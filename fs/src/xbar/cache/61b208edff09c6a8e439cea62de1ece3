@@ -1,0 +1,316 @@
+HTTP/2.0 200 OK
+Connection: close
+Alt-Svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+Cache-Control: public, max-age=600
+Cf-Cache-Status: DYNAMIC
+Cf-Ray: 7a38cbef1dc93e3c-SIN
+Content-Type: application/json
+Date: Mon, 06 Mar 2023 07:13:32 GMT
+Etag: "2W0fXQ"
+Expires: Mon, 06 Mar 2023 07:23:32 GMT
+Nel: {"success_fraction":0,"report_to":"cf-nel","max_age":604800}
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=2KLUTmWMGZnxQyhD%2FQ%2BL9n4vuJFI1SqctFj323V3%2FwHsfjxrM52j%2Ff%2FNEm9ZtxF2eo7YhozBQKS%2FN7dXn20KjK8usLuyaCdfPj4j36yBxEf%2BGZu9IgExyeO7sulvDw%3D%3D"}],"group":"cf-nel","max_age":604800}
+Server: cloudflare
+Server-Timing: cf-q-config;dur=6.9999987317715e-06
+X-Cloud-Trace-Context: 7d8fd806910bbb8803f1c253098deae0
+X-From-Cache: 1
+
+{
+	"version": "v2.1.7-beta-17-g263aea9",
+	"lastUpdated": "21 Oct 22 13:46 BST",
+	"plugins": [
+		{
+			"files": [
+				{
+					"path": "Cryptocurrency/okex_ticker.10s.py",
+					"filename": "okex_ticker.10s.py",
+					"content": "#!/usr/bin/env python2\n# coding: utf-8\n# yc@2021/06/30\n\n# \u003cxbar.title\u003eOKEx Ticker\u003c/xbar.title\u003e\n# \u003cxbar.version\u003ev1.0\u003c/xbar.version\u003e\n# \u003cxbar.author\u003eyc\u003c/xbar.author\u003e\n# \u003cxbar.author.github\u003eichuan\u003c/xbar.author.github\u003e\n# \u003cxbar.desc\u003eShow price ticker from OKEx. Currencies can be configured.\u003c/xbar.desc\u003e\n# \u003cxbar.image\u003ehttps://i.imgur.com/mykIv6O.png\u003c/xbar.image\u003e\n# \u003cxbar.dependencies\u003epython\u003c/xbar.dependencies\u003e\n# \u003cxbar.abouturl\u003ehttps://www.okex.com/about.html\u003c/xbar.abouturl\u003e\n# \u003cxbar.var\u003estring(VAR_CURRENCIES=\"btc,eth\"): Currencies, separated with comma.\u003c/xbar.var\u003e\n# \u003cxbar.var\u003estring(VAR_FONT_NAME=\"\"): Font name.\u003c/xbar.var\u003e\n\nimport re\nimport os\nimport json\nimport urllib2\nfrom datetime import datetime\nfrom decimal import Decimal\n\n\nHTTP_TIMEOUT = 10\nDEFAULT_CURRENCIES = \"btc,eth\"\n\n\ndef normalize_decimal(val, precision=2):\n    if type(val) is not Decimal:\n        val = Decimal(val)\n    mul = pow(10, precision)\n    val = Decimal(int(val * mul)) / mul\n    return format(val.normalize(), \"f\")\n\n\ndef get_update_time(timestamp):\n    updated_at = datetime.strptime(timestamp, \"%Y-%m-%dT%H:%M:%S.%fZ\")\n    delta = (datetime.utcnow() - updated_at).total_seconds()\n    ret = []\n    h, s = divmod(int(delta), 3600)\n    if h:\n        ret.append(\"{} hours\".format(h))\n    m, s = divmod(s, 60)\n    if m:\n        ret.append(\"{} minutes\".format(m))\n    if s:\n        ret.append(\"{} seconds\".format(s))\n    if ret:\n        return \"{} ago\".format(\" \".join(ret))\n    return \"just now\"\n\n\ndef http_get_json(url):\n    req = urllib2.Request(\n        url,\n        headers={\n            \"User-Agent\": \"curl/7.55\",\n            \"Cache-Control\": \"max-age=0\",\n            \"accept\": \"*/*\",\n        },\n    )\n    return json.load(urllib2.urlopen(req, timeout=HTTP_TIMEOUT))\n\n\ndef get_ticker_info(currency):\n    url = \"https://www.okex.com/api/spot/v3/instruments/{}-USDT/ticker\".format(currency)\n    try:\n        resp = http_get_json(url)\n        updated_at = get_update_time(resp[\"timestamp\"])\n        change_24h = (\n            (float(resp[\"last\"]) - float(resp[\"open_24h\"]))\n            / float(resp[\"open_24h\"])\n            * 100\n        )\n        return {\n            \"currency\": currency,\n            \"title\": \"${} ({}%)\".format(\n                normalize_decimal(resp[\"last\"]), normalize_decimal(change_24h),\n            ),\n            \"updated_at\": updated_at,\n            \"24h_high_low\": \"{} / {}\".format(resp[\"high_24h\"], resp[\"low_24h\"]),\n        }\n    except Exception as e:\n        return {\n            \"currency\": currency,\n            \"title\": \"ERR\",\n            \"error\": str(e),\n        }\n\n\ndef get_extra_parameters():\n    params = []\n    font_name = os.environ.get(\"VAR_FONT_NAME\")\n    if font_name:\n        params.append('font=\"{}\"'.format(font_name.replace('\"', '\\\\\"')))\n    return \" \".join(params)\n\n\ndef main():\n    currencies = os.environ.get(\"VAR_CURRENCIES\", DEFAULT_CURRENCIES)\n    currencies = [i.upper() for i in re.split(r\"\\s*,\\s*\", currencies) if i]\n    infos = [get_ticker_info(i) for i in currencies]\n    titles = [\"{currency}: {title}\".format(**i) for i in infos]\n    title = \"{} | color=white size=12 {}\".format(\n        \"    \".join(titles), get_extra_parameters()\n    )\n    last_updates = [\n        \"--{}: {}\".format(i[\"currency\"], i[\"updated_at\"])\n        for i in infos\n        if \"updated_at\" in i\n    ]\n    high_lows = [\n        \"--{}: {}\".format(i[\"currency\"], i[\"24h_high_low\"])\n        for i in infos\n        if \"24h_high_low\" in i\n    ]\n    print(title)\n    print(\"---\")\n    if last_updates:\n        print(\"Last update\")\n        for i in last_updates:\n            print(i)\n    if high_lows:\n        print(\"24 hours high/low\")\n        for i in high_lows:\n            print(i)\n    for i in infos:\n        if \"error\" in i:\n            print(\"{}: {} | color=red\".format(i[\"currency\"], i[\"error\"]))\n    print(\"Open www.okex.com | href=https://www.okex.com/\")\n\n\nif __name__ == \"__main__\":\n    main()\n"
+				}
+			],
+			"path": "Cryptocurrency/okex_ticker.10s.py",
+			"filename": "okex_ticker.10s.py",
+			"dir": "Cryptocurrency",
+			"docsPlugin": "Cryptocurrency/okex_ticker.10s.py.html",
+			"docsCategory": "Cryptocurrency.html",
+			"pathSegments": [
+				"Cryptocurrency"
+			],
+			"categoryPathSegments": [
+				{
+					"path": "Cryptocurrency",
+					"text": "Cryptocurrency",
+					"isLast": true
+				}
+			],
+			"title": "OKEx Ticker",
+			"version": "v1.0",
+			"author": "yc",
+			"authors": [
+				{
+					"name": "yc",
+					"githubUsername": "ichuan",
+					"imageURL": "https://avatars.githubusercontent.com/u/328225?v=4",
+					"bio": "",
+					"primary": true
+				}
+			],
+			"desc": "Show price ticker from OKEx. Currencies can be configured.",
+			"imageURL": "https://xbarapp.com/docs/plugins/Cryptocurrency/okex_ticker.10s.py.png",
+			"dependencies": [
+				"python"
+			],
+			"aboutURL": "https://www.okex.com/about.html",
+			"lastUpdated": "2022-10-21T13:46:07.864301+01:00",
+			"vars": [
+				{
+					"type": "string",
+					"name": "VAR_CURRENCIES",
+					"label": "Currencies",
+					"default": "btc,eth",
+					"desc": "Currencies, separated with comma.",
+					"options": null
+				},
+				{
+					"type": "string",
+					"name": "VAR_FONT_NAME",
+					"label": "Font name",
+					"default": "",
+					"desc": "Font name.",
+					"options": null
+				}
+			],
+			"processingNotes": null
+		},
+		{
+			"files": [
+				{
+					"path": "Cryptocurrency/Monero/monero-cny-bter.30s.sh",
+					"filename": "monero-cny-bter.30s.sh",
+					"content": "#!/bin/bash\n\n# \u003cxbar.title\u003eMonero CNY price at Bter\u003c/xbar.title\u003e\n# \u003cxbar.version\u003ev1.0\u003c/xbar.version\u003e\n# \u003cxbar.author\u003eMonero.how\u003c/xbar.author\u003e\n# \u003cxbar.author.github\u003emonerohow\u003c/xbar.author.github\u003e\n# \u003cxbar.desc\u003eShows the last Monero price (in CNY) on the Bter exchange\u003c/xbar.desc\u003e\n# \u003cxbar.image\u003ehttps://raw.githubusercontent.com/monerohow/misc/master/mac-menu-bar-light-and-dark.jpg\u003c/xbar.image\u003e\n# \u003cxbar.abouturl\u003ehttps://www.monero.how\u003c/xbar.abouturl\u003e\n#\n# Visit https://www.monero.how for Monero tutorials, paper wallets and the latest Monero news\n# \n\nmoneroIconBase64='iVBORw0KGgoAAAANSUhEUgAAABoAAAAeCAYAAAAy2w7YAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAE3RFWHRTb2Z0d2FyZQBtb25lcm8uaG9398/iYQAAAyxJREFUeNrclstrE1EUxu9MJkWrtvWxKmgXRrG4KBRELFUqVtFKqnUnLkRF1L9AwYXBpeBCEVcuXIgbQRG0rYraGokP4iok5KHZqJi0TUwnD9I8/U48I9Mwk7FNcOGBX7i599zz3ee5I7lcLmFh/eAgGAAOsA5IIAm+AA+YBN5GQZQGbXvBJTAMZIP2DWArOASuglfgGnhuFMwowApwG7wEB0x86o1muA88A3fAKiuhTvAYXODOy7Ez4AlYbya0EjzgWTRrQ+AhWG0kdB3sF62zPeBWvdBucJ7L0+BrEwI/wGsun9QGrwld0e2JGxwGsWWIJIATvNDV0f2RSaiPj7Jma4CPO8wtQSQFRsEn0KGrp/u3Q+bRGx1hryRJR3iUVjYP3zG+vEbmJIFBs96VSsWDACMWy5iAjxO+U9Vq1cxnQOa0sshsNptIJpPC7/eLQqHwUZZls2VMoW20VCq5A4GASCQStb4G1kNCaxddcUkS5XJZxONxoaqqCIfDYmFhwYuA9cs4j7oxDMRDPuQ7MzMjIFqLUWcdslEGIOd8Pi/sdvvFTCbTFwqFSMyDwCOcTFWaJUSmWKRXUZTL6CMVi0Vhlut+Giav36Pqx1KMZ7NZBwVEkNoy0nKh7I5EIiKdTvfAZwK+O9HHbJNUEoo2yH8q6CYxzMwRDAZJzAOmaZaYySa0PaU9YF+zHPqNnokpzk2aFXVrrBW2sNgIBD5TO8+ERLbrfbkvrV9BF3NaQcNNLMUj/KFpSygnaWMNNpXEJiFGl7vIy9WrX2rqk8vlRHt7+w0c93taTJS/K2jMplKpIDloJ46ONt0J/C/VLcFmDIQetpJeRDtD9BONRgXizWIgsxQDoqKrq0soPp+P7oodlYM8AiQmWZvNRoON3Way4d3oM0SzisX+3G8ZdW/b2toKCh1HBK6g8iw43kTWpid/mAaou7S0Je6aBo+8DM5x5m6VfQCntcOlP4ZpcAy8aYHIe3CUM7rheZ/jbH63CZH7/GUUs/oKyoBTLLiU2dETQfnwhH4mf/NdN87Qw0U5bhdngE4tqfKT/w5MWO2v1OANaanJ4h/Z/yf0S4ABAI1oQOxFaPzhAAAAAElFTkSuQmCC'\n\nxmrLast=$(curl -s http://data.bter.com/api/1/ticker/xmr_cny | tr -d '{}\"' | tr ':,' '\\n' | grep -A1 \"last\" | tail -1)\nprintf \"¥%.*f | image=%s\\n\" 2 \"$xmrLast\" \"$moneroIconBase64\"\necho \"---\"\necho \"Live chart | href=\\\"https://www.monero.how/monero-chart\\\"\"\necho \"Monero.how homepage | href=\\\"https://www.monero.how\\\"\"\n\n"
+				}
+			],
+			"path": "Cryptocurrency/Monero/monero-cny-bter.30s.sh",
+			"filename": "monero-cny-bter.30s.sh",
+			"dir": "Cryptocurrency/Monero",
+			"docsPlugin": "Cryptocurrency/Monero/monero-cny-bter.30s.sh.html",
+			"docsCategory": "Cryptocurrency/Monero.html",
+			"pathSegments": [
+				"Cryptocurrency",
+				"Monero"
+			],
+			"categoryPathSegments": [
+				{
+					"path": "Cryptocurrency",
+					"text": "Cryptocurrency",
+					"isLast": false
+				},
+				{
+					"path": "Cryptocurrency/Monero",
+					"text": "Monero",
+					"isLast": true
+				}
+			],
+			"title": "Monero CNY price at Bter",
+			"version": "v1.0",
+			"author": "Monero.how",
+			"authors": [
+				{
+					"name": "Monero.how",
+					"githubUsername": "monerohow",
+					"imageURL": "https://avatars.githubusercontent.com/u/24931986?v=4",
+					"bio": "",
+					"primary": true
+				}
+			],
+			"desc": "Shows the last Monero price (in CNY) on the Bter exchange",
+			"imageURL": "https://xbarapp.com/docs/plugins/Cryptocurrency/Monero/monero-cny-bter.30s.sh.jpg",
+			"dependencies": null,
+			"aboutURL": "https://www.monero.how",
+			"lastUpdated": "2022-10-21T13:46:06.631339+01:00",
+			"vars": null,
+			"processingNotes": null
+		},
+		{
+			"files": [
+				{
+					"path": "Web/bilibili.py",
+					"filename": "bilibili.py",
+					"content": "#!/usr/bin/env PYTHONIOENCODING=UTF-8 /usr/local/bin/python3\n# coding=utf-8\n#\n# \u003cxbar.title\u003eB站UP主粉丝和投稿视频播放信息获取\u003c/xbar.title\u003e\n# \u003cxbar.version\u003ev1.0\u003c/xbar.version\u003e\n# \u003cxbar.author\u003e胖哥带你入坑带你飞\u003c/xbar.author\u003e\n# \u003cxbar.author.github\u003ebihell\u003c/xbar.author.github\u003e\n# \u003cxbar.desc\u003e实时显示B站粉丝数和最新20次投稿的视频信息，请把userId改为你自己的。\u003c/xbar.desc\u003e\n# \u003cxbar.image\u003ehttps://bihell.com/media/2020/02/bilibili-bitbar.jpg\u003c/xbar.image\u003e\n# \u003cxbar.dependencies\u003epython\u003c/xbar.dependencies\u003e\n#\n# by tpxcer\n\nimport requests\nfrom datetime import datetime\n\n# 请把下面88900889改为你的用户Id\nuserId = 88900889\n\nuserInfoUrl = \"https://api.bilibili.com/x/web-interface/card?mid=\" + str(userId)\nuserInfoRes = requests.request(\"GET\", userInfoUrl).json()\nprint(\"粉丝：\" + str(userInfoRes['data']['follower']))\n\nsubMitVideosUrl = \"http://space.bilibili.com/ajax/member/getSubmitVideos?mid=\" + str(userId)\nsubMitVideosRes = requests.request(\"GET\", subMitVideosUrl).json()\nprint(\"---\")\nfor video in subMitVideosRes[\"data\"][\"vlist\"]:\n    print(video[\"title\"] + \"| color=#123def href=http://bilibili.com/video/av\" + str(video[\"aid\"]))\n    print(\"    投稿时间:\" + datetime.fromtimestamp(video[\"created\"]).strftime(\"%Y-%m-%d %H:%M:%S\") +\n          \"    时长:\" + str(video[\"length\"]) +\n          \"    播放:{0:6}\".format(video[\"play\"]) +\n          \"    收藏:\" + str(video[\"favorites\"]) +\n          \"    评论:\" + str(video[\"comment\"]) +\n          \"    弹幕:\" + str(video[\"video_review\"]))\n"
+				}
+			],
+			"path": "Web/bilibili.py",
+			"filename": "bilibili.py",
+			"dir": "Web",
+			"docsPlugin": "Web/bilibili.py.html",
+			"docsCategory": "Web.html",
+			"pathSegments": [
+				"Web"
+			],
+			"categoryPathSegments": [
+				{
+					"path": "Web",
+					"text": "Web",
+					"isLast": true
+				}
+			],
+			"title": "B站UP主粉丝和投稿视频播放信息获取",
+			"version": "v1.0",
+			"author": "胖哥带你入坑带你飞",
+			"authors": [
+				{
+					"name": "Haseo Chen",
+					"githubUsername": "bihell",
+					"imageURL": "https://avatars.githubusercontent.com/u/19926035?v=4",
+					"bio": "",
+					"primary": true
+				}
+			],
+			"desc": "实时显示B站粉丝数和最新20次投稿的视频信息，请把userId改为你自己的。",
+			"imageURL": "https://bihell.com/media/2020/02/bilibili-bitbar.jpg",
+			"dependencies": [
+				"python"
+			],
+			"aboutURL": "",
+			"lastUpdated": "2022-10-21T13:46:33.274893+01:00",
+			"vars": null,
+			"processingNotes": [
+				"unable to access image: Get \"https://bihell.com/media/2020/02/bilibili-bitbar.jpg\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"
+			]
+		},
+		{
+			"files": [
+				{
+					"path": "Tools/JsonUtils.1d.sh",
+					"filename": "JsonUtils.1d.sh",
+					"content": "#!/usr/bin/env bash\n\n# JSON Utils: Validate, format and compact JSON entity from clipboard and then write to clipboard\n#\n# by Cnfn (http://github.com/cnfn)\n#\n# \u003cxbar.title\u003eJSON Utils\u003c/xbar.title\u003e\n# \u003cxbar.version\u003ev1.4\u003c/xbar.version\u003e\n# \u003cxbar.author\u003eCnfn\u003c/xbar.author\u003e\n# \u003cxbar.author.github\u003ecnfn\u003c/xbar.author.github\u003e\n# \u003cxbar.desc\u003eValidate, format and compact JSON entity from clipboard and then write to clipboard. More info: https://github.com/cnfn/BitBarPlugins/tree/master/JsonUtils\u003c/xbar.desc\u003e\n# \u003cxbar.image\u003ehttps://raw.githubusercontent.com/cnfn/grocery/master/images/blog/bitbar_plugin_json_utils_main.png\u003c/xbar.image\u003e\n# \u003cxbar.dependencies\u003ebash,jq\u003c/xbar.dependencies\u003e\n# \u003cxbar.abouturl\u003ehttps://github.com/cnfn/BitBarPlugins/tree/master/JsonUtils\u003c/xbar.abouturl\u003e\n#\n# Dependencies:\n#   jq (https://stedolan.github.io/jq/)\n\nexport PATH=$PATH:/usr/local/bin\n\n# Hack for language not being set properly and unicode support\nexport LANG=\"${LANG:-en_US.UTF-8}\"\n\nnotifyTitle=\"JsonUtils\"\nnotifyValidJson=\"Valid JSON, type:\"\nnotifyInvalidJson=\"Invalid JSON !!!!!!!!!!\"\n\ndisplayNotification() {\n\ttitle=$1\n\tcontent=$2\n\tosascript -e \"display notification \\\"$content\\\" with title \\\"$title\\\"\"\n}\n\ndoValidate() {\n\ttypeName=$(pbpaste | jq type 2\u003e /dev/null | xargs echo -n 2\u003e /dev/null)\n\tif [[ \"object\" == \"$typeName\" || \"array\" == \"$typeName\" ]]\n\tthen\n\t \techo \"$typeName\"\n\telse\n\t\techo \"\"\n\tfi\n}\n\nnotifyAndExitWhenInvalidJson() {\n\ttypeName=$(doValidate)\n\t[ -n \"$typeName\" ] || { osascript -e \"beep\"; \\\n\t\tdisplayNotification $notifyTitle \"$notifyInvalidJson\"; exit 1; }\n}\n\nvalidate() {\n\ttypeName=$(doValidate)\n\tif [[ -n \"$typeName\" ]]\n\tthen\n\t\tdisplayNotification $notifyTitle \"$notifyValidJson $typeName\"\n\telse\n\t\tosascript -e \"beep\"\n\t\tdisplayNotification $notifyTitle \"$notifyInvalidJson\"\n\tfi\n}\n\nformat() {\n\tnotifyAndExitWhenInvalidJson\n\n\tpbpaste | jq . --indent 4 | pbcopy\n\tdisplayNotification $notifyTitle \"Formatted\"\n}\n\ncompact() {\n\tnotifyAndExitWhenInvalidJson\n\n\tpbpaste | jq . --compact-output | pbcopy\n\tdisplayNotification $notifyTitle \"Compacted\"\n}\n\n# call function: validate, format, compact\n[ $# == 1 ] \u0026\u0026 { $1; exit 0; }\n\necho \"JSON\"\necho \"---\"\necho \"Validate | bash='$0' param1=validate terminal=false\"\necho \"---\"\necho \"Format | bash='$0' param1=format terminal=false\"\necho \"Compact | bash='$0' param1=compact terminal=false\"\n"
+				}
+			],
+			"path": "Tools/JsonUtils.1d.sh",
+			"filename": "JsonUtils.1d.sh",
+			"dir": "Tools",
+			"docsPlugin": "Tools/JsonUtils.1d.sh.html",
+			"docsCategory": "Tools.html",
+			"pathSegments": [
+				"Tools"
+			],
+			"categoryPathSegments": [
+				{
+					"path": "Tools",
+					"text": "Tools",
+					"isLast": true
+				}
+			],
+			"title": "JSON Utils",
+			"version": "v1.4",
+			"author": "Cnfn",
+			"authors": [
+				{
+					"name": "Cnfn",
+					"githubUsername": "cnfn",
+					"imageURL": "https://avatars.githubusercontent.com/u/1445517?v=4",
+					"bio": "",
+					"primary": true
+				}
+			],
+			"desc": "Validate, format and compact JSON entity from clipboard and then write to clipboard. More info: https://github.com/cnfn/BitBarPlugins/tree/master/JsonUtils",
+			"imageURL": "https://xbarapp.com/docs/plugins/Tools/JsonUtils.1d.sh.png",
+			"dependencies": [
+				"bash",
+				"jq"
+			],
+			"aboutURL": "https://github.com/cnfn/BitBarPlugins/tree/master/JsonUtils",
+			"lastUpdated": "2022-10-21T13:46:30.461579+01:00",
+			"vars": null,
+			"processingNotes": null
+		},
+		{
+			"files": [
+				{
+					"path": "Environment/CO2-Signal.10m.py",
+					"filename": "CO2-Signal.10m.py",
+					"content": "#!/usr/bin/env PYTHONIOENCODING=UTF-8 /usr/local/bin/python3\n\n# \u003cxbar.title\u003eCO2Signal API\u003c/xbar.title\u003e\n# \u003cxbar.version\u003ev1.0\u003c/xbar.version\u003e\n# \u003cxbar.author\u003eMartin Jobke\u003c/xbar.author\u003e\n# \u003cxbar.author.github\u003epygoner\u003c/xbar.author.github\u003e\n# \u003cxbar.desc\u003eThis plugin displays the current carbon (gC02equivalent) emmissions per kWh of produced electric energy in the requested country/region \u003c/xbar.desc\u003e\n# \u003cxbar.dependencies\u003epython, CO2 Signal\u003c/xbar.dependencies\u003e\n# \u003cxbar.abouturl\u003ehttps://docs.co2signal.com/\u003c/xbar.abouturl\u003e\n# \u003cxbar.image\u003ehttps://raw.githubusercontent.com/pygoner/Plugin-Bitbar/main/Bitbar%20C02%20Signal%20Plugin%20Image.png\u003c/xbar.image\u003e\n\nimport requests\nimport sys\n\n# user settings \n# get your C02Signal API token at https://www.co2signal.com/\n# insert your specific country code from this list http://api.electricitymap.org/v3/zones\n# have fun ^^\n\nmyapitoken = ''\nmyCountrycode = ''\n\nclass CO2Signal:\n\n    def __init__(self, authToken, countryCode):\n        self.authToken = authToken\n        self.countryCode = countryCode\n\n    def requestC02Signal(self):\n        url = 'http://api.co2signal.com/v1/latest?countryCode=' + self.countryCode\n        headers = {'auth-token': self.authToken}\n        self.resDict = requests.get(url, params=headers).json()\n\n    def displayResponse(self):\n        try:\n            print(self.resDict['error'])\n            self.dropdownMenu('', 'error')\n            return\n        except KeyError:\n            stringToDisplay = self.countryFlag(self.countryCode)\n            try:\n                self.resDict['message']\n                # if the API key is used more than 30 times an hour or wrong\n                # the CO2 Signal return just a json containing 'message'\n                self.dropdownMenu(stringToDisplay, 'APILimit')\n                return\n            except KeyError:\n                # if the country live data is currently unavialable the\n                # fossilFuelPercentage is null/none\n                if (self.resDict['data']['fossilFuelPercentage']):\n                    stringToDisplay += str(round(self.resDict['data']['carbonIntensity'], 1))\n                    stringToDisplay += ' | color=' + self.color(self.resDict['data']['carbonIntensity'])\n                    self.dropdownMenu(stringToDisplay, 'normal')\n                else:\n                    stringToDisplay += ':-( | color=#e62e00'     # red sad smiley\n                    self.dropdownMenu(stringToDisplay, 'noLiveData')\n\n    def dropdownMenu(self, stringToDisplay, mode):\n        print(stringToDisplay)\n        if (mode == 'normal'):\n            print('---')\n            ffp = round(self.resDict['data']['fossilFuelPercentage'], 1)\n            # creating a smiley face which reflects the mood of\n            # an environmental caring person ^^\n            if (ffp \u003c 20):\n                ffp = str(ffp) + ' :heart_eyes:'\n            else:\n                if(ffp \u003c 30):\n                    ffp = ffp = str(ffp) + ' :grinning:'\n                else:\n                    if(ffp \u003c 50):\n                        ffp = ffp = str(ffp) + ' :neutral_face:'\n                    else:\n                        ffp = ffp = str(ffp) + ' :poop:'\n            print('fossil fuel percentage: ' + ffp)\n            print('-- percentage of electricity')\n            print('-- generated by coal, gas or oil')\n        \n        if (mode == 'APILimit'):\n            print('---')\n            print(self.resDict['message'])\n            if ('Invalid' in self.resDict['message']):\n                print('Get a API key at https://www.co2signal.com/')\n\n        if (mode == 'noLiveData'):\n            print('---')\n            print('No data currently avialable!')\n\n        if (mode == 'error'):\n            print('---')\n\n        print('API Website (CO2 Signal)| href=https://www.co2signal.com/')\n        print('electricityMap Website | href=https://electricitymap.org') \n\n    def countryFlag(self, countryCode='WhiteFlag'):\n        # https://www.unicode.org/charts/PDF/U1F100.pdf\n        # see regional indicator symbols\n        if (countryCode == 'WhiteFlag'):\n            return '🏳 '\n        start = 0x1F1E6\n        # unicode start for letter 'A' in regional Symbols\n        letterOffset1 = ord(countryCode[0]) - ord('A')\n        letterOffset2 = ord(countryCode[1]) - ord('A')\n        # calculation of number which is added\n        # e.g. 'D' as regional letter = 'A' as regional letter + 3\n        letter1 = start + letterOffset1\n        letter2 = start + letterOffset2\n        return (chr(letter1) + chr(letter2))\n\n    def rgb_to_hex(self, rgb):\n        # https://www.codespeedy.com/convert-rgb-to-hex-color-code-in-python/\n        return '%02x%02x%02x' % rgb\n\n    def linearGradient(self, col1, col2, splitFactor):\n        # this function returns the color which is in between those two colors and\n        # is splits those two colors according to the split factor\n        # e.g. col1 = (0, 0, 0); col2 = (40, 60, 80); SF = 0.4\n        # linearGradient(col1, col2, SF) -\u003e 0.4*((40, 60, 80) - (0, 0, 0))\n        # similar to finding a point on straight between two points\n        dif = (col1[0] - col2[0], col1[1] - col2[1], col1[2] - col2[2])\n        dif = (dif[0]*splitFactor, dif[1]*splitFactor, dif[2]*splitFactor)\n        result = (col1[0] - dif[0], col1[1] - dif[1], col1[2] - dif[2])\n        result = (int(result[0]), int(result[1]), int(result[2]))\n        return result\n     \n    def color(self, carbonIntensity):\n        # this function should determine a color given the carbon intensity\n        # low intensity -\u003e more green\n        # middle intensity -\u003e yellow\n        # high intensity -\u003e brown\n        # similar to the color scale at: electricitymap.org\n\n        maximum = 800\n        ratio = carbonIntensity / maximum\n\n        colors = ((42, 163, 100), (162, 206, 86), (240, 225, 75),\n                (222, 191, 68), (205, 158, 61), (188, 124, 53),\n                (171, 91, 46), (143, 61, 35), (82, 39, 12), (56, 29, 2))\n        splitLenght = 1 / 9\n\n        # the color scale is split up nine times\n        # each time there is a linear gradient betwenn the colors of the colors tuple\n\n        k = int(ratio // splitLenght)\n        splitFactor = (ratio % splitLenght) / splitLenght\n        if (ratio \u003e= 0.999999):\n            return('#' + self.rgb_to_hex(colors[10]))\n        else:\n            carbonColor = self.linearGradient(colors[k], colors[k+1], splitFactor)\n            carbonColor = self.rgb_to_hex(carbonColor)\n            return('#' + carbonColor)\n\n\nmyCO2Signal = CO2Signal(myapitoken, myCountrycode)\nmyCO2Signal.requestC02Signal()\nmyCO2Signal.displayResponse()"
+				}
+			],
+			"path": "Environment/CO2-Signal.10m.py",
+			"filename": "CO2-Signal.10m.py",
+			"dir": "Environment",
+			"docsPlugin": "Environment/CO2-Signal.10m.py.html",
+			"docsCategory": "Environment.html",
+			"pathSegments": [
+				"Environment"
+			],
+			"categoryPathSegments": [
+				{
+					"path": "Environment",
+					"text": "Environment",
+					"isLast": true
+				}
+			],
+			"title": "CO2Signal API",
+			"version": "v1.0",
+			"author": "Martin Jobke",
+			"authors": [
+				{
+					"name": "MaJob",
+					"githubUsername": "pygoner",
+					"imageURL": "https://avatars.githubusercontent.com/u/22852467?v=4",
+					"bio": "",
+					"primary": true
+				}
+			],
+			"desc": "This plugin displays the current carbon (gC02equivalent) emmissions per kWh of produced electric energy in the requested country/region ",
+			"imageURL": "https://xbarapp.com/docs/plugins/Environment/CO2-Signal.10m.py.png",
+			"dependencies": [
+				"python",
+				"CO2 Signal"
+			],
+			"aboutURL": "https://docs.co2signal.com/",
+			"lastUpdated": "2022-10-21T13:46:14.278573+01:00",
+			"vars": null,
+			"processingNotes": null
+		},
+		{
+			"files": [
+				{
+					"path": "Time/stopwatch.1s.sh",
+					"filename": "stopwatch.1s.sh",
+					"content": "#!/bin/bash\n\n# \u003cxbar.title\u003eStopwatch\u003c/xbar.title\u003e\n# \u003cxbar.version\u003e1.0\u003c/xbar.version\u003e\n# \u003cxbar.author\u003eTim Baumgard\u003c/xbar.author\u003e\n# \u003cxbar.author.github\u003etbaumgard\u003c/xbar.author.github\u003e\n# \u003cxbar.desc\u003eSimple stopwatch for BitBar.\u003c/xbar.desc\u003e\n# \u003cxbar.image\u003ehttps://raw.githubusercontent.com/tbaumgard/tbaumgard.github.io/master/_/img/bitbar-stopwatch.png\u003c/xbar.image\u003e\n\n### Configuration\n\nMAX_SPLITS=25\nSTART_FILE=\"$HOME/.bitbar-stopwatch-start\"\nPAUSE_FILE=\"$HOME/.bitbar-stopwatch-pause\"\nSPLIT_FILE=\"$HOME/.bitbar-stopwatch-split\"\nSPLITS_FILE=\"$HOME/.bitbar-stopwatch-splits\"\nSTART_TEXT=\"Start\"\nSTOP_TEXT=\"Stop\"\nSPLIT_TEXT=\"Split\"\nRESET_TEXT=\"Reset\"\n\n### Functions\n\nfunction stopwatch-print-splits {\n\tlocal COUNTER\n\tlocal CLOCK\n\n\tif [ ! -n \"$1\" ]; then\n\t\treturn\n\tfi\n\n\tCOUNTER=1\n\techo \"---\"\n\n\tfor SPLIT in $1; do\n\t\tCLOCK=\"$(stopwatch-print-clock \"$SPLIT\")\"\n\t\techo \"$COUNTER. $CLOCK\"\n\t\tCOUNTER=$((COUNTER + 1))\n\tdone\n}\n\nfunction stopwatch-print-clock {\n\tlocal NUM_SECONDS=$(($1))\n\tlocal HOURS=$((NUM_SECONDS / 3600))\n\tlocal MINUTES=$((NUM_SECONDS % 3600 / 60))\n\tlocal SECONDS=$((NUM_SECONDS % 3600 % 60))\n\n\tprintf \"%02d:%02d:%02d\" $HOURS $MINUTES $SECONDS\n}\n\n### Main\n\nSTART_TIME=\"$(cat \"$START_FILE\" 2\u003e /dev/null)\"\nPAUSE_TIME=\"$(cat \"$PAUSE_FILE\" 2\u003e /dev/null)\"\nSPLIT_TIME=\"$(cat \"$SPLIT_FILE\" 2\u003e /dev/null)\"\nSPLITS=\"$(cat \"$SPLITS_FILE\" 2\u003e /dev/null)\"\n\nif [ \"$1\" == \"start\" ]; then\n\tdate +%s \u003e \"$START_FILE\"\n\texit\nelif [ \"$1\" == \"pause\" ]; then\n\tELAPSED_TIME=$(($(date +%s) - START_TIME))\n\techo $ELAPSED_TIME \u003e \"$PAUSE_FILE\"\n\texit\nelif [ \"$1\" == \"resume\" ]; then\n\tOFFSET_START_TIME=$(($(date +%s) - PAUSE_TIME))\n\techo $OFFSET_START_TIME \u003e \"$START_FILE\"\n\trm \"$PAUSE_FILE\"\n\texit\nelif [ \"$1\" == \"split\" ]; then\n\tNOW=\"$(date +%s)\"\n\n\tif [ -n \"$SPLIT_TIME\" ]; then\n\t\tELAPSED_TIME=$((NOW - SPLIT_TIME))\n\telse\n\t\tELAPSED_TIME=$((NOW - START_TIME))\n\tfi\n\n\techo \"$NOW\" \u003e \"$SPLIT_FILE\"\n\n\tif [ -n \"$SPLITS\" ]; then\n\t\tprintf \"%s\\n%d\\n\" \"$SPLITS\" $ELAPSED_TIME | tail -n \"$MAX_SPLITS\" \u003e \"$SPLITS_FILE\"\n\telse\n\t\tprintf \"%d\\n\" $ELAPSED_TIME \u003e \"$SPLITS_FILE\"\n\tfi\n\n\texit\nelif [ \"$1\" == \"reset\" ]; then\n\trm \"$START_FILE\"\n\trm \"$PAUSE_FILE\"\n\trm \"$SPLIT_FILE\"\n\trm \"$SPLITS_FILE\"\n\texit\nfi\n\nif [ -n \"$PAUSE_TIME\" ]; then\n\tCLOCK=\"$(stopwatch-print-clock \"$PAUSE_TIME\")\"\n\n\techo \"◎ $CLOCK\"\n\techo \"---\"\n\techo \"$START_TEXT| bash='$0' param1=resume terminal=false refresh=true\"\n\techo \"$RESET_TEXT| bash='$0' param1=reset terminal=false refresh=true\"\n\tstopwatch-print-splits \"$SPLITS\"\nelif [ -n \"$START_TIME\" ]; then\n\tELAPSED_TIME=$(($(date +%s) - START_TIME))\n\tCLOCK=\"$(stopwatch-print-clock \"$ELAPSED_TIME\")\"\n\n\techo \"◉ $CLOCK\"\n\techo \"---\"\n\techo \"$START_TEXT| bash='$0' param1=resume terminal=false refresh=true\"\n\techo \"$STOP_TEXT| bash='$0' param1=pause terminal=false refresh=true\"\n\techo \"$RESET_TEXT| bash='$0' param1=reset terminal=false refresh=true\"\n\t\n\tif [ \"$MAX_SPLITS\" -gt 0 ]; then\n\t\techo \"$SPLIT_TEXT| bash='$0' param1=split terminal=false refresh=true\"\n\tfi\n\n\tstopwatch-print-splits \"$SPLITS\"\nelse\n\techo \"◎ 00:00:00\"\n\techo \"---\"\n\techo \"$START_TEXT| bash='$0' param1=start terminal=false refresh=true\"\nfi\n"
+				}
+			],
+			"path": "Time/stopwatch.1s.sh",
+			"filename": "stopwatch.1s.sh",
+			"dir": "Time",
+			"docsPlugin": "Time/stopwatch.1s.sh.html",
+			"docsCategory": "Time.html",
+			"pathSegments": [
+				"Time"
+			],
+			"categoryPathSegments": [
+				{
+					"path": "Time",
+					"text": "Time",
+					"isLast": true
+				}
+			],
+			"title": "Stopwatch",
+			"version": "1.0",
+			"author": "Tim Baumgard",
+			"authors": [
+				{
+					"name": "Tim Baumgard",
+					"githubUsername": "tbaumgard",
+					"imageURL": "https://avatars.githubusercontent.com/u/1239241?v=4",
+					"bio": "",
+					"primary": true
+				}
+			],
+			"desc": "Simple stopwatch for BitBar.",
+			"imageURL": "https://xbarapp.com/docs/plugins/Time/stopwatch.1s.sh.png",
+			"dependencies": null,
+			"aboutURL": "",
+			"lastUpdated": "2022-10-21T13:46:29.785331+01:00",
+			"vars": null,
+			"processingNotes": null
+		}
+	]
+}

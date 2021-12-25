@@ -1,0 +1,10 @@
+#!/bin/zsh
+
+results=()
+while IFS= read -r line; do
+  results+=($line)
+done < <(fd --hidden DS_Store $PWD)
+
+for i in $results; do
+  sudo rm $i
+done

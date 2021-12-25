@@ -1,0 +1,62 @@
+#! /bin/zsh
+
+# help text {{{
+HELP=$(cat<< EOF
+flags:
+  none         :  display help menu
+  -b, --build  :  compiles keyboard firmware
+  -f, --flash  :  compiles and flashes keyboard firmware
+EOF
+) # }}}
+[[ -z $1 ]] && echo $HELP && return true
+
+pushd $PWD
+
+local user="nguyenvukhang"
+local QMK_DIR=$HOME/.local/qmk_firmware
+
+# only gotta edit these
+# local here=iris
+# local there=keyboards/keebio/iris/keymaps
+# local make_cmd=keebio/iris/rev4:$user
+
+local here=dz60/nguyenvukhang
+local there=keyboards/dz60/keymaps
+local make_cmd=dz60:$user
+
+local DEST_DIR=$QMK_DIR/$there
+
+# check if keeb is valid
+[ ! -d $PWD/$here ] \
+  && echo "Source directory doesn't exist. (check \$here variable)" \
+  && return false
+
+# check if DEST_DIR is valid
+[ ! -d $DEST_DIR ] \
+  && echo "Destination directory doesn't exist. (check \$dest_dir array)" \
+  && return false
+
+DEST_DIR+=/$user
+
+# copy keymap over
+rm -rf $DEST_DIR
+ln -s $PWD/$here $DEST_DIR
+
+function main() {
+  cd $QMK_DIR
+  [[ $1 = "-b" || $1 = "--build" ]] \
+    && make $make_cmd \
+    && return true
+  [[ $1 = "-f" || $1 = "--flash" ]] \
+    && make ${make_cmd}:flash \
+    && return true
+  echo "unregistered argument"
+}
+
+main $1
+
+# remove keymap file from qmk_firmware repo
+# to prevent unstaged changes
+# rm $DEST_DIR
+
+popd

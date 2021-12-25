@@ -1,0 +1,8 @@
+#! /bin/zsh
+
+case "$PINENTRY_USER_DATA" in
+  gui)
+    exec /usr/bin/pinentry-gtk2 "$@";;
+  *)
+    exec /usr/bin/pinentry-tty "$@";;
+esac

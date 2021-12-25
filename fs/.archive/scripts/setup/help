@@ -1,0 +1,72 @@
+#!/usr/bin/env zsh
+
+# help messages
+function short_help() {
+cat <<EOF
+USAGE:
+    ./$SCRIPTNAME [-i --install] [-y --yes] [-u --uninstall] [-h --help]
+    ./$SCRIPTNAME -i
+    ./$SCRIPTNAME -y
+    ./$SCRIPTNAME --uninstall
+    ./$SCRIPTNAME --help
+
+EOF
+exit 0
+}
+function long_help() {
+cat <<EOF
+USAGE:
+    ./$SCRIPTNAME [OPTION]
+    ./$SCRIPTNAME [-i --install] [-y --yes] [-u --uninstall] [-h --help]
+
+OPTIONS:
+
+    -i, --install
+        Kickstarts installation with a welcome message asking
+        for confirmation.
+
+    -y, --yes
+        Proceeds with the install immediately, having
+        automatically answered yes to the welcome message's
+        prompt.
+
+    -u, --uninstall
+        Removes all executables installed by this script.
+
+    -h, --help
+        display this help message again.
+
+    -p, --postscript
+        why so serious? life's too short to overthink. just do.
+
+EOF
+exit 0
+}
+function postscript() {
+cat <<EOF
+To the homies:
+
+Oh why hello, I didn't see you there. So nice of you to join me
+in using this set of configs for zsh. The --postscript flag from
+the help text must have sent you here.
+
+For more help you can look here:
+    - zsh manual (accessed by running \`man zsh\`)
+    - cheatsheet.md (in this repo)
+    - online docs @ https://zsh.sourceforge.io/Doc/Release/
+
+I hope you enjoy my little setup. May your programming always be
+fun and your vimming be quick.
+
+To k (or c, whatever, jk):
+
+Ubarfgyl qvqa'g rkcrpg hf gb unat bhg ng onef fb zhpu. Cyrnfr
+pbagvahr gb znvagnva lbhe zvavzhz fgnaqneq bs zhfpyr-hcf sbe nf
+ybat nf cbffvoyr naq nyjnlf erzrzore gb xrrc lbhe jevfgf fnsr.
+Frr lbh arkg lrne.
+
+uggcf://tvguho.pbz/fcbafbef/athlraihxunat
+
+EOF
+exit 0
+}

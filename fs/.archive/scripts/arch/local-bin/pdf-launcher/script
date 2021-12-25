@@ -1,0 +1,37 @@
+#! /bin/zsh
+
+UNI_PUB="$HOME/repos/uni/nightly"
+
+cd $UNI_PUB && \
+fd \
+--type file \
+--hidden \
+--type symlink \
+--base-directory $UNI_PUB \
+--extension pdf \
+--color=never \
+| fzf --no-info \
+--no-mouse \
++m \
+--keep-right \
+--reverse \
+--no-bold \
+--prompt=' > ' \
+--header='' \
+--padding=1 \
+| (nohup xargs -I{} zathura "{}" >/dev/null 2>&1 &)
+
+# --search-path $HOME/.tex \
+# --exclude qmk_firmware \
+# --exclude upgraded-chainsaw \
+
+# black        = '#282828',
+# white        = '#ebdbb2',
+# red          = '#fb4934',
+# green        = '#b8bb26',
+# blue         = '#83a598',
+# yellow       = '#fabd2f',
+# gray         = '#a89984',
+# darkgray     = '#3c3836',
+# lightgray    = '#504945',
+# inactivegray = '#7c6f64',

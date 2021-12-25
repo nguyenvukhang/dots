@@ -1,0 +1,3 @@
+#! /bin/zsh
+
+rofi -show run -display-run "ﳨ" -lines 5 -location 0 -yoffset -100 -scroll-method 1 -width 240

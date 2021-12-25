@@ -1,0 +1,5 @@
+#! /bin/zsh
+
+filepath="$PWD/"
+name=$(date +"%Y.%m.%d__%R__")note.md
+nvim $filepath$name

@@ -1,0 +1,101 @@
+#!/usr/bin/env zsh
+# vim:tw=64
+
+# if you're on macOS, you're good to go.
+# if you're on Linux, some commands here might work slightly differently.
+# if you're on Windows, you can simply stop reading this, and gently,
+# place the toaster ███████████████████████
+if [[ "$OSTYPE" != "darwin"* ]]; then
+  echo "You're not on macOS. This script may not work."
+  exit 1
+fi
+# TODO: reinstall Arch someday and add Linux support for this script
+
+function msg() {
+  local len=$(printf '─%.0s' {1..$((${#1} + 2))})
+  echo "╭$len╮"
+  echo "│ $1 │"
+  echo "╰$len╯"
+}
+
+function invalid_arg() {
+  echo "invalid argument. nothing happened.\n"
+  short_help
+  exit 1
+}
+
+function re() {
+  recurse $ZSH_DOTS/bin $HOME/.local/bin $1
+  recurse $ZSH_DOTS/.zsh $HOME $1
+}
+
+function install() {
+  # first message to user
+  welcome $CYAN $YELLOW
+
+  typeset -A local INSTALL_LIST=()
+  re true
+
+  # checks INSTALL_LIST (now populated) for validity of symlinks
+  checkSymlinks
+
+  # checks dependencies
+  local DEPS=(git fzf rg fd nvim)
+  local NVIM_INSTALL_LOC=$HOME/.local/bin
+  checkDependencies
+}
+
+function uninstall() {
+  typeset -A local INSTALL_LIST=()
+  re false
+  local removed=""
+  for app loc in ${(kv)INSTALL_LIST}; do
+    # if the thing exists, remove it an add it to $removed
+    [ -e $loc/$app ] \
+      && rm -f $loc/$app &>/dev/null \
+      && removed+="${GREEN}$app${NORMAL}, "
+  done
+  [ ${#removed} -eq 0 ] \
+    && echo "\nnothing to uninstall\n" \
+    || echo "\nuninstalled: \n${removed%,*}\n"
+  exit 0
+}
+
+# get this script's filename
+SCRIPTNAME=${ZSH_ARGZERO:2}
+# get this script's parent directory
+# (which is the root of this repo's zsh config)
+ZSH_DOTS=${${0:A}%%/$SCRIPTNAME}
+
+# color my pencils
+source $ZSH_DOTS/core/colors
+
+# import functions
+source $ZSH_DOTS/scripts/setup/help
+source $ZSH_DOTS/scripts/setup/checks
+source $ZSH_DOTS/scripts/setup/recurse
+source $ZSH_DOTS/scripts/setup/welcome
+
+# rejects two or more arguments
+[ $2 ] \
+  && msg "life's too short to have more than one argument" \
+  && exit 1
+
+# if no arguments, then send short help message
+[ -z $1 ] && short_help
+
+# continues execution with one argument
+function main() {
+  case $1 in
+    '-u'|'--uninstall') uninstall ;;
+    '-i'|'--install') install ;;
+    '-y'|'--yes') SKIP=true install ;;
+    '-h'|'--help') long_help ;;
+    '-p'|'--postscript') postscript ;;
+    '-t'|'--test') msg "Something big, I feel it happening out of my control" ;;
+    *) invalid_arg ;;
+  esac
+}
+[ $1 ] && main $1 \
+  && msg "end of script!" \
+  || short_help

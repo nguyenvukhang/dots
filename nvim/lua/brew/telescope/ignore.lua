@@ -1,0 +1,17 @@
+return {
+  'node_modules',
+  'LICENSE',
+  'autoload/plug.vim',
+  '.ccls-cache',
+  'yarn.lock',
+  'error.log',
+  '%.git/',
+  '%.gpg',
+  '%.DS_Store',
+  '%.pdf',
+  '%.pdf',
+  '%.png',
+  '%.jpg',
+  '%.gif',
+  '%.sql',
+}

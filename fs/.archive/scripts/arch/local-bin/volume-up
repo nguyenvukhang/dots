@@ -1,0 +1,4 @@
+#! /bin/zsh
+
+amixer -c 1 set Master 5%+ -M ; kill -44 $(pidof dwmblocks)
+# amixer -D pulse sset Master 5%+; kill -44 $(pidof dwmblocks)

@@ -1,0 +1,14 @@
+#! /bin/zsh
+
+REPOS="$HOME/repos"
+cardNumber=$(cat /proc/asound/cards | ag "USB-Audio - Scarlett 2i2 USB")
+cardNumber=${cardNumber:1:2}
+echo $cardNumber
+
+cat <<EOT > $REPOS/arch/settings/etc/asound.conf
+defaults.pcm.card $cardNumber
+defaults.pcm.device 0
+defaults.ctl.card $cardNumber
+defaults.pcm.rate_converter "speexrate_best"
+EOT
+alsactl restore

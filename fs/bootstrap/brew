@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+
+BREW=(brew install)
+_N='\033[0m'    # Normal
+_G='\033[1;37m' # Gray
+
+add() {
+  BREW+=("$@")
+}
+
+install() {
+  printf "${_G}${BREW[@]}${_N}\n"
+  ${BREW[@]}
+}
+
+# gnu-stow (required to run dots/setup)
+stow() {
+  add stow
+  install
+}
+
+# cli apps
+cli() {
+  add --formulae
+  add fd exa fzf tmux neovim ripgrep # core apps
+  add pass nnn
+  install
+}
+
+# gui apps
+gui() {
+  add --cask
+  add notion kitty rectangle firefox manymc affinity-designer
+  add xbar          # scripted menu bar
+  add telegram zoom # communications
+  install
+}
+
+# developer tools
+dev() {
+  add clang-format shfmt stylua    # formatters
+  add lua-language-server py-right # language servers
+  add openjdk@17
+  add node@16
+  install
+
+  # post-install setup
+  sudo ln -sfn \
+    /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk \
+    /Library/Java/JavaVirtualMachines
+}
+
+help() {
+  echo "
+OPTIONS
+    stow    install stow (required to run dots/setup)
+    cli     install command-line apps
+    gui     install graphical apps
+    dev     install developer tools
+
+EXAMPLES
+    sh brew cli
+    sh brew gui
+"
+}
+
+case $1 in
+"stow") stow ;;
+"cli") cli ;;
+"gui") gui ;;
+"dev") dev ;;
+*) help ;;
+esac

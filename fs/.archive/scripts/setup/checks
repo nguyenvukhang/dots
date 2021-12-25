@@ -1,0 +1,76 @@
+#!/usr/bin/env zsh
+
+local TICK=${GREEN}✓${NORMAL}
+local CROSS=${RED}✗${NORMAL}
+
+function checkSymlinks() {
+  # checks INSTALL_LIST array
+  # to make sure symlinks are good to go
+  # (each element in this array will be "app___/path/installed")
+
+  # checks two things:
+  #   1. `which <executable>` doesn't return "<executable> not found"
+  #   2. `which <executable>` matches intended symlink destination
+
+  # both checks need to pass for a successful install
+
+  # checks if INSTALL_LIST is empty
+  [ ${#INSTALL_LIST} -eq 0 ] \
+    && echo "${YELLOW}nothing symlinked${NORMAL}\n" \
+    && return
+
+  local ALL_OK=true
+  for app loc in ${(kv)INSTALL_LIST}; do
+
+    local W=$(which $app)
+    local S=true
+
+    if [[ $W = "$app not found" ]]; then
+      [ -L $loc/$app ] || S=false
+    else
+      [ "$W" = "$loc/$app" ] || S=false
+    fi
+
+    [ "$S" = true ] \
+      && echo "${GREEN}$app${NORMAL} is installed $TICK" \
+      || echo "${RED}$app${NORMAL} failed to install $CROSS"
+
+    [ "$S" = false ] && ALL_OK=false
+  done
+  echo
+  [ "$ALL_OK" = true ] \
+    && echo "${CYAN}all executables symlinked!${NORMAL}" \
+    || echo "${RED}some executables failed to symlink over${NORMAL}"
+  echo
+}
+
+# takes in an array as first argument, then checks if all
+# elements are installed as executables
+function checkDependencies() {
+  msg "checking dependencies..."
+  local ALL_OK=true
+  for app in $DEPS; do
+    # I do like to build the latest version of nvim
+    if [ $app = "nvim" ]; then
+      if [ -x $NVIM_INSTALL_LOC/nvim ]; then
+        echo "${GREEN}nvim${NORMAL} installed at $NVIM_INSTALL_LOC $TICK"
+      elif type $app &>/dev/null; then
+        echo "${GREEN}nvim${NORMAL} installed $TICK"
+      else
+        echo "${RED}nvim${NORMAL} is not installed $CROSS"
+        ALL_OK=false
+      fi
+    # standard check for the rest of dependencies
+    elif type $app &>/dev/null; then
+      echo "${GREEN}$app${NORMAL} is installed $TICK"
+    else
+      echo "${RED}$app${NORMAL} is not installed $CROSS"
+      ALL_OK=false
+    fi
+  done
+  echo
+  [ "$ALL_OK" = true ] \
+    && echo "${CYAN}all dependencies are installed!${NORMAL}" \
+    || echo "${YELLOW}there are some missing dependencies${NORMAL}"
+  echo
+}
