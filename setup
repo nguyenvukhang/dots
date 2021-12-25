@@ -3,8 +3,15 @@
 # run this script to install stuff with stow
 # run it with a -D flag to uninstall stuff
 
-stow_list=(nvim zsh kitty)
+stow_list=(nvim zsh kitty pass)
+
+del=false
+if [ $1 ]; then
+  [ $1 = "-D" ] && del=true && continue
+  echo "unrecognized argument"
+fi
+
 for i in ${stow_list[@]}; do
   stow -D --target $HOME $i &> /dev/null
-  [[ $1 != "-D" ]] && stow --target $HOME $i
+  [[ $del = false ]] && stow --target $HOME $i
 done
