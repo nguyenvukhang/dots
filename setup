@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
+# run this script to install stuff with stow
+# run it with a -D flag to uninstall stuff
+
 stow_list=(nvim zsh kitty)
 for i in ${stow_list[@]}; do
   stow -D --target $HOME $i &> /dev/null
-  stow --target $HOME $i
+  [[ $1 != "-D" ]] && stow --target $HOME $i
 done
