@@ -6,10 +6,7 @@
 stow_list=(nvim zsh kitty pass)
 
 del=false
-if [ $1 ]; then
-  [ $1 = "-D" ] && del=true && continue
-  echo "unrecognized argument"
-fi
+[ $1 ] && [ $1 = "-D" ] && del=true
 
 for i in ${stow_list[@]}; do
   stow -D --target $HOME $i &> /dev/null
