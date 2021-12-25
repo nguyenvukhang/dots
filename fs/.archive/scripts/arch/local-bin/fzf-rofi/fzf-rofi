@@ -1,0 +1,15 @@
+#! /bin/zsh
+
+string=$PATH
+a=("${(@s/:/)string}") # @ modifier
+
+l=()
+for i in $a; do
+  l+=($(fd \
+    --type executable \
+    --color never \
+    . $i))
+done
+for i in $l; do
+  echo $i:t
+done

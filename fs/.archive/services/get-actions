@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+rm -rf ./quick-actions
+cp -r ~/Library/Services ./quick-actions

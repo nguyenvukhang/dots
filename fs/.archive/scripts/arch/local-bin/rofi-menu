@@ -1,0 +1,35 @@
+#! /bin/zsh
+
+actions=(
+  logout
+  lock
+  suspend
+  shutdown
+  reboot
+)
+
+# options passed into variable
+choices=${(j:\n:)actions}
+confirm_options="yes\nno"
+
+chosen="$(echo -e "$choices" | rofi -theme ~/.config/rofi/power.rasi -dmenu -p 襤 -lines 5 -width 9 -location 0)"
+
+function confirm() {
+  retval="false"
+  ask="$(echo -e "$confirm_options" | rofi -theme ~/.config/rofi/power.rasi -lines 2 -width 9 -location 0 -dmenu -p "sure?")"
+  [ "$ask" = "yes" ] && retval="true"
+  echo $retval
+}
+
+case $chosen in
+  'lock') [ "$(confirm)" = "true" ] \
+      && ~/.local/bin/lock-screen;;
+  'suspend') [ "$(confirm)" = "true" ] \
+      && systemctl suspend;;
+  'logout') [ "$(confirm)" = "true" ] \
+      && pkill dwm || pkill awesome;;
+  'shutdown') [ "$(confirm)" = "true" ] \
+      && shutdown now;;
+  'reboot') [ "$(confirm)" = "true" ] \
+      reboot;;
+esac

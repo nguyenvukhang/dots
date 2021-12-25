@@ -1,0 +1,41 @@
+#!/usr/bin/env sh
+# vim:syntax=bash
+
+# parse CLI arguments
+help() {
+  echo "khang's dotfiles bootstrapper
+    -i    install
+    -u    uninstall" && exit 0
+}
+[ $1 ] || help
+[ $1 = '-i' ] || [ $1 = 'i' ] && OP=install
+[ $1 = '-u' ] || [ $1 = 'u' ] && OP=uninstall
+[ $OP ] && echo "\033[1;32m${OP}ing...\033[1;0m" || help
+
+OS="$(uname)"
+ARCH="$(arch)"
+
+# check that brew is installed on mac
+if [ $OS = 'Darwin' ] && ! command -v brew >/dev/null; then
+  # arm64 and non-arm archs on mac have different homebrew paths
+  [ $ARCH = 'arm64' ] && PREFIX='/opt/homebrew' || PREFIX='/usr/local'
+  [ ! -f $PREFIX/bin/brew ] && echo 'brew not found ._.' && exit 1
+  # clutch a brew link
+  eval "$($PREFIX/bin/brew shellenv)"
+fi
+
+# check that stow is installed
+if ! command -v stow >/dev/null; then
+  echo 'stow not found ._.' && exit 1
+fi
+
+use() {
+  if [ $OP = 'install' ]; then
+    stow --restow $@
+  elif [ $OP = 'uninstall' ]; then
+    stow --delete $@
+  fi
+}
+
+use -t ~ -d fs home
+# use -t / -d fs root

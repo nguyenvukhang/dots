@@ -1,0 +1,7 @@
+#! /bin/zsh
+
+REPOS="$HOME/repos"
+for i in $PWD/*; do
+  [[ $i = *"symlink" ]] && continue
+  ln -sf $i $HOME/.local/bin 
+done

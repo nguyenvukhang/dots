@@ -1,0 +1,17 @@
+#! /opt/homebrew/bin/python3
+
+import requests
+import json
+
+def jprint(obj):
+    # create a formatted string of the Python JSON object
+    text = json.dumps(obj, sort_keys=True, indent=4)
+    print(text)
+
+moi = requests.get("https://api.github.com/users/nguyenvukhang/repos")
+org = requests.get("https://api.github.com/orgs/hcanoe/repos")
+
+for i in moi.json():
+    print(i["html_url"])
+for i in org.json():
+    print(i["html_url"])

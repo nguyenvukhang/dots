@@ -1,0 +1,33 @@
+# This is Git's per-user configuration file.
+[user]
+# Please adapt and uncomment the following lines:
+	name = nguyenvukhang
+	email = brew4k@gmail.com
+[pull]
+	rebase = false
+[push]
+	autoSetupRemote = true
+[init]
+	defaultBranch = main
+[alias]
+	sm = submodule
+	wt = worktree
+	cp = cherry-pick
+[advice]
+	pushUpdateRejected = true
+	pushNonFFCurrent = true
+	pushNonFFMatching = true
+	pushAlreadyExists = true
+	pushFetchFirst = true
+	pushNeedsForce = true
+	statusUoption = true
+	commitBeforeMerge = true
+	resolveConflict = true
+	implicitIdentity = true
+	detachedHead = true
+	amWorkDir = true
+	rmHints = true
+	; personal falses
+	statusHints = false
+[core]
+	whitespace = cr-at-eol

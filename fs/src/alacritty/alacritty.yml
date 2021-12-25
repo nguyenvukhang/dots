@@ -1,0 +1,105 @@
+# Window decorations
+#
+# Values for `decorations`:
+#     - full: Borders and title bar
+#     - none: Neither borders nor title bar
+#
+# Values for `decorations` (macOS only):
+#     - transparent: Title bar, transparent background and title bar buttons
+#     - buttonless: Title bar, transparent background and no title bar buttons
+#decorations: full
+window:
+  decorations: buttonless
+  opacity: 0.96
+  padding:
+    x: 8
+    y: 4
+  dynamic_padding: true
+
+scrolling:
+  history: 10000
+  multiplier: 2
+
+font:
+  normal:
+    family: JetBrains Mono
+  bold:
+    family: JetBrains Mono
+  italic:
+    family: JetBrains Mono
+  bold_italic:
+    family: JetBrains Mono
+  size: 15
+  offset:
+    x: 0
+    y: 0
+
+key_bindings:
+  - { key: A,  mods: Command,   chars: "\x1ba"  }
+  - { key: B,  mods: Command,   chars: "\x1bb"  }
+  - { key: C,  mods: Command,   chars: "\x1bc"  }
+  - { key: D,  mods: Command,   chars: "\x1bd"  }
+  - { key: E,  mods: Command,   chars: "\x1be"  }
+  - { key: F,  mods: Command,   chars: "\x1bf"  }
+  - { key: G,  mods: Command,   chars: "\x1bg"  }
+  - { key: H,  mods: Command,   chars: "\x1bh"  }
+  - { key: I,  mods: Command,   chars: "\x1bi"  }
+  - { key: J,  mods: Command,   chars: "\x1bj"  }
+  - { key: K,  mods: Command,   chars: "\x1bk"  }
+  - { key: L,  mods: Command,   chars: "\x1bl"  }
+  - { key: M,  mods: Command,   chars: "\x1bm"  }
+  - { key: N,  mods: Command,   chars: "\x1bn"  }
+  - { key: O,  mods: Command,   chars: "\x1bo"  }
+  - { key: P,  mods: Command,   chars: "\x1bp"  }
+  - { key: Q,  mods: Command,   chars: "\x1bq"  }
+  - { key: R,  mods: Command,   chars: "\x1br"  }
+  - { key: S,  mods: Command,   chars: "\x1bs"  }
+  - { key: T,  mods: Command,   chars: "\x1bt"  }
+  - { key: U,  mods: Command,   chars: "\x1bu"  }
+  - { key: V,  mods: Command,   chars: "\x1bv"  }
+  - { key: W,  mods: Command,   chars: "\x1bw"  }
+  - { key: X,  mods: Command,   chars: "\x1bx"  }
+  - { key: Y,  mods: Command,   chars: "\x1by"  }
+  - { key: Z,  mods: Command,   chars: "\x1bz"  }
+
+# Colors (Gruvbox Dark)
+colors:
+  bright:
+    black: '#7c6f64'
+    blue: '#83a598'
+    cyan: '#8ec07c'
+    green: '#b8bb26'
+    magenta: '#d3869b'
+    red: '#fb4934'
+    white: '#ebdbb2'
+    yellow: '#fabd2f'
+  cursor:
+    cursor: '#ebdbb2'
+    text: '#282828'
+  normal:
+    black: '#7c6f64'
+    blue: '#83a598'
+    cyan: '#8ec07c'
+    green: '#b8bb26'
+    magenta: '#d3869b'
+    red: '#fb4934'
+    white: '#ebdbb2'
+    yellow: '#fabd2f'
+  primary:
+    background: '#282828'
+    foreground: '#ebdbb2'
+  selection:
+    background: '#ebdbb2'
+    text: '#504945'
+
+bell:
+  duration: 0
+
+cursor:
+  style:
+    shape: Block
+    blinking: Always
+  blink_interval: 750
+  unfocused_hollow: true
+
+live_config_reload: true

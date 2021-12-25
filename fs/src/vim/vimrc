@@ -1,0 +1,48 @@
+syntax on
+" when in doubt of what set <option> does, do a :h <option>
+" to look it up in vim's help text.
+set sidescrolloff=10 shiftwidth=4 tabstop=4 laststatus=2
+set nocp noeb nowrap nohls rnu nu hid is noswf nobk
+set completeopt=menu,menuone
+if !isdirectory($HOME."/.backup")
+    call mkdir($HOME."/.backup", "", 0700)
+endif
+set undofile undodir=~/.backup " save undos
+
+nnoremap <Left> <Nop>
+nnoremap <Right> <Nop>
+nnoremap <Up> <Nop>
+nnoremap <Down> <Nop>
+
+nnoremap H ^
+nnoremap L $
+vnoremap H ^
+vnoremap L $
+nnoremap <C-d> 12j0zz
+nnoremap <C-u> 12k0zz
+
+" recursive-directory search
+" nnoremap <space>ps :vim  **/*<left><left><left><left><left>
+" current-directory search
+nnoremap <space>ps :vim  *<left><left>
+
+" go to next/prev global search result
+nnoremap <C-j> :cnext<CR>
+nnoremap <C-k> :cprev<CR>
+
+" change the target files to suit your project
+nnoremap <space>1 :w<CR>:e Main.java<CR>
+nnoremap <space>2 :w<CR>:e Simulator.java<CR>
+nnoremap <space>3 :w<CR>:e Customer.java<CR>
+nnoremap <space>4 :w<CR>:e Server.java<CR>
+
+" helps with jumping between vim's splits (created by :vs, :sp)
+nnoremap <space>h :wincmd h<CR>
+nnoremap <space>l :wincmd l<CR>
+nnoremap <space>j :wincmd j<CR>
+nnoremap <space>k :wincmd k<CR>
+
+" replace in buffer
+nnoremap <space>rb yiw:%s/<C-r>"//g<left><left>
+" replace in line
+nnoremap <space>rl yiw:s/<C-r>"//g<left><left>
