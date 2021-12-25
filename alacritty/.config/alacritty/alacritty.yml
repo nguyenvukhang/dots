@@ -1,0 +1,71 @@
+env:
+  TERM: xterm
+
+window:
+  padding:
+    x: 8
+    y: 4
+  dynamic_padding: true
+  decorations: buttonless
+
+scrolling:
+  history: 10000
+  multiplier: 2
+
+font:
+  normal:
+    family: JetBrains Mono Medium
+  bold:
+    family: JetBrains Mono Medium
+  italic:
+    family: JetBrains Mono Medium
+  bold_italic:
+    family: JetBrains Mono Medium
+  size: 15
+  offset:
+    x: 0
+    y: 0
+
+# Colors (Gruvbox Dark)
+colors:
+  bright:
+    black: '#7f7061'
+    blue: '#719586'
+    cyan: '#7db669'
+    green: '#aab01e'
+    magenta: '#c77089'
+    red: '#f73028'
+    white: '#e6d4a3'
+    yellow: '#f7b125'
+  cursor:
+    cursor: '#e6d4a3'
+    text: '#1e1e1e'
+  normal:
+    black: '#7f7061'
+    blue: '#719586'
+    cyan: '#7db669'
+    green: '#aab01e'
+    magenta: '#c77089'
+    red: '#f73028'
+    white: '#e6d4a3'
+    yellow: '#f7b125'
+  primary:
+    background: '#1e1e1e'
+    foreground: '#e6d4a3'
+  selection:
+    background: '#e6d4a3'
+    text: '#534a42'
+
+bell:
+  duration: 0
+
+background_opacity: 0.89
+
+cursor:
+  style:
+    shape: Block
+    blinking: Always
+  blink_interval: 750
+  unfocused_hollow: true
+
+live_config_reload: true
