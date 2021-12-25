@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+stow_list=(nvim zsh)
+for i in ${stow_list[@]}; do
+  stow -D --target $HOME $i &> /dev/null
+  stow --target $HOME $i
+done
