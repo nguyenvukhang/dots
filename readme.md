@@ -5,6 +5,7 @@ welcome to my dotfile repo.
 mac's mostly gui so this isn't gonna exactly be a roller coaster ride.
 
 ### general setup
+
 clone the repo, then recursively update submodules with
 ```
 git submodule update --init --recursive
