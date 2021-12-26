@@ -10,3 +10,6 @@
 [submodule "pass/.password-store"]
 	path = pass/.password-store
 	url = git@github.com:nguyenvukhang/p.git
+[submodule "personal"]
+	path = personal
+	url = git@github.com:nguyenvukhang/personal.git
