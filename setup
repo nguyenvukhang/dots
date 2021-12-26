@@ -3,7 +3,7 @@
 # run this script to install stuff with stow
 # run it with a -D flag to uninstall stuff
 
-stow_list=(nvim zsh kitty pass)
+stow_list=(nvim zsh kitty pass personal)
 
 del=false
 [ $1 ] && [ $1 = "-D" ] && del=true
