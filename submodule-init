@@ -1,0 +1,12 @@
+#!/bin/zsh
+
+git submodule update --init --recursive
+repo_folders=(zsh kitty pass nvim personal)
+
+for i in $PWD/*; do
+  local basename=${i##*/}
+  if [[ ${repo_folders[(r)$basename]} == $basename ]]; then
+    cd $i && echo "\n-> $basename"
+    git checkout master
+  fi
+done
