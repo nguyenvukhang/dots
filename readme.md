@@ -10,10 +10,6 @@ clone the repo, then recursively update submodules with
 ```
 git submodule update --init --recursive
 ```
-if you're using nvim, then go to `nvim/.config/nvim` and run
-`plug-init` first.  
-then, open vim and run `:PlugInstall`.
-
 stow files by running the setup script:
 ```
 cd dots

@@ -7,6 +7,7 @@
 [submodule "zsh"]
 	path = zsh
 	url = git@github.com:nguyenvukhang/zsh.git
+	branch = master
 [submodule "pass/.password-store"]
 	path = pass/.password-store
 	url = git@github.com:nguyenvukhang/p.git
