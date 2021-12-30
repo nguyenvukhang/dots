@@ -29,5 +29,5 @@ done
 
 if [[ $del = false ]]; then
 	NVIM_BIN=$HOME/.local/bin/nvim
-	[ -f $NVIM_BIN ] && $NVIM_BIN -c "PlugInstall" -c "qa"
+	# [ -f $NVIM_BIN ] && $NVIM_BIN -c "PlugInstall" -c "qa"
 fi
