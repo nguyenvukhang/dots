@@ -10,14 +10,13 @@ clone the repo, then recursively update submodules with
 ```
 git submodule update --init --recursive
 ```
-and stow files by running the setup script:
+if you're using nvim, then go to `nvim/.config/nvim` and run
+`plug-init` first.  
+then, open vim and run `:PlugInstall`.
+
+stow files by running the setup script:
 ```
 cd dots
 ./setup
 ```
 before making changes to any submodule, remember to checkout a branch
-
-### neovim setup
-
-install plug by running the `plug-init` script in nvim  
-install plugins by opening vim and running `:PlugInstall`
