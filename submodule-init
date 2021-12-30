@@ -4,7 +4,7 @@ git submodule update --init --recursive
 repo_folders=(
   zsh
   kitty
-  pass
+  pass/.password-store
   nvim/.config/nvim
   personal
 )
