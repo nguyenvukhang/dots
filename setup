@@ -9,6 +9,6 @@ del=false
 [ $1 ] && [ $1 = "-D" ] && del=true
 
 for i in ${stow_list[@]}; do
-  stow -D --target $HOME $i &> /dev/null
-  [[ $del = false ]] && stow --target $HOME $i
+  stow -D --target $HOME $i
+  [[ $del = false ]] && stow --target $HOME $i || continue
 done
