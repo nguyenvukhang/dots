@@ -1,12 +1,9 @@
-env:
-  TERM: xterm
-
 window:
   padding:
     x: 8
     y: 4
   dynamic_padding: true
-  decorations: buttonless
+  decorations: full
 
 scrolling:
   history: 10000
@@ -50,7 +47,7 @@ colors:
     white: '#e6d4a3'
     yellow: '#f7b125'
   primary:
-    background: '#1e1e1e'
+    background: '#282828'
     foreground: '#e6d4a3'
   selection:
     background: '#e6d4a3'
@@ -59,7 +56,7 @@ colors:
 bell:
   duration: 0
 
-background_opacity: 0.89
+background_opacity: 1
 
 cursor:
   style:
