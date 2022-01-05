@@ -3,7 +3,7 @@
 # run this script to install stuff with stow
 # run it with a -D flag to uninstall stuff
 
-stow_list=(zsh kitty pass)
+stow_list=(zsh kitty pass alacritty)
 nvim_list=(nvim personal)
 
 del=false
@@ -14,20 +14,15 @@ for i in ${stow_list[@]}; do
   [[ $del = false ]] && stow --target $HOME $i || continue
 done
 
-NVIM_RUNTIMEPATH=$HOME/.config/nvim
-
-rm -rf $NVIM_RUNTIMEPATH
-if [[ $del = false ]]; then
-  curl -fLo $NVIM_RUNTIMEPATH/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-fi
+# NVIM_RUNTIMEPATH=$HOME/.config/nvim
+ 
+# rm -rf $NVIM_RUNTIMEPATH
+# if [[ $del = false ]]; then
+#   curl -fLo $NVIM_RUNTIMEPATH/autoload/plug.vim --create-dirs \
+#     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# fi
 
 for i in ${nvim_list[@]}; do
   stow -D --target $HOME $i
   [[ $del = false ]] && stow --target $HOME $i || continue
 done
-
-if [[ $del = false ]]; then
-	NVIM_BIN=$HOME/.local/bin/nvim
-	# [ -f $NVIM_BIN ] && $NVIM_BIN -c "PlugInstall" -c "qa"
-fi
