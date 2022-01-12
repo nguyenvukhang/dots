@@ -1,0 +1,35 @@
+#!/bin/zsh
+
+function submodule_init() {
+  git submodule update --init --recursive
+  repo_folders=(
+    zsh
+    walls
+    pass/.password-store
+    nvim/.config/nvim
+    personal
+  )
+
+  p=$PWD
+  for i in $repo_folders; do
+    [ ! -d $p/$i ] && continue
+    cd $p/$i
+    echo "----------\n$i"
+    git checkout master
+  done
+  echo '----------'
+}
+
+function lua_build() {
+  cd personal/lua-language-server
+  cd 3rd/luamake
+  ./compile/install.sh
+  cd ../..
+  ./3rd/luamake/luamake rebuild
+}
+
+case $1 in
+  "--sub"|"-S") submodule_init;;
+  "--lua"|"-L") lua_build;;
+  "") echo "TODO: create a simple help message";;
+esac
