@@ -1,0 +1,42 @@
+#! /bin/zsh
+
+# help text {{{
+HELP_TEXT=$(cat<< EOF
+flags:
+  none         :  compiles keyboard firmware
+  -f, --flash  :  compiles and flashes keyboard firmware
+  -h, --help   :  display help menu
+EOF
+) # }}}
+M=$PWD
+QMK_DIR=$HOME/repos/qmk_firmware/keyboards/keebio/iris/keymaps
+DEST_DIR=$QMK_DIR/khang
+
+KEEB_DIR=$HOME/repos/arch/settings/keymap
+
+# copy keymap over
+rm -rf $DEST_DIR
+ln -s $KEEB_DIR/iris $DEST_DIR
+
+function main() {
+  cd $HOME/repos/qmk_firmware
+  [[ -z $1 ]] \
+    && make keebio/iris/rev4:khang \
+    && return true
+  [[ $1 = "-f" || $1 = "--flash" ]] \
+    && make keebio/iris/rev4:khang:flash \
+    && return true
+  [[ $1 = "-h" || $1 = "--help" ]] \
+    && echo $HELP_TEXT \
+    && return true
+  echo "unregistered argument"
+}
+
+main $1
+
+# remove keymap file from qmk_firmware repo
+# to prevent unstaged changes
+rm -rf $DEST_DIR
+
+# return to starting directory
+cd $M && unset M
