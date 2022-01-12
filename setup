@@ -1,19 +1,5 @@
 #!/usr/bin/env zsh
 
-# doing this because I want all my submodules
-# to be in the root folder of dots
-
-# just in case one day I decide to make this a little crazier
-# wear your seatbelt.
-# typeset -A targets=(
-#   [alacritty]="$HOME"
-#   [kitty]="$HOME"
-#   [nvim]="$HOME"
-#   [pass]="$HOME"
-#   [personal]="$HOME"
-#   [zsh]="$HOME"
-# )
-
 local dots=(alacritty kitty xbar)
 local submodules=(nvim zsh pass personal)
 

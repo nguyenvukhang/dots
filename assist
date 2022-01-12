@@ -28,8 +28,14 @@ function lua_build() {
   ./3rd/luamake/luamake rebuild
 }
 
+function generate_uninstaller() {
+  local setup=$(cat setup)
+  echo ${setup/--restow/--delete} > uninstall
+}
+
 case $1 in
   "--sub"|"-S") submodule_init;;
   "--lua"|"-L") lua_build;;
+  "--gen"|"-G") generate_uninstaller;;
   "") echo "TODO: create a simple help message";;
 esac
