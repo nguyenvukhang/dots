@@ -14,7 +14,7 @@
 #   [zsh]="$HOME"
 # )
 
-local dots=(alacritty kitty)
+local dots=(alacritty kitty xbar)
 local submodules=(nvim zsh pass personal)
 
 local stow_folders=($dots $submodules)
