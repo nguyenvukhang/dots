@@ -1,28 +1,25 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
-# run this script to install stuff with stow
-# run it with a -D flag to uninstall stuff
+# doing this because I want all my submodules
+# to be in the root folder of dots
 
-stow_list=(zsh kitty pass alacritty)
-nvim_list=(nvim personal)
+# just in case one day I decide to make this a little crazier
+# wear your seatbelt.
+# typeset -A targets=(
+#   [alacritty]="$HOME"
+#   [kitty]="$HOME"
+#   [nvim]="$HOME"
+#   [pass]="$HOME"
+#   [personal]="$HOME"
+#   [zsh]="$HOME"
+# )
 
-del=false
-[ $1 ] && [ $1 = "-D" ] && del=true
+local dots=(alacritty kitty qmk)
+local submodules=(nvim zsh pass personal)
 
-for i in ${stow_list[@]}; do
-  stow -D --target $HOME $i
-  [[ $del = false ]] && stow --target $HOME $i || continue
-done
+local stow_folders=($dots $submodules)
 
-# NVIM_RUNTIMEPATH=$HOME/.config/nvim
- 
-# rm -rf $NVIM_RUNTIMEPATH
-# if [[ $del = false ]]; then
-#   curl -fLo $NVIM_RUNTIMEPATH/autoload/plug.vim --create-dirs \
-#     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-# fi
-
-for i in ${nvim_list[@]}; do
-  stow -D --target $HOME $i
-  [[ $del = false ]] && stow --target $HOME $i || continue
+for folder in ${stow_folders}; do
+  echo "$folder -> $targets[$folder]"
+  stow --restow --target=$HOME $folder
 done
