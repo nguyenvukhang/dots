@@ -19,17 +19,15 @@
 enum my_keycodes {
     ______ = SAFE_RANGE,
     HYPR1, HYPR2, HYPR3, HYPR4, HYPR5, HYPR6, HYPR7, HYPR8, HYPR9, HYPR0,
-    HYPRL,
-    HYPRM,
-    HYPRP,
-    HYPRQ,
-    HYPRS,
-    HYPRT,
+    HYPRA, HYPRB, HYPRC, HYPRD, HYPRE, HYPRF, HYPRG, HYPRH, HYPRI, HYPRJ,
+    HYPRK, HYPRL, HYPRM, HYPRN, HYPRO, HYPRP, HYPRQ, HYPRR, HYPRS, HYPRT,
+    HYPRU, HYPRV, HYPRW, HYPRX, HYPRY, HYPRZ,
     KC_STAB
 };
 
 #undef _______
 #define ______ KC_NO
+#define XXXXXX KC_NO
 
 #define HYPR1 HYPR(KC_1)
 #define HYPR2 HYPR(KC_2)
@@ -42,12 +40,32 @@ enum my_keycodes {
 #define HYPR9 HYPR(KC_9)
 #define HYPR0 HYPR(KC_0)
 
+#define HYPRA HYPR(KC_A)
+#define HYPRB HYPR(KC_B)
+#define HYPRC HYPR(KC_C)
+#define HYPRD HYPR(KC_D)
+#define HYPRE HYPR(KC_E)
+#define HYPRF HYPR(KC_F)
+#define HYPRG HYPR(KC_G)
+#define HYPRH HYPR(KC_H)
+#define HYPRI HYPR(KC_I)
+#define HYPRJ HYPR(KC_J)
+#define HYPRK HYPR(KC_K)
 #define HYPRL HYPR(KC_L)
 #define HYPRM HYPR(KC_M)
+#define HYPRN HYPR(KC_N)
+#define HYPRO HYPR(KC_O)
 #define HYPRP HYPR(KC_P)
 #define HYPRQ HYPR(KC_Q)
+#define HYPRR HYPR(KC_R)
 #define HYPRS HYPR(KC_S)
 #define HYPRT HYPR(KC_T)
+#define HYPRU HYPR(KC_U)
+#define HYPRV HYPR(KC_V)
+#define HYPRW HYPR(KC_W)
+#define HYPRX HYPR(KC_X)
+#define HYPRY HYPR(KC_Y)
+#define HYPRZ HYPR(KC_Z)
 
 #define KC_STAB LSFT(KC_TAB)
 

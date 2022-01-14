@@ -44,7 +44,7 @@ function main() {
     && make $make_cmd \
     && return true
   [[ $1 = "-f" || $1 = "--flash" ]] \
-    && make $make_cmd:flash \
+    && make ${make_cmd}:flash \
     && return true
   echo "unregistered argument"
 }
