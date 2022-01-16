@@ -6,5 +6,8 @@ local submodules=(nvim zsh personal raspberry-pi)
 local stow_folders=($dots $submodules)
 
 for folder in ${stow_folders}; do
-  stow --restow --target=$HOME --override=\.ssh $folder
+  stow --restow \
+    --override=.ssh \
+    --override=.config/zsh/prompt \
+    --target=$HOME $folder
 done
