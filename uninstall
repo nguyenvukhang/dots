@@ -1,10 +1,10 @@
 #!/usr/bin/env zsh
 
-local dots=(alacritty kitty xbar)
-local submodules=(nvim zsh pass personal)
+local dots=(vim)
+local submodules=(nvim zsh personal raspberry-pi)
 
 local stow_folders=($dots $submodules)
 
 for folder in ${stow_folders}; do
-  stow --delete --target=$HOME $folder
+  stow --delete --target=$HOME --override=\.ssh $folder
 done
