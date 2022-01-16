@@ -1,7 +1,13 @@
 #!/usr/bin/env zsh
 
-local dots=(vim)
-local submodules=(nvim zsh personal raspberry-pi)
+case $1 in
+  "--pi")
+    local dots=(vim)
+    local submodules=(nvim zsh personal raspberry-pi);;
+  *)
+    local dots=(alacritty kitty xbar vim)
+    local submodules=(nvim zsh pass personal);;
+esac
 
 local stow_folders=($dots $submodules)
 
