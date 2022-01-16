@@ -8,6 +8,7 @@ function submodule_init() {
     pass/.password-store
     nvim/.config/nvim
     personal
+    raspberry-pi
   )
 
   p=$PWD
