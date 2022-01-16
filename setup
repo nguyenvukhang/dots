@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
-local dots=(alacritty kitty xbar vim)
-local submodules=(nvim zsh pass personal)
+local dots=(vim)
+local submodules=(nvim zsh personal)
 
 local stow_folders=($dots $submodules)
 
