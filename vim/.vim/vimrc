@@ -1,3 +1,73 @@
+" sets {{{
+set nocompatible
+set noerrorbells
 set background=dark
+set scrolloff=10
+set sidescrolloff=10
+set tabstop=2
+set softtabstop=1
+set shiftwidth=2
+set nowrap
+set nohlsearch
+set expandtab
+set linebreak
+set breakindent
+set relativenumber
+set number
+set hidden
+set incsearch
+set autochdir
+set laststatus=2
+set foldmethod=marker
+set noswapfile
+set nobackup
+set pumheight=8
+set completeopt=menu,menuone,noselect
+set shortmess+=c
+set fillchars=
+set termguicolors
+" }}}
+" colorscheme stuff {{{
+let g:gruvbox_bold = 0
+let g:gruvbox_italicize_strings = 0
+let g:gruvbox_italics = 0
 colorscheme gruvbox8
 syntax on
+" }}}
+" remaps {{{
+" no-op stuff
+nnoremap <Space> <Nop>
+nnoremap <BS> <Nop>
+nnoremap Q <Nop>
+nnoremap K <Nop>
+nnoremap <Left> <Nop>
+nnoremap <Right> <Nop>
+nnoremap <Up> <Nop>
+nnoremap <Down> <Nop>
+" slip n' slide
+let mapleader=' '
+nnoremap H ^
+nnoremap L $
+nnoremap H ^
+nnoremap L $
+nnoremap gF :vs <cfile><CR>
+nnoremap <C-d> 12j0zz
+nnoremap <C-u> 12k0zz
+nnoremap <C-j> :cnext<CR>
+nnoremap <C-k> :cprev<CR>
+nnoremap <leader>7 :set colorcolumn=71<CR>
+nnoremap <leader>8 :set colorcolumn=81<CR>
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+nnoremap <leader>x :%bdelete\|edit #\|normal `"
+nnoremap <leader>h :wincmd h<CR>
+nnoremap <leader>l :wincmd l<CR>
+nnoremap <leader>j :wincmd j<CR>
+nnoremap <leader>k :wincmd k<CR>
+nnoremap <leader>rb yiw:%s/<C-r>"//g<left><left>
+nnoremap <leader>rl yiw:s/<C-r>"//g<left><left>
+nnoremap <C-r> y:%s/<C-r>"//g<left><left>
+nnoremap * y/<C-r>"<CR>
+nnoremap <F1> :syntax sync fromstart<CR>
+nnoremap <F5> :setlocal spell!<CR>:set spell?<CR>
+" }}}
