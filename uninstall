@@ -9,5 +9,6 @@ for folder in ${stow_folders}; do
   stow --delete \
     --override=.ssh \
     --override=.config/zsh/prompt \
+    --override=.config/zsh/nav \
     --target=$HOME $folder
 done
