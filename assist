@@ -31,7 +31,7 @@ function lua_build() {
 
 function generate_uninstaller() {
   local setup=$(cat setup)
-  echo ${setup/--restow/--delete} > uninstall
+  echo ${setup//--restow/--delete} > uninstall
 }
 
 function mac_setup() {

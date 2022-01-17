@@ -3,9 +3,11 @@
 case $1 in
   "--pi")
     local dots=(vim)
+    local root=()
     local submodules=(nvim zsh personal raspberry-pi);;
   *)
     local dots=(alacritty kitty xbar vim)
+    local root=(root)
     local submodules=(nvim zsh pass personal);;
 esac
 
@@ -18,4 +20,9 @@ for folder in ${stow_folders}; do
     --override=.config/zsh/nav \
     --override=.zshrc \
     --target=$HOME $folder
+done
+
+for folder in ${root}; do
+  sudo stow --restow \
+    --target=/ $folder
 done
