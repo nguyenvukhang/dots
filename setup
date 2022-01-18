@@ -4,9 +4,9 @@ case $1 in
   "--pi")
     local dots=(vim)
     local root=()
-    local submodules=(nvim zsh personal raspberry-pi);;
+    local submodules=(nvim zsh personal pi);;
   *)
-    local dots=(alacritty kitty xbar vim)
+    local dots=(term xbar vim)
     local root=(root)
     local submodules=(nvim zsh personal);;
 esac
