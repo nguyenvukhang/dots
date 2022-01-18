@@ -1,10 +1,6 @@
 [submodule "walls"]
 	path = walls
 	url = git@github.com:nguyenvukhang/walls.git
-[submodule "zsh"]
-	path = zsh
-	url = git@github.com:nguyenvukhang/zsh.git
-	branch = master
 [submodule "pass/.password-store"]
 	path = pass/.password-store
 	url = git@github.com:nguyenvukhang/p.git
