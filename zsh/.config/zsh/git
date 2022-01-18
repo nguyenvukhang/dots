@@ -14,6 +14,8 @@ alias gitm="$EDITOR .gitmodules"
 alias gp="git number -c $EDITOR" # git preview
 alias gcan="git commit --amend --no-edit"
 
+alias gf="git fetch --all"
+
 alias gap="git number add -p"
 alias gms="git merge --squash" # squash diff into one commit
 
@@ -47,12 +49,14 @@ function gcb() {
 
 # git log
 function gl() {
-  local len=10
-  if [ "$1" ]; then
-    [ "$1" = "a" ] && git log --oneline --graph --all -n 10 && return
-    len=$1
-  fi
-  git log --oneline --graph -n $len HEAD
+  local len; [ $1 ] && len=$1 || len=10
+  git log --oneline --graph -n $len
+}
+
+# git log (all)
+function gla() {
+  local len; [ $1 ] && len=$1 || len=10
+  git log --oneline --graph --all -n $len
 }
 
 # git commit
