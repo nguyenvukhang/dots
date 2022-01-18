@@ -2,17 +2,13 @@
 
 function submodule_init() {
   git submodule update --init --recursive
-  repo_folders=(
-    zsh
-    walls
-    pass/.password-store
-    nvim/.config/nvim
-    personal
-    raspberry-pi
-  )
+  local submodules=()
+  while IFS= read -r line; do
+    submodules+=(${${${line#* }#* }%% *})
+  done < <(git submodule)
 
-  p=$PWD
-  for i in $repo_folders; do
+  local p=$PWD
+  for i in $submodules; do
     [ ! -d $p/$i ] && continue
     cd $p/$i
     echo "----------\n$i"
