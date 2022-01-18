@@ -4,3 +4,6 @@
 [submodule "raspberry-pi"]
 	path = raspberry-pi
 	url = git@github.com:nguyenvukhang/raspberry-pi.git
+[submodule "p"]
+	path = pass
+	url = git@github.com:nguyenvukhang/p.git
