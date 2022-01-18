@@ -1,9 +1,6 @@
 [submodule "walls"]
 	path = walls
 	url = git@github.com:nguyenvukhang/walls.git
-[submodule "nvim/.config/nvim"]
-	path = nvim/.config/nvim
-	url = git@github.com:nguyenvukhang/neovim.git
 [submodule "zsh"]
 	path = zsh
 	url = git@github.com:nguyenvukhang/zsh.git
