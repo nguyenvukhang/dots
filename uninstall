@@ -11,6 +11,12 @@ case $1 in
     local submodules=(nvim zsh personal);;
 esac
 
+setopt nullglob
+local clear_list=(
+  $HOME/.zsh*
+  $HOME/.zprofile
+)
+
 local stow_folders=($dots $submodules)
 
 for folder in ${stow_folders}; do
@@ -25,4 +31,8 @@ done
 for folder in ${root}; do
   sudo stow --delete \
     --target=/ $folder
+done
+
+for file in ${clear_list}; do
+  rm -rf $file
 done
