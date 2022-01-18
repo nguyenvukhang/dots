@@ -2,8 +2,7 @@
   * 
   * This program is free software: you can redistribute it and/or modify 
   * it under the terms of the GNU General Public License as published by 
-  * the Free Software Foundation, either version 2 of the License, or 
-  * (at your option) any later version. 
+  * the Free Software Foundation, either version 2 of the License, or (at your option) any later version. 
   * 
   * This program is distributed in the hope that it will be useful, 
   * but WITHOUT ANY WARRANTY; without even the implied warranty of 
@@ -69,31 +68,54 @@ enum my_keycodes {
 
 #define KC_STAB LSFT(KC_TAB)
 
+
+/* Summary:
+ * CTRL + Backspace => Delete
+ * CTRL + MO(_UP)   => CTRL + Page-Down
+ */
 uint8_t mod_state;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    mod_state = get_mods();
-    switch (keycode) {
-        case KC_BSPC: {
-            static bool delkey_registered;
-            if (record->event.pressed) { // on key-down of Backspace
-                if (mod_state & MOD_MASK_CTRL) {
-                    // Ctrl + Backspace -> Forward Delete
-                    del_mods(MOD_MASK_CTRL);
-                    register_code(KC_DEL);
-                    delkey_registered = true;
-                    set_mods(mod_state);
-                    return false;
-                }
-            } else { // on release of Backspace
-                if (delkey_registered) {
-                    unregister_code(KC_DEL);
-                    delkey_registered = false;
-                    return false;
-                }
-            }
-            return true;
-        };
-        break;
-    }
-    return true;
+  mod_state = get_mods();
+  switch (keycode) {
+    case KC_BSPC: {
+      static bool delkey_registered;
+      if (record->event.pressed) { // on key-down of Backspace
+        if (mod_state & MOD_MASK_CTRL) {
+          // Ctrl + Backspace -> Forward Delete
+          del_mods(MOD_MASK_CTRL); // or you can do set_mods(MOD_MASK_CSA) or smth
+          register_code(KC_DEL);
+          delkey_registered = true;
+          set_mods(mod_state);
+          return false;
+        }
+      } else { // on release of Backspace
+        if (delkey_registered) {
+          unregister_code(KC_DEL);
+          delkey_registered = false;
+          return false;
+        }
+      }
+      return true;
+    };
+    case MO(_UP): {
+      static bool upkey_registered;
+      if (record->event.pressed) { // on key-down of MO(_UP)
+        if (mod_state & MOD_MASK_CTRL) {
+          // Ctrl + MO(_UP) -> Ctrl + Alt + Shift + b (for tmux prefix)
+          register_code(KC_PGUP);
+          upkey_registered = true;
+          return false;
+        }
+      } else { // on release of MO(_UP)
+        if (upkey_registered) {
+          unregister_code(KC_PGUP);
+          upkey_registered = false;
+          return false;
+        }
+      }
+      return true;
+    };
+    break;
+  }
+  return true;
 };
