@@ -2,5 +2,5 @@
 	path = personal
 	url = git@github.com:nguyenvukhang/personal.git
 [submodule "raspberry-pi"]
-	path = raspberry-pi
+	path = pi
 	url = git@github.com:nguyenvukhang/raspberry-pi.git
