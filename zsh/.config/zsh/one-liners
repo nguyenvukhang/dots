@@ -5,6 +5,7 @@ alias ct="printf '\033[2J\033[3J\033[1;1H'" # clear terminal
 alias gup="pass git push"
 alias kt="kitty @ set-tab-title"
 alias mon="while; do; clear; lt; sleep 1; done" # monitor directory
+alias si="$EDITOR .stow-local-ignore"
 alias t="$EDITOR $REPOS/uni/nightly/todo.md"
 alias zb="time zsh -i -c exit" # zsh benchmark
 alias zr="exec $SHELL -l" # reloads shell
