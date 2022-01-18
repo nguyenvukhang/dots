@@ -6,6 +6,7 @@ function ed() {
     [a]="$DOTS/alacritty/.config/alacritty/alacritty.yml"
     [g]="$HOME/.config/git/config"
     [k]="$DOTS/kitty/.config/kitty/kitty.conf"
+    [t]="$DOTS/tmux/.config/tmux/tmux.conf"
     [n]="$DOTS/zsh/config/nav"
     [v]="$DOTS/nvim/.config/nvim/init.lua"
     [z]="$DOTS/zsh/.zshrc"
