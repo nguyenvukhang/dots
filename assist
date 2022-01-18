@@ -61,10 +61,15 @@ function mac_setup() {
   defaults write -g NSScrollViewRubberbanding -bool false
 }
 
+function brew_clutch() {
+  echo "eval \"\$(/opt/homebrew/bin/brew shellenv)\"" > $HOME/.zprofile
+}
+
 case $1 in
   "--sub"|"-S") submodule_init;;
   "--lua"|"-L") lua_build;;
   "--gen"|"-G") generate_uninstaller;;
   "--mac"|"-M") mac_setup;;
+  "--brew"|"-B") brew_clutch;;
   "") echo "TODO: create a simple help message";;
 esac
