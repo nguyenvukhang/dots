@@ -1,0 +1,30 @@
+#!/usr/bin/env zsh
+
+function ed() {
+  typeset -A local marks=(
+    [.]="$ZSH_DOTS/edits"
+    [a]="$DOTS/alacritty/.config/alacritty/alacritty.yml"
+    [g]="$HOME/.config/git/config"
+    [k]="$DOTS/kitty/.config/kitty/kitty.conf"
+    [n]="$DOTS/zsh/config/nav"
+    [v]="$DOTS/nvim/.config/nvim/init.lua"
+    [z]="$DOTS/zsh/.zshrc"
+  )
+  local FZF_OPTS=(--height=7 +m --no-mouse --reverse
+    --no-info --prompt="  " --color='pointer:green')
+  function fuzzy_ed() {
+    # pick a key out of the keys of pretty
+    local key=$(for i in ${(v)marks}; do
+      echo "${i/$HOME\//~/}"
+    done | fzf ${FZF_OPTS})
+    [ -z $key ] && return true
+    $EDITOR "${key/\~\//$HOME/}"
+  }
+
+  # if no first arg supplied, run fuzzy_ed
+  [ -z $1 ] && fuzzy_ed && return true
+ 
+  local file=$marks[$1]
+  [ -z $file ] && echo "nothing happened." && return true
+  $EDITOR $file
+}

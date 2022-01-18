@@ -1,0 +1,5 @@
+#! /bin/zsh
+
+SCRIPT="$HOME/.local/bin/pdf-launcher/script"
+CONFIG="$HOME/.local/bin/pdf-launcher/alacritty.yml"
+alacritty --class "fzfmenu" --config-file $CONFIG -e $SCRIPT

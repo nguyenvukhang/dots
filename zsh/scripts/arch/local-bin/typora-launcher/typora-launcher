@@ -1,0 +1,5 @@
+#! /bin/zsh
+
+SCRIPT="$HOME/.local/bin/typora-launcher/script"
+CONFIG="$HOME/.local/bin/typora-launcher/alacritty.yml"
+alacritty --class "fzfmenu" --config-file $CONFIG -e $SCRIPT

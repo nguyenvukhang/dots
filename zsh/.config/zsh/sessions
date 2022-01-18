@@ -1,0 +1,20 @@
+#!/usr/bin/env zsh
+
+function edit-sessions() {
+  $EDITOR $ZSH_DOTS/sessions
+}
+
+rs() {
+  local raw=$(rg "^function" $ZSH_DOTS/sessions)
+  local f_list=${${raw//function\ }//\(\)\ \{}
+  local session=$(echo $f_list | fzf \
+    --height=10 +m \
+    --no-mouse \
+    --reverse --no-info \
+    --prompt="  " \
+    --color='pointer:2')
+  [[ $session = "" ]] \
+    && echo "nothing selected. have a good day." \
+    && return true
+  $session
+}

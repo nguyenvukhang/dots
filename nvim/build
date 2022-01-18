@@ -1,0 +1,23 @@
+#! /bin/sh
+
+# install build prerequisites:
+# [https://github.com/neovim/neovim/wiki/Building-Neovim#build-prerequisites]
+
+# clone the repo:
+# git clone https://github.com/neovim/neovim
+
+# symlink this script into that repo
+# cd neovim
+# ln -s ~/path/to/this/script .
+
+INSTALL_DIRECTORY=$HOME/.local/bin
+INSTALL_PATH=$INSTALL_DIRECTORY/nvim
+
+make distclean
+make \
+  CMAKE_BUILD_TYPE=Release \
+  CMAKE_INSTALL_PREFIX=$INSTALL_DIRECTORY \
+  install
+
+rm $INSTALL_PATH
+cp ./build/bin/nvim $INSTALL_PATH

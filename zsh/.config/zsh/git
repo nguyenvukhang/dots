@@ -1,0 +1,128 @@
+#!/usr/bin/env zsh
+
+alias gs="git number" # git status
+alias ga="git number add"
+alias gaa="git add --all"
+alias gco="git number checkout"
+alias gb="git branch"
+
+alias gd="git number diff"
+alias gds="git number diff --staged"
+alias giti="$EDITOR .gitignore"
+alias gr="git number reset"
+alias gitm="$EDITOR .gitmodules"
+alias gp="git number -c $EDITOR" # git preview
+alias gcan="git commit --amend --no-edit"
+
+alias gap="git number add -p"
+alias gms="git merge --squash" # squash diff into one commit
+
+alias gu="git fetch && git number status" # git update
+alias gc="git commit"
+alias gau="git add -u"
+alias ga.="git add ."
+
+function gur() {
+  git commit -m "update ref"
+  git push
+}
+
+# git clone
+function gcl() {
+  [ ${1%%:*} = "https" ] \
+    && git clone $1 && return
+  [ ${1%%:*} = "git@github.com" ] \
+    && git clone $1 && return
+  git clone git@github.com:$1.git
+}
+
+# git clone --bare
+function gcb() {
+  [ ${1%%:*} = "https" ] \
+    && git clone --bare $1 && return
+  [ ${1%%:*} = "git@github.com" ] \
+    && git clone --bare $1 && return
+  git clone --bare git@github.com:$1.git
+}
+
+# git log
+function gl() {
+  local len=10
+  if [ "$1" ]; then
+    [ "$1" = "a" ] && git log --oneline --graph --all -n 10 && return
+    len=$1
+  fi
+  git log --oneline --graph -n $len HEAD
+}
+
+# git commit
+function gcm() {
+  [ $1 ] && git commit -m $1 && return true
+  git commit
+}
+
+# git commit --amend
+function gca() {
+  [ $1 ] && git commit --amend -m $1 && return true
+  git commit --amend
+}
+
+# the laziest git function ever
+function gq() {
+  git add .
+  [ "$1" = "-w" ] \
+    && git commit --amend --no-edit \
+    || git commit -m 'up'
+  git push
+}
+
+# fzf-branch
+function fb() {
+  local FZF_OPTS=(--height=7 +m --no-mouse --reverse
+    --no-info --prompt="  " --color='pointer:green')
+  branch=$(git branch | fzf ${FZF_OPTS})
+  git checkout ${branch[3,-1]}
+}
+
+# delete branch
+# git branch -d <branch_name>
+
+# delete remote branch
+# git push origin -d <branch_name>
+
+# to remove a submodule completely:
+# 0. mv a/submodule a/submodule_tmp
+# 1. git submodule deinit -f -- a/submodule    
+# 2. rm -rf .git/modules/a/submodule
+# 3. git rm -f a/submodule
+# Note: a/submodule (no trailing slash)
+# 
+# or, if you want to leave it in your working tree and have done step 0
+# 3.   git rm --cached a/submodule
+# 3b.  mv a/submodule_tmp a/submodule
+# remove a file with sensitive data from history
+# git filter-repo --invert-paths --path secrets.json
+
+# to change an old commit message:
+# git rebase -i HEAD~5
+# this displays the latest 5 commits in vim
+# change "pick" to "reword" or "r" (read instructions opened in vim)
+# write and quit
+# those commits whose lines changed to "r" will be editable
+
+# remove a secrets file from all git history:
+# [https://stackoverflow.com/questions/43762338/how-to-remove-file-from-git-history]
+# git filter-branch --index-filter "git rm -rf --cached --ignore-unmatch path_to_file" HEAD
+
+# ============
+# git worktree
+# ============
+#
+# git worktree add [-f] [--detach] [--checkout] [--lock] [-b <new-branch>] <path> [<commit-ish>]
+#
+# to add a new branch:
+# git worktree add -b <branch> ../<directory>
+
+function gwnb() {
+  git worktree add -b $1 ../$1
+}

@@ -1,0 +1,56 @@
+#! /bin/zsh
+
+email='brew4k@gmail.com'
+
+accounts=(
+  nus-zoom
+  lumiNUS
+  microsoft
+  minecraft
+  student-id
+  application-id
+)
+
+# options passed into variable
+choices=${(j:\n:)accounts}
+user_pass_options="username\npassword"
+
+
+chosen="$(echo -e "$choices" | rofi \
+  -theme ~/.config/rofi/pass.rasi \
+  -dmenu -p  \
+  -lines 1 -width 10 -location 0 \
+)"
+
+function get_what() {
+  ask="$(echo -e "$user_pass_options" | rofi \
+    -theme ~/.config/rofi/pass.rasi \
+    -dmenu -p "pick one:" \
+    -lines 2 -width 10 -location 0 \
+  )"
+  echo $ask
+}
+
+case $chosen in
+  'nus-zoom')
+    [ "$(get_what)" = "username" ] \
+      && (echo "e0725213@u.nus.edu" | xclip -sel clip) \
+      || (pass "zoom/e0725213@u.nus.edu" | xclip -sel clip);;
+  'lumiNUS')
+    [ "$(get_what)" = "username" ] \
+      && (echo "nusstu\\\e0725213" | xclip -sel clip) \
+      || (pass "nus/nusnet/E0725213" | xclip -sel clip);;
+  'microsoft'|'minecraft')
+    [ "$(get_what)" = "username" ] \
+      && (echo $email | xclip -sel clip) \
+      || (pass microsoft/$email | xclip -sel clip);;
+  'student-id')
+    [ "$(get_what)" = "username" ] \
+      && (echo "A0233213X" | xclip -sel clip) \
+      || (pass "nus/student-id/A0233213X" | xclip -sel clip);;
+  'application-id')
+    [ "$(get_what)" = "username" ] \
+      && (echo "19022276" | xclip -sel clip) \
+      || (pass "nus/app-number/19022276" | xclip -sel clip);;
+  *) return true;;
+esac

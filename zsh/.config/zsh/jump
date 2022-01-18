@@ -1,0 +1,47 @@
+#!/usr/bin/env zsh
+
+# generic navigation
+# g for jump
+# requires fd
+function g() {
+  local depth=4
+  # if directory has no children directory, end
+  local check=$(command ls -Ap)
+  [[ ! $check = *"/"* ]] && return true
+
+  # create list of directories only
+  local ls=()
+  while IFS= read -r line; do
+    # [ "${line[-1]}" = "/" ] && ls+=( "${line[0,-2]}" )
+    ls+=( "$line" )
+  done < <( command fd -d $depth -t d -HI \
+    --exclude ".git")
+
+  local target=$(for i in $ls; do echo $i; done \
+    | fzf \
+    --height=10 +m \
+    --no-mouse \
+    --header=${PWD/#$HOME/'~'} \
+    --expect "enter,esc,left,right" \
+    --reverse \
+    --no-info \
+    --prompt="  " \
+    --color='pointer:2')
+
+  local res=()
+  while IFS= read -r line; do
+    res+=( "$line" )
+  done < <( echo $target )
+
+  local key=${res[1]}
+  local location=${res[2]}
+
+  case $key in
+    'esc') return true ;;
+    'left') cd ../ && g ;;
+    'right') cd $location && g;;
+    'enter') cd $location ;;
+    *) return true ;;
+  esac
+  unset key
+}

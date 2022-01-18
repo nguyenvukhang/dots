@@ -1,0 +1,13 @@
+#! /usr/bin/python
+
+from datetime import datetime
+import math
+
+def days_between(d1):
+    d1 = datetime.strptime(d1, "%Y-%m-%d")
+    d2 = datetime.today()
+    return abs((d2 - d1).days)
+
+termStart = "2021-08-08"
+weeks = math.ceil(days_between(termStart) / 7)
+print("Week", weeks)

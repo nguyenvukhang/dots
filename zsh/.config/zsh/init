@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+
+# command flag autocomplete
+# autoload -U compinit; compinit
+
+# include hidden dir tab complete
+setopt globdots
+
+# fuzzy vim
+function v() {
+  local target=$(command ls -A | fzf \
+    --height=10 +m \
+    --no-mouse \
+    --reverse \
+    --no-info \
+    --prompt="  " \
+    --color='pointer:2')
+  [ $target ] && $EDITOR $target
+}

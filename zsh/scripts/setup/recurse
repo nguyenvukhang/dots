@@ -1,0 +1,27 @@
+#!/usr/bin/env zsh
+
+# recursively symlinks all executables inside of SOURCE to DESTINATION
+# usage: recurse [SOURCE (path)] [DESTINATION (path)] [LINK (boolean)]
+function recurse() {
+  [ ! -d $2 ] && mkdir -p $2
+  # required in zsh to suppress error for null results
+  setopt nullglob
+
+  for i in $1/{.,}*; do
+    # ignore files containing "symlink".
+    # these tend to be files doing this exact same job
+    [[ $i == *"symlink"* ]] && continue
+
+    # if $i is a directory, recurse
+    if [ -d $i ]; then
+      recurse $i $2 $3
+
+    # else, symlink it and add it to the INSTALL_LIST array
+    else
+      local f=${i##*/}
+      ([ -x $i ] || [[ $f = *"zsh"* ]]) \
+        && INSTALL_LIST[$f]=$2 \
+        && ( [ "$3" = true ] && ln -sf $i $2 )
+    fi
+  done
+}

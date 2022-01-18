@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns='http://www.w3.org/2005/Atom' xmlns:apps='http://schemas.google.com/apps/2006'>
+  <title>Mail Filters</title>
+  <entry>
+    <category term='filter'></category>
+    <title>Mail Filter</title>
+    <apps:property name='hasTheWord' value='{from:*@e.change.org from:*@singaporetuitionteachers.com }'/>
+    <apps:property name='shouldArchive' value='true'/>
+    <apps:property name='shouldNeverSpam' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>Mail Filter</title>
+    <apps:property name='hasTheWord' value='{from:*@facebookmail.com from:*@facebook.com from:*@instagram.com }'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>Mail Filter</title>
+    <apps:property name='from' value='vercel[bot]'/>"
+    <apps:property name='label' value='bots/vercel'/>
+    <apps:property name='shouldArchive' value='true'/>
+    <apps:property name='shouldNeverSpam' value='true'/>
+  </entry>
+</feed>

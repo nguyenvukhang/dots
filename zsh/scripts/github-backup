@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+
+import requests
+import json
+import subprocess
+from datetime import datetime, date
+import os
+
+# color my pencils
+class t:
+    cyan = '\033[96m'
+    purple = '\033[95m'
+    blue = '\033[94m'
+    yellow = '\033[93m'
+    green = '\033[92m'
+    red = '\033[91m'
+    gray = '\033[90m'
+    normal = '\033[0m'
+
+# fetch n last updated repositories
+n = 10
+user = "nguyenvukhang"
+HOME = str(os.getenv('HOME'))
+snapshot_dir = HOME + "/github-snapshot"
+today = date.today().strftime("%Y-%m-%d")
+today_dir = snapshot_dir + '/' + today
+
+def pprint(obj):
+    # create a formatted string of the Python JSON object
+    text = json.dumps(obj, sort_keys=True, indent=4)
+    print(text)
+
+def fetch_data():
+    l = subprocess.run(["pass", "github-actions/personal-token"], capture_output=True)
+    token = str(l.stdout)[2:-3]
+    headers = {'Authorization': 'token ' + token}
+    res = requests.get('https://api.github.com/user/repos', headers=headers)
+    return res.json()
+
+# create new folder to pull all data to
+os.system('mkdir -p ' + today_dir)
+os.chdir(today_dir)
+data = fetch_data()
+
+# scan list of users/organizations
+for i in data:
+    owner = i['owner']['login']
+    os.system('mkdir -p ' + today_dir + '/' + owner)
+
+l = len(data)
+def actual_pull():
+    for c, i in enumerate(data):
+        ssh_url = i['ssh_url']
+        owner = i['owner']['login']
+        os.chdir(today_dir + "/" + owner)
+        print(t.normal, "cloning ", t.yellow, owner, '/', i['name'],sep="", end='')
+        print(t.gray, ' (', c + 1, '/', l, ')', sep='')
+        os.system('git clone --recurse-submodules ' + ssh_url)
+
+actual_pull()

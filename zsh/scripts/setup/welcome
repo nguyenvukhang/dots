@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+
+function welcome() {
+  # using the -y flag skips the welcome message
+  [ "$SKIP" = true ] \
+    && msg "proceeding with install..." \
+    && return
+
+  msg "welcome to the $SCRIPTNAME script!"
+  # welcome message
+  echo "Installing zsh config. \n"
+  read -ks "CONFIRM?Proceed (Y/n)? "
+
+  # if user presses anything but y/Y, exit out of script
+  ([ ! $CONFIRM = "y" ] && [ ! $CONFIRM = "Y" ]) \
+    && echo "${RED}nope${NORMAL}\n" \
+    && msg "cancelled install." \
+    && exit 1
+  echo "${GREEN}yes${NORMAL}\n"
+  msg "proceeding with setup..."
+}

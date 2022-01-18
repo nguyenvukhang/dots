@@ -1,0 +1,82 @@
+#!/usr/bin/env zsh
+
+typeset -A local nav=(
+  [a]="$HOME/sunnus/app/khang"
+  [b]="$REPOS/blog"
+  [bo]="$REPOS/books"
+  [c]="$HOME/.config"
+  [d]="$DOTS"
+  [g]="/Volumes/Gauss"
+  [f]="$HOME/files"
+  [i]="$REPOS/cal"
+  [j]="$HOME/Downloads"
+  [l]="$HOME/.local"
+  [ls]="$HOME/.local/src"
+  [lb]="$HOME/.local/bin"
+  [m]="$REPOS/min"
+  [mc]="$HOME/.local/minecraft/repo"
+  [m.]="/Applications/MultiMC.app/Data"
+  [n]="$REPOS/notes"
+  [o]="$HOME/other-repos"
+  [p]="$DOTS/personal"
+  [pl]="$HOME/.config/nvim/plugged"
+  [pw]="$DOTS/pass/.password-store"
+  [q]="$DOTS/qmk"
+  [q.]="$HOME/.local/src/qmk_firmware"
+  [s]="$HOME/sunnus"
+  [ss]="$HOME/files/ssh-server"
+  [t]="$HOME/.config/nvim/plugged/telescope.nvim/lua/telescope"
+  [v]="$DOTS/nvim/.config/nvim"
+  [vl]="$DOTS/nvim/.config/nvim/lua/brew"
+  [vo]="$DOTS/nvim/.config/nvim/lua/brew/opts"
+  [w]="$HOME/sunnus/web/dev"
+  [z]="$DOTS/zsh"
+  [A]="/Applications"
+)
+
+for k v in ${(kv)nav}; do alias 2$k="cd $v"; done
+unset nav k v
+
+alias 2.="$EDITOR $ZSH_DOTS/nav"
+alias o="cd .." # out
+alias b="cd -"  # back
+alias rep="cd $REPOS"
+
+# goes to root of git repo
+function 2r() { cd $(git rev-parse --show-toplevel) }
+
+function jumpToFolder() {
+  local BASEDIR=$1 
+  local DEFAULTDIR=$2
+
+  local OPTIONS=$(fd \
+    -t d \
+    -d 1 \
+    --base-directory $BASEDIR \
+    --exec basename)
+
+  local RES="home\n$OPTIONS"
+
+  local TARGET=$(echo $RES | fzf \
+    --height=10 +m \
+    --no-mouse \
+    --reverse \
+    --no-info \
+    --prompt="  " \
+    --color='pointer:2')
+
+  case $TARGET in 
+    "")
+      return true;;
+    "home") cd $DEFAULTDIR;;
+    *) cd $BASEDIR$TARGET;;
+  esac
+}
+
+# to university folder
+function 2u() {
+  local BASEDIR="$REPOS/uni/modules/"
+  local DEFAULTDIR="$REPOS/uni"
+
+  jumpToFolder $BASEDIR $BASEDIR
+}

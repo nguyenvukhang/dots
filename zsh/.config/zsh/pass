@@ -1,0 +1,36 @@
+#!/usr/bin/env zsh
+
+local YELLOW="\e[1;33m"
+local NORMAL="\e[1;0m"
+
+function p() {
+  local passdir=$HOME/.password-store
+  local results=()
+  while IFS= read -r line; do
+    results+=("${${line%.gpg*}#*./}")
+  done < <(fd .\.gpg --base-directory $passdir)
+  
+  local gpg_file=$(for i in $results; do; echo $i; done | fzf \
+    --height=10 +m \
+    --no-mouse \
+    --reverse \
+    --no-info \
+    --prompt="  " \
+    --color='pointer:2')
+  cred=${gpg_file%.gpg*}
+
+  # guard
+  [ -z $cred ] && echo "nothing selected." && return
+
+  echo $cred
+  case $1 in
+    '')
+      local danger=$(pass $cred)
+      [[ "$danger" = *$'\n'* ]] && echo ${YELLOW}${danger#*$'\n'}${NORMAL}
+      read -ks "_?Press any key to continue..."
+      pass show --clip $cred &>/dev/null
+      printf "\nCopied password to clipboard. Will clear after 45 seconds.\n" ;;
+    '--edit'|'-e')
+      pass edit $cred ;;
+  esac
+}
