@@ -4,6 +4,7 @@ aug THE_BREWERY
   au VimResized * wincmd =
   " markdown/mdx handling
   au BufRead,BufNewFile *.mdx set ft=markdown | set tw=70
+  au BufRead,BufNewFile *.m set ft=matlab
   au BufRead,BufNewFile *.m UltiSnipsAddFiletypes markdown
   " made all /bin/sh files be highlighted as if they were zsh files
 	au BufRead,BufNewFile *	if &ft == 'sh' | set ft=zsh | endif
