@@ -24,7 +24,7 @@ local setup = function()
   }
   -- }}}
   -- lua {{{
-  local sumneko_root_path = env.dots_root..'personal/lua-language-server'
+  local sumneko_root_path = env.home..'.local/src/lua-language-server'
   local sumneko_binary = sumneko_root_path .. "/bin/lua-language-server"
 
   local runtime_path = vim.split(package.path, ';')

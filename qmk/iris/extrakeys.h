@@ -71,7 +71,7 @@ enum my_keycodes {
 
 /* Summary:
  * CTRL + Backspace => Delete
- * CTRL + MO(_UP)   => CTRL + Page-Down
+ * CTRL + MO(_UP)   => CTRL + Page-up
  */
 uint8_t mod_state;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -101,7 +101,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       static bool upkey_registered;
       if (record->event.pressed) { // on key-down of MO(_UP)
         if (mod_state & MOD_MASK_CTRL) {
-          // Ctrl + MO(_UP) -> Ctrl + Alt + Shift + b (for tmux prefix)
           register_code(KC_PGUP);
           upkey_registered = true;
           return false;

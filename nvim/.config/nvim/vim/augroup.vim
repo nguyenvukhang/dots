@@ -14,6 +14,7 @@ function! StanGlyphs()
   %s/“/"/g
   %s/”/"/g
   %s/’/'/g
+  %s/‘/'/g
 endfunction
 
 function! Date()

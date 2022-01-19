@@ -23,3 +23,5 @@ PATH=$HOME/.local/bin:$PATH
 PATH=$HOME/.local/bin/git:$PATH
 PATH=$HOME/.yarn/bin:$PATH
 export PATH
+
+alias luamake=/Users/khang/.local/src/lua-language-server/3rd/luamake/luamake
