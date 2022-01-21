@@ -23,3 +23,8 @@ bindkey '^[[Z' reverse-menu-complete
 
 # options
 unsetopt BEEP
+
+function spt() {
+  tmux has-session -t s && tmux a -t s \
+    || (tmux new -d -s s "ncspot" && tmux a -t s)
+}
