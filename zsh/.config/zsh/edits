@@ -5,11 +5,11 @@ function ed() {
     [.]="$ZSH_DOTS/edits"
     [a]="$HOME/.config/ags/scanlist"
     [g]="$HOME/.config/git/config"
-    [k]="$DOTS/kitty/.config/kitty/kitty.conf"
+    [k]="$DOTS/term/.config/kitty/kitty.conf"
     [t]="$DOTS/tmux/.config/tmux/tmux.conf"
-    [n]="$DOTS/zsh/config/nav"
+    [n]="$DOTS/zsh/.config/zsh/nav"
     [v]="$DOTS/nvim/.config/nvim/init.lua"
-    [z]="$DOTS/zsh/.zshrc"
+    [z]="$DOTS/zsh/.config/zsh/.zshrc"
   )
   local FZF_OPTS=(--height=7 +m --no-mouse --reverse
     --no-info --prompt="  " --color='pointer:green')
