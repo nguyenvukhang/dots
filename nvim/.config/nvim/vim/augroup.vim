@@ -1,9 +1,25 @@
+function! MdxSpecific()
+  set ft=markdown
+  set tw=70
+  nnoremap <buffer> <leader>p :Prettier<CR>:MarkdownHeadersSetext<CR>:echo "Prettier + MDX!"<CR>
+
+  " makes word surrounded in backticks
+  nnoremap <buffer> <leader>m ciw``<esc>P
+  vnoremap <buffer> <leader>m c``<esc>P
+
+  " makes letter become vector: A -> \v{A}
+  nnoremap <buffer> <leader>v s\v{}<esc>P
+
+  " makes letter become math'd vector: A -> `\v{A}`
+  nnoremap <buffer> <leader>V s`\v{}`<esc>hP
+endfunction
+
 aug THE_BREWERY
   au!
   " make splits equally sized on window resize
   au VimResized * wincmd =
   " markdown/mdx handling
-  au BufRead,BufNewFile *.mdx set ft=markdown | set tw=70
+  au BufRead,BufNewFile *.mdx call MdxSpecific()
   au BufRead,BufNewFile *.m set ft=matlab
   au BufRead,BufNewFile *.m UltiSnipsAddFiletypes markdown
   " made all /bin/sh files be highlighted as if they were zsh files
@@ -16,6 +32,11 @@ function! StanGlyphs()
   %s/”/"/g
   %s/’/'/g
   %s/‘/'/g
+endfunction
+
+function! MarkdownHeadersSetext()
+  silent g/^#\s/norm! ^df yypVr=
+  silent g/^##\s/norm! ^df yypVr-
 endfunction
 
 function! Date()
@@ -44,3 +65,4 @@ endfunction
 command! StanGlyphs :silent! call StanGlyphs()
 " command! Date :silent! call Date()
 command! Date :call Date()
+command! MarkdownHeadersSetext :call MarkdownHeadersSetext()
