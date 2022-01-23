@@ -3,7 +3,7 @@
 function ed() {
   typeset -A local marks=(
     [.]="$ZSH_DOTS/edits"
-    [a]="$DOTS/alacritty/.config/alacritty/alacritty.yml"
+    [a]="$HOME/.config/ags/scanlist"
     [g]="$HOME/.config/git/config"
     [k]="$DOTS/kitty/.config/kitty/kitty.conf"
     [t]="$DOTS/tmux/.config/tmux/tmux.conf"
