@@ -20,6 +20,8 @@ local remaps = function()
 
   -- search dots
   remap('n', '<Leader>sd', ':lua require("brew.telescope.file").dots()<CR>', opts)
+  -- search university
+  remap('n', '<Leader>su', ':lua require("brew.telescope.file").university()<CR>', opts)
   -- search notes
   remap('n', '<Leader>sn', ':lua require("brew.telescope.file").notes()<CR>', opts)
   -- search telescope

@@ -50,6 +50,14 @@ M.telescope = function()
   })
 end
 
+-- searches university files
+M.university = function()
+  dir_search({
+    search_dir = env.repos.."uni",
+    prompt_title = 'university files'
+  })
+end
+
 -- searches my list of repos
 M.repo_search = function()
   dir_search({
