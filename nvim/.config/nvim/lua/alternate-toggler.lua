@@ -15,6 +15,7 @@ local default_table = {
   ['vertical'] = 'horizontal',
   ['left'] = 'right',
   ['up'] = 'down',
+  ['begin'] = 'end',
   ['top'] = 'bottom',
   ['height'] = 'width',
   ['below'] = 'above',
