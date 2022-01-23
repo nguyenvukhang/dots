@@ -2,39 +2,40 @@
 
 typeset -A local nav=(
   [a]="$HOME/sunnus/app/main"
-  [b]="$REPOS/blog"
+  [b]="$REPOS/min"
   [bo]="$REPOS/books"
   [c]="$HOME/.config"
   [d]="$DOTS"
-  [g]="$REPOS/gcal"
   [f]="$HOME/files"
-  [i]="$REPOS/cal"
+  [g]="$REPOS/gcal"
   [j]="$HOME/Downloads"
   [l]="$HOME/.local"
-  [ls]="$HOME/.local/src"
   [lb]="$HOME/.local/bin"
-  [m]="$REPOS/min"
-  [mc]="$HOME/.local/minecraft/repo"
+  [ls]="$HOME/.local/src"
   [m.]="/Applications/MultiMC.app/Data"
+  [m]="$REPOS/minnesoda"
+  [mc]="$HOME/.local/minecraft/repo"
   [n]="$REPOS/notes"
   [o]="$HOME/other-repos"
   [p]="$DOTS/personal"
   [pl]="$HOME/.config/nvim/plugged"
   [pw]="$DOTS/personal/.password-store"
-  [q]="$DOTS/qmk"
   [q.]="$HOME/.local/src/qmk_firmware"
+  [q]="$DOTS/qmk"
   [s]="$HOME/sunnus"
   [ss]="$HOME/files/ssh-server"
   [t]="$HOME/.config/nvim/plugged/telescope.nvim/lua/telescope"
   [v]="$DOTS/nvim/.config/nvim"
   [vl]="$DOTS/nvim/.config/nvim/lua/brew"
-  [vo]="$DOTS/nvim/.config/nvim/lua/brew/opts"
   [w]="$HOME/sunnus/web/dev"
   [z]="$DOTS/zsh"
   [A]="/Applications"
 )
 
-for k v in ${(kv)nav}; do alias 2$k="cd $v"; done
+for k dir in ${(kv)nav}; do
+  [ ! -d $dir ] && echo "zsh nav: $dir doesn't exist" && continue
+  alias 2$k="cd $dir"
+done
 unset nav k v
 
 alias 2.="$EDITOR $ZSH_DOTS/nav"
