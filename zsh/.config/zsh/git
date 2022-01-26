@@ -59,6 +59,11 @@ function gla() {
   git log --oneline --graph --all -n $len
 }
 
+# git log (today)
+function glt() {
+  git log --since="24 hours ago" --oneline --graph --all
+}
+
 # git commit
 function gcm() {
   [ $1 ] && git commit -m $1 && return true
