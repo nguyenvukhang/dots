@@ -47,22 +47,9 @@ function gcb() {
   git clone --bare git@github.com:$1.git
 }
 
-# git log
-function gl() {
-  local len; [ $1 ] && len=$1 || len=10
-  git log --oneline --graph -n $len
-}
-
-# git log (all)
-function gla() {
-  local len; [ $1 ] && len=$1 || len=10
-  git log --oneline --graph --all -n $len
-}
-
-# git log (today)
-function glt() {
-  git log --since="24 hours ago" --oneline --graph --all
-}
+function gl() { git log --oneline --graph -n ${1-10} } # git log
+function gla() { git log --oneline --graph --all -n ${1-10} } # git log (all)
+function glt() { git log --since="24 hours ago" --oneline --graph --all } # git log (today)
 
 # git commit
 function gcm() {
