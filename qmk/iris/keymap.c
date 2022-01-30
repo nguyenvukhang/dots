@@ -10,7 +10,7 @@ enum keyboard_layers {
 #include "colors.h"
 #include "extrakeys.h"
 
-#define TMUX LCTL(KC_PGUP)
+#define TMUX LCTL(KC_Q)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 

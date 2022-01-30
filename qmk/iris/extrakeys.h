@@ -101,13 +101,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       static bool upkey_registered;
       if (record->event.pressed) { // on key-down of MO(_UP)
         if (mod_state & MOD_MASK_CTRL) {
-          register_code(KC_PGUP);
+          register_code(KC_Q);
           upkey_registered = true;
           return false;
         }
       } else { // on release of MO(_UP)
         if (upkey_registered) {
-          unregister_code(KC_PGUP);
+          unregister_code(KC_Q);
           upkey_registered = false;
           return false;
         }
