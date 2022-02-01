@@ -26,8 +26,10 @@ local remaps = function()
   remap('n', '<Leader>sn', ':lua require("brew.telescope.file").notes()<CR>', opts)
   -- search telescope
   remap('n', '<Leader>st', ':lua require("brew.telescope.file").telescope()<CR>', opts)
-  -- search repos
+  -- search recents
   remap('n', '<Leader>sr', ':lua require("brew.telescope.file").recents()<CR>', opts)
+  -- search repos
+  remap('n', '<Leader>sa', ':lua require("brew.telescope.file").repo_search()<CR>', opts)
   remap('n', '<Leader>so', ':lua require("brew.telescope.file").other_repos_search()<CR>', opts)
   -- search vim help
   remap('n', '<Leader>sh', ':lua require("telescope.builtin").help_tags()<CR>', opts)
