@@ -22,6 +22,12 @@ local gruvbox = {
   inactive = standard
 }
 
+local function wordCount()
+  local chars = tostring(vim.fn.wordcount().chars)
+  local words = tostring(vim.fn.wordcount().words)
+  return "words "..words.." | chars "..chars
+end
+
 local setup = function()
   -- makes the statusbar consistent through vim splits
   vim.cmd('highlight Statusline guifg='..colors.bg1)
@@ -40,7 +46,7 @@ local setup = function()
       lualine_c = {},
       lualine_x = {},
       lualine_y = {},
-      lualine_z = {}
+      lualine_z = {wordCount}
     },
     inactive_sections = {
       lualine_a = {},
