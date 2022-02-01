@@ -8,7 +8,7 @@ setopt globdots
 
 # fuzzy vim
 function v() {
-  local target=$(command ls -A | fzf \
+  local target=$(fzf \
     --height=10 +m \
     --no-mouse \
     --reverse \
