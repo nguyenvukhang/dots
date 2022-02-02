@@ -21,8 +21,8 @@ local setup = function()
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
       { name = 'ultisnips' },
-    }, {
       { name = 'buffer' },
+      { name = 'path' },
     })
   })
 

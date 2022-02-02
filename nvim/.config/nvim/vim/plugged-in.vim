@@ -13,6 +13,7 @@ Plug 'tpope/vim-fugitive'
 
 " math & notes
 Plug 'vimplug/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+Plug 'lervag/vimtex'
 
 " TEEJ
 Plug 'nvim-lua/plenary.nvim'
@@ -45,6 +46,7 @@ Plug 'terrortylor/nvim-comment'
 " colorizer
 Plug 'vimplug/nvim-colorizer.lua'
 
-Plug 'lifepillar/vim-colortemplate'
+" old friends
+" Plug 'lifepillar/vim-colortemplate'
 
 call plug#end()
