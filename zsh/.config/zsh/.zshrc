@@ -24,4 +24,6 @@ PATH=$HOME/.local/bin/git:$PATH
 PATH=$HOME/.yarn/bin:$PATH
 export PATH
 
+setopt ignoreeof
+
 alias luamake=/Users/khang/.local/src/lua-language-server/3rd/luamake/luamake
