@@ -14,12 +14,27 @@ function! MdxSpecific()
   nnoremap <buffer> <leader>V s`\v{}`<esc>hP
 endfunction
 
+function! LatexSpecific()
+  set tw=70
+
+  " makes word surrounded in backticks
+  nnoremap <buffer> <leader>m ciw$$<esc>P
+  vnoremap <buffer> <leader>m c$$<esc>P
+
+  " makes letter become vector: A -> \v{A}
+  nnoremap <buffer> <leader>v s\v{}<esc>P
+
+  " makes letter become math'd vector: A -> `\v{A}`
+  nnoremap <buffer> <leader>V s$\v{}$<esc>hP
+endfunction
+
 aug THE_BREWERY
   au!
   " make splits equally sized on window resize
   au VimResized * wincmd =
   " markdown/mdx handling
   au BufRead,BufNewFile *.mdx call MdxSpecific()
+  au BufRead,BufNewFile *.tex call LatexSpecific()
   au BufRead,BufNewFile *.m set ft=matlab
   au BufRead,BufNewFile *.m UltiSnipsAddFiletypes markdown
   " made all /bin/sh files be highlighted as if they were zsh files
