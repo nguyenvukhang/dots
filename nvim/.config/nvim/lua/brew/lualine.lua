@@ -45,8 +45,8 @@ local setup = function()
       lualine_b = {'branch'},
       lualine_c = {},
       lualine_x = {},
-      lualine_y = {},
-      lualine_z = {wordCount}
+      lualine_y = {wordCount},
+      lualine_z = {}
     },
     inactive_sections = {
       lualine_a = {},
