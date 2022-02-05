@@ -27,3 +27,7 @@ export PATH
 setopt ignoreeof
 
 alias luamake=/Users/khang/.local/src/lua-language-server/3rd/luamake/luamake
+
+if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+  tmux attach -t base || tmux new -s base
+fi
