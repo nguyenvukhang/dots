@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 # main variables
-START=$REPOS/uni/modules/MA2002/assignments/1
+START=$REPOS/uni/calc/modules/MA2002/assignments/1
 
 # files to open
 open $START/questions.pdf

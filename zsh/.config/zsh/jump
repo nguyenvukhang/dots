@@ -9,7 +9,7 @@ function g() {
   local check=$(command ls -Ap)
   [[ ! $check = *"/"* ]] && return true
 
-  local target=$(fzf \
+  local target=$(fd -d $depth -t d | fzf \
     --height=10 +m \
     --no-mouse \
     --header=${PWD/#$HOME/'~'} \
@@ -18,7 +18,7 @@ function g() {
     --no-info \
     --prompt="  " \
     --color='pointer:2')
-  target=${target%/*}
+  target=${target#/*}
 
   local res=()
   while IFS= read -r line; do
