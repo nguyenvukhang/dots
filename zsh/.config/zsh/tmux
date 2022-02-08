@@ -3,7 +3,7 @@
 
 alias tls="tmux ls"
 
-function tkill() {
+function tkl() {
   if [ $1 ]; then
     tmux kill-session -t "$1"
   else
@@ -13,51 +13,53 @@ function tkill() {
 }
 
 function ta() {
-  local t="${1-"base"}"
+  local t="${1-base}"
+  local v=false
   # first argument is target attach
   # default value: "base"
-  #
+
   if [ -z "$TMUX" ]; then
     # when outside of tmux
+    $v && echo "outside TMUX"
 
-    if tmux has-session -t $t 2>/dev/null; then
+    if tmux has-session -t "$t" 2>/dev/null; then
       # if target exists, attach to it 
-      tmux attach -t $t
-      return
+      $v && echo "session exists"
+      tmux attach -t $t; return
     else
       if [ -f $DOTS/tmux/$1.sh ]; then
         # if launch script exists, use it
-        $DOTS/tmux/$1.sh
-        return
+        $v && echo "launch script exists"
+        $DOTS/tmux/$1.sh; return
       else
         # else if launch script doesn't exist, create a fresh session
-        tmux new-session -t $t
-        return
+        $v && echo "create fresh"
+        tmux new-session -s $t; return
       fi
     fi
   else
     # when inside of tmux
+    $v && echo "inside TMUX"
 
     if tmux has-session -t $t 2>/dev/null; then
       # if target exists, switch to it
-      tmux switch-client -t $t
-      return
+      $v && echo "session exists"
+      tmux switch-client -t $t; return
     else
       if [ -f $DOTS/tmux/$1.sh ]; then
         # if launch script exists, use it
-        $DOTS/tmux/$1.sh
-        return
+        $v && echo "launch script exists"
+        tmux new-session -As "base" -d $DOTS/tmux/$1.sh; return
       else
         # else if launch script doesn't exist, create a fresh session
+        $v && echo "create fresh"
         tmux new-session -As $t -d
-        tmux switch-client -t $t
-        return
+        tmux switch-client -t $t; return
       fi
     fi
   fi
 }
 
 function spt() {
-  ta "ncspot"
-  tmux send-keys -t "ncspot" "ncspot" ENTER
+  ta "spt"
 }

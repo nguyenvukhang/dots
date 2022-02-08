@@ -6,9 +6,8 @@ START=$REPOS/uni/calc/modules/MA2002/assignments/1
 # files to open
 open $START/questions.pdf
 
-# start tmux session detached (and attach if session exists)
-tmux new-session -d -As "uni" -c "$START" \
-  "git log --oneline --graph --all -n 10; exec zsh -i"
+# start tmux session
+tmux new-session -s "uni" -c "$START"
 
 # tmux operations
 tmux send -t "uni" "vim" ENTER
