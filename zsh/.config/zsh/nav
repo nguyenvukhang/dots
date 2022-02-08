@@ -76,8 +76,8 @@ function jumpToFolder() {
 
 # to university folder
 function 2u() {
-  local BASEDIR="$REPOS/uni/modules/"
-  local DEFAULTDIR="$REPOS/uni"
+  local BASEDIR="$REPOS/uni/"
+  local DEFAULTDIR="$REPOS/uni/"
 
   jumpToFolder $BASEDIR $BASEDIR
 }

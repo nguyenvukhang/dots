@@ -1,0 +1,63 @@
+#!/usr/bin/env zsh
+#
+
+alias tls="tmux ls"
+
+function tkill() {
+  if [ $1 ]; then
+    tmux kill-session -t "$1"
+  else
+    echo "Please provide a session name."
+    return 0
+  fi
+}
+
+function ta() {
+  local t="${1-"base"}"
+  # first argument is target attach
+  # default value: "base"
+  #
+  if [ -z "$TMUX" ]; then
+    # when outside of tmux
+
+    if tmux has-session -t $t 2>/dev/null; then
+      # if target exists, attach to it 
+      tmux attach -t $t
+      return
+    else
+      if [ -f $DOTS/tmux/$1.sh ]; then
+        # if launch script exists, use it
+        $DOTS/tmux/$1.sh
+        return
+      else
+        # else if launch script doesn't exist, create a fresh session
+        tmux new-session -t $t
+        return
+      fi
+    fi
+  else
+    # when inside of tmux
+
+    if tmux has-session -t $t 2>/dev/null; then
+      # if target exists, switch to it
+      tmux switch-client -t $t
+      return
+    else
+      if [ -f $DOTS/tmux/$1.sh ]; then
+        # if launch script exists, use it
+        $DOTS/tmux/$1.sh
+        return
+      else
+        # else if launch script doesn't exist, create a fresh session
+        tmux new-session -As $t -d
+        tmux switch-client -t $t
+        return
+      fi
+    fi
+  fi
+}
+
+function spt() {
+  ta "ncspot"
+  tmux send-keys -t "ncspot" "ncspot" ENTER
+}

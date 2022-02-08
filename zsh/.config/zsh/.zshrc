@@ -12,6 +12,7 @@ source $ZSH_DOTS/git
 source $ZSH_DOTS/jump
 source $ZSH_DOTS/nav
 source $ZSH_DOTS/one-liners
+source $ZSH_DOTS/tmux
 source $ZSH_DOTS/pass
 source $ZSH_DOTS/sessions
 

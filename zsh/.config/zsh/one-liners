@@ -23,11 +23,3 @@ bindkey '^[[Z' reverse-menu-complete
 
 # options
 unsetopt BEEP
-
-# tmux warm fuzz
-function spt() {
-  tmux has-session -t s && tmux a -t s \
-    || (tmux new -d -s s "ncspot" && tmux a -t s)
-}
-alias tkill="tmux kill-session"
-alias ta="tmux attach"
