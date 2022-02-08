@@ -30,7 +30,7 @@ function ta() {
       if [ -f $DOTS/tmux/$1.sh ]; then
         # if launch script exists, use it
         $v && echo "launch script exists"
-        $DOTS/tmux/$1.sh; return
+        tmux new-session -As "base" $DOTS/tmux/$1.sh; return
       else
         # else if launch script doesn't exist, create a fresh session
         $v && echo "create fresh"
@@ -49,7 +49,7 @@ function ta() {
       if [ -f $DOTS/tmux/$1.sh ]; then
         # if launch script exists, use it
         $v && echo "launch script exists"
-        tmux new-session -As "base" -d $DOTS/tmux/$1.sh; return
+        $DOTS/tmux/$1.sh; return
       else
         # else if launch script doesn't exist, create a fresh session
         $v && echo "create fresh"
