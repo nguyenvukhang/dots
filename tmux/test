@@ -1,0 +1,70 @@
+#!/bin/zsh
+
+t=testmux
+
+function quit() { tmux send-keys -t "$1" "exit" ENTER }
+function cleanup() {
+  quit "$t" 2>/dev/null
+  quit "inside" 2>/dev/null
+}
+trap cleanup EXIT
+
+# ====================================================================
+# OUTSIDE OF TMUX
+# ====================================================================
+
+[ ! -z $TMUX ] && echo "you're inside of TMUX. stopping the test." && exit 0
+echo ""> $l
+
+# if no argument supplied, go to "base"
+
+  ta
+  # CHECK 1: success if session name = "base"
+
+# if target exists, attach to it
+
+  # create a dummy session "testmux"
+  tmux new-session -s "$t" -d
+
+  ta "$t"
+  # CHECK 2: success if session name = "testmux"
+
+# if target doesn't exist, create a new one first
+
+  ta "$t"
+  # CHECK 3: success if session name = "testmux"
+
+# ====================================================================
+# INSIDE OF TMUX
+# ====================================================================
+
+  # get inside of tmux
+  tmux new-session -s "inside" -d
+
+# if no argument supplied, go to "base"
+
+  tmux send-keys -t "inside" "ta" ENTER
+  tmux attach -t "inside"
+  # CHECK 4: success if session name = "base"
+
+# if target exists, attach to it
+
+  # create a dummy session "testmux"
+  tmux new-session -s "$t" -d
+
+  tmux send-keys -t "inside" "ta $t" ENTER
+  tmux attach -t "inside"
+  # CHECK 5: success if session name = "testmux"
+
+# if target doesn't exist, create a new one first
+
+  tmux send-keys -t "inside" "ta $t" ENTER
+  tmux attach -t "inside"
+  # CHECK 6: success if session name = "testmux"
+
+# CHECK 1: success if session name = "base"
+# CHECK 2: success if session name = "testmux"
+# CHECK 3: success if session name = "testmux"
+# CHECK 4: success if session name = "base"
+# CHECK 5: success if session name = "testmux"
+# CHECK 6: success if session name = "testmux"
