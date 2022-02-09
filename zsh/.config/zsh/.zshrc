@@ -27,7 +27,7 @@ export PATH
 
 setopt ignoreeof
 
-alias luamake=/Users/khang/.local/src/lua-language-server/3rd/luamake/luamake
+eval "$(pyenv init -)"
 
 # if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
 #   tmux new -As base
