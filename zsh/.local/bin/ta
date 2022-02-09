@@ -1,37 +1,37 @@
 #!/bin/zsh
 
 t="${1-base}"
-v=false
+# v=false
 # first argument is target attach
 # default value: "base"
 
 if [ -z "$TMUX" ]; then
   # when outside of tmux
-  $v && echo "outside TMUX"
+  # $v && echo "outside TMUX"
 
   if tmux has-session -t "$t" 2>/dev/null; then
     # if target exists, attach to it 
-    $v && echo "session exists"
+    # $v && echo "session exists"
     tmux attach -t $t; return
   else
     # else if target doesn't exist,
     # just start a new session first
-    $v && echo "not existing, creating fresh"
+    # $v && echo "not existing, creating fresh"
     tmux new-session -s $t -d
     tmux attach -t $t; return
   fi
 else
   # when inside of tmux
-  $v && echo "inside TMUX"
+  # $v && echo "inside TMUX"
 
   if tmux has-session -t $t 2>/dev/null; then
     # if target exists, switch to it
-    $v && echo "session exists"
+    # $v && echo "session exists"
     tmux switch-client -t $t; return
   else
     # else if target doesn't exist,
     # just start a new session first
-    $v && echo "not existing, creating fresh"
+    # $v && echo "not existing, creating fresh"
     tmux new-session -As $t -d
     tmux switch-client -t $t; return
   fi
