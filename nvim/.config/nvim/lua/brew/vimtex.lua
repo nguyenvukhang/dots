@@ -8,9 +8,9 @@ local is_git_repo = brew.utils.is_git_repo
 
 vim.g.vimtex_view_method = 'skim'
 vim.g.vimtex_syntax_enabled = true
-vim.g.vimtex_compiler_latexmk = {
-  build_dir = home..'repos/uni/tex'
-}
+-- vim.g.vimtex_compiler_latexmk = {
+--   build_dir = home..'repos/uni/tex'
+-- }
 
 -- if is_git_repo(vim.fn.getcwd()) then
 --   function os.capture(cmd)

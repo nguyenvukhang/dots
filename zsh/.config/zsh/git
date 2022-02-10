@@ -18,6 +18,7 @@ alias gf="git fetch --all"
 
 alias gap="git number add -p"
 alias gms="git merge --squash" # squash diff into one commit
+alias gm="git merge" # squash diff into one commit
 
 alias gu="git fetch && git number status" # git update
 alias gc="git commit"
