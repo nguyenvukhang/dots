@@ -1,6 +1,6 @@
 local dots_root = require('brew').env.dots_root
 vim.opt.scrolloff      = 15         -- scrolls before cursor reaches edge
-vim.opt.sidescrolloff  = 5          -- scrolls before cursor reaches side
+vim.opt.sidescrolloff  = 10         -- scrolls before cursor reaches side
 vim.opt.tabstop        = 2          -- # of spaces a <Tab> counts for
 vim.opt.softtabstop    = 1          -- # of spaces a <Tab> is when editing
 vim.opt.expandtab      = true       -- space instead tab when pressing <Tab>
