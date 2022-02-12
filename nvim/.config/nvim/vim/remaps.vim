@@ -33,13 +33,13 @@ nnoremap <leader>l :wincmd l<cr>
 nnoremap <leader>j :wincmd j<cr>
 nnoremap <leader>k :wincmd k<cr>
 " replace in buffer
-nnoremap <silent> <leader>rb yiw:%s/<C-r>"//g<left><left>
+nnoremap <leader>rb yiw:%s/<C-r>"//g<left><left>
 " replace in line
-nnoremap <silent> <leader>rl yiw:s/<C-r>"//g<left><left>
+nnoremap <leader>rl yiw:s/<C-r>"//g<left><left>
 " replace visual selection
-vnoremap <silent> <C-r> y:%s/<C-r>"//g<left><left>
+vnoremap <C-r> y:%s/<C-r>"//g<left><left>
 " search visual selection
-vnoremap <silent> * y/<C-r>"<cr>
+vnoremap * y/<C-r>"<cr>
 " refresh syntax highlighting
 nnoremap <silent> <f1> :syntax sync fromstart<cr>
 " toggle spell check
