@@ -1,4 +1,4 @@
-local dots_root = require('brew').env.dots_root
+local dots_root = require('brew.core').env.dots_root
 vim.opt.scrolloff      = 15         -- scrolls before cursor reaches edge
 vim.opt.sidescrolloff  = 10         -- scrolls before cursor reaches side
 vim.opt.tabstop        = 2          -- # of spaces a <Tab> counts for
@@ -25,9 +25,16 @@ vim.opt.autochdir      = true       -- keep pwd the same as current buffer
 vim.opt.pumheight      = 8          -- sets popup menu height
 vim.opt.completeopt    = 'menu,menuone,noselect'  -- recommended by nvim-cmp
 vim.opt.shortmess      = vim.o.shortmess..'c'
-vim.opt.undodir        = dots_root..'personal/.config/nvim/data/undodir'
-vim.opt.spellfile      = dots_root..'personal/.config/nvim/data/spell/en.utf-8.add'
+vim.opt.undodir        = dots_root..'/personal/.config/nvim/data/undodir'
+vim.opt.spellfile      = dots_root..'/personal/.config/nvim/data/spell/en.utf-8.add'
 vim.opt.grepprg        = "rg --color=never --no-heading --with-filename --line-number --column --smart-case"
 vim.opt.grepformat     = '%f:%l:%c:%m,%f:%l:%m'
 vim.opt.fillchars      = 'fold: '
 vim.opt.termguicolors  = true
+
+-- color scheme
+vim.g.gruvbox_italics           = false
+vim.g.gruvbox_italicize_strings = false
+vim.g.gruvbox_transp_bg         = true
+vim.g.gruvbox_bold              = false
+vim.cmd("colorscheme gruvbox8")

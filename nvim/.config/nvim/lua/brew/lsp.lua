@@ -1,7 +1,7 @@
 --
 -- https://github.com/neovim/nvim-lspconfig
 --
-local env = require('brew').env
+local env = require('brew.core').env
 
 local setup = function()
   -- lsp-specific keymaps
@@ -24,7 +24,7 @@ local setup = function()
   }
   -- }}}
   -- lua {{{
-  local sumneko_root_path = env.home..'.local/src/lua-language-server'
+  local sumneko_root_path = env.home..'/.local/src/lua-language-server'
   local sumneko_binary = sumneko_root_path .. "/bin/lua-language-server"
 
   local runtime_path = vim.split(package.path, ';')
@@ -55,11 +55,11 @@ local setup = function()
   }
   -- }}}
   -- python {{{
-  require'lspconfig'.pyright.setup{
+  require('lspconfig').pyright.setup{
     on_attach = on_attach
   }
   -- }}}
-  require'lspconfig'.clangd.setup{}
+  require('lspconfig').clangd.setup{}
 
   local diagnostics_on = true
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(

@@ -9,7 +9,7 @@ function g() {
   local check=$(command ls -Ap)
   [[ ! $check = *"/"* ]] && return true
 
-  local target=$(fd -d $depth -t d | fzf \
+  local target=$(fd --hidden -d $depth -t d | fzf \
     --height=10 +m \
     --no-mouse \
     --header=${PWD/#$HOME/'~'} \

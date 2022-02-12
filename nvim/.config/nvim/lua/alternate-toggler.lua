@@ -1,4 +1,4 @@
-local remap = require('brew').remap
+local remap = require('brew.core').remap
 local AlternateToggler = {}
 
 local default_table = {

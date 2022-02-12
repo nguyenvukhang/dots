@@ -2,7 +2,7 @@
 -- https://github.com/nvim-lualine/lualine.nvim
 --
 
-local colors = require('brew').colors
+local colors = require('brew.core').colors
 
 local standard = {
   a = { bg = colors.bg1,  fg = colors.white },
@@ -33,7 +33,7 @@ local setup = function()
   vim.cmd('highlight Statusline guifg='..colors.bg1)
 
   -- setup
-  require'lualine'.setup {
+  require('lualine').setup {
     options = {
       icons_enabled = false,
       theme = gruvbox,

@@ -1,11 +1,11 @@
-local env = require('brew').env
+local env = require('brew.core').env
 local ignore = require('brew.telescope.ignore')
-local git_check = require('brew').utils.is_git_repo
+local git_check = require('brew.core').utils.is_git_repo
 
 local M = {}
 
 M.cwd = function ()
-  require("telescope.builtin").find_files({
+  require('telescope.builtin').find_files({
     prompt_title = 'Files In CWD',
     file_ignore_patterns = ignore
   })
@@ -13,7 +13,7 @@ end
 
 M.repo = function()
   if git_check() then
-    require("telescope.builtin").git_files({
+    require('telescope.builtin').git_files({
       prompt_title = 'Files In Repo',
       file_ignore_patterns = ignore
     })
@@ -24,7 +24,7 @@ end
 
 -- searches all dotfiles by filename
 M.dots = function()
-  require("telescope.builtin").find_files({
+  require('telescope.builtin').find_files({
     hidden = true,
     cwd = env.dots_root,
     prompt_title = "searching dotfiles",
@@ -33,7 +33,7 @@ M.dots = function()
 end
 
 local dir_search = function(opts)
-  require("telescope.builtin").find_files({
+  require('telescope.builtin').find_files({
     hidden = true,
     preview = false,
     cwd = opts.search_dir,

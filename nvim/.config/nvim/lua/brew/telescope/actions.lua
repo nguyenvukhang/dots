@@ -5,8 +5,8 @@
 
 local action_state = require('telescope.actions.state')
 local action_set = require('telescope.actions.set')
-local from_entry = require "telescope.from_entry"
-local transform_mod = require("telescope.actions.mt").transform_mod
+local from_entry = require('telescope.from_entry')
+local transform_mod = require('telescope.actions.mt').transform_mod
 
 local actions = setmetatable({}, {
   __index = function(_, k)

@@ -1,7 +1,7 @@
 --
 -- https://github.com/iamcco/markdown-preview.nvim
 --
-local conf = require('brew').env.conf
+local conf = require('brew.core').env.conf
 
 vim.g.mkdp_auto_close = 0
 vim.g.mkdp_preview_options = {
@@ -29,12 +29,8 @@ vim.g.mkdp_preview_options = {
   disable_sync_scroll = false,
   disable_filename = 1,
 }
-vim.g.mkdp_markdown_css = conf..'data/github-markdown.css'
+vim.g.mkdp_markdown_css = conf..'/data/github-markdown.css'
 
-local abbrevs = function()
-  local v = vim.api.nvim_command
-  v('cnoreabbrev MP MarkdownPreview')
-  v('cnoreabbrev MS MarkdownPreviewStop')
-end
-
-abbrevs()
+-- abbreviations
+vim.cmd('cnoreabbrev MP MarkdownPreview')
+vim.cmd('cnoreabbrev MS MarkdownPreviewStop')

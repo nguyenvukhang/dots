@@ -87,9 +87,9 @@ end
 -- quickfix/local list
 M.diagnostics = function ()
   -- close diagnostics if qflist is already open
-  local utils = require('brew').utils
+  local utils = require('brew.core').utils
   if utils.qflist_is_open() then
-    vim.api.nvim_command('cclose') print(' ') return
+    vim.cmd('cclose') print(' ') return
   end
 
   local diagnostics = diagnostics_to_tbl()
@@ -100,7 +100,7 @@ M.diagnostics = function ()
   else
     -- send diagnostics to qflist
     vim.fn.setqflist(diagnostics, "r")
-    vim.api.nvim_command('botright copen')
+    vim.cmd('botright copen')
     return
   end
 end

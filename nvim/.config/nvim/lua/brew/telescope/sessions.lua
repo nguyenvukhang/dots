@@ -2,7 +2,7 @@ local themes = require('telescope.themes')
 local actions = require('telescope.actions')
 local action_state = require('telescope.actions.state')
 local ignore = require('brew.telescope.ignore')
-local conf = require('brew').env.conf
+local conf = require('brew.core').env.conf
 
 local M = {}
 
@@ -68,7 +68,7 @@ M.save_session = function(opts)
 end
 
 M.sessions = function()
-  require("telescope.builtin").find_files(themes.get_dropdown({
+  require('telescope.builtin').find_files(themes.get_dropdown({
     attach_mappings = function(_, map)
       actions.select_default:replace(source_session)
       map('i', '<C-d>', delete_session)
@@ -77,7 +77,7 @@ M.sessions = function()
     previewer = false,
     prompt_title = 'Sessions',
     hidden = true,
-    cwd = conf.."data/sessions",
+    cwd = conf.."/data/sessions",
     file_ignore_patterns = ignore,
   }))
 end

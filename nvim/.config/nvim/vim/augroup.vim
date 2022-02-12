@@ -1,6 +1,11 @@
 function! MdxSpecific()
   set ft=markdown
   set tw=70
+  function! MarkdownHeadersSetext()
+    silent g/^#\s/norm! ^df yypVr=
+    silent g/^##\s/norm! ^df yypVr-
+  endfunction
+  command! MarkdownHeadersSetext :call MarkdownHeadersSetext()
   nnoremap <buffer> <leader>p :Prettier<CR>:MarkdownHeadersSetext<CR>:echo "Prettier + MDX!"<CR>
 
   " makes word surrounded in backticks
@@ -49,11 +54,6 @@ function! StanGlyphs()
   %s/‘/'/g
 endfunction
 
-function! MarkdownHeadersSetext()
-  silent g/^#\s/norm! ^df yypVr=
-  silent g/^##\s/norm! ^df yypVr-
-endfunction
-
 function! Date()
   let l:filename = expand("%:t")
   if l:filename ==# "notes.yml"
@@ -68,16 +68,13 @@ function TeleIfEmpty()
     echo "Tele? "
     let c = getchar()
     if c == char2nr("\<CR>")
-      lua require("brew.telescope.file").cwd()
+      lua require('brew.telescope.file').cwd()
     endif
   endif
   redraw!
   echo ""
 endfunction
-
 " au VimEnter * call TeleIfEmpty()
 
 command! StanGlyphs :silent! call StanGlyphs()
-" command! Date :silent! call Date()
 command! Date :call Date()
-command! MarkdownHeadersSetext :call MarkdownHeadersSetext()

@@ -1,7 +1,6 @@
 local actions = require('brew.telescope.actions')
-local home = require('brew').env.home
 local ignore = require('brew.telescope.ignore')
-local git_check = require('brew').utils.is_git_repo
+local git_check = require('brew.core').utils.is_git_repo
 
 local M = {}
 
@@ -12,7 +11,7 @@ M.repo = function()
     if (input_string == '') then
       return
     end
-    require("telescope.builtin").grep_string({
+    require('telescope.builtin').grep_string({
       search = input_string,
       prompt_title = "Word In Repo",
       cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1],
@@ -29,13 +28,14 @@ M.repo = function()
 end
 
 M.cwd = function()
-  local pwd = string.gsub(vim.fn.getcwd(), home, '~/')
+  local HOME = vim.env.HOME
+  local pwd = string.gsub(vim.fn.getcwd(), HOME, '~')
 
   local input_string = vim.fn.input("Search In [" .. pwd .. "] > ")
   if (input_string == '') then
     return
   end
-  require("telescope.builtin").grep_string({
+  require('telescope.builtin').grep_string({
     search = input_string,
     prompt_title = "Word In Directory",
     file_ignore_patterns = ignore,
@@ -50,7 +50,7 @@ end
 -- searches repo for work under cursor
 M.this_in_repo = function()
   if git_check() then
-    require("telescope.builtin").grep_string({
+    require('telescope.builtin').grep_string({
       prompt_title = "Word In Repo",
       cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1],
       file_ignore_patterns = ignore,
