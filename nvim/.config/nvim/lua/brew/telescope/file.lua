@@ -1,68 +1,21 @@
 local env = require('brew.core').env
 local ignore = require('brew.telescope.ignore')
-local git_check = require('brew.core').utils.is_git_repo
+local is_git_repo = require('brew.core').utils.is_git_repo
 
 local M = {}
 
-M.cwd = function ()
-  require('telescope.builtin').find_files({
-    prompt_title = 'Files In CWD',
+M.repo = function()
+  if not is_git_repo() then print('not in a git repo') return end
+  require('telescope.builtin').git_files({
+    prompt_title = 'Files In Repo',
     file_ignore_patterns = ignore
   })
 end
 
-M.repo = function()
-  if git_check() then
-    require('telescope.builtin').git_files({
-      prompt_title = 'Files In Repo',
-      file_ignore_patterns = ignore
-    })
-  else
-    print('not in a git repo')
-  end
-end
-
--- searches all dotfiles by filename
-M.dots = function()
+M.cwd = function()
   require('telescope.builtin').find_files({
-    hidden = true,
-    cwd = env.dots_root,
-    prompt_title = "searching dotfiles",
-    file_ignore_patterns = ignore,
-  })
-end
-
-local dir_search = function(opts)
-  require('telescope.builtin').find_files({
-    hidden = true,
-    preview = false,
-    cwd = opts.search_dir,
-    prompt_title = opts.prompt_title,
-    file_ignore_patterns = ignore,
-  })
-end
-
--- searches telescope lua files
-M.telescope = function()
-  dir_search({
-    search_dir = env.home..".config/nvim/plugged/telescope.nvim/lua/telescope",
-    prompt_title = 'telescope lua files'
-  })
-end
-
--- searches university files
-M.university = function()
-  dir_search({
-    search_dir = env.repos.."uni",
-    prompt_title = 'university files'
-  })
-end
-
--- searches my list of repos
-M.repo_search = function()
-  dir_search({
-    search_dir = env.repos,
-    prompt_title = 'searching in repos'
+    prompt_title = 'Files In CWD',
+    file_ignore_patterns = ignore
   })
 end
 
@@ -74,20 +27,62 @@ M.recents = function()
   })
 end
 
+local dir_search = function(opts)
+  require('telescope.builtin').find_files({
+    hidden = true,
+    preview = false,
+    cwd = opts.cwd,
+    prompt_title = opts.prompt_title,
+    file_ignore_patterns = ignore,
+  })
+end
+
+-- searches dotfiles
+M.dots = function()
+  dir_search({
+    cwd = env.dots_root,
+    prompt_title = "dotfiles",
+  })
+end
+
+-- searches telescope lua files
+M.telescope = function()
+  dir_search({
+    cwd = env.home.."/.config/nvim/plugged/telescope.nvim/lua/telescope",
+    prompt_title = 'telescope lua files'
+  })
+end
+
+-- searches university files
+M.university = function()
+  dir_search({
+    cwd = env.repos.."/uni",
+    prompt_title = 'university files'
+  })
+end
+
+-- searches my list of repos
+M.repo_search = function()
+  dir_search({
+    cwd = env.repos,
+    prompt_title = 'searching in repos'
+  })
+end
+
 -- searches other repos I've cloned locally
 M.other_repos_search = function()
   dir_search({
-    search_dir = env.home..'other-repos',
+    search_dir = env.home..'/other-repos',
     prompt_title = 'searching in other-repos'
   })
 end
 
+-- searches notes directory
 M.notes = function()
   dir_search({
-    search_dir = env.repos..'notes',
+    search_dir = env.repos..'/notes',
     prompt_title = 'searching in notes'
   })
 end
-
 
 return M

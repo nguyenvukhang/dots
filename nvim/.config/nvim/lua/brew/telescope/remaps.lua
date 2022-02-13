@@ -12,7 +12,7 @@ local tele = function(keypress, search_type, search_function)
   { noremap = true, silent = true })
 end
 
-tele('<C-b>', 'builtin', 'buffers')
+tele('<C-b>', 'builtin', 'buffers()')
 
 -- file search
 tele('<C-p>', 'file', 'repo()')
