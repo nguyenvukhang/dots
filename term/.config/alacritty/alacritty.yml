@@ -3,6 +3,7 @@ window:
     x: 8
     y: 4
   dynamic_padding: true
+  opacity: 0.96
   decorations: full
 
 scrolling:
@@ -26,37 +27,35 @@ font:
 # Colors (Gruvbox Dark)
 colors:
   bright:
-    black: '#7f7061'
-    blue: '#719586'
-    cyan: '#7db669'
-    green: '#aab01e'
-    magenta: '#c77089'
-    red: '#f73028'
-    white: '#e6d4a3'
-    yellow: '#f7b125'
+    black: '#7c6f64'
+    blue: '#83a598'
+    cyan: '#8ec07c'
+    green: '#b8bb26'
+    magenta: '#d3869b'
+    red: '#fb4934'
+    white: '#ebdbb2'
+    yellow: '#fabd2f'
   cursor:
-    cursor: '#e6d4a3'
-    text: '#1e1e1e'
+    cursor: '#ebdbb2'
+    text: '#282828'
   normal:
-    black: '#7f7061'
-    blue: '#719586'
-    cyan: '#7db669'
-    green: '#aab01e'
-    magenta: '#c77089'
-    red: '#f73028'
-    white: '#e6d4a3'
-    yellow: '#f7b125'
+    black: '#7c6f64'
+    blue: '#83a598'
+    cyan: '#8ec07c'
+    green: '#b8bb26'
+    magenta: '#d3869b'
+    red: '#fb4934'
+    white: '#ebdbb2'
+    yellow: '#fabd2f'
   primary:
     background: '#282828'
-    foreground: '#e6d4a3'
+    foreground: '#ebdbb2'
   selection:
-    background: '#e6d4a3'
-    text: '#534a42'
+    background: '#ebdbb2'
+    text: '#504945'
 
 bell:
   duration: 0
-
-background_opacity: 1
 
 cursor:
   style:
@@ -65,4 +64,4 @@ cursor:
   blink_interval: 750
   unfocused_hollow: true
 
-live_config_reload: true
+live_config_reload: false
