@@ -12,7 +12,7 @@ alias zr="exec $SHELL -l" # reloads shell
 
 alias py=python3
 alias oc=octave
-# alias vim=nvim
+alias vim=nvim
 
 alias yb="yarn build"
 alias yd="yarn dev"
