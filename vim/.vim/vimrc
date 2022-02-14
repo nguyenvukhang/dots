@@ -31,6 +31,8 @@ set termguicolors
 let g:gruvbox_bold = 0
 let g:gruvbox_italicize_strings = 0
 let g:gruvbox_italics = 0
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 colorscheme gruvbox8
 syntax on
 " }}}

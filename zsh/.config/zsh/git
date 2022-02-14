@@ -14,7 +14,7 @@ alias gitm="$EDITOR .gitmodules"
 alias gp="git number -c $EDITOR" # git preview
 alias gcan="git commit --amend --no-edit"
 
-alias gf="git fetch --all"
+alias gf="git fetch"
 
 alias gap="git number add -p"
 alias gms="git merge --squash" # squash diff into one commit

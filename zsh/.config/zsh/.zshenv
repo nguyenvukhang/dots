@@ -10,6 +10,7 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export N_PREFIX=$HOME/.local/bin/n
 export PREFIX=$HOME/.local/bin/n
+export TERM="screen-256color"
 # export VIMTEX_OUTPUT_DIRECTORY=$HOME/.local/vimtex
 
 # editor
