@@ -10,14 +10,9 @@
 # cd neovim
 # ln -s ~/path/to/this/script .
 
-INSTALL_DIRECTORY=$HOME/.local/bin
-INSTALL_PATH=$INSTALL_DIRECTORY/nvim
+INSTALL_DIRECTORY=/usr/local
 
-make distclean
-make \
+sudo make \
   CMAKE_BUILD_TYPE=Release \
   CMAKE_INSTALL_PREFIX=$INSTALL_DIRECTORY \
   install
-
-rm $INSTALL_PATH
-cp ./build/bin/nvim $INSTALL_PATH
