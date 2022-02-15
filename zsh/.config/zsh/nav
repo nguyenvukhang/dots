@@ -50,25 +50,17 @@ function jumpToFolder() {
   local BASEDIR=$1 
   local DEFAULTDIR=$2
 
-  local OPTIONS=$(fd \
-    -t d \
-    -d 1 \
+  local OPTIONS=$(fd -t d -d 1 \
     --base-directory $BASEDIR \
     --exec basename)
 
   local RES="home\n$OPTIONS"
 
-  local TARGET=$(echo $RES | fzf \
-    --height=10 +m \
-    --no-mouse \
-    --reverse \
-    --no-info \
-    --prompt="  " \
-    --color='pointer:2')
+  local TARGET=$(echo $RES | fzf --height=10 +m --no-mouse --reverse \
+    --no-info --prompt="  " --color='pointer:2')
 
   case $TARGET in 
-    "")
-      return true;;
+    "") return true;;
     "home") cd $DEFAULTDIR;;
     *) cd $BASEDIR$TARGET;;
   esac
@@ -76,8 +68,26 @@ function jumpToFolder() {
 
 # to university folder
 function 2u() {
-  local BASEDIR="$REPOS/uni/"
-  local DEFAULTDIR="$REPOS/uni/"
+  local BASEDIR=$REPOS/uni
+  local DEFAULTDIR=$REPOS/uni
 
-  jumpToFolder $BASEDIR $BASEDIR
+  local OPTIONS=$(fd -t d -d 1 \
+    --base-directory $BASEDIR \
+    --exec basename)
+
+  local RES="home\n$OPTIONS"
+
+  local TARGET=$(echo $RES | fzf --height=10 +m --no-mouse --reverse \
+    --no-info --prompt="  " --color='pointer:2')
+
+  function jumpToModule() {
+    cd $BASEDIR/$TARGET/modules/$TARGET 2>/dev/null \
+      || cd $BASEDIR/$TARGET 
+  }
+
+  case $TARGET in 
+    "") return true;;
+    "home") cd $DEFAULTDIR;;
+    *) jumpToModule;;
+  esac
 }
