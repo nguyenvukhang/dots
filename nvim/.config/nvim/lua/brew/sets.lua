@@ -6,6 +6,7 @@ vim.opt.softtabstop    = 1          -- # of spaces a <Tab> is when editing
 vim.opt.expandtab      = true       -- space instead tab when pressing <Tab>
 vim.opt.shiftwidth     = 2          -- # of spaces to use for each >> and <<
 vim.opt.wrap           = false      -- line wrap
+vim.opt.wrapscan       = false      -- search wrap
 vim.opt.linebreak      = true       -- wrap without breaking words
 vim.opt.breakindent    = true       -- indented wraps
 vim.opt.guicursor      = ''         -- make cursor a block
