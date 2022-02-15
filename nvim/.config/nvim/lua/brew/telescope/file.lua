@@ -32,6 +32,7 @@ local dir_search = function(opts)
     hidden = true,
     preview = false,
     cwd = opts.cwd,
+    search_dirs = opts.search_dirs,
     prompt_title = opts.prompt_title,
     file_ignore_patterns = ignore,
   })
@@ -41,6 +42,7 @@ end
 M.dots = function()
   dir_search({
     cwd = env.dots_root,
+    search_dirs = env.dots,
     prompt_title = "dotfiles",
   })
 end

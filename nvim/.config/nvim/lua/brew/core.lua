@@ -62,7 +62,6 @@ local env = {
   repos = HOME..'/repos',
   dots_root = DOTS,
   dots = {
-    DOTS,
     DOTS..'/nvim/.config/nvim',
     DOTS..'/zsh',
     DOTS..'/personal',
