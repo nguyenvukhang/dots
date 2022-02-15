@@ -9,15 +9,9 @@ function g() {
   local check=$(command ls -Ap)
   [[ ! $check = *"/"* ]] && return true
 
-  local target=$(fd --hidden -d $depth -t d | fzf \
-    --height=10 +m \
-    --no-mouse \
+  local target=$(fd --hidden -d $depth -t d | fzf $FZF_OPTS \
     --header=${PWD/#$HOME/'~'} \
-    --expect "enter,esc,left,right" \
-    --reverse \
-    --no-info \
-    --prompt="  " \
-    --color='pointer:2')
+    --expect "enter,esc,left,right" )
   target=${target#/*}
 
   local res=()

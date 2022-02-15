@@ -75,8 +75,6 @@ function gq() {
 
 function gb() {
   # fzf-branch (switch branch)
-  local FZF_OPTS=(--height=7 +m --no-mouse --reverse
-    --no-info --prompt="  " --color='pointer:green')
   branch=$(git branch | fzf $FZF_OPTS)
   [ $branch ] && git checkout ${branch[3,-1]} || return 0
 }

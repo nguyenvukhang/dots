@@ -56,8 +56,7 @@ function jumpToFolder() {
 
   local RES="home\n$OPTIONS"
 
-  local TARGET=$(echo $RES | fzf --height=10 +m --no-mouse --reverse \
-    --no-info --prompt="  " --color='pointer:2')
+  local TARGET=$(echo $RES | fzf $FZF_OPTS)
 
   case $TARGET in 
     "") return true;;
@@ -77,8 +76,7 @@ function 2u() {
 
   local RES="home\n$OPTIONS"
 
-  local TARGET=$(echo $RES | fzf --height=10 +m --no-mouse --reverse \
-    --no-info --prompt="  " --color='pointer:2')
+  local TARGET=$(echo $RES | fzf $FZF_OPTS)
 
   function jumpToModule() {
     cd $BASEDIR/$TARGET/modules/$TARGET 2>/dev/null \

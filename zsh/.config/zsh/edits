@@ -12,13 +12,11 @@ function ed() {
     [v]="$DOTS/nvim/.config/nvim/init.lua"
     [z]="$DOTS/zsh/.config/zsh/.zshrc"
   )
-  local FZF_OPTS=(--height=7 +m --no-mouse --reverse
-    --no-info --prompt="  " --color='pointer:green')
   function fuzzy_ed() {
     # pick a key out of the keys of pretty
     local key=$(for i in ${(v)marks}; do
       echo "${i/$HOME\//~/}"
-    done | fzf ${FZF_OPTS})
+    done | fzf $FZF_OPTS)
     [ -z $key ] && return true
     $EDITOR "${key/\~\//$HOME/}"
   }

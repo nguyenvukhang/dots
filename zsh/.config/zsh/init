@@ -8,12 +8,6 @@ setopt globdots
 
 # fuzzy vim
 function v() {
-  local target=$(fzf \
-    --height=10 +m \
-    --no-mouse \
-    --reverse \
-    --no-info \
-    --prompt="  " \
-    --color='pointer:2')
+  local target=$(fzf $FZF_OPTS)
   [ $target ] && $EDITOR $target
 }

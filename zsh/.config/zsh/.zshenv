@@ -3,6 +3,8 @@ REPOS=$HOME/repos
 ZSH_DOTS=$HOME/.config/zsh
 MAPLE=192.168.1.9
 BREW=brew@$MAPLE
+FZF_OPTS=(--height=7 +m --no-mouse --reverse \
+  --no-info --prompt="  " --color='pointer:green')
 
 # exports
 export DOTS=$HOME/dots

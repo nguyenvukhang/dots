@@ -10,13 +10,7 @@ function p() {
     results+=("${${line%.gpg*}#*./}")
   done < <(fd .\.gpg --base-directory $passdir)
   
-  local gpg_file=$(for i in $results; do; echo $i; done | fzf \
-    --height=10 +m \
-    --no-mouse \
-    --reverse \
-    --no-info \
-    --prompt="  " \
-    --color='pointer:2')
+  local gpg_file=$(for i in $results; do; echo $i; done | fzf $FZF_OPTS)
   cred=${gpg_file%.gpg*}
 
   # guard
