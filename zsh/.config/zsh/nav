@@ -80,7 +80,7 @@ function 2u() {
 
   function jumpToModule() {
     cd $BASEDIR/$TARGET/modules/$TARGET 2>/dev/null \
-      || cd $BASEDIR/$TARGET 
+      || cd $BASEDIR/$TARGET/modules
   }
 
   case $TARGET in 

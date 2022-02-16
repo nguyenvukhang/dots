@@ -48,9 +48,19 @@ function gcb() {
   git clone --bare git@github.com:$1.git
 }
 
-function gl() { git log --oneline --graph -n ${1-10} } # git log
-function gla() { git log --oneline --graph --all -n ${1-10} } # git log (all)
 function glt() { git log --since="24 hours ago" --oneline --graph --all } # git log (today)
+
+function gl() {
+  git log --graph \
+    --pretty=format:"%C(yellow)%h%C(auto)%d %Creset%s %C(dim)(%ar)" \
+    -n ${1-12}
+}
+
+function gla() {
+  git log --graph --all \
+    --pretty=format:"%C(yellow)%h%C(auto)%d %Creset%s %C(dim)(%ar)" \
+    -n ${1-12}
+}
 
 # git commit
 function gcm() {
@@ -74,6 +84,7 @@ function gq() {
 }
 
 function gb() {
+  if [ $1 ]; then; git branch "$@"; return; fi
   # fzf-branch (switch branch)
   branch=$(git branch | fzf $FZF_OPTS)
   [ $branch ] && git checkout ${branch[3,-1]} || return 0
