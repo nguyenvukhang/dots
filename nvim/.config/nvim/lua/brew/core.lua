@@ -92,7 +92,7 @@ end
 
 -- toggles a todo
 local Todolist = function()
-  local file = env.home.."repos/uni/todo.md"
+  local file = env.home.."/repos/uni/todo.md"
   local open = vim.fn.bufwinid(file)
   if open < 0 then
     local h = math.floor(vim.fn.winheight(0) * 0.5)
