@@ -6,6 +6,7 @@ function uw() {
   local module=$(fd -t d -d 1 \
     --base-directory $worktree/master/modules \
     --exec basename | fzf $FZF_OPTS)
+  [ -z $module ] && return 0
 
   local function jump_there() {
     cd $worktree/$module/modules/$module 2>/dev/null \
@@ -44,17 +45,34 @@ function ud() {
     --base-directory $worktree \
     --exec basename)
   while IFS= read -r line; do
-    modules+=($line)
+    modules+=("$line")
   done < <(fd -t d -d 1 --base-directory $worktree/master/modules \
     --exec basename)
   local delete_module=$(for m in $modules; do
     (($worktrees[(Ie)$m])) && echo $m
   done | fzf $FZF_OPTS)
+  [ -z $delete_module ] && return 0
   local confirm=$(printf "yes\nno" | fzf $FZF_OPTS \
     --prompt "confirm deletion of worktree $delete_module?")
+  [[ $confirm == "no" ]] && echo "deletion cancelled." && return 0
   local ok_worktree=false; local ok_branch=false
   git -C $worktree worktree remove $delete_module && ok_worktree=true
   git -C $worktree branch -d $delete_module && ok_branch=true
   echo "Deleted worktree $delete_module."
   cd $worktree
+}
+
+function umm() {
+  local worktree=$REPOS/uni
+  local branches=()
+  while IFS= read -r line; do
+    [ "$line" != "master" ] && branches+=("$line")
+  done < <(git -C $worktree branch --format='%(refname:short)')
+  local to_merge=$(for i in $branches; do; echo $i; done | fzf $FZF_OPTS)
+  [ -z $to_merge ] && return 0
+  local confirm=$(printf "yes\nno" | fzf $FZF_OPTS \
+    --prompt "confirm pull master to $to_merge?")
+  [[ $confirm == "no" ]] && echo "pull cancelled." && return 0
+  git -C $worktree/master checkout master >/dev/null
+  git -C $worktree/master merge $to_merge
 }
