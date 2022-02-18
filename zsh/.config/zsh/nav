@@ -28,7 +28,7 @@ typeset -A local nav=(
   [v]="$DOTS/nvim/.config/nvim"
   [vl]="$DOTS/nvim/.config/nvim/lua/brew"
   [w]="$HOME/sunnus/web/dev"
-  [z]="$DOTS/zsh"
+  [z]="$DOTS/zsh/.config/zsh"
   [A]="/Applications"
 )
 
