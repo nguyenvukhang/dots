@@ -48,8 +48,8 @@ local pickers = {
     sort_lastused = true,
     theme = 'dropdown',
     previewer = false,
-    path_display = { tail = 1 },
-    layout_config = { height = 10, width = 40 },
+    path_display = { smart = 1 },
+    layout_config = { height = 15, width = 50 },
     mappings = {
       i = {
         ['<c-d>'] = require('telescope.actions').delete_buffer,
