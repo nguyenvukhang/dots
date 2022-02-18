@@ -1,0 +1,60 @@
+#!/usr/bin/env zsh
+
+# uni: create worktree
+function uw() {
+  local worktree=$REPOS/uni
+  local module=$(fd -t d -d 1 \
+    --base-directory $worktree/master/modules \
+    --exec basename | fzf $FZF_OPTS)
+
+  local function jump_there() {
+    cd $worktree/$module/modules/$module 2>/dev/null \
+        || cd $worktree/$module/modules
+  }
+
+  # check if there's current an existing git branch
+  # with the same name (may not be a worktree)
+  local branches=$(git -C $worktree branch --format='%(refname:short)')
+
+  local has_branch=false
+  (($branches[(Ie)$module])) && has_branch=true
+
+  # check if worktree exists
+  local has_worktree=false
+  [ -d $worktree/$module ] && has_worktree=true
+
+  if [ "$has_worktree" = true ]; then
+    jump_there
+  else # no worktree
+    if [ "$has_branch" = true ]; then
+      echo "branch exists but worktree doesn't: currently unsupported"
+      return 1
+    else # no branch
+      # create worktree and branch at the same time
+      git -C $worktree worktree add $module
+      jump_there
+    fi
+  fi
+}
+
+# uni: delete worktree
+function ud() {
+  local worktree=$REPOS/uni; local modules
+  local worktrees=$(fd -t d -d 1 \
+    --base-directory $worktree \
+    --exec basename)
+  while IFS= read -r line; do
+    modules+=($line)
+  done < <(fd -t d -d 1 --base-directory $worktree/master/modules \
+    --exec basename)
+  local delete_module=$(for m in $modules; do
+    (($worktrees[(Ie)$m])) && echo $m
+  done | fzf $FZF_OPTS)
+  local confirm=$(printf "yes\nno" | fzf $FZF_OPTS \
+    --prompt "confirm deletion of worktree $delete_module?")
+  local ok_worktree=false; local ok_branch=false
+  git -C $worktree worktree remove $delete_module && ok_worktree=true
+  git -C $worktree branch -d $delete_module && ok_branch=true
+  echo "Deleted worktree $delete_module."
+  cd $worktree
+}

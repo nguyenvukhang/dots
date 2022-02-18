@@ -9,6 +9,7 @@ source $ZSH_DOTS/prompt
 source $ZSH_DOTS/ls
 source $ZSH_DOTS/edits
 source $ZSH_DOTS/git
+source $ZSH_DOTS/uni
 source $ZSH_DOTS/jump
 source $ZSH_DOTS/nav
 source $ZSH_DOTS/one-liners
