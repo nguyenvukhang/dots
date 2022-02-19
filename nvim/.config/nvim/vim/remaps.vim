@@ -41,9 +41,9 @@ vnoremap <C-r> y:%s/<C-r>"//g<left><left>
 " search visual selection
 vnoremap * y/<C-r>"<cr>
 " refresh syntax highlighting
-nnoremap <silent> <f1> :syntax sync fromstart<cr>
+nnoremap <f1> :syntax sync fromstart<cr>
 " toggle spell check
-nnoremap <silent> <f5> :setlocal spell!<cr>:set spell?<cr>
+nnoremap <f5> :setlocal spell!<cr>:set spell?<cr>
 " vim functions
 command! CloseOtherBuffers execute '%bd|e #|norm `"'
 nnoremap <leader>x :CloseOtherBuffers
