@@ -1,11 +1,17 @@
 #!/usr/bin/env zsh
-#
+
 function prompt_git() {
   local branch=$(git branch --show-current 2> /dev/null)
-  [ $branch ] \
-    && local remote=${${$(git config --get remote.origin.url)##*/}%*.git} \
-    && echo "%F{241}(%F{246}${remote}%F{241}/${branch})"
+  if [ $branch ]; then
+    local remote=${${$(git config --get remote.origin.url)##*/}%*.git}
+    if [ $remote ]; then
+      echo "%F{241}(%F{246}${remote}%F{241}/${branch})"
+    else
+      echo "%F{241}(${branch})"
+    fi
+  fi
 }
+
 setopt prompt_subst
 PROMPT=$'%F{blue}%~ $(prompt_git)%f
 %(?.%F{green}> %f.%F{red}> %f)'
