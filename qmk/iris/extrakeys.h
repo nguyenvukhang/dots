@@ -21,8 +21,11 @@ enum my_keycodes {
     HYPRA, HYPRB, HYPRC, HYPRD, HYPRE, HYPRF, HYPRG, HYPRH, HYPRI, HYPRJ,
     HYPRK, HYPRL, HYPRM, HYPRN, HYPRO, HYPRP, HYPRQ, HYPRR, HYPRS, HYPRT,
     HYPRU, HYPRV, HYPRW, HYPRX, HYPRY, HYPRZ,
-    KC_STAB
+    KC_STAB, TMUX,
+    UP_A, UP_S, UP_D, UP_F, UP_G
 };
+
+#define TMUX LCTL(KC_SPC)
 
 #undef _______
 #define ______ KC_NO
@@ -68,12 +71,20 @@ enum my_keycodes {
 
 #define KC_STAB LSFT(KC_TAB)
 
-
 /* Summary:
  * CTRL + Backspace => Delete
  * CTRL + MO(_UP)   => CTRL + Page-up
  */
 uint8_t mod_state;
+
+static bool spotlight(const char* str, keyrecord_t *record) {
+  if (record->event.pressed) {
+    SEND_STRING(SS_LGUI(" "));
+    send_string(str);
+    SEND_STRING("\n");
+  } return true;
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   mod_state = get_mods();
   switch (keycode) {
@@ -114,7 +125,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return true;
     };
+    case UP_A: {return spotlight("iterm",record);};
+    case UP_S: {return spotlight("safari",record);};
+    case UP_D: {return spotlight("spotify",record);};
+    case UP_F: {return spotlight("skim",record);};
+    case UP_G: {return spotlight("preview",record);};
     break;
   }
   return true;
 };
+
+/* MACROS */
+
+
