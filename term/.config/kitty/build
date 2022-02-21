@@ -1,0 +1,6 @@
+#!/bin/bash
+
+LDFLAGS=-L/opt/homebrew/lib \
+    python3 setup.py kitty.app \
+    --extra-include-dirs /opt/homebrew/Cellar/librsync/2.3.2/include \
+    -I"/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9.10/Frameworks/Python.framework/Headers"
