@@ -28,8 +28,8 @@ export PATH
 
 setopt ignoreeof
 
-eval "$(pyenv init -)"
-eval "$(jenv init -)"
+# eval "$(pyenv init -)"
+# eval "$(jenv init -)"
 
 # if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
 #   tmux new -As base
