@@ -25,6 +25,8 @@ alias gc="git commit"
 alias gau="git add -u"
 alias ga.="git add ."
 
+alias gce="git commit --allow-empty -m"
+
 function gur() {
   git commit -m "update ref"
   git push
