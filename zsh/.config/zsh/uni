@@ -40,26 +40,64 @@ function uw() {
 
 # uni: delete worktree
 function ud() {
-  local worktree=$REPOS/uni; local modules
-  local worktrees=$(fd -t d -d 1 \
-    --base-directory $worktree \
-    --exec basename)
+  _N='\033[0m'    # Normal
+  _R='\033[0;31m' # Red
+  _G='\033[0;32m' # Green
+  _Y='\033[0;33m' # Yellow
+  _B='\033[0;34m' # Blue
+  _P='\033[0;35m' # Purple
+  _C='\033[0;36m' # Cyan
+  _S='\033[1;37m' # Gray (Soft)
+
+  local UNI=$REPOS/uni
+
+  # get list of worktrees (except for master)
+  declare -A local worktrees
   while IFS= read -r line; do
-    modules+=("$line")
-  done < <(fd -t d -d 1 --base-directory $worktree/master/modules \
-    --exec basename)
-  local delete_module=$(for m in $modules; do
-    (($worktrees[(Ie)$m])) && echo $m
-  done | fzf $FZF_OPTS)
-  [ -z $delete_module ] && return 0
-  local confirm=$(printf "yes\nno" | fzf $FZF_OPTS \
-    --prompt "confirm deletion of worktree $delete_module?")
-  [[ $confirm == "no" ]] && echo "deletion cancelled." && return 0
+    [[ ${line%% *} != "worktree" ]] && continue
+    # worktree path is everything after "worktree " in that line
+    worktree_path=${line##*worktree }
+    # worktree name is the text following the UNI variable
+    # and after the slash
+    worktree_name=${${line##*$UNI}##*/}
+
+    # reject the worktree root and the master worktree
+    [[ $worktree_name == "master" || -z $worktree_name ]] && continue
+
+    # add to list of worktrees
+    worktrees[$worktree_name]="$worktree_path"
+  done < <(git -C $UNI worktree list --porcelain)
+
+  # if there are no valid worktrees to delete, quit out
+  [ -z $worktrees ] && echo "no worktrees to delete. quitting." && return 0
+
+  # prompt user for which worktree to delete
+  local to_delete=$(for key in ${(k)worktrees}; do; echo $key; done \
+    | fzf $FZF_OPTS)
+
+  # if nothing is selected, quit out
+  [ -z $to_delete ] && echo "nothing selected. quitting." && return 0
+
+  # get the branch that's currently checked out on that worktree
+  local worktree_path=$worktrees[$to_delete]
+  local branch=$(git -C $worktree_path branch --show-current)
+
+  # ask for confirmation, since this proceeding will forcefully
+  # delete both worktree and the associated branch
+  [[ $branch == $to_delete ]] \
+    && printf "${_B}confirm deletion of worktree ${_Y}$to_delete${_B}?${_N}" \
+    || printf "${_B}confirm deletion of worktree ${_Y}$to_delete${_B} @ branch ${_Y}$branch${_B}?${_N}"
+  local confirm=$(printf "yes\nno" | fzf $FZF_OPTS)
+
+  # quit if "no" or escaped
+  [[ $confirm == "no" || -z $confirm ]] && echo "deletion cancelled." && return 0
+
+  # proceed with deletion fo worktree and checked out branch
   local ok_worktree=false; local ok_branch=false
-  git -C $worktree worktree remove $delete_module && ok_worktree=true
-  git -C $worktree branch -d $delete_module && ok_branch=true
-  echo "Deleted worktree $delete_module."
-  cd $worktree
+  git -C $UNI worktree remove $to_delete && ok_worktree=true
+  git -C $UNI branch -D $to_delete && ok_branch=true
+  echo "Deleted worktree $to_delete."
+  cd $UNI
 }
 
 function umm() {
