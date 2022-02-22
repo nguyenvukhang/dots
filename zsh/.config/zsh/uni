@@ -28,7 +28,7 @@ function uw() {
     jump_there
   else # no worktree
     if [ "$has_branch" = true ]; then
-      echo "branch exists but worktree doesn't: currently unsupported"
+      echo "A branch called \"$module\" already exists."
       return 1
     else # no branch
       # create worktree and branch at the same time
@@ -41,13 +41,8 @@ function uw() {
 # uni: delete worktree
 function ud() {
   _N='\033[0m'    # Normal
-  _R='\033[0;31m' # Red
-  _G='\033[0;32m' # Green
   _Y='\033[0;33m' # Yellow
   _B='\033[0;34m' # Blue
-  _P='\033[0;35m' # Purple
-  _C='\033[0;36m' # Cyan
-  _S='\033[1;37m' # Gray (Soft)
 
   local UNI=$REPOS/uni
 
@@ -69,14 +64,14 @@ function ud() {
   done < <(git -C $UNI worktree list --porcelain)
 
   # if there are no valid worktrees to delete, quit out
-  [ -z $worktrees ] && echo "no worktrees to delete. quitting." && return 0
+  [ -z $worktrees ] && echo "No worktrees to delete. Quitting." && return 0
 
   # prompt user for which worktree to delete
   local to_delete=$(for key in ${(k)worktrees}; do; echo $key; done \
     | fzf $FZF_OPTS)
 
   # if nothing is selected, quit out
-  [ -z $to_delete ] && echo "nothing selected. quitting." && return 0
+  [ -z $to_delete ] && echo "Nothing selected. Quitting." && return 0
 
   # get the branch that's currently checked out on that worktree
   local worktree_path=$worktrees[$to_delete]
@@ -90,16 +85,17 @@ function ud() {
   local confirm=$(printf "yes\nno" | fzf $FZF_OPTS)
 
   # quit if "no" or escaped
-  [[ $confirm == "no" || -z $confirm ]] && echo "deletion cancelled." && return 0
+  [[ $confirm == "no" || -z $confirm ]] && echo "Deletion cancelled." && return 0
 
   # proceed with deletion fo worktree and checked out branch
   local ok_worktree=false; local ok_branch=false
   git -C $UNI worktree remove $to_delete && ok_worktree=true
-  git -C $UNI branch -D $to_delete && ok_branch=true
+  git -C $UNI branch -D $branch && ok_branch=true
   echo "Deleted worktree $to_delete."
-  cd $UNI
+  cd $REPOS/uni
 }
 
+# uni: merge master
 function umm() {
   local worktree=$REPOS/uni
   local branches=()
