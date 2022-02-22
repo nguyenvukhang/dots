@@ -1,10 +1,10 @@
 window:
+  decorations: buttonless
   padding:
     x: 8
     y: 4
   dynamic_padding: true
-  opacity: 0.96
-  decorations: full
+  opacity: 1
 
 scrolling:
   history: 10000
