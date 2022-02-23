@@ -32,6 +32,14 @@ function gur() {
   git push
 }
 
+function gsl() {
+  [ $1 ] \
+    && local opts="--after='3 months' --grep=\"$@\"" \
+    || local opts="-n 10"
+  git log --graph --all $opts \
+    --pretty=format:"%C(yellow)%h%C(auto)%d %Creset%s %C(dim)(%ar)"
+}
+
 # git clone
 function gcl() {
   [ ${1%%:*} = "https" ] \
