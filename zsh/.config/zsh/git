@@ -4,6 +4,7 @@ alias gs="git number" # git status
 alias ga="git number add"
 alias gaa="git add --all"
 alias gco="git number checkout"
+alias gcf="git config --edit"
 # alias gb="git branch"
 
 alias gd="git number diff"
