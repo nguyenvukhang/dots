@@ -1,5 +1,24 @@
 #!/usr/bin/env zsh
 
+# TODO: make it permanent that worktrees add origin tracking#
+# EXAMPLE git config file:
+# ---------------------------------------------
+# [core]
+# 	repositoryformatversion = 0
+# 	filemode = true
+# 	bare = true
+# 	ignorecase = true
+# 	precomposeunicode = true
+# 	logallrefupdates = true
+# [remote "origin"]
+# 	url = git@github.com:sunnustech/app.git
+#   fetch = +refs/heads/*:refs/remotes/origin/*
+# [branch "feature/scoreboard"]
+# 	remote = origin
+# 	merge = refs/heads/feature/scoreboard
+# ---------------------------------------------
+
+
 alias gs="git number" # git status
 alias ga="git number add"
 alias gaa="git add --all"
