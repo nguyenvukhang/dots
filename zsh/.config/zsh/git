@@ -10,6 +10,7 @@ alias gd="git number diff"
 alias gds="git number diff --staged"
 alias giti="$EDITOR .gitignore"
 alias gr="git number reset"
+alias grh="git reset --hard"
 alias gitm="$EDITOR .gitmodules"
 alias gp="git number -c $EDITOR" # git preview
 alias gcan="git commit --amend --no-edit"
