@@ -19,7 +19,7 @@ end
 
 local setup = function()
   -- makes the statusbar consistent through vim splits
-  vim.cmd('hi StatusLine guifg='..colors.bg2)
+  vim.cmd('hi StatusLine guifg='..bg)
 
   -- setup
   require('lualine').setup {
