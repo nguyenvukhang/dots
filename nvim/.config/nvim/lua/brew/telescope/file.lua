@@ -28,14 +28,10 @@ M.recents = function()
 end
 
 local dir_search = function(opts)
-  require('telescope.builtin').find_files({
-    hidden = true,
-    preview = false,
-    cwd = opts.cwd,
-    search_dirs = opts.search_dirs,
-    prompt_title = opts.prompt_title,
-    file_ignore_patterns = ignore,
-  })
+  opts.hidden = true
+  opts.preview = false
+  opts.file_ignore_patterns = ignore
+  require('telescope.builtin').find_files(opts)
 end
 
 -- searches dotfiles
@@ -74,7 +70,7 @@ end
 -- searches other repos I've cloned locally
 M.other_repos_search = function()
   dir_search({
-    search_dir = env.home..'/other-repos',
+    cwd = env.home..'/other-repos',
     prompt_title = 'searching in other-repos'
   })
 end
@@ -82,7 +78,7 @@ end
 -- searches notes directory
 M.notes = function()
   dir_search({
-    search_dir = env.repos..'/notes',
+    cwd = env.repos..'/notes',
     prompt_title = 'searching in notes'
   })
 end
