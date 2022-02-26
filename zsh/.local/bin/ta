@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+# tmux attach script: ta
+
 t="${1-base}"
 # v=false
 # first argument is target attach
