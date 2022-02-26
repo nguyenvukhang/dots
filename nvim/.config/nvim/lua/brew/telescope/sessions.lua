@@ -62,7 +62,7 @@ local delete_session = function(prompt_bufnr)
     vim.cmd('silent exec \"!rm '..selection.path..'"')
     -- refresh telescope
     local current_picker = action_state.get_current_picker(prompt_bufnr)
-    current_picker:delete_selection()
+    current_picker:delete_selection(function () end)
   end
 end
 
