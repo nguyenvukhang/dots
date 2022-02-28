@@ -3,7 +3,7 @@
 # uni: create worktree
 function uw() {
   local worktree=$REPOS/uni
-  local module=$(fd -t d -d 1 \
+  local module=$(fd -t d -d 1 '^[A-Z]{2,3}[0-9]{4}[A-Z]?$' \
     --base-directory $worktree/master/modules \
     --exec basename | fzf $FZF_OPTS)
   [ -z $module ] && return 0
