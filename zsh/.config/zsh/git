@@ -54,11 +54,9 @@ function gur() {
 }
 
 function gsl() {
-  [ $1 ] \
-    && local opts="--after='3 months' --grep=\"$@\"" \
-    || local opts="-n 10"
-  git log --graph --all $opts \
-    --pretty=format:"%C(yellow)%h%C(auto)%d %Creset%s %C(dim)(%ar)"
+  local git_log=(git log --graph --all \
+    --pretty=format:"%C(yellow)%h%C(auto)%d %Creset%s %C(dim)(%ar)")
+  $git_log | fzf $FZF_OPTS --no-clear
 }
 
 # git clone
