@@ -8,6 +8,7 @@ local default_table = {
   ["Yes"] = "No",
   ["YES"] = "NO",
   ["yes"] = "no",
+  ["on"] = "off",
   ["1"] = "0",
   ["<"] = ">",
   ["+"] = "-",
