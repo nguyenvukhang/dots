@@ -2,13 +2,13 @@
 
 case $1 in
   "--pi")
-    local dots=(vim)
+    local dots=(nvim vim zsh)
     local root=()
-    local submodules=(nvim zsh personal pi);;
+    local submodules=(personal pi);;
   *)
-    local dots=(term xbar vim)
+    local dots=(tmux mac nvim term vim xbar zsh)
     local root=(root)
-    local submodules=(nvim zsh personal);;
+    local submodules=(personal);;
 esac
 
 setopt nullglob

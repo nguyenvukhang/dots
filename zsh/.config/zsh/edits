@@ -7,9 +7,11 @@ function ed() {
     [al]="$HOME/.config/alacritty/alacritty.yml"
     [g]="$HOME/.config/git/config"
     [k]="$DOTS/term/.config/kitty/kitty.conf"
+    [s]="$HOME/.config/skhd/skhdrc"
     [t]="$DOTS/tmux/.config/tmux/tmux.conf"
     [n]="$DOTS/zsh/.config/zsh/nav"
     [v]="$DOTS/nvim/.config/nvim/init.lua"
+    [y]="$HOME/.config/yabai/yabairc"
     [z]="$DOTS/zsh/.config/zsh/.zshrc"
   )
   function fuzzy_ed() {
