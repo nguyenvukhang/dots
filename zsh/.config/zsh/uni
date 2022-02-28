@@ -3,10 +3,18 @@
 # uni: create worktree
 function uw() {
   local worktree=$REPOS/uni
-  local module=$(fd -t d -d 1 '^[A-Z]{2,3}[0-9]{4}[A-Z]?$' \
+
+  local get_query_and_module=$(fd -t d -d 1 '^[A-Z]{2,3}[0-9]{4}[A-Z]?$' \
     --base-directory $worktree/master/modules \
-    --exec basename | fzf $FZF_OPTS)
-  [ -z $module ] && return 0
+    --exec basename | fzf $FZF_OPTS --print-query)
+
+  local qm=(); while IFS= read -r line; do qm+=( "$line" )
+  done < <( echo $get_query_and_module )
+
+  local query=${qm[1]}; local module=${qm[2]}
+
+  [[ -z $query && -z $module ]] && echo "Nothing queried. Quitting." && return 0
+  [ -z $module ] && module="$query"
 
   local function jump_there() {
     cd $worktree/$module/modules/$module 2>/dev/null \
@@ -64,14 +72,14 @@ function ud() {
   done < <(git -C $UNI worktree list --porcelain)
 
   # if there are no valid worktrees to delete, quit out
-  [ -z $worktrees ] && echo "No worktrees to delete. Quitting." && return 0
+  [[ -z $worktrees ]] && echo "No worktrees to delete. Quitting." && return 0
 
   # prompt user for which worktree to delete
   local to_delete=$(for key in ${(k)worktrees}; do; echo $key; done \
     | fzf $FZF_OPTS)
 
   # if nothing is selected, quit out
-  [ -z $to_delete ] && echo "Nothing selected. Quitting." && return 0
+  [[ -z $to_delete ]] && echo "Nothing selected. Quitting." && return 0
 
   # get the branch that's currently checked out on that worktree
   local worktree_path=$worktrees[$to_delete]
@@ -83,8 +91,8 @@ function ud() {
   # ask for confirmation, since this proceeding will forcefully
   # delete both worktree and the associated branch
   [[ $branch == $to_delete ]] \
-    && printf "${_B}confirm deletion of worktree ${_Y}$to_delete${_B}?${_N}" \
-    || printf "${_B}confirm deletion of worktree ${_Y}$to_delete${_B} @ branch ${_Y}$branch${_B}?${_N}"
+    && printf "\n${_B}confirm deletion of worktree ${_Y}$to_delete${_B}?${_N}" \
+    || printf "\n${_B}confirm deletion of worktree ${_Y}$to_delete${_B} @ branch ${_Y}$branch${_B}?${_N}"
   local confirm=$(printf "yes\nno" | fzf $FZF_OPTS)
 
   # quit if "no" or escaped
