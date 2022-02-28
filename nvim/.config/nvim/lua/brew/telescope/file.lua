@@ -15,7 +15,7 @@ end
 M.cwd = function()
   require('telescope.builtin').find_files({
     prompt_title = 'Files In CWD',
-    file_ignore_patterns = ignore
+    file_ignore_patterns = ignore,
   })
 end
 

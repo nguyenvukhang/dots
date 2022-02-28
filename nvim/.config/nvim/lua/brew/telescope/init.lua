@@ -20,12 +20,14 @@ local vimgrep_arguments = {
 
 local compact = {
   previewer = false,
+  hidden = true,
   sorting_strategy = 'ascending',
   theme = 'dropdown',
 }
 
 local pickers = {
   file_browser = compact,
+  git_files = { hidden = true },
   find_files = compact,
   oldfiles = compact,
   help_tags = {
