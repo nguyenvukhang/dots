@@ -53,7 +53,7 @@ function mac_setup() {
   # defaults write com.apple.Dock autohide-delay -float 1
   
   # reset dock appearance delay
-  defaults delete com.apple.Dock autohide-delay
+  # defaults delete com.apple.Dock autohide-delay
 
   killall Dock
 
@@ -65,6 +65,18 @@ function mac_setup() {
 
   # disable rubber band scrolling
   defaults write -g NSScrollViewRubberbanding -bool false
+
+  # disable Cmd-H hiding apps by making it Hypr-H
+  declare -A apps=(
+    [kitty]="net.kovidgoyal.kitty"
+    [Safari]="com.apple.Safari"
+    [Spotify]="com.spotify.client"
+  )
+
+  for key value in ${(kv)apps}; do
+    echo $key $value
+    # defaults write -app $key NSUserKeyEquivalents -dict-add "Hide $key" "\@\~\^\$h"
+  done
 }
 
 function brew_clutch() {
