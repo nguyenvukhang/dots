@@ -1,13 +1,20 @@
-cmd - 1 : yabai -m space --focus 1
-cmd - 2 : ~/files/yabai/spaces.py
-cmd - 3 : yabai -m space --focus 3
-cmd - 4 : yabai -m space --focus 4
+cmd - 1 : ~/dots/mac/.config/yabai/spaces.py 1
+cmd - 2 : ~/dots/mac/.config/yabai/spaces.py 2
+cmd - 3 : ~/dots/mac/.config/yabai/spaces.py 3
+cmd - 4 : ~/dots/mac/.config/yabai/spaces.py 4
+cmd - 5 : ~/dots/mac/.config/yabai/spaces.py 5
 
 cmd + shift - 1 : yabai -m window --space 1
 cmd + shift - 2 : yabai -m window --space 2
 cmd + shift - 3 : yabai -m window --space 3
 cmd + shift - 4 : yabai -m window --space 4
+cmd + shift - 5 : yabai -m window --space 5
 
 cmd - 0x32 : open -a Mission\ Control.app
 
 cmd - 0x24 : open -a kitty.app -n
+
+cmd + shift - 0x2F : yabai -m window --display next
+cmd + shift - 0x2B : yabai -m window --display prev
+cmd + shift + ctrl + alt - a : yabai -m window --display prev
+cmd + shift + ctrl + alt - s : yabai -m window --display next
