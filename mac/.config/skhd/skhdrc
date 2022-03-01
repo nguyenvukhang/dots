@@ -14,13 +14,17 @@ cmd - 0x32 : open -a Mission\ Control.app
 
 cmd - 0x24 : open -a kitty.app -n
 
-cmd - up : yabai -m window --focus prev
-cmd - down : yabai -m window --focus next
+# no-shift -> change focus
+# shift -> movements
 
-cmd + shift - up : yabai -m window --swap prev
-cmd + shift - down : yabai -m window --swap next
+cmd - left          : yabai -m window  --focus prev
+cmd - right         : yabai -m window  --focus next
+cmd - up            : yabai -m display --focus next
+cmd - down          : yabai -m display --focus prev
 
-cmd + shift - 0x2F : yabai -m window --display next
-cmd + shift - 0x2B : yabai -m window --display prev
-cmd + shift + ctrl + alt - a : yabai -m window --display prev
-cmd + shift + ctrl + alt - s : yabai -m window --display next
+cmd + shift - left  : yabai -m window  --swap prev
+cmd + shift - right : yabai -m window  --swap next
+cmd + shift - up    : yabai -m window  --display next; yabai -m display --focus next
+cmd + shift - down  : yabai -m window  --display prev; yabai -m display --focus prev
+
+# vim:ft=yaml
