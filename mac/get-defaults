@@ -1,0 +1,3 @@
+#!/usr/bin/env zsh
+
+defaults read > mac-prefs.json

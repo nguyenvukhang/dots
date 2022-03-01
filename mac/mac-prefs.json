@@ -85,11 +85,11 @@
     };
     ContextStoreAgent =     {
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertEventsNotification:/app/mediaUsageActivityDate" = "2022-02-25 17:09:17 +0000";
-        "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertEventsNotification:/app/usageActivityDate" = "2022-03-01 01:57:27 +0000";
+        "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertEventsNotification:/app/usageActivityDate" = "2022-03-01 02:50:40 +0000";
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertEventsNotification:/app/webUsageActivityDate" = "2022-02-10 07:24:45 +0000";
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertEventsNotification:/media/nowPlayingActivityDate" = "2022-02-19 01:38:52 +0000";
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertLocalEventsNotification:/app/mediaUsageActivityDate" = "2022-02-25 17:09:17 +0000";
-        "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertLocalEventsNotification:/app/usageActivityDate" = "2022-03-01 01:57:27 +0000";
+        "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertLocalEventsNotification:/app/usageActivityDate" = "2022-03-01 02:50:40 +0000";
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertLocalEventsNotification:/app/webUsageActivityDate" = "2022-02-10 07:24:45 +0000";
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertLocalEventsNotification:/media/nowPlayingActivityDate" = "2022-02-19 01:38:52 +0000";
     };
@@ -215,6 +215,10 @@
                 primaryEmailVerified = 1;
             }
         );
+    };
+    Safari =     {
+    };
+    Spotify =     {
     };
     WhatsApp =     {
         NSFullScreenMenuItemEverywhere = 0;
@@ -4640,6 +4644,7 @@
                 PrivacyReportToolbarIdentifier,
                 InputFieldsToolbarIdentifier,
                 NSToolbarFlexibleSpaceItem,
+                ShowDownloadsToolbarIdentifier,
                 ShareToolbarIdentifier,
                 NewTabToolbarIdentifier,
                 TabPickerToolbarIdentifier
@@ -4668,9 +4673,9 @@
             "TB Size Mode" = 1;
         };
         NSUserKeyEquivalents =         {
-            "Hide Safari" = "@~^$h";
+            "Hide Safari" = "@~^$p";
         };
-        "NSWindow Frame BrowserWindowFrame" = "-208 982 1920 1055 -208 982 1920 1055 ";
+        "NSWindow Frame BrowserWindowFrame" = "756 0 756 944 0 0 1512 944 ";
         "NSWindow Frame NSNavPanelAutosaveName" = "-251 -300 801 500 0 0 1512 944 ";
         "NSWindow Frame NSSpellCheckerSubstitutionsPanel2" = "815 1679 428 137 -208 982 1920 1055 ";
         "NSWindow Frame NewBookmarksSheet" = "521 1415 462 217 -208 982 1920 1055 ";
@@ -4719,6 +4724,18 @@
         };
         RecentWebSearches =         (
                         {
+                Date = "2022-03-01 02:45:06 +0000";
+                SearchString = "mac default delete key";
+            },
+                        {
+                Date = "2022-03-01 02:03:49 +0000";
+                SearchString = "defaults write new key";
+            },
+                        {
+                Date = "2022-03-01 01:58:00 +0000";
+                SearchString = "defaults write and reload";
+            },
+                        {
                 Date = "2022-03-01 01:49:37 +0000";
                 SearchString = "get bundle name of app mac os";
             },
@@ -4745,18 +4762,6 @@
                         {
                 Date = "2022-03-01 01:35:56 +0000";
                 SearchString = "move dock to left mac os terminal";
-            },
-                        {
-                Date = "2022-03-01 01:26:05 +0000";
-                SearchString = "mac change key repeat speed";
-            },
-                        {
-                Date = "2022-03-01 01:23:05 +0000";
-                SearchString = yabai;
-            },
-                        {
-                Date = "2022-03-01 01:20:37 +0000";
-                SearchString = "npm mac space indicator";
             }
         );
         ResponsiveDesignLastConfiguration =         {
@@ -4796,7 +4801,7 @@
             highlightsItemIdentifier
         );
         StartPageViewControllerMode = 0;
-        SuccessfulLaunchTimestamp = "667783962.74081";
+        SuccessfulLaunchTimestamp = "667793024.790272";
         UniversalSearchFeatureNotificationHasBeenDisplayed = 1;
         UserAgentQuirksConfigurationUpdateDate = "2022-02-28 15:06:05 +0000";
         UserStyleSheetEnabled = 0;
@@ -4835,7 +4840,7 @@
         accountTypesToSkipForSetup =         (
             "com.apple.account.Google"
         );
-        "com.apple.MobileAsset.PhishingImageClassifier2.UpdateDate" = "2022-02-28 02:09:36 +0000";
+        "com.apple.MobileAsset.PhishingImageClassifier2.UpdateDate" = "2022-03-01 01:59:17 +0000";
         "com.apple.Safari.WebInspectorPageGroupIdentifier.WebKit2InspectorAttachedHeight" = 509;
         customizationSyncServerToken = {length = 293, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000ed };
     };
@@ -6430,10 +6435,10 @@
     };
     "com.apple.Spotlight" =     {
         ModelName = Canned;
-        SPMessageTracingWindowHideCount = 1770;
-        SPMessageTracingWindowShowCount = 1770;
+        SPMessageTracingWindowHideCount = 1791;
+        SPMessageTracingWindowShowCount = 1791;
         "__NSEnableTSMDocumentWindowLevel" = 1;
-        "engagementCount-com.apple.Spotlight" = 132;
+        "engagementCount-com.apple.Spotlight" = 153;
         lastVisibleScreenRect = "{{0, 0}, {1512, 944}}";
         lastWindowPosition = "{{416, 355}, {680, 430}}";
         orderedItems =         (
@@ -11659,7 +11664,7 @@
         lastShowIndicatorTime = "659005376.92977";
         launchanim = 1;
         loc = "en_US:SG";
-        "mod-count" = 505;
+        "mod-count" = 506;
         "mru-spaces" = 0;
         "no-bouncing" = 0;
         orientation = bottom;
@@ -11714,7 +11719,7 @@
                     "file-mod-date" = 3721765167;
                     "file-type" = 41;
                     "is-beta" = 0;
-                    "parent-mod-date" = 87101370695203;
+                    "parent-mod-date" = 11509946328529;
                 };
                 "tile-type" = "file-tile";
             },
@@ -23198,6 +23203,12 @@
                     topic = "com.apple.Notes";
                     types = 9223372036854775808;
                 };
+                src =                 (
+                                        {
+                        flags = 16;
+                        uuid = "A35569D7-432D-4F92-A284-3F07CC8A79CE";
+                    }
+                );
             },
                         {
                 auth = 7;
@@ -24034,7 +24045,7 @@
     "com.apple.networkserviceproxy" =     {
         NSPConfiguration = {length = 9417, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 00002401 };
         NSPProxyAgentManagerPreferences = {length = 604, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000001ce };
-        NSPServiceStatusManagerInfo = {length = 1744, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 00000556 };
+        NSPServiceStatusManagerInfo = {length = 1838, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 0000059a };
         NSPSignatureInfo = {length = 2536, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 00000982 };
     };
     "com.apple.newscore2" =     {
@@ -24417,7 +24428,7 @@
             89fb35e2f31cdbd0b8e5a502bde4dd146d1808cc14a6776f25f764c018548c3f = {length = 391, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 0000012b };
         };
         CloudKitAccountStatus = 1;
-        CloudKitLastSyncSinceInternetReachable = "667727732.881834";
+        CloudKitLastSyncSinceInternetReachable = "667795468.68416";
         CloudKitZonesNeedingFetchChanges =         (
         );
         ThrottlingPolicyCurrentBatchCount = 0;
@@ -24452,14 +24463,14 @@
         RTDefaultsLearnedLocationEngineLocationOfInterestMetricsSubmitted = 1;
         "XPCActivityLastAttemptDate.com.apple.routined.assets" = "2022-03-01 01:34:12 +0000";
         "XPCActivityLastAttemptDate.com.apple.routined.learnedLocationEngine.train" = "2022-02-28 03:33:54 +0000";
-        "XPCActivityLastAttemptDate.com.apple.routined.locationAwareness.heartbeat" = "2022-03-01 00:59:03 +0000";
+        "XPCActivityLastAttemptDate.com.apple.routined.locationAwareness.heartbeat" = "2022-03-01 01:57:43 +0000";
         "XPCActivityLastAttemptDate.com.apple.routined.metrics.daily" = "2022-03-01 01:34:08 +0000";
         "XPCActivityLastAttemptDate.com.apple.routined.persistence.mirroring.background" = "2022-02-28 03:53:44 +0000";
         "XPCActivityLastAttemptDate.com.apple.routined.persistence.mirroring.post-install" = "2021-12-16 11:45:25 +0000";
         "XPCActivityLastAttemptDate.com.apple.routined.purge" = "2022-02-27 08:33:54 +0000";
         "XPCActivityLastCompleteDate.com.apple.routined.assets" = "2022-03-01 01:34:12 +0000";
         "XPCActivityLastCompleteDate.com.apple.routined.learnedLocationEngine.train" = "2022-02-28 03:33:54 +0000";
-        "XPCActivityLastCompleteDate.com.apple.routined.locationAwareness.heartbeat" = "2022-03-01 00:59:03 +0000";
+        "XPCActivityLastCompleteDate.com.apple.routined.locationAwareness.heartbeat" = "2022-03-01 01:57:43 +0000";
         "XPCActivityLastCompleteDate.com.apple.routined.metrics.daily" = "2022-03-01 01:34:08 +0000";
         "XPCActivityLastCompleteDate.com.apple.routined.persistence.mirroring.background" = "2022-02-28 03:53:44 +0000";
         "XPCActivityLastCompleteDate.com.apple.routined.persistence.mirroring.post-install" = "2021-12-16 11:45:25 +0000";
@@ -24680,7 +24691,7 @@
     "com.apple.spaces" =     {
         SpacesDisplayConfiguration =         {
             "Management Data" =             {
-                Age = "63059.62693812502";
+                Age = "65228.55864958335";
                 "Management Mode" = 1;
                 Monitors =                 (
                                         {
@@ -24707,20 +24718,20 @@
                         );
                     },
                                         {
-                        "Current Space" =                         {
+                        "Collapsed Space" =                         {
                             ManagedSpaceID = 7;
                             id64 = 7;
                             type = 0;
                             uuid = "711B9FAD-9ECB-4936-84B9-4DE0B2A77C9A";
                         };
+                        "Current Space" =                         {
+                            ManagedSpaceID = 6;
+                            id64 = 6;
+                            type = 0;
+                            uuid = "746C133F-205B-4238-9A61-4E5D6521200F";
+                        };
                         "Display Identifier" = "12524D6C-6D2D-4422-8ED5-B61BE9333EB1";
                         Spaces =                         (
-                                                        {
-                                ManagedSpaceID = 7;
-                                id64 = 7;
-                                type = 0;
-                                uuid = "711B9FAD-9ECB-4936-84B9-4DE0B2A77C9A";
-                            },
                                                         {
                                 ManagedSpaceID = 6;
                                 id64 = 6;
@@ -24753,30 +24764,23 @@
                                 {
                     name = "A9F3F806-EC35-475A-8377-ECBCCE11ADFC";
                     windows =                     (
-                        903,
+                        838,
                         799,
-                        889
+                        1280
                     );
                 },
                                 {
                     name = "A558AFDB-3D9B-45B1-A6A0-C094BC9CDF30";
                     windows =                     (
                         799,
-                        890
+                        1281
                     );
                 },
                                 {
                     name = "746C133F-205B-4238-9A61-4E5D6521200F";
                     windows =                     (
-                        800,
-                        892
-                    );
-                },
-                                {
-                    name = "711B9FAD-9ECB-4936-84B9-4DE0B2A77C9A";
-                    windows =                     (
-                        800,
-                        891
+                        799,
+                        1282
                     );
                 }
             );
@@ -24840,7 +24844,7 @@
         CKPerBootTasks =         (
             CKAcccountInfoCacheReset
         );
-        CKStartupTime = 1646090805;
+        CKStartupTime = 1646090806;
         CloudKitAccountInfoCache =         {
             c516600bbdf4e73b2cc656a64d2974cc0c9e9d356647d58e3987a12a9123c26c = {length = 391, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 0000012b };
         };
@@ -25506,7 +25510,7 @@
         "NSToolbar Configuration com.apple.NSColorPanel" =         {
             "TB Is Shown" = 1;
         };
-        "NSWindow Frame Main Window Frame SystemPreferencesApp 8.0" = "428 39 668 544 0 0 1512 944 ";
+        "NSWindow Frame Main Window Frame SystemPreferencesApp 8.0" = "427 24 668 544 0 0 1512 944 ";
         "NSWindow Frame NSColorPanel" = "0 136 224 278 0 0 1512 944 ";
         "NSWindow Frame NSNavPanelAutosaveName" = "26 223 800 428 0 0 1512 944 ";
         "NSWindow Frame NSSpellCheckerSubstitutionsPanel2" = "692 407 425 137 0 0 1512 944 ";
@@ -25592,8 +25596,7 @@
         closeViewZoomFactor = 1;
         "com.apple.custommenu.apps" =         (
             "net.kovidgoyal.kitty",
-            "com.apple.Safari",
-            "ru.keepcoder.Telegram"
+            "com.apple.Safari"
         );
         login = 0;
         selectedTab = 8;
@@ -25689,7 +25692,7 @@
             "PDMapsMerchantProcessingServiceClientIdentifier.PDMapsMerchantProcessingActivityIdentifier" = "2022-03-01 01:54:13 +0000";
             "PDPaymentWebServiceCoordinator.ConsistencyCheck" = "2022-02-20 03:27:20 +0000";
             "com.apple.AOSHeartbeat.daily" = "2022-03-01 01:53:52 +0000";
-            "com.apple.AddressBook.ScheduledSync" = "2022-03-01 01:27:01 +0000";
+            "com.apple.AddressBook.ScheduledSync" = "2022-03-01 02:27:01 +0000";
             "com.apple.CacheDelete.daily" = "2022-03-01 01:53:52 +0000";
             "com.apple.DataDetectorsLocalSource" = "2022-02-28 13:33:10 +0000";
             "com.apple.EscrowSecurityAlert.daily" = "2022-03-01 01:53:52 +0000";
@@ -25705,7 +25708,7 @@
             "com.apple.Maps.mapspushd.launchForAnnouncements" = "2022-02-28 23:27:01 +0000";
             "com.apple.Maps.mapspushd.updateRAPSubmissionStatus" = "2022-02-28 23:27:08 +0000";
             "com.apple.ProtectedCloudStorage.fortnightly" = "2022-02-23 00:55:06 +0000";
-            "com.apple.Safari.PasswordBreachHelper.PeriodicLookupActivity" = "2022-03-01 01:53:52 +0000";
+            "com.apple.Safari.PasswordBreachHelper.PeriodicLookupActivity" = "2022-03-08 01:53:52 +0000";
             "com.apple.Safari.SafeBrowsing.BrowsingDatabases.Update" = "2022-02-27 15:22:59 +0000";
             "com.apple.SafariBookmarksSyncAgent.XPC.BookmarkSyncNetworkConnectivity" = "2022-02-28 14:48:42 +0000";
             "com.apple.SafariBookmarksSyncAgent.XPC.CloudSettingsZoneSubscriptionRegistration" = "2022-03-01 01:54:01 +0000";
@@ -25713,8 +25716,8 @@
             "com.apple.SafariBookmarksSyncAgent.XPC.CloudTabsZoneSubscriptionRegistration" = "2022-03-01 01:53:58 +0000";
             "com.apple.SafariBookmarksSyncAgent.XPC.TabCollectionMaintenance" = "2022-02-28 23:27:19 +0000";
             "com.apple.SafariBookmarksSyncAgent.XPC.TabGroupSyncNetworkConnectivity" = "2022-02-18 02:38:34 +0000";
-            "com.apple.SafariBookmarksSyncAgent.XPC.ZoneSubscriptionRegistration" = "2022-03-01 01:53:58 +0000";
-            "com.apple.SafariShared.WBSPeriodicActivityScheduler" = "2022-02-28 23:32:42 +0000";
+            "com.apple.SafariBookmarksSyncAgent.XPC.ZoneSubscriptionRegistration" = "2022-03-01 01:57:57 +0000";
+            "com.apple.SafariShared.WBSPeriodicActivityScheduler" = "2022-03-01 01:59:16 +0000";
             "com.apple.ScreenTimeAgent.activity.fail-stuck-sent-messages" = "2022-03-01 01:54:00 +0000";
             "com.apple.ScreenTimeAgent.activity.retry-failed-messages" = "2022-01-17 13:53:57 +0000";
             "com.apple.UsageTrackingAgent.activity.reset-device-activity-alarms" = "2022-03-01 01:54:06 +0000";
@@ -25723,7 +25726,7 @@
             "com.apple.ak.hb" = "2022-03-01 01:53:52 +0000";
             "com.apple.ak.listupdate" = "2022-03-01 01:53:52 +0000";
             "com.apple.ak.postinstall" = "2022-01-16 12:11:59 +0000";
-            "com.apple.amsaccountsd.refresh" = "2022-02-28 14:45:55 +0000";
+            "com.apple.amsaccountsd.refresh" = "2022-03-01 02:47:36 +0000";
             "com.apple.amsengagementd.daily" = "2022-03-01 01:53:52 +0000";
             "com.apple.ap.adprivacyd.reconcile" = "2022-02-01 23:46:35 +0000";
             "com.apple.appleaccountd.custodian.invitationStatusCheck" = "2022-03-01 10:51:15 +0000";
@@ -25735,19 +25738,19 @@
             "com.apple.appstored.activities.AdPlatformsStatusConditions" = "2022-03-31 01:56:39 +0000";
             "com.apple.biome.prune-expired-events" = "2022-03-01 01:53:52 +0000";
             "com.apple.biomesyncd.metrics-collection" = "2022-02-28 14:24:39 +0000";
-            "com.apple.biomesyncd.periodic-sync" = "2022-03-01 01:27:01 +0000";
+            "com.apple.biomesyncd.periodic-sync" = "2022-03-01 02:27:01 +0000";
             "com.apple.bird.analytics-report" = "2022-01-12 00:02:33 +0000";
             "com.apple.bird.app-telemetry" = "2022-01-12 00:02:33 +0000";
             "com.apple.bird.cache-delete.push" = "2022-02-28 23:27:13 +0000";
             "com.apple.bird.configuration-server-update" = "2022-03-01 01:54:00 +0000";
             "com.apple.bird.db-integrity-check" = "2022-02-28 13:33:30 +0000";
-            "com.apple.bird.stage.gc" = "2022-03-01 01:27:13 +0000";
+            "com.apple.bird.stage.gc" = "2022-03-01 02:27:13 +0000";
             "com.apple.bird.sync" = "2022-02-28 23:27:13 +0000";
             "com.apple.bird.transmogrify" = "2022-03-01 01:54:00 +0000";
-            "com.apple.calendar.AlarmScan" = "2022-03-01 01:42:01 +0000";
+            "com.apple.calendar.AlarmScan" = "2022-03-01 03:12:01 +0000";
             "com.apple.calendar.biDailyWork" = "2022-03-01 01:54:02 +0000";
             "com.apple.calendar.dailyWork" = "2022-03-01 01:54:03 +0000";
-            "com.apple.cloudkit.assetHandleExpiration" = "2022-03-01 01:27:03 +0000";
+            "com.apple.cloudkit.assetHandleExpiration" = "2022-03-01 02:27:03 +0000";
             "com.apple.cloudkit.operationInfoCacheEviction" = "2022-03-01 01:53:58 +0000";
             "com.apple.cloudkit.packageGarbageCollection" = "2022-01-20 07:19:00 +0000";
             "com.apple.cloudkit.pcs.sqlcache.evict" = "2022-03-01 01:54:00 +0000";
@@ -25767,13 +25770,13 @@
             "com.apple.email.EDRemoteContentManager.requestScheduler" = "2022-02-15 12:59:18 +0000";
             "com.apple.email.EDRemoteContentPersistence.analyticsScheduler" = "2022-02-15 12:59:18 +0000";
             "com.apple.exchange.exchangesyncd.accountauthupgrader" = "2022-02-28 13:46:14 +0000";
-            "com.apple.exchange.exchangesyncd.firstrun" = "2022-02-28 23:32:56 +0000";
+            "com.apple.exchange.exchangesyncd.firstrun" = "2022-03-01 01:59:08 +0000";
             "com.apple.exchangesyncd.activity.maintenance" = "2022-02-24 01:42:37 +0000";
             "com.apple.family.heartbeat" = "2022-03-01 01:49:09 +0000";
             "com.apple.followup.notify" = "2022-03-01 01:54:05 +0000";
             "com.apple.geo.analytics" = "2022-03-01 01:53:52 +0000";
             "com.apple.geo.ma.resource.server" = "2022-03-01 01:33:28 +0000";
-            "com.apple.geod.updateNetworkDefaults" = "2022-02-28 23:27:08 +0000";
+            "com.apple.geod.updateNetworkDefaults" = "2022-03-01 05:27:08 +0000";
             "com.apple.homed.HMDMobileAssetManager.BackgroundActivityScheduler" = "2022-03-01 01:54:01 +0000";
             "com.apple.homed.logEvent.dailyScheduler" = "2022-03-01 01:54:01 +0000";
             "com.apple.iCal.APSSubscriptionRefresh.x-coredata://932A703D-67F5-4F29-9B9A-AA65EF7DF27B/CalDAVPrincipal/p5" = "2022-03-01 00:59:35 +0000";
@@ -25818,7 +25821,7 @@
             "com.apple.osanalytics.submissions.cleanup" = "2022-02-28 14:30:25 +0000";
             "com.apple.osanalytics.submissions.submit" = "2022-02-28 23:27:17 +0000";
             "com.apple.osanalytics.submissions.submit-permissive" = "2022-02-28 14:30:25 +0000";
-            "com.apple.parsec-fbf.flush" = "2022-03-01 01:27:01 +0000";
+            "com.apple.parsec-fbf.flush" = "2022-03-01 02:27:01 +0000";
             "com.apple.photoanalysisd.backgroundanalysis" = "2022-03-01 01:54:06 +0000";
             "com.apple.photolibraryd.curatedlibraryprocessing" = "2022-02-28 02:04:21 +0000";
             "com.apple.photolibraryd.periodicmaintenance" = "2022-02-27 07:58:52 +0000";
@@ -25860,7 +25863,7 @@
             "com.apple.proactive.ProactiveHarvesting.Harvest" = "2022-01-12 00:02:32 +0000";
             "com.apple.proactive.ProactiveHarvesting.Harvest.PeriodicBackground" = "2022-02-28 02:04:22 +0000";
             "com.apple.proactived.contextualactions.training" = "2022-03-01 01:53:52 +0000";
-            "com.apple.proactiveeventtrackerd.mapreduce.heartbeat" = "2022-03-01 01:27:01 +0000";
+            "com.apple.proactiveeventtrackerd.mapreduce.heartbeat" = "2022-03-01 02:27:01 +0000";
             "com.apple.proactiveeventtrackerd.sendDaily" = "2022-03-01 01:53:52 +0000";
             "com.apple.proactiveeventtrackerd.updateAssetMetadata" = "2022-03-01 01:33:11 +0000";
             "com.apple.proactiveinsights.submission" = "2022-02-28 07:58:41 +0000";
@@ -25869,12 +25872,12 @@
             "com.apple.remindd.RDExtraneousAlarmCleaner" = "2022-02-28 08:53:38 +0000";
             "com.apple.routined.assets" = "2022-03-01 01:54:01 +0000";
             "com.apple.routined.learnedLocationEngine.train" = "2022-02-28 02:04:17 +0000";
-            "com.apple.routined.locationAwareness.heartbeat" = "2022-03-01 01:27:09 +0000";
+            "com.apple.routined.locationAwareness.heartbeat" = "2022-03-01 02:27:09 +0000";
             "com.apple.routined.metrics.daily" = "2022-03-01 01:54:00 +0000";
             "com.apple.routined.persistence.mirroring.background" = "2022-02-28 02:04:17 +0000";
             "com.apple.routined.persistence.mirroring.backup" = "2022-01-12 00:02:42 +0000";
             "com.apple.routined.purge" = "2022-02-27 07:58:49 +0000";
-            "com.apple.safarishared.WBSParsecDSession.autoFillDataUpdate" = "1991-03-01 01:53:52 +0000";
+            "com.apple.safarishared.WBSParsecDSession.autoFillDataUpdate" = "2022-03-01 10:03:44 +0000";
             "com.apple.searchd.expirations" = "2022-02-28 14:30:04 +0000";
             "com.apple.searchd.expirations.AB" = "2022-02-28 14:30:04 +0000";
             "com.apple.securityd.daily" = "2022-03-01 01:53:52 +0000";
@@ -25919,7 +25922,7 @@
             "com.apple.transparencyd.dutycycle" = "2022-02-28 23:27:01 +0000";
             "com.apple.triald.cellular" = "2022-02-28 23:31:09 +0000";
             "com.apple.triald.client-trigger.wifi" = "2022-03-01 01:53:58 +0000";
-            "com.apple.triald.fetch-experiments" = "2022-02-28 14:00:03 +0000";
+            "com.apple.triald.fetch-experiments" = "2022-03-01 14:00:03 +0000";
             "com.apple.triald.recurrent-rollback.cellular" = "2022-02-13 15:50:07 +0000";
             "com.apple.triald.retries-networking" = "2022-03-01 01:53:58 +0000";
             "com.apple.triald.setup-assistant-fetch" = "2022-03-01 01:53:58 +0000";
@@ -28412,10 +28415,10 @@
         NSNavLastRootDirectory = "~/files/affinity/photo/exports";
         NSNavPanelExpandedSizeForOpenMode = "{800, 448}";
         NSUserKeyEquivalents =         {
-            "Hide Spotify" = "@~^$h";
+            "Hide Spotify" = "@~^$p";
         };
         "NSWindow Frame NSNavPanelAutosaveName" = "0 0 800 423 0 0 1512 944 ";
-        "NSWindow Frame com.spotify.client.mainwindow" = "0 0 1512 944 0 0 1512 944 ";
+        "NSWindow Frame com.spotify.client.mainwindow" = "756 0 800 944 0 0 1512 944 ";
         "run_mode" = "clean_quit";
     };
     "com.tdesktop.Telegram" =     {
@@ -28516,12 +28519,12 @@
         };
         ScreenTimeSyncDisabled = 1;
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertEventsNotification:/app/mediaUsageActivityDate" = "2022-02-28 14:57:43 +0000";
-        "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertEventsNotification:/app/webUsageActivityDate" = "2022-03-01 01:53:44 +0000";
+        "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertEventsNotification:/app/webUsageActivityDate" = "2022-03-01 02:45:38 +0000";
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertEventsNotification:/notification/usageActivityDate" = "2022-02-28 13:35:46 +0000";
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertEventsNotification:/portrait/entityActivityDate" = "2022-02-27 15:54:33 +0000";
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertEventsNotification:/portrait/topicActivityDate" = "2022-02-27 08:34:44 +0000";
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertLocalEventsNotification:/app/mediaUsageActivityDate" = "2022-02-28 14:57:43 +0000";
-        "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertLocalEventsNotification:/app/webUsageActivityDate" = "2022-03-01 01:53:44 +0000";
+        "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertLocalEventsNotification:/app/webUsageActivityDate" = "2022-03-01 02:45:38 +0000";
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertLocalEventsNotification:/notification/usageActivityDate" = "2022-02-28 13:35:46 +0000";
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertLocalEventsNotification:/portrait/entityActivityDate" = "2022-02-27 15:54:33 +0000";
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertLocalEventsNotification:/portrait/topicActivityDate" = "2022-02-27 08:34:44 +0000";
@@ -29290,9 +29293,6 @@
         NSNavPanelExpandedSizeForSaveMode = "{800, 448}";
         NSNavPanelExpandedStateForSaveMode = 1;
         "NSStatusItem Preferred Position Item-0" = 389;
-        NSUserKeyEquivalents =         {
-            "Hide Telegram" = "@~^$h";
-        };
         "NSWindow Frame NSNavPanelAutosaveName" = "356 372 800 448 0 0 1512 944 ";
         SUUpdateRelaunchingMarker = 1;
         "app_tooltip_video_recording_1" = 2;
