@@ -10,9 +10,11 @@ cmd + shift - 3 : ~/dots/mac/.config/yabai/spaces.py 3 --move
 cmd + shift - 4 : ~/dots/mac/.config/yabai/spaces.py 4 --move
 cmd + shift - 5 : ~/dots/mac/.config/yabai/spaces.py 5 --move
 
+# 0x32 = backtick
 cmd - 0x32 : open -a Mission\ Control.app
-
-cmd - 0x24 : open -a kitty.app -n
+cmd + shift - 0x32 : open -a Launchpad.app
+cmd - return : open -a kitty.app -n
+cmd + ctrl + alt + shift - s : open -a Spotify
 
 # no-shift -> change focus
 # shift -> movements
