@@ -1,14 +1,14 @@
-cmd - 1 : ~/dots/mac/.config/yabai/spaces.py 1
-cmd - 2 : ~/dots/mac/.config/yabai/spaces.py 2
-cmd - 3 : ~/dots/mac/.config/yabai/spaces.py 3
-cmd - 4 : ~/dots/mac/.config/yabai/spaces.py 4
-cmd - 5 : ~/dots/mac/.config/yabai/spaces.py 5
+cmd - 1 : ~/dots/mac/.config/yabai/spaces.py 1 --focus
+cmd - 2 : ~/dots/mac/.config/yabai/spaces.py 2 --focus
+cmd - 3 : ~/dots/mac/.config/yabai/spaces.py 3 --focus
+cmd - 4 : ~/dots/mac/.config/yabai/spaces.py 4 --focus
+cmd - 5 : ~/dots/mac/.config/yabai/spaces.py 5 --focus
 
-cmd + shift - 1 : yabai -m window --space 1
-cmd + shift - 2 : yabai -m window --space 2
-cmd + shift - 3 : yabai -m window --space 3
-cmd + shift - 4 : yabai -m window --space 4
-cmd + shift - 5 : yabai -m window --space 5
+cmd + shift - 1 : ~/dots/mac/.config/yabai/spaces.py 1 --move
+cmd + shift - 2 : ~/dots/mac/.config/yabai/spaces.py 2 --move
+cmd + shift - 3 : ~/dots/mac/.config/yabai/spaces.py 3 --move
+cmd + shift - 4 : ~/dots/mac/.config/yabai/spaces.py 4 --move
+cmd + shift - 5 : ~/dots/mac/.config/yabai/spaces.py 5 --move
 
 cmd - 0x32 : open -a Mission\ Control.app
 
