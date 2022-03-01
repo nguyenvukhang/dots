@@ -68,14 +68,15 @@ function mac_setup() {
 
   # disable Cmd-H hiding apps by making it Hypr-H
   declare -A apps=(
-    [kitty]="net.kovidgoyal.kitty"
-    [Safari]="com.apple.Safari"
     [Spotify]="com.spotify.client"
+    [Safari]="com.apple.Safari"
   )
 
   for key value in ${(kv)apps}; do
     echo $key $value
-    # defaults write -app $key NSUserKeyEquivalents -dict-add "Hide $key" "\@\~\^\$h"
+    defaults write -globalDomain -dict-add "$value"
+    defaults write -app $key -dict-add "NSUserKeyEquivalents"
+    defaults write -app $key NSUserKeyEquivalents -dict "Hide $key" "\@\~\^\$m"
   done
 }
 

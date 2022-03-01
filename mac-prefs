@@ -85,11 +85,11 @@
     };
     ContextStoreAgent =     {
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertEventsNotification:/app/mediaUsageActivityDate" = "2022-02-25 17:09:17 +0000";
-        "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertEventsNotification:/app/usageActivityDate" = "2022-03-01 01:54:16 +0000";
+        "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertEventsNotification:/app/usageActivityDate" = "2022-03-01 01:57:27 +0000";
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertEventsNotification:/app/webUsageActivityDate" = "2022-02-10 07:24:45 +0000";
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertEventsNotification:/media/nowPlayingActivityDate" = "2022-02-19 01:38:52 +0000";
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertLocalEventsNotification:/app/mediaUsageActivityDate" = "2022-02-25 17:09:17 +0000";
-        "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertLocalEventsNotification:/app/usageActivityDate" = "2022-03-01 01:54:16 +0000";
+        "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertLocalEventsNotification:/app/usageActivityDate" = "2022-03-01 01:57:27 +0000";
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertLocalEventsNotification:/app/webUsageActivityDate" = "2022-02-10 07:24:45 +0000";
         "_DKThrottledActivityLast_DKKnowledgeStorageLogging_DKKnowledgeStorageDidInsertLocalEventsNotification:/media/nowPlayingActivityDate" = "2022-02-19 01:38:52 +0000";
     };
@@ -461,7 +461,7 @@
         };
         ABDefaultAddressCountryCode = sg;
         ABDefaultSourceID = "F098AED2-A8C0-416B-92B6-E8C38A3DF93B";
-        ABMetaDataChangeCount = 6549;
+        ABMetaDataChangeCount = 6554;
         ABMetadataLastOilChange = "2022-02-28 10:48:59 +0000";
         ABTextSizeIncrement = 2;
         ABUserHasSelectedDefaultCountryCode = 1;
@@ -4668,7 +4668,7 @@
             "TB Size Mode" = 1;
         };
         NSUserKeyEquivalents =         {
-            "Hide Safari" = "@~^";
+            "Hide Safari" = "@~^$h";
         };
         "NSWindow Frame BrowserWindowFrame" = "-208 982 1920 1055 -208 982 1920 1055 ";
         "NSWindow Frame NSNavPanelAutosaveName" = "-251 -300 801 500 0 0 1512 944 ";
@@ -6430,10 +6430,10 @@
     };
     "com.apple.Spotlight" =     {
         ModelName = Canned;
-        SPMessageTracingWindowHideCount = 1762;
-        SPMessageTracingWindowShowCount = 1762;
+        SPMessageTracingWindowHideCount = 1770;
+        SPMessageTracingWindowShowCount = 1770;
         "__NSEnableTSMDocumentWindowLevel" = 1;
-        "engagementCount-com.apple.Spotlight" = 125;
+        "engagementCount-com.apple.Spotlight" = 132;
         lastVisibleScreenRect = "{{0, 0}, {1512, 944}}";
         lastWindowPosition = "{{416, 355}, {680, 430}}";
         orderedItems =         (
@@ -8610,6 +8610,7 @@
         };
         TargetDateArcadePostPayout = "2022-03-01 13:46:55 +0000";
         TargetDateArcadePostSummary = "2022-03-01 13:46:54 +0000";
+        "TargetDateCacheDelete Push" = "2022-03-01 02:11:39 +0000";
         TargetDateCrossfirePost = "2022-03-01 05:31:10 +0000";
         WelcomeNotificationLastAppStoreConnectionProductVersion = "12.1";
     };
@@ -12493,44 +12494,44 @@
         FXQuickActionsConfigUpgradeLevel = 2;
         FXRecentFolders =         (
                         {
-                "file-bookmark" = {length = 508, bytes = 0x626f6f6b fc010000 00000410 30000000 ... 04000000 00000000 };
-                name = Applications;
-            },
-                        {
-                "file-bookmark" = {length = 624, bytes = 0x626f6f6b 70020000 00000410 30000000 ... 04000000 00000000 };
-                name = khang;
-            },
-                        {
-                "file-bookmark" = {length = 740, bytes = 0x626f6f6b e4020000 00000410 30000000 ... 04000000 00000000 };
-                name = MA2219;
-            },
-                        {
-                "file-bookmark" = {length = 700, bytes = 0x626f6f6b bc020000 00000410 30000000 ... 04000000 00000000 };
-                name = uni;
-            },
-                        {
                 "file-bookmark" = {length = 664, bytes = 0x626f6f6b 98020000 00000410 30000000 ... 04000000 00000000 };
-                name = files;
+                name = Library;
             },
                         {
-                "file-bookmark" = {length = 708, bytes = 0x626f6f6b c4020000 00000410 30000000 ... 04000000 00000000 };
-                name = screenshots;
-            },
-                        {
-                "file-bookmark" = {length = 668, bytes = 0x626f6f6b 9c020000 00000410 30000000 ... 04000000 00000000 };
-                name = Downloads;
-            },
-                        {
-                "file-bookmark" = {length = 664, bytes = 0x626f6f6b 98020000 00000410 30000000 ... 04000000 00000000 };
-                name = Desktop;
+                "file-bookmark" = {length = 556, bytes = 0x626f6f6b 2c020000 00000410 30000000 ... 04000000 00000000 };
+                name = homebrew;
             },
                         {
                 "file-bookmark" = {length = 592, bytes = 0x626f6f6b 50020000 00000410 30000000 ... 04000000 00000000 };
                 name = bin;
             },
                         {
-                "file-bookmark" = {length = 556, bytes = 0x626f6f6b 2c020000 00000410 30000000 ... 04000000 00000000 };
-                name = homebrew;
+                "file-bookmark" = {length = 664, bytes = 0x626f6f6b 98020000 00000410 30000000 ... 04000000 00000000 };
+                name = Desktop;
+            },
+                        {
+                "file-bookmark" = {length = 668, bytes = 0x626f6f6b 9c020000 00000410 30000000 ... 04000000 00000000 };
+                name = Downloads;
+            },
+                        {
+                "file-bookmark" = {length = 708, bytes = 0x626f6f6b c4020000 00000410 30000000 ... 04000000 00000000 };
+                name = screenshots;
+            },
+                        {
+                "file-bookmark" = {length = 664, bytes = 0x626f6f6b 98020000 00000410 30000000 ... 04000000 00000000 };
+                name = files;
+            },
+                        {
+                "file-bookmark" = {length = 700, bytes = 0x626f6f6b bc020000 00000410 30000000 ... 04000000 00000000 };
+                name = uni;
+            },
+                        {
+                "file-bookmark" = {length = 740, bytes = 0x626f6f6b e4020000 00000410 30000000 ... 04000000 00000000 };
+                name = MA2219;
+            },
+                        {
+                "file-bookmark" = {length = 624, bytes = 0x626f6f6b 70020000 00000410 30000000 ... 04000000 00000000 };
+                name = khang;
             }
         );
         FXSidebarUpgradedSharedSearchToTwelve = 1;
@@ -24614,7 +24615,7 @@
         AutoUnlockPresentedWiFiError = 0;
         "HashManager-LastConsumedHistoryTokenKey" = {length = 562, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000001bc };
         "HashManager-LastRebuiltDateKey" = "2022-02-23 09:26:48 +0000";
-        "HashManager-LastUpdatedDateKey" = "2022-03-01 01:54:00 +0000";
+        "HashManager-LastUpdatedDateKey" = "2022-03-01 01:57:27 +0000";
         "HashManager-StoredDatabaseVersionKey" = 3;
         OneTimeAirDropReset2 = 1;
     };
@@ -24679,7 +24680,7 @@
     "com.apple.spaces" =     {
         SpacesDisplayConfiguration =         {
             "Management Data" =             {
-                Age = "62907.90901550002";
+                Age = "63059.62693812502";
                 "Management Mode" = 1;
                 Monitors =                 (
                                         {
@@ -24752,30 +24753,30 @@
                                 {
                     name = "A9F3F806-EC35-475A-8377-ECBCCE11ADFC";
                     windows =                     (
-                        838,
+                        903,
                         799,
-                        778
+                        889
                     );
                 },
                                 {
                     name = "A558AFDB-3D9B-45B1-A6A0-C094BC9CDF30";
                     windows =                     (
                         799,
-                        779
+                        890
                     );
                 },
                                 {
                     name = "746C133F-205B-4238-9A61-4E5D6521200F";
                     windows =                     (
                         800,
-                        781
+                        892
                     );
                 },
                                 {
                     name = "711B9FAD-9ECB-4936-84B9-4DE0B2A77C9A";
                     windows =                     (
                         800,
-                        780
+                        891
                     );
                 }
             );
@@ -25697,10 +25698,10 @@
             "com.apple.FileProvider.maintenance.fpck-repair" = "2022-02-27 05:54:01 +0000";
             "com.apple.GeoServices.UpdateExperiment" = "2022-02-28 23:27:08 +0000";
             "com.apple.GeoServices.UpdateExperiment.Execute" = "2022-02-28 23:29:10 +0000";
-            "com.apple.HMFoundation.Message.Dispatcher.Index" = "2022-02-28 23:32:53 +0000";
+            "com.apple.HMFoundation.Message.Dispatcher.Index" = "2022-03-01 01:57:10 +0000";
             "com.apple.IMAutomaticHistoryDeletionAgent" = "2022-03-01 01:53:52 +0000";
             "com.apple.IntlPreferences.analytics" = "2022-02-28 14:45:44 +0000";
-            "com.apple.KeyboardServices.TextReplacementCKSyncTask" = "1991-03-01 01:53:52 +0000";
+            "com.apple.KeyboardServices.TextReplacementCKSyncTask" = "2022-03-01 01:57:35 +0000";
             "com.apple.Maps.mapspushd.launchForAnnouncements" = "2022-02-28 23:27:01 +0000";
             "com.apple.Maps.mapspushd.updateRAPSubmissionStatus" = "2022-02-28 23:27:08 +0000";
             "com.apple.ProtectedCloudStorage.fortnightly" = "2022-02-23 00:55:06 +0000";
@@ -25727,11 +25728,11 @@
             "com.apple.ap.adprivacyd.reconcile" = "2022-02-01 23:46:35 +0000";
             "com.apple.appleaccountd.custodian.invitationStatusCheck" = "2022-03-01 10:51:15 +0000";
             "com.apple.appleaccountd.trustedContacts.healthCheck" = "2022-03-01 01:54:39 +0000";
-            "com.apple.appstoreagent.scheduleTasks" = "2022-02-28 14:54:05 +0000";
-            "com.apple.appstored.AutoUpdates" = "1991-03-01 01:53:52 +0000";
-            "com.apple.appstored.CacheDeleteUpdate" = "1991-03-01 01:53:52 +0000";
-            "com.apple.appstored.Daily" = "1991-03-01 01:53:52 +0000";
-            "com.apple.appstored.activities.AdPlatformsStatusConditions" = "1991-03-01 01:53:52 +0000";
+            "com.apple.appstoreagent.scheduleTasks" = "2022-03-01 01:56:38 +0000";
+            "com.apple.appstored.AutoUpdates" = "2022-03-01 01:56:38 +0000";
+            "com.apple.appstored.CacheDeleteUpdate" = "2022-03-01 01:56:39 +0000";
+            "com.apple.appstored.Daily" = "2022-03-01 01:56:38 +0000";
+            "com.apple.appstored.activities.AdPlatformsStatusConditions" = "2022-03-31 01:56:39 +0000";
             "com.apple.biome.prune-expired-events" = "2022-03-01 01:53:52 +0000";
             "com.apple.biomesyncd.metrics-collection" = "2022-02-28 14:24:39 +0000";
             "com.apple.biomesyncd.periodic-sync" = "2022-03-01 01:27:01 +0000";
@@ -25878,7 +25879,7 @@
             "com.apple.searchd.expirations.AB" = "2022-02-28 14:30:04 +0000";
             "com.apple.securityd.daily" = "2022-03-01 01:53:52 +0000";
             "com.apple.securityd.entropyhealth" = "2022-03-01 01:53:52 +0000";
-            "com.apple.securityd.prng" = "2022-03-01 01:27:01 +0000";
+            "com.apple.securityd.prng" = "2022-03-01 02:27:01 +0000";
             "com.apple.securityuploadd.triggerupload" = "2022-03-01 01:33:11 +0000";
             "com.apple.siri.vocabulary.indexMaintenance" = "2022-03-01 01:54:00 +0000";
             "com.apple.siri.xpc_activity.cloudkitsync.weekly" = "2022-02-27 05:54:11 +0000";
@@ -28411,7 +28412,7 @@
         NSNavLastRootDirectory = "~/files/affinity/photo/exports";
         NSNavPanelExpandedSizeForOpenMode = "{800, 448}";
         NSUserKeyEquivalents =         {
-            "Hide Spotify" = "@~^";
+            "Hide Spotify" = "@~^$h";
         };
         "NSWindow Frame NSNavPanelAutosaveName" = "0 0 800 423 0 0 1512 944 ";
         "NSWindow Frame com.spotify.client.mainwindow" = "0 0 1512 944 0 0 1512 944 ";
@@ -28560,7 +28561,7 @@
     };
     "net.kovidgoyal.kitty" =     {
         NSUserKeyEquivalents =         {
-            "Hide kitty" = "@~^";
+            "Hide kitty" = "@~^$h";
         };
     };
     "net.pulsesecure.Pulse-Secure" =     {
