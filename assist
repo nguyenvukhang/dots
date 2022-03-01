@@ -38,7 +38,7 @@ function mac_setup() {
   defaults write com.apple.dock autohide -bool true
 
   # set dock size
-  defaults write com.apple.dock tilesize -int 1
+  defaults write com.apple.dock tilesize -int 32
 
   # disable dock icon bounce
   defaults write com.apple.dock no-bouncing -bool false
@@ -47,7 +47,13 @@ function mac_setup() {
   defaults write com.apple.Dock size-immutable -bool yes && \
 
   # move dock to the left
-  defaults write com.apple.dock orientation left
+  # defaults write com.apple.dock orientation left
+
+  # change dock appearance delay
+  # defaults write com.apple.Dock autohide-delay -float 1
+  
+  # reset dock appearance delay
+  defaults delete com.apple.Dock autohide-delay
 
   killall Dock
 
