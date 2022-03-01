@@ -29,4 +29,7 @@ cmd + shift - right : yabai -m window  --swap next
 cmd + shift - up    : yabai -m window  --display next; yabai -m display --focus next
 cmd + shift - down  : yabai -m window  --display prev; yabai -m display --focus prev
 
+shift - f6 : yabai -m space --layout bsp
+shift - f7 : yabai -m space --layout stack
+
 # vim:ft=yaml
