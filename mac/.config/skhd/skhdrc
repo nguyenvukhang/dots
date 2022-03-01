@@ -14,6 +14,12 @@ cmd - 0x32 : open -a Mission\ Control.app
 
 cmd - 0x24 : open -a kitty.app -n
 
+cmd - up : yabai -m window --focus prev
+cmd - down : yabai -m window --focus next
+
+cmd + shift - up : yabai -m window --swap prev
+cmd + shift - down : yabai -m window --swap next
+
 cmd + shift - 0x2F : yabai -m window --display next
 cmd + shift - 0x2B : yabai -m window --display prev
 cmd + shift + ctrl + alt - a : yabai -m window --display prev
