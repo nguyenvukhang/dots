@@ -3,7 +3,7 @@
 import requests
 import json
 import subprocess
-from datetime import datetime, date
+from datetime import date
 import os
 
 # color my pencils
@@ -31,8 +31,9 @@ def pprint(obj):
     print(text)
 
 def fetch_data():
-    l = subprocess.run(["pass", "github-actions/personal-token"], capture_output=True)
-    token = str(l.stdout)[2:-3]
+    l = subprocess.run(["pass", "github-actions"], capture_output=True)
+    first_line = str(l.stdout).split("\\n")[0]
+    token = str(first_line)[2:]
     headers = {'Authorization': 'token ' + token}
     res = requests.get('https://api.github.com/user/repos', headers=headers)
     return res.json()
