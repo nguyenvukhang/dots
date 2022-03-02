@@ -17,6 +17,7 @@ function! MdxSpecific()
 
   " makes letter become math'd vector: A -> `\v{A}`
   nnoremap <buffer> <leader>V s`\v{}`<esc>hP
+  lua vim.api.nvim_buf_set_option(0, "commentstring", "{/* %s */}")
 endfunction
 
 function! LatexSpecific()
