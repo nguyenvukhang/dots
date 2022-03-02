@@ -46,7 +46,7 @@ aug THE_BREWERY
 	au BufRead,BufNewFile *	if &ft == 'sh' | set ft=zsh | endif
 	au BufRead,BufNewFile *.md set tw=70 | set fo-=l
   " temporary clutch
-  au BufRead,BufNewFile *.json set fmr={,}
+  " au BufRead,BufNewFile *.json set fmr={,}
 aug END
 
 function! StanGlyphs()
