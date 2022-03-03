@@ -6,17 +6,22 @@ function! MdxSpecific()
     silent g/^##\s/norm! ^df yypVr-
   endfunction
   command! MarkdownHeadersSetext :call MarkdownHeadersSetext()
-  nnoremap <buffer> <leader>p :Prettier<CR>:MarkdownHeadersSetext<CR>:echo "Prettier + MDX!"<CR>
+  " nnoremap <buffer> <leader>p :Prettier<CR>:MarkdownHeadersSetext<CR>:echo "Prettier + MDX!"<CR>
 
   " makes word surrounded in backticks
-  nnoremap <buffer> <leader>m ciw``<esc>P
-  vnoremap <buffer> <leader>m c``<esc>P
+  nnoremap <buffer> <leader>m ciw$$<esc>P
+  vnoremap <buffer> <leader>m c$$<esc>P
 
   " makes letter become vector: A -> \v{A}
   nnoremap <buffer> <leader>v s\v{}<esc>P
 
   " makes letter become math'd vector: A -> `\v{A}`
-  nnoremap <buffer> <leader>V s`\v{}`<esc>hP
+  nnoremap <buffer> <leader>V s$\v{}$<esc>hP
+
+  " use $ as bounding delimiters, kinda like () and {}
+  onoremap <silent> i$ :<c-u>normal! T$vt$<cr>
+  vnoremap i$ T$ot$
+
   lua vim.api.nvim_buf_set_option(0, "commentstring", "{/* %s */}")
 endfunction
 
