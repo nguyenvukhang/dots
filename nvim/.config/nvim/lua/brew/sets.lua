@@ -24,6 +24,7 @@ vim.opt.swapfile       = false      -- disables swap file
 vim.opt.backup         = false      -- disables backup
 vim.opt.autochdir      = true       -- keep pwd the same as current buffer
 vim.opt.pumheight      = 8          -- sets popup menu height
+vim.opt.signcolumn     = 'number'   -- sets lsp stuff to appear on numbers
 vim.opt.completeopt    = 'menu,menuone,noselect'  -- recommended by nvim-cmp
 vim.opt.shortmess      = vim.o.shortmess..'c'
 vim.opt.undodir        = dots_root..'/personal/.config/nvim/data/undodir'
