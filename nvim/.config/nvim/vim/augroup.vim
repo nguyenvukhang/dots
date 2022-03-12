@@ -23,6 +23,7 @@ function! MdxSpecific()
   vnoremap i$ T$ot$
 
   lua vim.api.nvim_buf_set_option(0, "commentstring", "{/* %s */}")
+  hi link markdownError Normal
 endfunction
 
 function! LatexSpecific()
@@ -87,3 +88,7 @@ endfunction
 command! StanGlyphs :silent! call StanGlyphs()
 command! Date :call Date()
 
+
+nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>

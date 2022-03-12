@@ -18,8 +18,8 @@ vnoremap H ^
 vnoremap L $
 " open file under cursor in a split
 nnoremap gF :vs <cfile><cr>
-nnoremap <C-d> 12j0zz
-nnoremap <C-u> 12k0zz
+nnoremap <C-d> 12jzz
+nnoremap <C-u> 12kzz
 nnoremap <silent> <C-j> :cnext<cr>
 nnoremap <silent> <C-k> :cprev<cr>
 nnoremap <leader>7 :set colorcolumn=71<cr>
