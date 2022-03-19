@@ -39,12 +39,12 @@
 const int yellow = 30;
 const int green = 99;
 const int blue = 130;
-const int pink = 235;
+const int indigo = 180;
 const int red = 252;
 const int base_sat = 120;
 
-#define  base  MINIMAL_FRONT(pink, 250, 100)
-#define basex MINIMAL_FRONTx(pink, 250, 100)
+#define  base  MINIMAL_FRONT(indigo, 250, 100)
+#define basex MINIMAL_FRONTx(indigo, 250, 100)
 #define  func MINIMAL_IN(green, 250, 100)
 #define  sudo MINIMAL_IN(red, 250, 100)
 
