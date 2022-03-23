@@ -24,6 +24,7 @@ function! MdxSpecific()
 
   lua vim.api.nvim_buf_set_option(0, "commentstring", "{/* %s */}")
   hi link markdownError Normal
+  let g:AutoPairs={'$':'$','(':')','[':']','{':'}',"'":"'",'"':'"','```':'```','"""':'"""',"'''":"'''","`":"`"}
 endfunction
 
 function! LatexSpecific()
