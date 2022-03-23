@@ -53,12 +53,6 @@ function gur() {
   git push
 }
 
-function gsl() {
-  local git_log=(git log --graph --all \
-    --pretty=format:"%C(yellow)%h%C(auto)%d %Creset%s %C(dim)(%ar)")
-  $git_log | fzf $FZF_OPTS --no-clear
-}
-
 # git clone
 function gcl() {
   [ ${1%%:*} = "https" ] \
@@ -79,16 +73,18 @@ function gcb() {
 
 function glt() { git log --since="24 hours ago" --oneline --graph --all } # git log (today)
 
-function gl() {
-  git log --graph \
-    --pretty=format:"%C(yellow)%h%C(auto)%d %Creset%s %C(dim)(%ar)" \
-    -n ${1-12}
+# git logs
+function custom_git_log() {
+  local pretty="%C(yellow)%h%C(auto)%d %Creset%s %C(dim)(%ar)"
+  git log $@ --graph --pretty=format:$pretty
 }
+function gl()  { custom_git_log -n ${1-12} }
+function gla() { custom_git_log -n ${1-12} --all }
 
-function gla() {
-  git log --graph --all \
-    --pretty=format:"%C(yellow)%h%C(auto)%d %Creset%s %C(dim)(%ar)" \
-    -n ${1-12}
+# git search log
+function gsl() {
+  custom_git_log --all \
+    | fzf $FZF_OPTS --multi 6 --bind 'enter:select-all+accept'
 }
 
 # git commit
