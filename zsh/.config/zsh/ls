@@ -1,8 +1,13 @@
 #!/usr/bin/env zsh
 
 # listing files
-alias ls="exa -a --group-directories-first --ignore-glob='.DS_Store'"
-alias ll="exa -al --group-directories-first --ignore-glob='.DS_Store'"
+EXA_OPTS=(
+  --group-directories-first
+  --sort=Filename
+  --ignore-glob='.DS_Store'
+)
+alias ls="exa -a $EXA_OPTS"
+alias ll="exa -al $EXA_OPTS"
 
 # file tree
 function lt() {
