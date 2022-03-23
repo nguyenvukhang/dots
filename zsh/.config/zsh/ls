@@ -6,19 +6,10 @@ alias ll="exa -al --group-directories-first --ignore-glob='.DS_Store'"
 
 # file tree
 function lt() {
-  # lt [path...] [depth]
-
-  # lt
-	[ -z $1 ] && exa -a --tree --level=2 && return
-
-  # lt [depth]
-	[ "$1" ] && [ -z "${1//[0-9]}" ] && exa -a --tree --level=$1 && return
-
-	if [ -d $1 ]; then
-    # lt [path...]
-		[ -z $2 ] && exa -a --tree --level=2 -- $1 && return
-
-    # lt [path...] [depth]
-		[ "$2" ] && [ -z "${2//[0-9]}" ] && exa -a --tree --level=$2 -- $1 && return
-	fi
+  # usage: lt <depth> <directory>
+  # <depth> is optional, defaults to 2.
+  # <directory> is optional, defaults to $PWD.
+  [ -d $1 ] && [ -z $2 ] \
+    && exa -a --tree --level=2 -- $1 \
+    || exa -a --tree --level=${1-2} -- ${2-.}
 }
