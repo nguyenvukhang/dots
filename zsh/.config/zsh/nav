@@ -7,7 +7,6 @@ typeset -A local nav=(
   [c]="$HOME/.config"
   [d]="$DOTS"
   [f]="$HOME/files"
-  [g]="$REPOS/gcal"
   [j]="$HOME/Downloads"
   [l]="$HOME/.local"
   [lb]="$HOME/.local/bin"

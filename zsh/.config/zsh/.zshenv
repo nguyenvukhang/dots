@@ -5,6 +5,7 @@ MAPLE=192.168.1.9
 BREW=brew@$MAPLE
 FZF_OPTS=(--height=7 +m --no-mouse --reverse \
   --no-info --prompt="  " --color='pointer:green')
+LESSHISTFILE=-
 
 # exports
 export DOTS=$HOME/dots
