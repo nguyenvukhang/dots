@@ -6,7 +6,6 @@ Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
 " T-POPE
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-fugitive'
 
 " math & notes
 Plug 'vimplug/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
