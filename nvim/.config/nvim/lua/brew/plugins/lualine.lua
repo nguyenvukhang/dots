@@ -5,7 +5,7 @@
 local colors = require('brew.core').colors
 
 local bg = colors.bg1
-local s = {
+local theme = {
   a = { bg = bg, fg = colors.white },
   b = { bg = bg, fg = colors.gray  },
   c = { bg = bg, fg = colors.fg4   },
@@ -27,7 +27,7 @@ local setup = function()
       icons_enabled = false,
       component_separators = '', -- within each component
       section_separators = '',   -- across sections
-      theme = { normal = s, insert = s, visual = s, replace = s, command = s, inactive = s },
+      theme = theme,
     },
     sections = {
       lualine_a = {'filename'},
