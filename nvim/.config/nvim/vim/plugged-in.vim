@@ -4,9 +4,6 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
-" markdown goodness
-Plug 'godlygeek/tabular'
-
 " T-POPE
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
@@ -35,10 +32,6 @@ Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 
 " old but gold
 Plug 'rmagatti/alternate-toggler'
-" Plug 'jiangmiao/auto-pairs'
-
-" statusline
-Plug 'nvim-lualine/lualine.nvim'
 
 " comments
 Plug 'terrortylor/nvim-comment'
@@ -48,5 +41,6 @@ Plug 'vimplug/nvim-colorizer.lua'
 
 " old friends
 " Plug 'lifepillar/vim-colortemplate'
+" Plug 'nvim-lualine/lualine.nvim'
 
 call plug#end()

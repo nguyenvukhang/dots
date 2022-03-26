@@ -6,8 +6,6 @@ source('vim/plugged-in.vim') -- plugins
 require('brew.sets')         -- sets
 source('vim/remaps.vim')     -- remaps
 
-require('brew.plugins.autopairs')
-require('brew.plugins.lualine')
 require('brew.plugins.markdown_preview')
 require('brew.plugins.nvim_cmp')
 require('brew.plugins.nvim_comment')
