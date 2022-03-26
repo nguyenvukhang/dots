@@ -38,29 +38,12 @@ func! AutoPairsDefaultPairs()
   return r
 endf
 
-" I need this
-if !exists('g:AutoPairsMapBS')
-  let g:AutoPairsMapBS = 1
-end
-
-" I need this
-if !exists('g:AutoPairsMapCR')
-  let g:AutoPairsMapCR = 1
-end
-
-" I need this
-if !exists('g:AutoPairsMapSpace')
-  let g:AutoPairsMapSpace = 1
-end
-
-" I need this
-if !exists('g:AutoPairsSmartQuotes')
-  let g:AutoPairsSmartQuotes = 1
-endif
-
-if !exists('g:AutoPairsWildClosedPair')
-  let g:AutoPairsWildClosedPair = ''
-end
+" I need these
+let g:AutoPairsMapBS = 1
+let g:AutoPairsMapCR = 1
+let g:AutoPairsMapSpace = 1
+let g:AutoPairsSmartQuotes = 1
+let g:AutoPairsWildClosedPair = ''
 
 " 7.4.849 support <C-G>U to avoid breaking '.'
 " Issue talk: https://github.com/jiangmiao/auto-pairs/issues/3
