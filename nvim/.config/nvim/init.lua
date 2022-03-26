@@ -4,7 +4,6 @@ local source = function(e) vim.cmd('source '..conf..'/'..e) end
 source('vim/auto-pairs.vim')
 source('vim/plugged-in.vim') -- plugins
 require('brew.sets')         -- sets
--- source('vim/statusline.vim') -- statusline
 source('vim/remaps.vim')     -- remaps
 
 require('brew.plugins.markdown_preview')
