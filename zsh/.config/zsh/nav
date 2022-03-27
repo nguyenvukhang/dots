@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 typeset -A local nav=(
-  [a]="$HOME/sunnus/app/main/src"
+  [a]="$HOME/sunnus/app"
   [b]="$REPOS/blog/dev"
   [bo]="$REPOS/books"
   [c]="$HOME/.config"
