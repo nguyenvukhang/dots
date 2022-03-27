@@ -1,12 +1,6 @@
-function! MdxSpecific()
+function! __MDX__()
   set ft=markdown
   set tw=70
-  function! MarkdownHeadersSetext()
-    silent g/^#\s/norm! ^df yypVr=
-    silent g/^##\s/norm! ^df yypVr-
-  endfunction
-  command! MarkdownHeadersSetext :call MarkdownHeadersSetext()
-  " nnoremap <buffer> <leader>p :Prettier<CR>:MarkdownHeadersSetext<CR>:echo "Prettier + MDX!"<CR>
 
   " makes word surrounded in backticks
   nnoremap <buffer> <leader>m ciw$$<esc>P
@@ -27,7 +21,7 @@ function! MdxSpecific()
   let g:AutoPairs={'$':'$','(':')','[':']','{':'}',"'":"'",'"':'"','```':'```','"""':'"""',"'''":"'''","`":"`"}
 endfunction
 
-function! LatexSpecific()
+function! __LATEX__()
   set tw=70
 
   " makes word surrounded in backticks
@@ -39,22 +33,21 @@ function! LatexSpecific()
 
   " makes letter become math'd vector: A -> `\v{A}`
   nnoremap <buffer> <leader>V s$\v{}$<esc>hP
+  let g:AutoPairs={'$':'$','(':')','[':']','{':'}',"'":"'",'"':'"','```':'```','"""':'"""',"'''":"'''","`":"`"}
 endfunction
 
 aug THE_BREWERY
   au!
   " make splits equally sized on window resize
   au VimResized * wincmd =
-  " markdown/mdx handling
-  au BufRead,BufNewFile *.mdx call MdxSpecific()
-  au BufRead,BufNewFile *.tex call LatexSpecific()
-  au BufRead,BufNewFile *.m set ft=matlab
+
+  " file extension handling
+  au BufRead,BufNewFile *.mdx call __MDX__()
+  au BufRead,BufNewFile *.tex call __LATEX__()
   au BufRead,BufNewFile *.m UltiSnipsAddFiletypes markdown
-  " made all /bin/sh files be highlighted as if they were zsh files
+
+  " /bin/sh files highlighted as if they were zsh files
 	au BufRead,BufNewFile *	if &ft == 'sh' | set ft=zsh | endif
-	au BufRead,BufNewFile *.md set tw=70 | set fo-=l
-  " temporary clutch
-  " au BufRead,BufNewFile *.json set fmr={,}
 aug END
 
 function! StanGlyphs()
@@ -89,7 +82,7 @@ endfunction
 command! StanGlyphs :silent! call StanGlyphs()
 command! Date :call Date()
 
-
+" show highlight group of char under cursor
 nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
