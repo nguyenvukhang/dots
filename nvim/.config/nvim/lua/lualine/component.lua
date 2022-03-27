@@ -22,6 +22,7 @@ M.__is_lualine_component = true
 
 ---initialize new component
 ---@param options table options for component
+--- I_need_this
 function M:init(options)
   self.options = options or {}
   component_no = component_no + 1
@@ -33,6 +34,7 @@ function M:init(options)
 end
 
 ---creates hl group from color option
+--- I_need_this
 function M:create_option_highlights()
   -- set custom highlights
   if self.options.color then
@@ -46,6 +48,7 @@ function M:create_option_highlights()
 end
 
 ---adds spaces to left and right of a component
+--- I_need_this
 function M:apply_padding()
   local padding = self.options.padding
   if padding == nil then
@@ -66,6 +69,7 @@ function M:apply_padding()
 end
 
 ---applies custom highlights for component
+--- I_need_this
 function M:apply_highlights(default_highlight)
   if self.options.color_highlight then
     local hl_fmt
@@ -76,16 +80,6 @@ function M:apply_highlights(default_highlight)
   -- color in previous component can cause side effect
   if not self.status:find('^%%#') then
     self.status = default_highlight .. self.status
-  end
-end
-
-function M:get_default_hl()
-  if self.options.color_highlight then
-    return highlight.component_format_highlight(self.options.color_highlight)
-  elseif self.default_hl then
-    return self.default_hl
-  else
-    return highlight.format_highlight(self.options.self.section)
   end
 end
 

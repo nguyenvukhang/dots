@@ -16,14 +16,6 @@ if source:sub(1, 1) == '@' then
   end
 end
 
---- checks if name is valied
----@param name string
----@return boolean
-function M.is_valid_filename(name)
-  local invalid_chars = '[^a-zA-Z0-9_. -]'
-  return name:find(invalid_chars) == nil
-end
-
 ---require module module
 ---@param module string mogule arraived
 ---@return any the required module
@@ -33,25 +25,6 @@ function M.require(module)
   end
   local pattern_dir = module:gsub('%.', M.sep)
   local pattern_path = pattern_dir .. '.lua'
-  if M.plugin_dir then
-    local path = M.plugin_dir .. pattern_path
-    assert(M.is_valid_filename(module), 'Invalid filename')
-    local file_stat, dir_stat
-    file_stat = vim.loop.fs_stat(path)
-    if not file_stat then
-      path = M.plugin_dir .. pattern_dir
-      dir_stat = vim.loop.fs_stat(path)
-      if dir_stat and dir_stat.type == 'directory' then
-        path = path .. M.sep .. 'init.lua'
-        file_stat = vim.loop.fs_stat(path)
-      end
-    end
-    if file_stat and file_stat.type == 'file' then
-      local mod_result = dofile(path)
-      package.loaded[module] = mod_result
-      return mod_result
-    end
-  end
 
   pattern_path = table.concat { 'lua/', module:gsub('%.', '/'), '.lua' }
   local paths = vim.api.nvim_get_runtime_file(pattern_path, false)

@@ -2,14 +2,10 @@
 -- MIT license, see LICENSE for more details.
 local M = {}
 local lualine_require = require('lualine_require')
-local modules = lualine_require.lazy_require {
-  utils = 'lualine.utils.utils',
-  color_utils = 'lualine.utils.color_utils',
-}
+local modules = lualine_require.lazy_require { utils = 'lualine.utils.utils', }
 
 local section_highlight_map = { x = 'c', y = 'b', z = 'a' }
 local theme_hls = {}
-local create_cterm_colors = false
 
 -- table to store the highlight names created by lualine
 local loaded_highlights = {}
@@ -37,28 +33,6 @@ local function sanitize_color(color)
     return 'None'
   end
   return color
-end
-
-function M.get_lualine_hl(name)
-  local hl = loaded_highlights[name]
-  if hl and not hl.empty then
-    if hl.link then
-      return modules.utils.extract_highlight_colors(hl.link)
-    end
-    local hl_def = {
-      fg = hl.fg ~= 'None' and vim.deepcopy(hl.fg) or nil,
-      bg = hl.bg ~= 'None' and vim.deepcopy(hl.bg) or nil,
-    }
-    if hl.gui then
-      for _, flag in ipairs(vim.split(hl.gui, ',')) do
-        if flag ~= 'None' then
-          hl_def[flag] = true
-        end
-      end
-    end
-
-    return hl_def
-  end
 end
 
 --- Define a hl_group
@@ -90,11 +64,6 @@ function M.highlight(name, foreground, background, gui, link)
     table.insert(command, 'guifg=' .. foreground)
     table.insert(command, 'guibg=' .. background)
     table.insert(command, 'gui=' .. gui)
-    if create_cterm_colors then
-      table.insert(command, 'ctermfg=' .. modules.color_utils.rgb2cterm(foreground))
-      table.insert(command, 'ctermbg=' .. modules.color_utils.rgb2cterm(background))
-      table.insert(command, 'cterm=' .. gui)
-    end
   end
   vim.cmd(table.concat(command, ' '))
 
@@ -158,7 +127,6 @@ function M.create_highlight_groups(theme)
   clear_highlights()
   theme_hls = {}
   local psudo_options = { self = { section = 'a' } }
-  create_cterm_colors = not vim.go.termguicolors
   for section, color in pairs(theme) do
     local hl_tag = 'normal'
     psudo_options.self.section = section
@@ -261,10 +229,8 @@ function M.component_format_highlight(highlight, is_focused)
   else
     local color = highlight.fn { section = highlight.section } or {}
     local hl_name = highlight.name
-    if type(color) == 'string' then
-      M.highlight(hl_name, nil, nil, nil, color)
-      return '%#' .. hl_name .. '#'
-    end
+    M.highlight(hl_name, nil, nil, nil, color)
+    return '%#' .. hl_name .. '#'
   end
 end
 

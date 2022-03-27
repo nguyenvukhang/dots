@@ -7,8 +7,6 @@ local modules = lualine_require.lazy_require {
   utils = 'lualine.utils.utils',
   notice = 'lualine.utils.notices',
 }
-local is_valid_filename = lualine_require.is_valid_filename
-local sep = lualine_require.sep
 
 --- function that loads specific type of component
 local component_types = {
