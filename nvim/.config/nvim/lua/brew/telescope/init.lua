@@ -25,33 +25,28 @@ local compact = {
   theme = 'dropdown',
 }
 
+local helps = function(prompt_title)
+  return {
+    prompt_title = prompt_title,
+    mappings = {
+      i = { ["<CR>"] = require('telescope.actions').select_vertical }
+    }
+  }
+end
+
 local pickers = {
-  file_browser = compact,
   git_files = { hidden = true },
+  file_browser = compact,
   find_files = compact,
   oldfiles = compact,
-  help_tags = {
-    prompt_title = 'search vim help',
-    mappings = {
-      i = { ["<CR>"] = require('telescope.actions').select_vertical }
-    }
-  },
-  man_pages = {
-    prompt_title = 'search man pages',
-    previewer = false,
-    theme = 'dropdown',
-    mappings = {
-      i = { ["<CR>"] = require('telescope.actions').select_vertical }
-    }
-  },
+  help_tags = helps('search vim help'),
+  man_pages = helps('search man pages'),
   buffers = {
-    show_all_buffers = true,
     ignore_current_buffer = true,
     sort_lastused = true,
-    theme = 'dropdown',
     previewer = false,
+    theme = 'dropdown',
     path_display = { smart = 1 },
-    layout_config = { height = 15, width = 100 },
     mappings = {
       i = {
         ['<c-d>'] = require('telescope.actions').delete_buffer,
@@ -60,31 +55,29 @@ local pickers = {
   }
 }
 
-local setup = function()
-  require('telescope').setup {
-    defaults = {
-      vimgrep_arguments = vimgrep_arguments,
-      file_sorter = require('telescope.sorters').get_fzy_sorter,
-      color_devicons = false,
-      mappings = {
-        i = {
-          ['<C-q>'] = actions.send_to_qflist,
-          ['<C-j>'] = actions.move_selection_next,
-          ['<C-k>'] = actions.move_selection_previous,
-          ['<esc>'] = actions.close,
-        },
+local config = {
+  defaults = {
+    vimgrep_arguments = vimgrep_arguments,
+    file_sorter = require('telescope.sorters').get_fzy_sorter,
+    color_devicons = false,
+    mappings = {
+      i = {
+        ['<C-q>'] = actions.send_to_qflist,
+        ['<C-j>'] = actions.move_selection_next,
+        ['<C-k>'] = actions.move_selection_previous,
+        ['<esc>'] = actions.close,
       },
     },
-    extensions = {
-      fzy_native = {
-        override_generic_sorter = false,
-        override_file_sorter = true,
-      }
-    },
-    pickers = pickers,
-  }
-  require('telescope').load_extension('fzy_native')
-end
+  },
+  pickers = pickers,
+  extensions = {
+    fzy_native = {
+      override_generic_sorter = false,
+      override_file_sorter = true,
+    }
+  },
+}
 
 require('brew.telescope.remaps')
-setup()
+require('telescope').setup(config)
+require('telescope').load_extension('fzy_native')

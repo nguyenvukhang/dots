@@ -27,8 +27,8 @@ vnoremap L $
 nnoremap gF :vs <cfile><cr>
 
 " slowly increase this until I can use the default
-nnoremap <C-d> 13jzz
-nnoremap <C-u> 13kzz
+nnoremap <C-d> 12jzz
+nnoremap <C-u> 12kzz
 
 " quickfix list navigation
 nnoremap <silent> <C-j> :cnext<cr>

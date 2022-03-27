@@ -20,7 +20,7 @@ M.cwd = function()
 end
 
 -- searches recent files
-M.recents = function()
+M.oldfiles = function()
   require('telescope.builtin').oldfiles({
     cwd = env.home,
     prompt_title = 'Recent Files'

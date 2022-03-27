@@ -8,50 +8,50 @@ local tele = function(keypress, search_type, search_function)
     final_type = 'brew.telescope.'..search_type
   end
   vim.api.nvim_set_keymap('n', keypress,
-  ':lua require("'..final_type ..'").' ..search_function..'<CR>',
+  ':lua require("'..final_type ..'").' ..search_function..'<cr>',
   { noremap = true, silent = true })
 end
 
-tele('<C-b>', 'builtin', 'buffers()')
+tele('<c-b>', 'builtin', 'buffers()')
 
 -- file search
-tele('<C-p>', 'file', 'repo()')
-tele('<C-f>', 'file', 'cwd()')
+tele('<c-p>', 'file', 'repo()')
+tele('<c-f>', 'file', 'cwd()')
 
 -- word search
-tele('<Leader>ps', 'word', 'repo()')
-tele('<Leader>pw', 'word', 'cwd()')
-tele('<Leader>pf', 'word', 'this_in_repo()')
+tele('<leader>ps', 'word', 'repo()')
+tele('<leader>pw', 'word', 'cwd()')
+tele('<leader>pf', 'word', 'this_in_repo()')
 
 -- search dots
-tele('<Leader>sd', 'file', 'dots()')
+tele('<leader>sd', 'file', 'dots()')
 
 -- search university
-tele('<Leader>su', 'file', 'university()')
+tele('<leader>su', 'file', 'university()')
 
 -- search notes
-tele('<Leader>sn', 'file', 'notes()')
+tele('<leader>sn', 'file', 'notes()')
 
 -- search telescope
-tele('<Leader>st', 'file', 'telescope()')
+tele('<leader>st', 'file', 'telescope()')
 
 -- search past-open files (recents)
-tele('<Leader>sp', 'file', 'recents()')
+tele('<leader>sp', 'file', 'oldfiles()')
 
 -- search repos
-tele('<Leader>sr', 'file', 'repo_search()')
-tele('<Leader>so', 'file', 'other_repos_search()')
+tele('<leader>sr', 'file', 'repo_search()')
+tele('<leader>so', 'file', 'other_repos_search()')
 
 -- search vim help
-tele('<Leader>sh', 'builtin', 'help_tags()')
+tele('<leader>sh', 'builtin', 'help_tags()')
 
 -- search manpages
-tele('<Leader>sm', 'builtin', 'man_pages()')
+tele('<leader>sm', 'builtin', 'man_pages()')
 
 -- session
 local save_session = 'save_session({ path = "'..sessions_path..'"})'
-tele('<Leader>ss', 'sessions', save_session)
-tele('<C-s>', 'sessions', 'sessions()')
+tele('<leader>ss', 'sessions', save_session)
+tele('<c-s>', 'sessions', 'sessions()')
 
 -- git stuff
-tele('<Leader>gs', 'builtin', 'git_status()')
+tele('<leader>gs', 'builtin', 'git_status()')
