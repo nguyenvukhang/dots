@@ -1,6 +1,6 @@
 -- Copyright (c) 2020-2021 shadmansaleh
 -- MIT license, see LICENSE for more details.
-local require = require('lualine_require').require
+local require = require('lualine.require').require
 local highlight = require('lualine.highlight')
 local M = require('lualine.utils.class'):extend()
 

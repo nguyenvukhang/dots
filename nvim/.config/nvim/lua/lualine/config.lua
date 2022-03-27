@@ -1,8 +1,8 @@
 -- Copyright (c) 2020-2021 hoob3rt
 -- MIT license, see LICENSE for more details.
-local require = require('lualine_require').require
+local require = require('lualine.require').require
 local utils = require('lualine.utils.utils')
-local modules = require('lualine_require').lazy_require {
+local modules = require('lualine.require').lazy_require {
   utils_notices = 'lualine.utils.notices',
 }
 

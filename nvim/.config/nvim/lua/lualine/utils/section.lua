@@ -1,7 +1,7 @@
 -- Copyright (c) 2020-2021 hoob3rt
 -- MIT license, see LICENSE for more details.
 local M = {}
-local require = require('lualine_require').require
+local require = require('lualine.require').require
 local utils = require('lualine.utils.utils')
 local highlight = require('lualine.highlight')
 

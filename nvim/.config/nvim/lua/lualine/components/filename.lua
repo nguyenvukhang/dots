@@ -1,6 +1,6 @@
 local M = require('lualine.component'):extend()
 
-local modules = require('lualine_require').lazy_require {
+local modules = require('lualine.require').lazy_require {
   utils = 'lualine.utils.utils',
 }
 

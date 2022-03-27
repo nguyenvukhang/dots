@@ -1,7 +1,7 @@
 -- Copyright (c) 2020-2021 shadmansaleh
 -- MIT license, see LICENSE for more details.
 local M = require('lualine.component'):extend()
-local modules = require('lualine_require').lazy_require {
+local modules = require('lualine.require').lazy_require {
   git_branch = 'lualine.components.branch.git_branch',
   highlight = 'lualine.highlight',
   utils = 'lualine.utils.utils',
