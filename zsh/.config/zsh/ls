@@ -18,3 +18,13 @@ function lt() {
     && exa -a --tree --level=2 -- $1 \
     || exa -a --tree --level=${1-2} -- ${2-.}
 }
+
+# directory-only tree
+function ld() {
+  # usage: lt <depth> <directory>
+  # <depth> is optional, defaults to 2.
+  # <directory> is optional, defaults to $PWD.
+  [ -d $1 ] && [ -z $2 ] \
+    && exa -aD --tree --level=2 -- $1 \
+    || exa -aD --tree --level=${1-2} -- ${2-.}
+}
