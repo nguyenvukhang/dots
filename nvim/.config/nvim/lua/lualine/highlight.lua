@@ -8,7 +8,6 @@ local modules = lualine_require.lazy_require {
 }
 
 local section_highlight_map = { x = 'c', y = 'b', z = 'a' }
-local active_theme = nil
 local theme_hls = {}
 local create_cterm_colors = false
 
@@ -37,17 +36,7 @@ local function sanitize_color(color)
   if color == nil or color == '' then
     return 'None'
   end
-  if type(color) == 'string' then
-    if color:sub(1, 1) == '#' then
-      return color
-    end -- RGB value
-    return modules.color_utils.color_name2rgb(color)
-  elseif type(color) == 'number' then
-    if color > 255 then
-      error("What's this it can't be higher then 255 and you've given " .. color)
-    end
-    return modules.color_utils.cterm2rgb(color)
-  end
+  return color
 end
 
 function M.get_lualine_hl(name)
