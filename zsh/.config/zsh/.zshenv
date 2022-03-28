@@ -18,4 +18,4 @@ export TERM="screen-256color"
 
 # editor
 export EDITOR=nvim
-[ $EDITOR = "nvim" ] && export MANPAGER="nvim +Man! -c 'set noma'"
+[ $EDITOR = "nvim" ] && export MANPAGER="nvim +Man!"
