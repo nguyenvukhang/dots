@@ -8,9 +8,6 @@ nnoremap <right> <nop>
 nnoremap <up> <nop>
 nnoremap <down> <nop>
 
-" typo guards
-nnoremap q: <nop>
-
 " set leader to <space>
 let mapleader = ' '
 
