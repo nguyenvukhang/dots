@@ -182,69 +182,10 @@ if (has('termguicolors') && &termguicolors) || has('gui_running')
     finish
   endif
   if get(g:, "gruvbox_plugin_hi_groups", 0)
-    hi ALEError guifg=NONE guibg=NONE guisp=#fb4934 gui=undercurl ctermfg=NONE ctermbg=NONE cterm=underline
-    hi ALEWarning guifg=NONE guibg=NONE guisp=#fb4934 gui=undercurl ctermfg=NONE ctermbg=NONE cterm=underline
-    hi ALEInfo guifg=NONE guibg=NONE guisp=#83a598 gui=undercurl ctermfg=NONE ctermbg=NONE cterm=underline
-    hi ALEErrorSign guifg=#fb4934 guibg=#3c3836 gui=NONE cterm=NONE
-    hi ALEWarningSign guifg=#fabd2f guibg=#3c3836 gui=NONE cterm=NONE
-    hi ALEInfoSign guifg=#83a598 guibg=#3c3836 gui=NONE cterm=NONE
-    hi BufTabLineCurrent guifg=#282828 guibg=#a89984 gui=NONE cterm=NONE
-    hi BufTabLineActive guifg=#a89984 guibg=#504945 gui=NONE cterm=NONE
-    hi BufTabLineHidden guifg=#7c6f64 guibg=#3c3836 gui=NONE cterm=NONE
-    hi BufTabLineFill guifg=#282828 guibg=#282828 gui=NONE cterm=NONE
-    hi CocErrorSign guifg=#fb4934 guibg=#3c3836 gui=NONE cterm=NONE
-    hi CocWarningSign guifg=#fe8019 guibg=#3c3836 gui=NONE cterm=NONE
-    hi CocInfoSign guifg=#fabd2f guibg=#3c3836 gui=NONE cterm=NONE
-    hi CocHintSign guifg=#83a598 guibg=#3c3836 gui=NONE cterm=NONE
-    hi CocErrorFloat guifg=#fb4934 guibg=NONE gui=NONE cterm=NONE
-    hi CocWarningFloat guifg=#fe8019 guibg=NONE gui=NONE cterm=NONE
-    hi CocInfoFloat guifg=#fabd2f guibg=NONE gui=NONE cterm=NONE
-    hi CocHintFloat guifg=#83a598 guibg=NONE gui=NONE cterm=NONE
-    hi CtrlPMatch guifg=#fabd2f guibg=NONE gui=NONE cterm=NONE
-    hi CtrlPNoEntries guifg=#fb4934 guibg=NONE gui=NONE cterm=NONE
-    hi CtrlPPrtBase guifg=#504945 guibg=NONE gui=NONE cterm=NONE
-    hi CtrlPPrtCursor guifg=#83a598 guibg=NONE gui=NONE cterm=NONE
-    hi CtrlPLinePre guifg=#504945 guibg=NONE gui=NONE cterm=NONE
-    hi CtrlPMode1 guifg=#83a598 guibg=#504945 gui=bold cterm=bold
-    hi CtrlPMode2 guifg=#282828 guibg=#83a598 gui=bold cterm=bold
-    hi CtrlPStats guifg=#a89984 guibg=#504945 gui=bold cterm=bold
-    if !get(g:, 'gruvbox_bold', 1)
-      hi CtrlPMode1 gui=NONE cterm=NONE
-      hi CtrlPMode2 gui=NONE cterm=NONE
-      hi CtrlPStats gui=NONE cterm=NONE
-    endif
     hi DirvishPathTail guifg=#8ec07c guibg=NONE gui=NONE cterm=NONE
     hi DirvishArg guifg=#fabd2f guibg=NONE gui=NONE cterm=NONE
-    hi! link EasyMotionTarget Search
-    hi! link EasyMotionShade Comment
     hi gitcommitSelectedFile guifg=#b8bb26 guibg=NONE gui=NONE cterm=NONE
     hi gitcommitDiscardedFile guifg=#fb4934 guibg=NONE gui=NONE cterm=NONE
-    if get(g:, 'gruvbox_transp_bg', 0)
-      hi GitGutterAdd guifg=#b8bb26 guibg=NONE gui=NONE cterm=NONE
-      hi GitGutterChange guifg=#8ec07c guibg=NONE gui=NONE cterm=NONE
-      hi GitGutterDelete guifg=#fb4934 guibg=NONE gui=NONE cterm=NONE
-      hi GitGutterChangeDelete guifg=#8ec07c guibg=NONE gui=NONE cterm=NONE
-    else
-      hi GitGutterAdd guifg=#b8bb26 guibg=#3c3836 gui=NONE cterm=NONE
-      hi GitGutterChange guifg=#8ec07c guibg=#3c3836 gui=NONE cterm=NONE
-      hi GitGutterDelete guifg=#fb4934 guibg=#3c3836 gui=NONE cterm=NONE
-      hi GitGutterChangeDelete guifg=#8ec07c guibg=#3c3836 gui=NONE cterm=NONE
-    endif
-    if get(g:, 'indent_guides_auto_colors', 0)
-      if get(g:, 'gruvbox_invert_indent_guides', 0)
-        hi IndentGuidesOdd guifg=#282828 guibg=#504945 gui=reverse cterm=reverse
-        hi IndentGuidesEven guifg=#282828 guibg=#3c3836 gui=reverse cterm=reverse
-      else
-        hi IndentGuidesOdd guifg=#282828 guibg=#504945 gui=NONE cterm=NONE
-        hi IndentGuidesEven guifg=#282828 guibg=#3c3836 gui=NONE cterm=NONE
-      endif
-    endif
-    if !exists('g:indentLine_color_term')
-      let g:indentLine_color_term = 239
-    endif
-    if !exists('g:indentLine_color_gui')
-      let g:indentLine_color_gui = '#504945'
-    endif
     hi LspDiagnosticsDefaultError guifg=#fb4934 guibg=NONE gui=NONE cterm=NONE
     hi LspDiagnosticsSignError guifg=#fb4934 guibg=#3c3836 gui=NONE cterm=NONE
     hi LspDiagnosticsUnderlineError guifg=NONE guibg=NONE guisp=NONE gui=NONE ctermfg=NONE ctermbg=NONE cterm=NONE
@@ -264,17 +205,6 @@ if (has('termguicolors') && &termguicolors) || has('gui_running')
     hi LangaugeClientInfo guifg=#83a598 guibg=NONE gui=NONE cterm=NONE
     hi LanguageClientInfoSign guifg=#83a598 guibg=#3c3836 gui=NONE cterm=NONE
     hi LanguageClientCodeLens guifg=#83a598 guibg=NONE gui=NONE cterm=NONE
-    hi NERDTreeDir guifg=#8ec07c guibg=NONE gui=NONE cterm=NONE
-    hi NERDTreeDirSlash guifg=#8ec07c guibg=NONE gui=NONE cterm=NONE
-    hi NERDTreeOpenable guifg=#fe8019 guibg=NONE gui=NONE cterm=NONE
-    hi NERDTreeClosable guifg=#fe8019 guibg=NONE gui=NONE cterm=NONE
-    hi NERDTreeFile guifg=#ebdbb2 guibg=NONE gui=NONE cterm=NONE
-    hi NERDTreeExecFile guifg=#fabd2f guibg=NONE gui=NONE cterm=NONE
-    hi NERDTreeUp guifg=#928374 guibg=NONE gui=NONE cterm=NONE
-    hi NERDTreeCWD guifg=#b8bb26 guibg=NONE gui=NONE cterm=NONE
-    hi NERDTreeHelp guifg=#ebdbb2 guibg=NONE gui=NONE cterm=NONE
-    hi NERDTreeToggleOn guifg=#b8bb26 guibg=NONE gui=NONE cterm=NONE
-    hi NERDTreeToggleOff guifg=#fb4934 guibg=NONE gui=NONE cterm=NONE
     hi netrwDir guifg=#8ec07c guibg=NONE gui=NONE cterm=NONE
     hi netrwClassify guifg=#8ec07c guibg=NONE gui=NONE cterm=NONE
     hi netrwLink guifg=#928374 guibg=NONE gui=NONE cterm=NONE
@@ -310,24 +240,8 @@ if (has('termguicolors') && &termguicolors) || has('gui_running')
     hi ShowMarksHLu guifg=#83a598 guibg=#3c3836 gui=NONE cterm=NONE
     hi ShowMarksHLo guifg=#83a598 guibg=#3c3836 gui=NONE cterm=NONE
     hi ShowMarksHLm guifg=#83a598 guibg=#3c3836 gui=NONE cterm=NONE
-    hi SignifySignAdd guifg=#b8bb26 guibg=#3c3836 gui=NONE cterm=NONE
-    hi SignifySignChange guifg=#8ec07c guibg=#3c3836 gui=NONE cterm=NONE
-    hi SignifySignDelete guifg=#fb4934 guibg=#3c3836 gui=NONE cterm=NONE
     hi SignatureMarkText guifg=#83a598 guibg=#3c3836 gui=NONE cterm=NONE
     hi SignatureMarkerText guifg=#d3869b guibg=#3c3836 gui=NONE cterm=NONE
-    hi StartifyBracket guifg=#bdae93 guibg=NONE gui=NONE cterm=NONE
-    hi StartifyFile guifg=#ebdbb2 guibg=NONE gui=NONE cterm=NONE
-    hi StartifyNumber guifg=#83a598 guibg=NONE gui=NONE cterm=NONE
-    hi StartifyPath guifg=#928374 guibg=NONE gui=NONE cterm=NONE
-    hi StartifySlash guifg=#928374 guibg=NONE gui=NONE cterm=NONE
-    hi StartifySection guifg=#fabd2f guibg=NONE gui=NONE cterm=NONE
-    hi StartifySpecial guifg=#504945 guibg=NONE gui=NONE cterm=NONE
-    hi StartifyHeader guifg=#fe8019 guibg=NONE gui=NONE cterm=NONE
-    hi StartifyFooter guifg=#504945 guibg=NONE gui=NONE cterm=NONE
-    hi SyntasticError guifg=NONE guibg=NONE guisp=#fb4934 gui=undercurl ctermfg=NONE ctermbg=NONE cterm=underline
-    hi SyntasticWarning guifg=NONE guibg=NONE guisp=#fabd2f gui=undercurl ctermfg=NONE ctermbg=NONE cterm=underline
-    hi SyntasticErrorSign guifg=#fb4934 guibg=#3c3836 gui=NONE cterm=NONE
-    hi SyntasticWarningSign guifg=#fabd2f guibg=#3c3836 gui=NONE cterm=NONE
     hi multiple_cursors_cursor guifg=NONE guibg=NONE gui=reverse ctermfg=NONE ctermbg=NONE cterm=reverse
     hi multiple_cursors_visual guifg=NONE guibg=#504945 gui=NONE cterm=NONE
     let g:vimshell_escape_colors = [
@@ -856,64 +770,10 @@ if s:t_Co >= 256
     finish
   endif
   if get(g:, "gruvbox_plugin_hi_groups", 0)
-    hi ALEError ctermfg=NONE ctermbg=NONE cterm=underline
-    hi ALEWarning ctermfg=NONE ctermbg=NONE cterm=underline
-    hi ALEInfo ctermfg=NONE ctermbg=NONE cterm=underline
-    hi ALEErrorSign ctermfg=203 ctermbg=237 cterm=NONE
-    hi ALEWarningSign ctermfg=214 ctermbg=237 cterm=NONE
-    hi ALEInfoSign ctermfg=109 ctermbg=237 cterm=NONE
-    hi BufTabLineCurrent ctermfg=235 ctermbg=137 cterm=NONE
-    hi BufTabLineActive ctermfg=137 ctermbg=239 cterm=NONE
-    hi BufTabLineHidden ctermfg=243 ctermbg=237 cterm=NONE
-    hi BufTabLineFill ctermfg=235 ctermbg=235 cterm=NONE
-    hi CocErrorSign ctermfg=203 ctermbg=237 cterm=NONE
-    hi CocWarningSign ctermfg=208 ctermbg=237 cterm=NONE
-    hi CocInfoSign ctermfg=214 ctermbg=237 cterm=NONE
-    hi CocHintSign ctermfg=109 ctermbg=237 cterm=NONE
-    hi CocErrorFloat ctermfg=203 ctermbg=NONE cterm=NONE
-    hi CocWarningFloat ctermfg=208 ctermbg=NONE cterm=NONE
-    hi CocInfoFloat ctermfg=214 ctermbg=NONE cterm=NONE
-    hi CocHintFloat ctermfg=109 ctermbg=NONE cterm=NONE
-    hi CtrlPMatch ctermfg=214 ctermbg=NONE cterm=NONE
-    hi CtrlPNoEntries ctermfg=203 ctermbg=NONE cterm=NONE
-    hi CtrlPPrtBase ctermfg=239 ctermbg=NONE cterm=NONE
-    hi CtrlPPrtCursor ctermfg=109 ctermbg=NONE cterm=NONE
-    hi CtrlPLinePre ctermfg=239 ctermbg=NONE cterm=NONE
-    hi CtrlPMode1 ctermfg=109 ctermbg=239 cterm=bold
-    hi CtrlPMode2 ctermfg=235 ctermbg=109 cterm=bold
-    hi CtrlPStats ctermfg=137 ctermbg=239 cterm=bold
     hi DirvishPathTail ctermfg=107 ctermbg=NONE cterm=NONE
     hi DirvishArg ctermfg=214 ctermbg=NONE cterm=NONE
-    hi! link EasyMotionTarget Search
-    hi! link EasyMotionShade Comment
     hi gitcommitSelectedFile ctermfg=142 ctermbg=NONE cterm=NONE
     hi gitcommitDiscardedFile ctermfg=203 ctermbg=NONE cterm=NONE
-    if get(g:, 'gruvbox_transp_bg', 0)
-      hi GitGutterAdd ctermfg=142 ctermbg=NONE cterm=NONE
-      hi GitGutterChange ctermfg=107 ctermbg=NONE cterm=NONE
-      hi GitGutterDelete ctermfg=203 ctermbg=NONE cterm=NONE
-      hi GitGutterChangeDelete ctermfg=107 ctermbg=NONE cterm=NONE
-    else
-      hi GitGutterAdd ctermfg=142 ctermbg=237 cterm=NONE
-      hi GitGutterChange ctermfg=107 ctermbg=237 cterm=NONE
-      hi GitGutterDelete ctermfg=203 ctermbg=237 cterm=NONE
-      hi GitGutterChangeDelete ctermfg=107 ctermbg=237 cterm=NONE
-    endif
-    if get(g:, 'indent_guides_auto_colors', 0)
-      if get(g:, 'gruvbox_invert_indent_guides', 0)
-        hi IndentGuidesOdd ctermfg=235 ctermbg=239 cterm=reverse
-        hi IndentGuidesEven ctermfg=235 ctermbg=237 cterm=reverse
-      else
-        hi IndentGuidesOdd ctermfg=235 ctermbg=239 cterm=NONE
-        hi IndentGuidesEven ctermfg=235 ctermbg=237 cterm=NONE
-      endif
-    endif
-    if !exists('g:indentLine_color_term')
-      let g:indentLine_color_term = 239
-    endif
-    if !exists('g:indentLine_color_gui')
-      let g:indentLine_color_gui = '#504945'
-    endif
     hi LspDiagnosticsDefaultError ctermfg=203 ctermbg=NONE cterm=NONE
     hi LspDiagnosticsSignError ctermfg=203 ctermbg=237 cterm=NONE
     hi LspDiagnosticsUnderlineError ctermfg=NONE ctermbg=NONE cterm=NONE
@@ -933,17 +793,6 @@ if s:t_Co >= 256
     hi LangaugeClientInfo ctermfg=109 ctermbg=NONE cterm=NONE
     hi LanguageClientInfoSign ctermfg=109 ctermbg=237 cterm=NONE
     hi LanguageClientCodeLens ctermfg=109 ctermbg=NONE cterm=NONE
-    hi NERDTreeDir ctermfg=107 ctermbg=NONE cterm=NONE
-    hi NERDTreeDirSlash ctermfg=107 ctermbg=NONE cterm=NONE
-    hi NERDTreeOpenable ctermfg=208 ctermbg=NONE cterm=NONE
-    hi NERDTreeClosable ctermfg=208 ctermbg=NONE cterm=NONE
-    hi NERDTreeFile ctermfg=187 ctermbg=NONE cterm=NONE
-    hi NERDTreeExecFile ctermfg=214 ctermbg=NONE cterm=NONE
-    hi NERDTreeUp ctermfg=102 ctermbg=NONE cterm=NONE
-    hi NERDTreeCWD ctermfg=142 ctermbg=NONE cterm=NONE
-    hi NERDTreeHelp ctermfg=187 ctermbg=NONE cterm=NONE
-    hi NERDTreeToggleOn ctermfg=142 ctermbg=NONE cterm=NONE
-    hi NERDTreeToggleOff ctermfg=203 ctermbg=NONE cterm=NONE
     hi netrwDir ctermfg=107 ctermbg=NONE cterm=NONE
     hi netrwClassify ctermfg=107 ctermbg=NONE cterm=NONE
     hi netrwLink ctermfg=102 ctermbg=NONE cterm=NONE
@@ -979,24 +828,8 @@ if s:t_Co >= 256
     hi ShowMarksHLu ctermfg=109 ctermbg=237 cterm=NONE
     hi ShowMarksHLo ctermfg=109 ctermbg=237 cterm=NONE
     hi ShowMarksHLm ctermfg=109 ctermbg=237 cterm=NONE
-    hi SignifySignAdd ctermfg=142 ctermbg=237 cterm=NONE
-    hi SignifySignChange ctermfg=107 ctermbg=237 cterm=NONE
-    hi SignifySignDelete ctermfg=203 ctermbg=237 cterm=NONE
     hi SignatureMarkText ctermfg=109 ctermbg=237 cterm=NONE
     hi SignatureMarkerText ctermfg=175 ctermbg=237 cterm=NONE
-    hi StartifyBracket ctermfg=144 ctermbg=NONE cterm=NONE
-    hi StartifyFile ctermfg=187 ctermbg=NONE cterm=NONE
-    hi StartifyNumber ctermfg=109 ctermbg=NONE cterm=NONE
-    hi StartifyPath ctermfg=102 ctermbg=NONE cterm=NONE
-    hi StartifySlash ctermfg=102 ctermbg=NONE cterm=NONE
-    hi StartifySection ctermfg=214 ctermbg=NONE cterm=NONE
-    hi StartifySpecial ctermfg=239 ctermbg=NONE cterm=NONE
-    hi StartifyHeader ctermfg=208 ctermbg=NONE cterm=NONE
-    hi StartifyFooter ctermfg=239 ctermbg=NONE cterm=NONE
-    hi SyntasticError ctermfg=NONE ctermbg=NONE cterm=underline
-    hi SyntasticWarning ctermfg=NONE ctermbg=NONE cterm=underline
-    hi SyntasticErrorSign ctermfg=203 ctermbg=237 cterm=NONE
-    hi SyntasticWarningSign ctermfg=214 ctermbg=237 cterm=NONE
     hi multiple_cursors_cursor ctermfg=NONE ctermbg=NONE cterm=reverse
     hi multiple_cursors_visual ctermfg=NONE ctermbg=239 cterm=NONE
     let g:vimshell_escape_colors = [
