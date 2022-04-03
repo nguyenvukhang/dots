@@ -4,10 +4,7 @@ vim.g.nvim_tree_show_icons = {
   files = 0,
   folder_arrows = 0,
 }
-require'nvim-tree'.setup()
 
-vim.api.nvim_set_keymap('n', '<leader>f', ':NvimTreeToggle<cr>',
-  { noremap = true, silent = true })
 vim.g.nvim_tree_icons = {
   folder = {
     arrow_open = "⋁",
@@ -18,3 +15,15 @@ vim.g.nvim_tree_icons = {
     empty_open = "⋁",
   }
 }
+
+vim.api.nvim_set_keymap('n', '<leader>f', ':NvimTreeToggle<cr>',
+  { noremap = true, silent = true })
+
+require'nvim-tree'.setup({
+  update_focused_file = {
+    enable = true
+  },
+  git = {
+    enable = false,
+  },
+})
