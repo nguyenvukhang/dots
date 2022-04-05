@@ -1,14 +1,19 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
 # tmux attach script: ta
 
-t="${1-base}"
-# v=false
-# first argument is target attach
-# default value: "base"
+t="${1-base}" # default value: "base"
+
+typeset -A start_dir=(
+  [base]="$HOME"
+  [uni]="$HOME/repos/uni"
+  [sun]="$HOME/sunnus/app/dev"
+)
 
 function tmux_new() {
-  tmux new-session -d -s $t -n server
+  local s=$start_dir[$t]
+  [ $s ] && c=$s || c=$HOME
+  tmux new-session -d -s $t -c $c -n server
 }
 
 if [ -z "$TMUX" ]; then # when outside of tmux
