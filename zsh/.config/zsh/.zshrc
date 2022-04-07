@@ -24,6 +24,10 @@ PATH=$HOME/.jenv/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
 PATH=$HOME/.local/bin/git:$PATH
 PATH=$HOME/.yarn/bin:$PATH
+
+# android build tools
+PATH=$HOME/Library/Android/sdk/build-tools/32.0.0:$PATH
+
 export PATH
 
 setopt ignoreeof
