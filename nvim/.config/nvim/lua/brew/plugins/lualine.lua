@@ -5,10 +5,18 @@
 local colors = require('brew.core').colors
 
 local bg = colors.bg1
-local theme = {
+local s = {
   a = { bg = bg, fg = colors.white },
   b = { bg = bg, fg = colors.gray  },
   c = { bg = bg, fg = colors.fg4   },
+}
+local theme = {
+  command = s,
+  inactive = s,
+  insert = s,
+  replace = s,
+  terminal = s,
+  visual = s,
 }
 
 local function wordCount()

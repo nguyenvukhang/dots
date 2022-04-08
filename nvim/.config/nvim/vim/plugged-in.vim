@@ -1,5 +1,7 @@
 call plug#begin('~/.config/nvim/plugged')
 
+Plug 'nvim-lualine/lualine.nvim'
+
 " sparklez
 Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
@@ -40,7 +42,6 @@ Plug 'vimplug/nvim-colorizer.lua'
 
 " old friends
 " Plug 'lifepillar/vim-colortemplate'
-" Plug 'nvim-lualine/lualine.nvim'
 " Plug 'kyazdani42/nvim-tree.lua'
 
 call plug#end()
