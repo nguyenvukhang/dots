@@ -41,6 +41,6 @@ Plug 'vimplug/nvim-colorizer.lua'
 " old friends
 " Plug 'lifepillar/vim-colortemplate'
 " Plug 'nvim-lualine/lualine.nvim'
-Plug 'kyazdani42/nvim-tree.lua'
+" Plug 'kyazdani42/nvim-tree.lua'
 
 call plug#end()

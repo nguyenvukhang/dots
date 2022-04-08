@@ -20,6 +20,7 @@ vim.api.nvim_set_keymap('n', '<leader>f', ':NvimTreeToggle<cr>',
   { noremap = true, silent = true })
 
 require'nvim-tree'.setup({
+  hijack_netrw = false,
   update_focused_file = {
     enable = true
   },
