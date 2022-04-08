@@ -14,10 +14,6 @@ local component_types = {
   custom = function(component)
     return component[1](component)
   end,
-  --- loads lua functions as component
-  lua_fun = function(component)
-    return require('lualine.components.special.function_component')(component)
-  end,
   --- loads lua modules as components (ones in /lua/lualine/components/)
   mod = function(component)
     local ok, loaded_component = pcall(require, 'lualine.components.' .. component[1])
@@ -27,27 +23,10 @@ local component_types = {
         loaded_component = loaded_component(component)
       elseif type(loaded_component) == 'function' then
         component[1] = loaded_component
-        loaded_component = require('lualine.components.special.function_component')(component)
       end
       return loaded_component
     end
-  end,
-  --- loads builtin statusline patterns as component
-  stl = function(component)
-    local stl_expr = component[1] -- Vim's %p %l statusline elements
-    component[1] = function()
-      return stl_expr
-    end
-    return require('lualine.components.special.function_component')(component)
-  end,
-  --- loads variables & options (g:,go:,b:,bo:...) as componenta
-  var = function(component)
-    return require('lualine.components.special.vim_var_component')(component)
-  end,
-  --- loads vim functions and lua expressions as components
-  ['_'] = function(component)
-    return require('lualine.components.special.eval_func_component')(component)
-  end,
+  end
 }
 
 ---load a component from component confif
