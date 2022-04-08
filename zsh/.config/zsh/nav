@@ -25,7 +25,6 @@ typeset -A local nav=(
   [t]="$HOME/.config/nvim/plugged/telescope.nvim/lua/telescope"
   [v]="$DOTS/nvim/.config/nvim"
   [vl]="$DOTS/nvim/.config/nvim/lua/brew"
-  [w]="$HOME/sunnus/web/dev"
   [z]="$DOTS/zsh/.config/zsh"
   [A]="/Applications"
 )
