@@ -37,7 +37,8 @@ M.update_status = function(self)
   local data
   if self.options.path == 1 then
     -- relative path
-    data = vim.fn.expand('%:~:.')
+    data = vim.fn.expand('%:p')
+    data = data:gsub(vim.env.HOME, "~")
   elseif self.options.path == 2 then
     -- absolute path
     data = vim.fn.expand('%:p')
