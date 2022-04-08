@@ -24,6 +24,7 @@ local setup = function()
   -- setup
   require('lualine').setup {
     options = {
+      path = 1,
       icons_enabled = false,
       component_separators = '', -- within each component
       section_separators = '',   -- across sections
