@@ -67,6 +67,7 @@ nnoremap <f5> :setlocal spell!<cr>:set spell?<cr>
 command! CloseOtherBuffers execute '%bd|e #|norm `"'
 nnoremap <leader>x :CloseOtherBuffers
 nnoremap <leader>c :ColorizerToggle<cr>
+nnoremap <leader>P :Prettier<cr>
 
 " lua functions
 nnoremap <silent> <leader>t :lua require('brew.core').functions.Todolist()<cr>

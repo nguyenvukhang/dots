@@ -12,6 +12,7 @@ local s = {
 }
 local theme = {
   command = s,
+  normal = s,
   inactive = s,
   insert = s,
   replace = s,
