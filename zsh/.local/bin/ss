@@ -2,41 +2,39 @@
 
 # tmux attach script: ta
 
-t="${1-server}" # default value: "server"
+SERVER_SESSION="server"
 
-typeset -A repos=(
+typeset -A START_DIRLIST=(
   [min]="$HOME/repos/minnesoda/min"
   [sun-app]="$HOME/sunnus/app/dev"
+  [sun-srv]="$HOME/sunnus/cloud/functions"
 )
 
-repo=$(for i in ${(k)repos}; do
+typeset -A COMMANDS=(
+  [min]="yarn dev"
+  [sun-app]="yarn dev"
+  [sun-srv]="yarn serve"
+)
+
+KEY=$(for i in ${(k)START_DIRLIST}; do
   echo $i
 done | fzf $FZF_OPTS --header="Pick a repo to start a server from")
 
-[[ -z $repo ]] \
+[[ -z $KEY ]] \
   && echo "No repo selected. Quitting." \
   && return 0
 
-echo $repo
-# repo=$(fzf)
+# results in c containing either $HOME or start dir
+s=$START_DIRLIST[$KEY]
+[ $s ] && START_DIR=$s || START_DIR=$HOME
 
-# function tmux_new() {
-#   local s=$start_dir[$t]
-#   [ $s ] && c=$s || c=$HOME
-#   tmux new-session -d -s $t -c $c -n server
-# }
-#
-# if [ -z "$TMUX" ]; then # when outside of tmux
-#   if ! tmux has-session -t "$t" 2>/dev/null; then
-#     # if session doesn't exist, create it
-#     tmux_new
-#   fi
-#   tmux attach -t $t:server; return
-# else # when inside of tmux
-#   if ! tmux has-session -t $t 2>/dev/null; then
-#     # if target doesn't exist,
-#     # just start a new session first
-#     tmux_new
-#   fi
-#   tmux switch-client -t $t:server; return
-# fi
+# check for existence of SERVER_SESSION
+! tmux has-session -t "$SERVER_SESSION" 2>/dev/null
+session_exists=$?
+
+# create it if it doesn't exist
+create() { tmux new-session -d \
+  -s $SERVER_SESSION -c $START_DIR -n $KEY \
+  $COMMANDS[$KEY]
+}
+[[ $session_exists == 0 ]] && create
