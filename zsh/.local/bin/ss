@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-# tmux attach script: ta
+# start server script: ss
 
 SERVER_SESSION="server"
 

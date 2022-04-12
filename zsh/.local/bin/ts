@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+
+# tmux switch-client script: ts
+
+TARGET_SESSION=$(tmux ls -F "#{session_name}" | fzf $FZF_OPTS \
+  --header="Pick a session to jump to")
+
+[[ -z $TARGET_SESSION ]] \
+  && echo "No session selected. Quitting." \
+  && return 0
+
+function outside() {
+  tmux attach -t $TARGET_SESSION
+}
+
+function inside() {
+  tmux switch-client -t $TARGET_SESSION
+}
+
+# outside of tmux
+[ -z "$TMUX" ] && outside || inside
