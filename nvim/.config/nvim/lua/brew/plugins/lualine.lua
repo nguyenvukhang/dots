@@ -26,6 +26,16 @@ local function wordCount()
   return "words "..words.." | chars "..chars
 end
 
+local function get_filename()
+    local data = vim.fn.expand('%:~:.')
+    if vim.bo.modified then
+        data = data .. '[+]'
+    elseif vim.bo.modifiable == false or vim.bo.readonly == true then
+        data = data .. '[-]'
+    end
+    return data
+end
+
 local setup = function()
   -- makes the statusbar consistent through vim splits
   vim.cmd('hi StatusLine guifg='..bg)
@@ -40,7 +50,7 @@ local setup = function()
       theme = theme,
     },
     sections = {
-      lualine_a = {'filename'},
+      lualine_a = {get_filename},
       lualine_b = {'branch'},
       lualine_c = {},
       lualine_x = {},
