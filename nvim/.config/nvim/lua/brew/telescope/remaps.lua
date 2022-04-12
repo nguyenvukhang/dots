@@ -52,6 +52,7 @@ tele('<leader>sm', 'builtin', 'man_pages()')
 local save_session = 'save_session({ path = "'..sessions_path..'"})'
 tele('<leader>ss', 'sessions', save_session)
 tele('<c-s>', 'sessions', 'sessions()')
+tele('<leader>rs', 'sessions', 'sessions()') -- restore session
 
 -- git stuff
 tele('<leader>gs', 'builtin', 'git_status()')
