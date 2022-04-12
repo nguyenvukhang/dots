@@ -1,0 +1,35 @@
+#!/usr/bin/env zsh
+
+# tmux attach script: ta
+
+SESSION_NAME="${1-uni}" # default value: "base"
+
+typeset -A STARTDIRLIST=(
+  [base]="$HOME"
+  [uni]="$HOME/repos/uni"
+  [sun]="$HOME/sunnus/app/dev"
+)
+
+# results in c containing either $HOME or start dir
+s=$STARTDIRLIST[$SESSION_NAME]
+[ $s ] && STARTDIR=$s || STARTDIR=$HOME
+
+# check for existence of requested session
+! tmux has-session -t "$SESSION_NAME" 2>/dev/null
+session_exists=$?
+
+# outside of tmux
+if [ -z "$TMUX" ]; then
+  # if session doesn't exist, create it
+  [[ $session_exists == 0 ]] && echo "outside create"
+  echo "outside switch-to"; return
+fi
+
+# inside of tmux
+[[ $session_exists == 0 ]] && echo "inside create"
+echo "inside switch-to"; return
+  # tmux new-session -d -s $SESSION_NAME -c $STARTDIR
+  echo "inside create"
+fi
+echo "inside switch-to"; return
+# tmux switch-client -t $SESSION_NAME; return

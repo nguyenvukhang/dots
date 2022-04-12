@@ -2,31 +2,34 @@
 
 # tmux attach script: ta
 
-t="${1-uni}" # default value: "base"
+SESSION_NAME="${1-uni}" # default value: "base"
 
-typeset -A start_dir=(
+typeset -A START_DIRLIST=(
   [base]="$HOME"
   [uni]="$HOME/repos/uni"
   [sun]="$HOME/sunnus/app/dev"
 )
 
-function tmux_new() {
-  local s=$start_dir[$t]
-  [ $s ] && c=$s || c=$HOME
-  tmux new-session -d -s $t -c $c -n server
+# results in c containing either $HOME or start dir
+s=$START_DIRLIST[$SESSION_NAME]
+[ $s ] && START_DIR=$s || START_DIR=$HOME
+
+# check for existence of requested session
+! tmux has-session -t "$SESSION_NAME" 2>/dev/null
+session_exists=$?
+
+# create it if it doesn't exist
+create() { tmux new-session -d -s $SESSION_NAME -c $START_DIR }
+[[ $session_exists == 0 ]] && create
+
+function outside() {
+  tmux attach -t $SESSION_NAME
 }
 
-if [ -z "$TMUX" ]; then # when outside of tmux
-  if ! tmux has-session -t "$t" 2>/dev/null; then
-    # if session doesn't exist, create it
-    tmux_new
-  fi
-  tmux attach -t $t:server; return
-else # when inside of tmux
-  if ! tmux has-session -t $t 2>/dev/null; then
-    # if target doesn't exist,
-    # just start a new session first
-    tmux_new
-  fi
-  tmux switch-client -t $t:server; return
-fi
+function inside() {
+  tmux switch-client -t $SESSION_NAME
+}
+
+# outside of tmux
+[ -z "$TMUX" ] && outside || inside
+return 0
