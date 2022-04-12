@@ -33,8 +33,28 @@ s=$START_DIRLIST[$KEY]
 session_exists=$?
 
 # create it if it doesn't exist
-create() { tmux new-session -d \
+create_session() { tmux new-session -d \
   -s $SERVER_SESSION -c $START_DIR -n $KEY \
   $COMMANDS[$KEY]
+  echo "Started a tmux server to run [$KEY]."
 }
-[[ $session_exists == 0 ]] && create
+
+create_window() { tmux new-window \
+  -t $SERVER_SESSION: -c $START_DIR -n $KEY \
+  $COMMANDS[$KEY]
+  echo "Added a window running [$KEY] to servers."
+}
+
+# if session doesn't exist, create session and exit
+[[ $session_exists == 0 ]] && create_session && exit 0
+
+active_windows=()
+window_exists=0
+while IFS= read -r line; do
+  [[ "$line" == "$KEY" ]] && window_exists=1
+done < <(tmux list-windows -t $SERVER_SESSION -F "#{window_name}")
+
+# if session exists but window doesn't exist, create window
+[[ $session_exists == 1 && $window_exists == 0 ]] && create_window && exit 0
+# if all already exists, echo that
+echo "Requested server is already running."
