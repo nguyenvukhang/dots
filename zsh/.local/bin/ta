@@ -2,7 +2,7 @@
 
 # tmux attach script: ta
 
-t="${1-base}" # default value: "base"
+t="${1-uni}" # default value: "base"
 
 typeset -A start_dir=(
   [base]="$HOME"
