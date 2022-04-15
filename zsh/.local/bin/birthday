@@ -1,5 +1,40 @@
 #!/usr/bin/env zsh
 
-# birthdays
+function birthday() {
+  local TODAY=$(date '+%d-%b')
+  declare -A local birthdays=(
+    # [$TODAY]="Linux"
+    [14-Jan]="Shermaine"
+    [18-Jan]="Wei Seng"
+    [20-Jan]="Dad"
+    [01-Feb]="Lan"
+    [06-Feb]="Herb"
+    [10-Mar]="Kien"
+    [18-Mar]="Chang Xinzhou"
+    [28-Mar]="Seer Li"
+    [04-Apr]="Gifford"
+    [14-Apr]="Ivan & Jerald"
+    [27-Apr]="Shawn Wei"
+    [12-May]="Kevin"
+    [03-Jun]="Minh"
+    [13-Jun]="Gereon"
+    [14-Jun]="Hang"
+    [15-Jun]="Khang"
+    [27-Jul]="Shermern"
+    [04-Aug]="Shankar"
+    [01-Sep]="Jaey"
+    [03-Sep]="Jun Hao"
+    [09-Sep]="Gerald"
+    [16-Sep]="Wee Tong"
+    [24-Oct]="Hanh"
+    [01-Nov]="Chu Yuan"
+    [12-Nov]="Mum"
+    [13-Nov]="Ee-J"
+    [15-Nov]="Hexiang"
+    [14-Dec]="Yiran"
+  )
+  local BORN_TODAY=$birthdays[$TODAY]
+  [ $BORN_TODAY ] && echo "$BORN_TODAY lvl up ↑"
+}
 
-echo "someone's birthday"
+birthday
