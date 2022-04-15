@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+# birthdays
+
+echo "someone's birthday"
