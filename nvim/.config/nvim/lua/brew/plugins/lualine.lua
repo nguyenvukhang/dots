@@ -59,7 +59,7 @@ local setup = function()
     },
     inactive_sections = {
       lualine_a = {},
-      lualine_b = {'filename'},
+      lualine_b = {get_filename},
       lualine_c = {},
       lualine_x = {},
       lualine_y = {},
