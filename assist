@@ -18,7 +18,13 @@ function submodule_init() {
 }
 
 function lua_build() {
-  cd personal/lua-language-server
+  local LUA_SRC=$HOME/.local/src
+  mkdir -p $LUA_SRC
+  cd $LUA_SRC
+  rm -rf lua-language-server
+  git clone git@github.com:sumneko/lua-language-server.git
+  cd lua-language-server
+  git submodule update --init --recursive
   cd 3rd/luamake
   ./compile/install.sh
   cd ../..
