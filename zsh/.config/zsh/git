@@ -2,6 +2,7 @@
 
 # TODO: make it permanent that worktrees add origin tracking#
 # EXAMPLE git config file:
+# https://stackoverflow.com/questions/54367011/git-bare-repositories-worktrees-and-tracking-branches
 # ---------------------------------------------
 # [core]
 # 	repositoryformatversion = 0
@@ -22,9 +23,7 @@
 alias gs="git number" # git status
 alias ga="git number add"
 alias gaa="git add --all"
-alias gco="git number checkout"
 alias gcf="git config --edit"
-# alias gb="git branch"
 
 alias gd="git number diff"
 alias gds="git number diff --staged"
@@ -48,9 +47,19 @@ alias ga.="git add ."
 
 alias gce="git commit --allow-empty -m"
 
-function gur() {
-  git commit -m "update ref"
-  git push
+function gco() {
+  local OUTPUT=$(git number checkout $@ 2>&1)
+  local TARGET="$1"
+  local MATCH="fatal: '$TARGET' is already checked out at '"
+  local TARGET_ROOT=${${OUTPUT#*$MATCH}[0,-2]}
+  local CWD=$(git rev-parse --show-prefix)
+  local TARGET_DIR=$TARGET_ROOT/$CWD
+
+  if [[ "$OUTPUT" == "$MATCH"* ]]; then
+    [ -d $TARGET_DIR ] \
+      && cd $TARGET_DIR \
+      || cd $TARGET_ROOT
+  fi
 }
 
 # git clone
@@ -113,6 +122,11 @@ function gb() {
   # fzf-branch (switch branch)
   branch=$(git branch | fzf $FZF_OPTS)
   [ $branch ] && git checkout ${branch[3,-1]} || return 0
+}
+
+function gur() {
+  git commit -m "update ref"
+  git push
 }
 
 # delete branch
