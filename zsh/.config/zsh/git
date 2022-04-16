@@ -121,7 +121,7 @@ function gb() {
   if [ $1 ]; then; git branch "$@"; return; fi
   # fzf-branch (switch branch)
   branch=$(git branch | fzf $FZF_OPTS)
-  [ $branch ] && git checkout ${branch[3,-1]} || return 0
+  [ $branch ] && gco ${branch[3,-1]} || return 0
 }
 
 function gur() {
