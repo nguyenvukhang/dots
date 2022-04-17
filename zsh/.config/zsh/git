@@ -48,18 +48,49 @@ alias ga.="git add ."
 alias gce="git commit --allow-empty -m"
 
 function gco() {
-  local OUTPUT=$(git number checkout $@ 2>&1)
-  local TARGET="$1"
-  local MATCH="fatal: '$TARGET' is already checked out at '"
-  local TARGET_ROOT=${${OUTPUT#*$MATCH}[0,-2]}
-  local CWD=$(git rev-parse --show-prefix)
-  local TARGET_DIR=$TARGET_ROOT/$CWD
+  local OUTPUT TARGET MATCH CWD TARGET_ROOT TARGET_DIR
 
+  # this will already execute the original command
+  OUTPUT=$(git number checkout $@ 2>&1)
+
+  # this function seeks to handle error messages
+  TARGET="$1"
+
+  MATCH="fatal: '$TARGET' is already checked out at '"
+
+  # inside a worktree
   if [[ "$OUTPUT" == "$MATCH"* ]]; then
+    TARGET_ROOT=${${OUTPUT#*$MATCH}[0,-2]}
+    CWD=$(git rev-parse --show-prefix)
+    TARGET_DIR=$TARGET_ROOT/$CWD
     [ -d $TARGET_DIR ] \
       && cd $TARGET_DIR \
       || cd $TARGET_ROOT
+    return 0
   fi
+
+  MATCH="fatal: this operation must be run in a work tree"
+
+  # just outside a worktree
+  if [[ "$OUTPUT" == "$MATCH" ]]; then
+    # keys: branch name
+    # values: branch root dir
+    typeset -A local WORKTREES=()
+    local dir
+    while IFS= read -r line; do
+      if [[ "$line" == "worktree"* ]]; then
+        dir="${line#*worktree }"
+      elif [[ "$line" == "branch"* ]]; then
+        local branch="${line##*/}"
+        WORKTREES[$branch]="$dir"
+      fi
+    done < <(git worktree list --porcelain)
+    cd $WORKTREES[$branch]
+    return 0
+  fi
+
+  # when all fails, just echo original output
+  echo $OUTPUT
 }
 
 # git clone
