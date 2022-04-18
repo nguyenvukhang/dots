@@ -3,6 +3,7 @@
 --
 
 local env = require('brew.core').env
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- lsp-specific keymaps
 local on_attach = function(_, bufnr)
@@ -20,7 +21,10 @@ end
 
 local servers = { 'pyright', 'tsserver' }
 for _, lsp in pairs(servers) do
-  require('lspconfig')[lsp].setup { on_attach = on_attach }
+  require('lspconfig')[lsp].setup {
+    on_attach = on_attach,
+    capabilities = capabilities
+  }
 end
 -- lua {{{
 local sumneko_root_path = env.home .. '/.local/src/lua-language-server'
