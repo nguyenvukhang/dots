@@ -42,9 +42,24 @@ local is_git_repo = function ()
   end
 end
 
+local cwd_in_git_repo = function (path)
+  local cmd = "git -C " .. path .. " rev-parse --is-inside-work-tree"
+  local git_check = vim.fn.systemlist(cmd)[1]
+  if git_check == "true" then
+    return true
+  else
+    return false
+  end
+end
+
 local git_root = function ()
   if not is_git_repo() then print('not in a git repo') return end
   return vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+end
+
+local git_root_from_path = function (path)
+  local cmd = "git -C " .. path .. " rev-parse --show-toplevel"
+  return vim.fn.systemlist(cmd)[1]
 end
 
 -- to clear command line area:
@@ -56,6 +71,8 @@ local utils = {
   loclist_is_open = loclist_is_open,
   is_git_repo = is_git_repo,
   git_root = git_root,
+  git_root_from_path = git_root_from_path,
+  cwd_in_git_repo = cwd_in_git_repo,
 }
 
 -- ENVIRONMENT VARIABLES

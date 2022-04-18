@@ -1,16 +1,18 @@
 local utils = require('brew.core').utils
-local is_git_repo = utils.is_git_repo
-local git_root = utils.git_root
+local cwd_in_git_repo = utils.cwd_in_git_repo
+local git_root_from_path = utils.git_root_from_path
 
 local augroup_id = vim.api.nvim_create_augroup("LuaAugroup", { clear = true })
 
 vim.api.nvim_create_autocmd("VimEnter", {
   pattern = "*",
   callback = function ()
-    if is_git_repo() then
-      vim.api.nvim_command("chdir " .. git_root())
+    local fn = vim.fn.getbufinfo()[1]
+    if fn.name == '' then return end
+    local file_dir = string.match(fn.name, ".*/")
+    if cwd_in_git_repo(file_dir) then
+      vim.api.nvim_command("chdir " .. git_root_from_path(file_dir))
     end
-    print('augroup id:', augroup_id)
   end,
   group = augroup_id
 })

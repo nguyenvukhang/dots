@@ -3,6 +3,9 @@
 # TODO: make it permanent that worktrees add origin tracking#
 # EXAMPLE git config file:
 # https://stackoverflow.com/questions/54367011/git-bare-repositories-worktrees-and-tracking-branches
+#
+# change default branch in a bare repo:
+# https://stackoverflow.com/questions/3301956/git-correct-way-to-change-active-branch-in-a-bare-repository
 # ---------------------------------------------
 # [core]
 # 	repositoryformatversion = 0
