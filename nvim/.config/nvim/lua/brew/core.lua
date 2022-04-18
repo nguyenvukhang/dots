@@ -63,8 +63,9 @@ local env = {
   dots_root = DOTS,
   dots = {
     DOTS..'/nvim/.config/nvim',
-    DOTS..'/zsh',
-    DOTS..'/personal',
+    DOTS..'/zsh/.config/zsh',
+    DOTS..'/zsh/.local/bin',
+    DOTS..'/personal/.local/bin',
   }
 }
 
