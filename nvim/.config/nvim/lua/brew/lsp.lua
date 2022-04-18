@@ -19,11 +19,12 @@ local on_attach = function(_, bufnr)
   map('n', 'K', ':lua vim.lsp.buf.hover()<CR>', opts)
 end
 
+-- main loop
 local servers = { 'pyright', 'tsserver' }
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
     on_attach = on_attach,
-    capabilities = capabilities
+    capabilities = capabilities,
   }
 end
 -- lua {{{
@@ -32,6 +33,7 @@ local sumneko_binary = sumneko_root_path .. '/bin/lua-language-server'
 
 require('lspconfig').sumneko_lua.setup {
   on_attach = on_attach,
+  capabilities = capabilities,
   cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' },
   settings = {
     Lua = {
@@ -44,10 +46,7 @@ require('lspconfig').sumneko_lua.setup {
         disable = {'undefined-global'},
       },
       workspace = {
-        library = {
-          [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-          [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-        },
+        library = vim.api.nvim_get_runtime_file("", true),
       },
     },
   },

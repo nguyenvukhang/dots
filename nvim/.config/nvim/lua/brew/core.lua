@@ -42,6 +42,11 @@ local is_git_repo = function ()
   end
 end
 
+local git_root = function ()
+  if not is_git_repo() then print('not in a git repo') return end
+  return vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+end
+
 -- to clear command line area:
 -- vim.cmd('redraw!')
 
@@ -50,6 +55,7 @@ local utils = {
   qflist_is_open = qflist_is_open,
   loclist_is_open = loclist_is_open,
   is_git_repo = is_git_repo,
+  git_root = git_root,
 }
 
 -- ENVIRONMENT VARIABLES
