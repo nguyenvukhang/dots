@@ -17,6 +17,9 @@
 #pragma once
 
 /* for startup/initial colorscheme */
+#define ALLx(hue, sat, lum) \
+    rgblight_sethsv_range(hue, sat, lum, 0, 12);
+
 #define MINIMAL_FRONTx(hue, sat, lum) \
     rgblight_sethsv_range(0, 0, 0, 0, 12); \
     rgblight_sethsv_range(hue, sat, lum, 0, 3); \
@@ -26,6 +29,9 @@
     {0, 12, 0, 0, 0}, \
     {0,  3, hue, sat, lum}, \
     {9,  3, hue, sat, lum}
+
+#define ALL(hue, sat, lum) \
+    {0, 12, hue, sat, lum}
 
 #define MINIMAL_OUT(hue, sat, lum) \
     {0, 12, 0, 0, 0}, \
@@ -41,10 +47,11 @@ const int green = 99;
 const int blue = 130;
 const int indigo = 180;
 const int red = 252;
+const int bonfire = 7;
 const int base_sat = 120;
 
-#define  base  MINIMAL_FRONT(indigo, 250, 100)
-#define basex MINIMAL_FRONTx(indigo, 250, 100)
+#define  base  ALL(bonfire, 250, 100)
+#define basex ALLx(bonfire, 250, 100)
 #define  func MINIMAL_IN(green, 250, 100)
 #define  sudo MINIMAL_IN(red, 250, 100)
 
