@@ -27,31 +27,32 @@ for _, lsp in pairs(servers) do
     capabilities = capabilities,
   }
 end
--- lua {{{
-local sumneko_root_path = env.home .. '/.local/src/lua-language-server'
-local sumneko_binary = sumneko_root_path .. '/bin/lua-language-server'
 
+-- lua lsp
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
 require('lspconfig').sumneko_lua.setup {
   on_attach = on_attach,
   capabilities = capabilities,
-  cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' },
   settings = {
     Lua = {
       runtime = {
         version = 'LuaJIT',
-        path = vim.split(package.path, ';'),
+        path = runtime_path,
       },
       diagnostics = {
         globals = {'vim'},
-        disable = {'undefined-global'},
       },
       workspace = {
         library = vim.api.nvim_get_runtime_file("", true),
       },
+      telemetry = {
+        enable = false
+      }
     },
   },
 }
--- }}}
 
 local diagnostics_on = true
 vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
