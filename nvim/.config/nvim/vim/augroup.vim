@@ -13,8 +13,10 @@ function! __MDX__()
   nnoremap <buffer> <leader>V s$\v{}$<esc>hP
 
   " use $ as bounding delimiters, kinda like () and {}
-  onoremap <silent> i$ :<c-u>normal! T$vt$<cr>
-  vnoremap i$ T$ot$
+  onoremap <buffer> <silent> i$ :<c-u>normal! T$vt$<cr>
+  onoremap <buffer> <silent> a$ :<c-u>normal! F$vf$<cr>
+  vnoremap <buffer> i$ T$ot$
+  vnoremap <buffer> a$ F$of$
 
   lua vim.api.nvim_buf_set_option(0, "commentstring", "{/* %s */}")
   hi link markdownError Normal
