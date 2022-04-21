@@ -2,3 +2,4 @@
 node_modules
 .netrwhist
 .zsh_sessions
+.zsh_history
