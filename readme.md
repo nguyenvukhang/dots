@@ -73,19 +73,4 @@ Put it at
 /Library/Caches/Desktop Pictures/<UUID>/lockscreen.png
 ```
 
-### Launch terminal faster
-
-On the first launch after startup, `xcodebuild` takes a good few
-seconds to run before the interactive shell loads.
-
-To counter this, I simply accepted the license of `xcodebuild` by
-running
-
-```
-sudo xcodebuild -license
-```
-
-Press <kbd>Shift</kbd> + <kbd>g</kbd> to scroll to the bottom and
-press enter. Type in `agree` and press enter to agree to the license.
-
 [arch-btw]: https://knowyourmeme.com/memes/btw-i-use-arch
