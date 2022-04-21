@@ -1,15 +1,8 @@
 #!/usr/bin/env zsh
 
-case $1 in
-  "--pi")
-    local dots=(nvim vim zsh)
-    local root=()
-    local submodules=(personal pi);;
-  *)
-    local dots=(tmux mac nvim term vim xbar zsh)
-    local root=()
-    local submodules=(personal);;
-esac
+local dots=(tmux mac nvim term vim xbar zsh)
+local root=()
+local submodules=(personal)
 
 setopt nullglob
 local clear_list=(
