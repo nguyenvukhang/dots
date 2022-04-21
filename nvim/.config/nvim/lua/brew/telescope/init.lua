@@ -2,15 +2,7 @@
 -- https://github.com/nvim-telescope/telescope.nvim
 --
 
-local colors = require('brew.core').colors
 local actions = require('telescope.actions')
-
-vim.cmd('hi TelescopeNormal guibg=NONE guifg='..colors.white)
-vim.cmd('hi TelescopeSelection guibg='..colors.lightgray..' guifg='..colors.white)
-vim.cmd('hi TelescopeBorder guibg=NONE guifg='..colors.bg4)
-vim.cmd('hi TelescopeSelectionCaret guibg=NONE guifg='..colors.orange)
-vim.cmd('hi TelescopeTitle guibg=NONE guifg='..colors.fg3)
-vim.cmd('hi TelescopePromptCounter guibg=NONE guifg='..colors.fg3)
 
 local vimgrep_arguments = {
   "rg",
