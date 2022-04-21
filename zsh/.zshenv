@@ -1,7 +1,4 @@
-# this will be ran for every instance of zsh
-# particularly, every single zsh script.
-# to add, interactive shell environment variables,
-# head over to .zshrc
+# the home-dir outpost
 
-export XDG_CONFIG_HOME=$HOME/.config
-export ZDOTDIR=$XDG_CONFIG_HOME/zsh
+ZDOTDIR=$HOME/.config/zsh
+. $ZDOTDIR/.zshenv
