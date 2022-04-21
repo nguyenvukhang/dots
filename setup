@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-local dots=(tmux mac nvim term vim xbar zsh)
+local dots=(tmux nvim term vim xbar zsh)
 local root=()
 local submodules=(personal)
 
@@ -22,7 +22,6 @@ for folder in ${stow_folders}; do
     --override=.ssh \
     --override=.config/zsh/prompt \
     --override=.config/zsh/nav \
-    --override=.zshenv \
     --target=$HOME $folder
 done
 
@@ -30,4 +29,3 @@ for folder in ${root}; do
   sudo stow --restow \
     --target=/ $folder
 done
-
