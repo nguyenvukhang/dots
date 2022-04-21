@@ -13,7 +13,6 @@
 # (to only be used in $ZDOTDIR)
 
 # for installed software
-export HISTFILE=$ZDOTDIR/.zsh_history
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export N_PREFIX=$HOME/.local/bin/n
@@ -40,6 +39,9 @@ unsetopt BEEP # prevents beeps in general
 setopt ignoreeof # prevents <C-d> from quitting the shell
 setopt globdots # include hidden dir tab complete
 SHELL_SESSIONS_DISABLE=1
+SAVEHIST=0
+HISTSIZE=0
+HISTFILE=/dev/null
 
 # =============
 # BUILDING PATH
