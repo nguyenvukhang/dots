@@ -3,6 +3,7 @@
 # start server script: ss
 
 SERVER_SESSION="server"
+FZF_OPTS=(--height=7 +m --no-mouse --reverse --no-info --prompt='  ' --color='pointer:green,header:white')
 
 typeset -A START_DIRLIST=(
   [min]="$HOME/repos/minnesoda/min"
