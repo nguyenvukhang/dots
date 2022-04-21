@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
+
 function ed() {
   typeset -A local marks=(
     [.]="$ZSH_DOTS/edits"
@@ -14,19 +15,34 @@ function ed() {
     [y]="$HOME/.config/yabai/yabairc"
     [z]="$DOTS/zsh/.config/zsh/.zshrc"
   )
-  function fuzzy_ed() {
-    # pick a key out of the keys of pretty
-    local key=$(for i in ${(v)marks}; do
+
+  local quit() {
+    echo "nothing happened."
+    return 0
+  }
+  local not_found() {
+    echo "target not indexed."
+    return 0
+  }
+
+  local list_dest() {
+    # replace $HOME with ~ in fzf
+    for i in ${(v)marks}; do
       echo "${i/$HOME\//~/}"
-    done | fzf $FZF_OPTS)
-    [ -z $key ] && return true
-    $EDITOR "${key/\~\//$HOME/}"
+    done
+  }
+
+  local fuzzy_ed() {
+    # fzf over a list of destination directories
+    local key=$(list_dest | fzf $FZF_OPTS)
+    [ -z $key ] && quit && return 0 # do nothing if nothing is selected
+    $EDITOR "${key/\~\//$HOME/}" # replace ~ with $HOME
   }
 
   # if no first arg supplied, run fuzzy_ed
-  [ -z $1 ] && fuzzy_ed && return true
+  [ -z $1 ] && fuzzy_ed && return 0
  
   local file=$marks[$1]
-  [ -z $file ] && echo "nothing happened." && return true
+  [ -z $file ] && not_found && return 0
   $EDITOR $file
 }

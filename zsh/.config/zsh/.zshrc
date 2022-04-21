@@ -4,9 +4,10 @@
 # reference
 # https://zsh.sourceforge.io/Intro/intro_3.html
 
-# =====================
-# ENVIRONMENT VARIABLES
-# =====================
+# ===============
+# ZSHRC VARIABLES
+# ===============
+# (to only be used in $ZDOTDIR)
 
 # for installed software
 export HISTFILE=$ZDOTDIR/.zsh_history
@@ -16,7 +17,7 @@ export N_PREFIX=$HOME/.local/bin/n
 export PYENV_ROOT=$HOME/.local/src/pyenv
 export TERM="screen-256color"
 
-export FZF_OPTS=(--height=7 +m --no-mouse --reverse \
+FZF_OPTS=(--height=7 +m --no-mouse --reverse \
   --no-info --prompt="  " --color='pointer:green,header:white')
 
 # editor
@@ -32,8 +33,9 @@ export REPOS=$HOME/repos
 # SHELL OPTIONS
 # =============
 
-setopt ignoreeof # prevents <C-d> from quitting the shell
 unsetopt BEEP # prevents beeps in general
+setopt ignoreeof # prevents <C-d> from quitting the shell
+setopt globdots # include hidden dir tab complete
 SHELL_SESSIONS_DISABLE=1
 
 # =============
@@ -53,7 +55,6 @@ export PATH
 # THE REAL ZSHRC
 # ==============
 
-source $ZDOTDIR/init
 source $ZDOTDIR/prompt
 source $ZDOTDIR/ls
 source $ZDOTDIR/edits
