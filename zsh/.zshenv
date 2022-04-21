@@ -1,24 +1,11 @@
-SHELL_SESSIONS_DISABLE=1
-REPOS=$HOME/repos
-ZSH_DOTS=$HOME/.config/zsh
-MAPLE=192.168.1.9
-BREW=brew@$MAPLE
-FZF_OPTS=(--height=7 +m --no-mouse --reverse \
-  --no-info --prompt="  " --color='pointer:green,header:white')
-LESSHISTFILE=-
+# this will be ran for every instance of zsh
+# particularly, every single zsh script.
+# to add, interactive shell environment variables,
+# head over to .zshrc
 
-# exports
-export DOTS=$HOME/dots
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-export N_PREFIX=$HOME/.local/bin/n
-export PREFIX=$HOME/.local/bin/n
-export TERM="screen-256color"
 export XDG_CONFIG_HOME=$HOME/.config
 export ZDOTDIR=$XDG_CONFIG_HOME/zsh
-export PYENV_ROOT=$HOME/.local/src/pyenv
-# export VIMTEX_OUTPUT_DIRECTORY=$HOME/.local/vimtex
 
-# editor
-export EDITOR=nvim
-[ $EDITOR = "nvim" ] && export MANPAGER="nvim +Man!"
+# for all script that depends on fzf
+export FZF_OPTS=(--height=7 +m --no-mouse --reverse \
+  --no-info --prompt="  " --color='pointer:green,header:white')
