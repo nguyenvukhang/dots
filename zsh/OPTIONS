@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+
+# default configs for commands that don't have nice .rc support
+FZF_OPTS=(--height=7 +m --no-mouse --reverse --no-info --prompt='  ' --color='pointer:green,header:white')
