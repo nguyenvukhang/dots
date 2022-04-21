@@ -30,7 +30,7 @@ hi! link markdownError Normal
 
 hi! link TelescopeNormal Normal
 hi! link TelescopeSelection Pmenu
-hi! link TelescopeBorder Comment
+hi! link TelescopeBorder DimForeground
 hi! link TelescopeSelectionCaret Delimiter
 hi! link TelescopeTitle DimForeground
 hi! link TelescopePromptCounter DimForeground
