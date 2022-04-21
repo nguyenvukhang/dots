@@ -10,6 +10,7 @@ alias yr="brew services restart yabai" # yabai restart
 alias zb="time zsh -i -c exit" # zsh benchmark
 alias zr="exec $SHELL -l" # reloads shell
 alias rg="rg --hidden"
+alias fd="fd --hidden"
 
 alias py=python3
 alias oc=octave
