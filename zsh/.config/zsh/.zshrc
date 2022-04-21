@@ -1,3 +1,6 @@
+# mac problems (required for every single cli tool installed by brew)
+[ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # dependencies
 # git, fzf, rg, fd, nvim (placed at ~/.local/bin/nvim), git number
 

@@ -6,18 +6,23 @@ local submodules=(personal)
 
 setopt nullglob
 local clear_list=(
-  $HOME/.zsh*
+  $HOME/.zshenv
+  $HOME/.zsh_history
   $HOME/.zprofile
 )
 
 local stow_folders=($dots $submodules)
+
+for file in ${clear_list}; do
+  rm -rf $file
+done
 
 for folder in ${stow_folders}; do
   stow --restow \
     --override=.ssh \
     --override=.config/zsh/prompt \
     --override=.config/zsh/nav \
-    --override=.zshrc \
+    --override=.zshenv \
     --target=$HOME $folder
 done
 
@@ -26,6 +31,3 @@ for folder in ${root}; do
     --target=/ $folder
 done
 
-for file in ${clear_list}; do
-  rm -rf $file
-done
