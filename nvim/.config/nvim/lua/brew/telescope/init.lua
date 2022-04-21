@@ -5,7 +5,12 @@
 local colors = require('brew.core').colors
 local actions = require('telescope.actions')
 
-vim.cmd('highlight TelescopeSelection guibg='..colors.lightgray..' guifg='..colors.white)
+vim.cmd('hi TelescopeNormal guibg=NONE guifg='..colors.white)
+vim.cmd('hi TelescopeSelection guibg='..colors.lightgray..' guifg='..colors.white)
+vim.cmd('hi TelescopeBorder guibg=NONE guifg='..colors.bg4)
+vim.cmd('hi TelescopeSelectionCaret guibg=NONE guifg='..colors.orange)
+vim.cmd('hi TelescopeTitle guibg=NONE guifg='..colors.fg3)
+vim.cmd('hi TelescopePromptCounter guibg=NONE guifg='..colors.fg3)
 
 local vimgrep_arguments = {
   "rg",
@@ -60,6 +65,8 @@ local config = {
     vimgrep_arguments = vimgrep_arguments,
     file_sorter = require('telescope.sorters').get_fzy_sorter,
     color_devicons = false,
+    selection_caret = '  ',
+    entry_prefix = '  ',
     mappings = {
       i = {
         ['<C-q>'] = actions.send_to_qflist,
