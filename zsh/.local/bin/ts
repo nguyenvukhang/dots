@@ -2,6 +2,7 @@
 
 # tmux switch-client script: ts
 
+FZF_OPTS=(--height=7 +m --no-mouse --reverse --no-info --prompt='  ' --color='pointer:green,header:white')
 TARGET_SESSION=$(tmux ls -F "#{session_name}" | fzf $FZF_OPTS \
   --header="Pick a session to jump to")
 
