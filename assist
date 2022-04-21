@@ -73,17 +73,17 @@ function mac_setup() {
   defaults write -g NSScrollViewRubberbanding -bool false
 
   # disable Cmd-H hiding apps by making it Hypr-H
-  local apps=(
-    Spotify
-    Safari
-    kitty
-    Telegram
-  )
-
-  for key value in ${(kv)apps}; do
-    local bundle=$(mdls -name kMDItemCFBundleIdentifier -raw /Applications/$key.app)
-    defaults write $bundle NSUserKeyEquivalents -dict "Hide $key" "\@\~\^\$y"
-  done
+  # local apps=(
+  #   Spotify
+  #   Safari
+  #   kitty
+  #   Telegram
+  # )
+  #
+  # for key value in ${(kv)apps}; do
+  #   local bundle=$(mdls -name kMDItemCFBundleIdentifier -raw /Applications/$key.app)
+  #   defaults write $bundle NSUserKeyEquivalents -dict "Hide $key" "\@\~\^\$y"
+  # done
 }
 
 function brew_clutch() {
