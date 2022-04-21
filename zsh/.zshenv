@@ -14,6 +14,9 @@ export LC_ALL=en_US.UTF-8
 export N_PREFIX=$HOME/.local/bin/n
 export PREFIX=$HOME/.local/bin/n
 export TERM="screen-256color"
+export XDG_CONFIG_HOME=$HOME/.config
+export ZDOTDIR=$XDG_CONFIG_HOME/zsh
+export PYENV_ROOT=$HOME/.local/src/pyenv
 # export VIMTEX_OUTPUT_DIRECTORY=$HOME/.local/vimtex
 
 # editor

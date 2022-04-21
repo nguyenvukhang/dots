@@ -7,7 +7,7 @@ case $1 in
     local submodules=(personal pi);;
   *)
     local dots=(tmux mac nvim term vim xbar zsh)
-    local root=(root)
+    local root=()
     local submodules=(personal);;
 esac
 
