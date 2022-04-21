@@ -5,7 +5,3 @@
 
 export XDG_CONFIG_HOME=$HOME/.config
 export ZDOTDIR=$XDG_CONFIG_HOME/zsh
-
-# for all script that depends on fzf
-export FZF_OPTS=(--height=7 +m --no-mouse --reverse \
-  --no-info --prompt="  " --color='pointer:green,header:white')
