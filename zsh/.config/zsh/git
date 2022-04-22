@@ -23,8 +23,8 @@
 # ---------------------------------------------
 
 
-alias gs="git status -s" # git status
-alias ga="git add"
+alias gs="gitn status" # git status
+alias ga="gitn add"
 alias gaa="git add --all"
 alias gcf="git config --edit"
 
