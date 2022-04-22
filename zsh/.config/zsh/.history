@@ -1,15 +1,3 @@
-git push
-cargo run
-cargo run
-cargo run
-cargo run
-cargo run
-cargo run
-cargo run
-cargo run
-cargo run
-cargo run
-cargo run
 cargo run
 cargo run
 cargo run
@@ -995,6 +983,18 @@ vim
 ls
 gs
 2d
+gs
+gd 1
+zr
+ls
+rep
+cd git-number
+ls
+cd bash
+ls
+vim gitn
+gs
+ga 1
 gs
 gd 1
 zr
