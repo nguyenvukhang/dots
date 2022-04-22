@@ -5,33 +5,41 @@
 local env = require('brew.core').env
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 local nvim_lsp = require('lspconfig')
+local map = function (bufnr, ...)
+  vim.api.nvim_buf_set_keymap(bufnr, ...)
+end
+local opts = { noremap = true, silent = true }
 
 -- lsp-specific keymaps
 local on_attach = function(_, bufnr)
-  local map = function (...)
-    vim.api.nvim_buf_set_keymap(bufnr, ...)
-  end
-  local opts = { noremap = true, silent = true }
-  map('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts)
-  map('n', 'gD', ':lua vim.lsp.buf.declaration()<CR>', opts)
-  map('n', 'gt', ':lua vim.lsp.buf.type_definition()<CR>', opts)
-  map('n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts)
-  map('n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', opts)
-  map('n', 'K', ':lua vim.lsp.buf.hover()<CR>', opts)
+  map(bufnr, 'n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts)
+  map(bufnr, 'n', 'gD', ':lua vim.lsp.buf.declaration()<CR>', opts)
+  map(bufnr, 'n', 'gt', ':lua vim.lsp.buf.type_definition()<CR>', opts)
+  map(bufnr, 'n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts)
+  map(bufnr, 'n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', opts)
+  map(bufnr, 'n', 'K', ':lua vim.lsp.buf.hover()<CR>', opts)
 end
 
--- main loop
-local servers = { 'pyright', 'tsserver' }
-for _, lsp in pairs(servers) do
-  nvim_lsp[lsp].setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }
-end
+-- javascript lsp
+nvim_lsp.tsserver.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+nvim_lsp.pyright.setup {
+  on_attach = function(_, bufnr)
+    on_attach(_, bufnr)
+    map(bufnr, 'n', '<leader>p', ':Black<CR>', opts)
+  end,
+  capabilities = capabilities,
+}
 
 -- rust lsp
 nvim_lsp.rls.setup {
-  on_attach = on_attach,
+  on_attach = function(_, bufnr)
+    on_attach(_, bufnr)
+    map(bufnr, 'n', '<leader>p', ':RustFmt<CR>', opts)
+  end,
   capabilities = capabilities,
   settings = {
     rust = {

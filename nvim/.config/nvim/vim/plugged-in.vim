@@ -1,6 +1,7 @@
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'nvim-lualine/lualine.nvim'
+Plug 'ambv/black'
 
 " sparklez
 Plug 'MaxMEllon/vim-jsx-pretty'
