@@ -73,7 +73,7 @@ nnoremap <leader>P :Prettier<cr>
 nnoremap <silent> <leader>t :lua require('brew.core').functions.Todolist()<cr>
 nnoremap <silent> <leader>o :lua require('brew.core').functions.ToggleQuickFix()<cr>
 nnoremap <silent> <leader>O :lua require('brew.core').functions.ToggleLocalList()<cr>
-nnoremap <leader>d :lua require('brew.diagnostics').diagnostics()<cr>
+nnoremap <silent> <leader>d :lua require('brew.diagnostics').diagnostics()<cr>
 
 " complete the trio of [{, [[, [(
 nnoremap <silent> [[ :call searchpair('\[', '', '\]', 'b')<cr>

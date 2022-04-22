@@ -20,7 +20,11 @@ function! __MDX__()
 
   lua vim.api.nvim_buf_set_option(0, "commentstring", "{/* %s */}")
   hi link markdownError Normal
-  let g:AutoPairs={'$':'$','(':')','[':']','{':'}',"'":"'",'"':'"','```':'```','"""':'"""',"'''":"'''","`":"`"}
+  let b:AutoPairs={'$':'$','(':')','[':']','{':'}',"'":"'",'"':'"','```':'```','"""':'"""',"'''":"'''","`":"`"}
+endfunction
+
+function! __RUST__()
+  nnoremap <leader>p :RustFmt<CR>
 endfunction
 
 function! __LATEX__()
@@ -45,6 +49,7 @@ aug THE_BREWERY
 
   " file extension handling
   au BufRead,BufNewFile *.mdx call __MDX__()
+  au BufRead,BufNewFile *.rs call __RUST__()
   au BufRead,BufNewFile *.tex call __LATEX__()
   au BufRead,BufNewFile *.m UltiSnipsAddFiletypes markdown
 

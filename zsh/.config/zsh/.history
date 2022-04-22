@@ -1,0 +1,1000 @@
+git push
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+gs
+gaa
+gcm 'read filename of each file'
+ls
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+ls
+git status -c tests/repo
+git status -C tests/repo
+git -C tests/repo status
+git -C tests/repo color.status=always status
+git -C tests/repo --color.status=always status
+git -C tests/repo --color.status=always status
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+ls
+cargo run
+git -C tests/repo status
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+ls
+cd repo
+ls
+o
+ls
+rmdir repo
+ls
+g
+ls
+cd repo
+ls
+mkdir some
+ls
+cd some
+touch gold
+ls
+mkdir thing
+ls
+cd thing
+touch silver
+ls
+o
+o
+o
+o
+cargo ru
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+./tests/init
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+v
+v
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run && cat tests/repo/.git/gitnumber.txt
+ls
+./tests/init
+ls
+cargo run
+vim tests/repo/.git/gitnumber.txt
+vim tests/repo/.git/gitnumber.txt
+cargo run
+gs
+gaa
+gcm 'write to gitnubmer.txt file'
+git push
+ls
+o
+ls
+rm -rf rust
+ls
+cp -r git-number rust
+cd rust
+ls
+gla
+grh 87b0133
+vim
+o
+ls
+cd git-number
+ls
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+vim tests/repo/.git/gitnumber.txt
+ls
+ls
+cargo run
+cargo run
+cargo run
+cargo run
+ls
+ln -s tests/repo/.git/gitnumber.txt .
+ls
+vim gitnumber.txt
+gs
+gaa
+gcm 'can write git status to file'
+git push
+ls
+vim gitnumber.txt
+cargo run
+vim gitnumber.txt
+vim gitnumber.txt
+cargo run
+gs
+gaa
+gcm 'safe'
+git push
+git push
+cargo run
+gs
+gaa
+gcm 'safe'
+ls
+gs
+gco .
+gsl
+ls
+cd src
+ls
+cargo run
+cargo run
+cargo run
+cargo run
+kkkls
+o
+ls
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+git status
+git status
+cargo run
+cargo run RUST_BACKTRACE=1
+RUST_BACKTRACE=1 cargo run
+RUST_BACKTRACE=1 cargo run
+RUST_BACKTRACE=1 cargo run
+RUST_BACKTRACE=1 cargo run
+RUST_BACKTRACE=1 cargo run
+RUST_BACKTRACE=1 cargo run
+RUST_BACKTRACE=1 cargo run
+RUST_BACKTRACE=1 cargo run
+RUST_BACKTRACE=1 cargo run
+git status
+git status
+git status
+RUST_BACKTRACE=1 cargo run
+cargo run
+gs
+gaa
+gcm 'experiments over'
+ls
+cargo run
+ls
+cargo run
+cargo update
+cargo run
+cargo run
+gs
+gaa
+gcan
+git push -f
+git push -f
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+gs
+gaa
+gcm 'split up some code'
+git push
+git push
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+vim gitnumber.txt
+vim gitnumber.txt
+cargo run
+vim gitnumber.txt
+vim gitnumber.txt
+cargo run
+vim gitnumber.txt
+cargo run 
+vim gitnumber.txt
+vim gitnumber.txt
+cargo ru
+cargo run
+cargo r
+cargo r
+ls
+vim gitnumber.txt
+vim gitnumber.txt
+cargo r
+cargo r
+cargo r
+vim gitnumber.txt
+cargo r
+cargo r
+cargo r
+cargo r
+cargo r
+cargo r
+cargo r
+cargo r
+2z
+vim
+o
+rep
+cd git-number
+ls
+cd bash
+ls
+mv touch gitn
+ls
+gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+ls
+vim file.txt
+./gitn
+cat file.txt
+vim file.txt
+vim file.txt
+./gitn
+./gitn
+./gitn
+man nvim
+./gitn
+ls
+vim file.txt
+./gitn
+ls
+cat file.txt
+vim file.txt
+./gitn
+./gitn
+./gitn
+ls
+vim file.txt
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+ls
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+./gitn
+vim gitn
+vim file.txt
+vim file.txt
+./gitn
+vim file.txt
+./gitn
+vim file.txt
+./gitn
+vim file.txt
+vim file.txt
+./gitn
+vim file.txt
+vim file.txt
+./gitn
+ls
+cp gitn install
+ls
+vim install
+ls
+o
+ls
+cd tests/repo
+ls
+o
+ls
+rm repo repo$'\n'gitnumber.txt repogitnumber.txt 
+ls
+cd repo
+ls
+gitn
+gitn
+gs
+gaa
+o
+o
+cd tests
+ls
+./init
+ls
+o
+ls
+gs
+ls
+rm gitnumber.txt
+ls
+gs
+gaa
+gcm 'install for temp testing'
+git push
+ls
+g
+ls
+cd repo
+ls
+gitn
+vim .git/gi
+vim ls
+ls
+ls
+vim file.txt 
+ls
+rm file.txt
+gitn
+ls
+vim .git/gitn.txt
+ls
+gs
+zr
+exit
+exit
+rep
+cd ags
+ls
+./test
+2d
+vim
+rep
+ls
+rg handling
+rg handling -l
+ls
+cd ags
+ls
+vim ags
+exit
+exit
+gs
+gr tests/repo
+ls
+gs
+gcm 'started writing tests'
+ls
+cd tests
+ls
+rm -rf repo
+ls
+gs
+ls
+git push
+vim init
+vim init
+gs
+vim init
+gs
+gaa
+gcm 'switched to more informative names'
+git push
+vim init
+gs
+gaa
+gcm 'tests done for now'
+git push
+ls
+o
+ls
+giti
+ls
+cd tests
+ls
+vim init
+./init
+ls
+o
+ls
+vim src
+ls
+vim src/main.rs
+ls
+cargo update
+ls
+vim src
+gs
+gaa
+gcm 'parse staged commits'
+ls
+vim 
+gs
+gaa
+gcm 'abstracted out println'
+ls
+vim 
+gs
+gaa
+gcm 'can print back numbered git status'
+git psu
+git push
+ls
+vim
+gs
+gaa
+gcm 'preserve git status output color'
+git push
+gla
+ls
+vim
+ls
+vim
+ls
+./tests/init
+vim
+gs
+gaa
+gcm 'read git root'
+git push
+ls
+vim 
+cargo update
+ls
+vim 
+cargo
+cargo update
+ls
+vim 
+ls
+vim
+ls
+cd src
+ls
+mv main.rs core.rs
+ls
+vim main.rs
+vim 
+cargo update
+gs
+gaa
+gcm 'sep dev file'
+ls
+vim main.rs
+ls
+vim core.rs
+ls
+mv main.rs experimental-map.rs
+ls
+mv core.rs main.rs
+ls
+gs
+g
+gaa
+gs
+gcan
+gs
+gla
+git push
+vim 
+s
+ls
+vim experimental-map.rs
+vim main.rs
+gs
+gaa
+gcm 'minimized log'
+ls
+vim main.rs
+cargo update
+ls
+vim
+gs
+gs
+gaa
+gcm 'safe'
+git push
+ls
+o
+ls
+mkdir bash
+ls
+cd bash
+ls
+vim touch gitn
+ls
+chmod +x touch
+ls
+vim gitn
+gs
+gaa
+gcm 'read all filenames to cache'
+git push
+ls
+vim gitn
+ls
+./install
+gitn
+ls
+ls
+vim gitn
+ls
+ls
+vim gitn
+ls
+o
+ls
+vim
+ls
+cd bash
+ls
+vim gitn
+ls
+zr
+gs
+gitn
+gitn
+gitn add
+gitn add
+gitn add
+gitn add
+gitn add alksdfj
+gitn add alksdfj
+gitn add alksdfj
+gitn add alksdfj
+gitn
+gitn
+gitn add
+gitn add
+gitn
+gitn
+gitn
+ls
+rm .git/gitn.txt
+ls
+gitn
+vim .git/gitn.txt
+ls
+ls
+gitn
+vim .git/gitn.txt
+ls
+ls
+gitn
+git add 1
+gitn add 1
+gitn add 1
+gitn add 1
+gitn add 1
+gitn add 1
+gitn add 1
+gitn add 1
+gitn add 1
+bash --version
+bash --version
+gitn
+gitn add
+gitn add 1
+gitn
+gitn add 7
+gitn add 7
+gitn add 7
+gitn add 7
+gitn add 7
+gitn add 7
+gitn add 7
+gitn add 7 3 4 54
+gitn add 7 3 4 54
+gitn add 7 3 4 54
+gitn add 7 3 4 54
+gitn add 7 3 4 54
+gitn add 7 3 4 54
+gitn add 7 3 4 54
+gitn add 7 3 4 54
+gitn add 7 3 4 54
+gitn add 7 3 4 54
+gitn add 7 3 4 54
+gitn add 7 3 4 54
+gitn add 7 3 4 54
+gitn add 7 3 4 54
+gitn add 7 3 4 54
+gitn add 7 3 4 54
+gitn add 7 3 4 54
+gitn add 7 3 4 54
+gitn add 7 3 4 54 asdf
+gitn add 7 3 4 54 asdf
+gitn
+gs
+gaa
+gs
+o
+gs
+o
+gs
+gaa
+gcm 'read back cache file'
+git push
+gla
+cd tests/repo
+ls
+gitn
+../init
+ls
+gitn
+ls
+ls
+ls
+ls
+o
+ls
+cd repo
+ls
+gitn
+ls
+git add 8
+gitn add 8
+gitn
+vim .git/gitn.txt
+gitn
+vim .git/gitn.txt
+ls
+cd some
+gitn add 8
+gitn
+gitn
+gitn
+gitn
+gitn
+ls
+gitn
+gitn cache
+ls
+gitn cache
+ls
+git add 1
+gitn add 9
+gitn
+gitn
+gitn add 8
+gitn add 8
+gitn
+gitn add 8
+gitn
+git add 8
+git add ../staged-modified-then-modified
+gitn
+o
+o
+ls
+./init
+cd repo
+ls
+cd some
+ls
+gitn
+git add 8
+gitn add 8
+gitn add 8
+gitn add 8
+gitn
+gitn add 13
+gitn
+gitn add 13
+gitn
+gitn add 13
+gitn
+gitn add 8
+gitn
+2n
+gs
+gla
+ls
+gitn
+ls
+rep
+cd git-number
+ls
+cd re
+cd rep
+ls
+cd tests/repo
+ls
+gs
+gitn
+ls
+o
+ls
+o
+ls
+cd bash
+ls
+vim gitn
+vim
+vim
+gs
+gaa
+o
+gs
+gaa
+gcm 'deployed'
+ls
+git push
+o
+ls
+2p
+ls
+cd .local
+ls
+cd bin
+ls
+vim git-number
+ls
+vim git-number
+gs
+ls
+ags
+2d
+gs
+zr
+gs
+gs
+zr
+gs
+ga 8
+gs
+gp 1
+gcm 'deployed gitn to my personal dotfiles'
+git push
+exit
+2s
+gs
+ls
+gitn
+gs
+gs
+gs
+gs
+ls
+vim
+ls
+gs
+2d
+gs
+gd 1
+zr

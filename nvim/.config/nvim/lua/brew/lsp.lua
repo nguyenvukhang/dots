@@ -4,6 +4,7 @@
 
 local env = require('brew.core').env
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local nvim_lsp = require('lspconfig')
 
 -- lsp-specific keymaps
 local on_attach = function(_, bufnr)
@@ -22,17 +23,30 @@ end
 -- main loop
 local servers = { 'pyright', 'tsserver' }
 for _, lsp in pairs(servers) do
-  require('lspconfig')[lsp].setup {
+  nvim_lsp[lsp].setup {
     on_attach = on_attach,
     capabilities = capabilities,
   }
 end
 
+-- rust lsp
+nvim_lsp.rls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    rust = {
+      unstable_features = true,
+      build_on_save = false,
+      all_features = true,
+    },
+  },
+}
+
 -- lua lsp
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
-require('lspconfig').sumneko_lua.setup {
+nvim_lsp.sumneko_lua.setup {
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {

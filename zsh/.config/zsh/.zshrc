@@ -39,9 +39,9 @@ unsetopt BEEP # prevents beeps in general
 setopt ignoreeof # prevents <C-d> from quitting the shell
 setopt globdots # include hidden dir tab complete
 SHELL_SESSIONS_DISABLE=1
-SAVEHIST=0
-HISTSIZE=0
-HISTFILE=/dev/null
+# SAVEHIST=0
+# HISTSIZE=0
+HISTFILE=$ZDOTDIR/.history
 
 # =============
 # BUILDING PATH
@@ -54,6 +54,7 @@ PATH=$HOME/.yarn/bin:$PATH
 PATH=$HOME/.local/src/lua-language-server/bin:$PATH
 # android build tools
 PATH=$HOME/Library/Android/sdk/build-tools/32.0.0:$PATH
+Path=$HOME/.cargo/bin:$PATH
 export PATH
 
 # ==============
