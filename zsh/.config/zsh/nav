@@ -8,6 +8,7 @@ typeset -A local nav=(
   [c]="$HOME/sunnus/cloud/functions/src"
   [d]="$DOTS"
   [f]="$HOME/files"
+  [g]="$REPOS/git-number"
   [j]="$HOME/Downloads"
   [l]="$HOME/.local"
   [lb]="$HOME/.local/bin"

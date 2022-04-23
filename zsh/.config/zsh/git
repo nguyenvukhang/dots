@@ -22,30 +22,29 @@
 # 	merge = refs/heads/feature/scoreboard
 # ---------------------------------------------
 
+GITNUMBER=gitn
 
-alias gs="git status" # git status
-alias ga="git add"
+alias gs="$GITNUMBER status" # git status
+alias ga="$GITNUMBER add"
 alias gaa="git add --all"
 alias gcf="git config --edit"
 
-alias gd="git diff"
-alias gds="git diff --staged"
+alias gd="$GITNUMBER diff"
+alias gds="$GITNUMBER diff --staged"
 alias giti="$EDITOR .gitignore"
-alias gr="git reset"
-alias grh="git reset --hard"
+alias gr="$GITNUMBER reset"
+alias grh="$GITNUMBER reset --hard"
 alias gitm="$EDITOR .gitmodules"
 alias gcan="git commit --amend --no-edit"
 
 alias gf="git fetch"
 
-alias gap="git add -p"
+alias gap="$GITNUMBER add -p"
 alias gms="git merge --squash" # squash diff into one commit
 alias gm="git merge" # squash diff into one commit
 
 alias gu="git fetch && git status" # git update
 alias gc="git commit"
-alias gau="git add -u"
-alias ga.="git add ."
 
 alias gce="git commit --allow-empty -m"
 
@@ -53,7 +52,7 @@ function gco() {
   local OUTPUT TARGET MATCH CWD TARGET_ROOT TARGET_DIR
 
   # this will already execute the original command
-  OUTPUT=$(git checkout $@ 2>&1)
+  OUTPUT=$($GITNUMBER checkout $@ 2>&1)
 
   # this function seeks to handle error messages
   TARGET="$1"

@@ -3,4 +3,5 @@ node_modules
 .netrwhist
 .zsh_sessions
 .zsh_history
+.history
 plugged
