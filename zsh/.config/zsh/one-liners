@@ -3,6 +3,7 @@
 # aliases
 alias ct="printf '\033[2J\033[3J\033[1;1H'" # clear terminal
 alias mon="while; do; clear; lt; sleep 1; done" # monitor directory
+alias monls="while; do; clear; ls; sleep 1; done" # monitor directory
 alias si="$EDITOR .stow-local-ignore"
 alias t="$EDITOR $REPOS/uni/todo.md"
 alias sr="brew services restart skhd" # skhd restart
