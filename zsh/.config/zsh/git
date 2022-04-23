@@ -22,7 +22,7 @@
 # 	merge = refs/heads/feature/scoreboard
 # ---------------------------------------------
 
-GITNUMBER=gitn
+GITNUMBER=gitnu
 
 alias gs="$GITNUMBER status" # git status
 alias ga="$GITNUMBER add"
