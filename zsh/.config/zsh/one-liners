@@ -16,6 +16,7 @@ alias fd="fd --hidden"
 alias py=python3
 alias oc=octave
 alias vim=nvim
+alias pi="pip install"
 
 alias yb="yarn build"
 alias yd="yarn dev"
