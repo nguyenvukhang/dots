@@ -23,6 +23,11 @@ function! __MDX__()
   let b:AutoPairs={'$':'$','(':')','[':']','{':'}',"'":"'",'"':'"','```':'```','"""':'"""',"'''":"'''","`":"`"}
 endfunction
 
+function! __CPP__()
+  set tabstop=4
+  set shiftwidth=4
+endfunction
+
 function! __LATEX__()
   set tw=70
 
@@ -46,6 +51,7 @@ aug THE_BREWERY
   " file extension handling
   au BufRead,BufNewFile *.mdx call __MDX__()
   au BufRead,BufNewFile *.tex call __LATEX__()
+  au BufRead,BufNewFile *.cpp call __CPP__()
   au BufRead,BufNewFile *.m UltiSnipsAddFiletypes markdown
 
   " /bin/sh files highlighted as if they were zsh files

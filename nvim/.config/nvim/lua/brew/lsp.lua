@@ -35,6 +35,14 @@ nvim_lsp.pyright.setup {
   capabilities = capabilities,
 }
 
+-- C++
+require'lspconfig'.clangd.setup{
+  on_attach = function(_, bufnr)
+    on_attach(_, bufnr)
+  end,
+  capabilities = capabilities,
+}
+
 -- golang lsp
 nvim_lsp.gopls.setup {
   on_attach = function(_, bufnr)
