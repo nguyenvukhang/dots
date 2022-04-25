@@ -39,7 +39,7 @@ nvim_lsp.pyright.setup {
 nvim_lsp.gopls.setup {
   on_attach = function(_, bufnr)
     on_attach(_, bufnr)
-    map(bufnr, 'n', '<leader>p', ':!gofmt -w %<CR>', opts)
+    map(bufnr, 'n', '<leader>p', ':silent !gofmt -w %<CR>', opts)
   end,
   capabilities = capabilities,
 }
