@@ -26,6 +26,7 @@ nvim_lsp.tsserver.setup {
   capabilities = capabilities,
 }
 
+-- python lsp
 nvim_lsp.pyright.setup {
   on_attach = function(_, bufnr)
     on_attach(_, bufnr)
@@ -33,6 +34,16 @@ nvim_lsp.pyright.setup {
   end,
   capabilities = capabilities,
 }
+
+-- golang lsp
+nvim_lsp.gopls.setup {
+  on_attach = function(_, bufnr)
+    on_attach(_, bufnr)
+    map(bufnr, 'n', '<leader>p', ':!gofmt -w %<CR>', opts)
+  end,
+  capabilities = capabilities,
+}
+
 
 -- rust lsp
 nvim_lsp.rls.setup {

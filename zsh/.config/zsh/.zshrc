@@ -46,7 +46,8 @@ HISTFILE=$ZDOTDIR/.history
 # =============
 # BUILDING PATH
 # =============
-PATH=$N_PREFIX/bin:$PATH
+GOPATH=$HOME/go/bin
+
 PATH=$HOME/.jenv/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
 PATH=$HOME/.local/bin/git:$PATH
@@ -54,7 +55,8 @@ PATH=$HOME/.yarn/bin:$PATH
 PATH=$HOME/.local/src/lua-language-server/bin:$PATH
 # android build tools
 PATH=$HOME/Library/Android/sdk/build-tools/32.0.0:$PATH
-Path=$HOME/.cargo/bin:$PATH
+PATH=$HOME/.cargo/bin:$PATH
+PATH=$GOPATH:$PATH
 export PATH
 
 # ==============
