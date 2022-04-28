@@ -42,6 +42,7 @@ gf()   { git fetch $@ }
 gap()  { $GIT add -p $@ }
 gms()  { git merge --squash $@ } # squash diff into one commit
 gm()   { git merge $@ } # squash diff into one commit
+gmn()   { git merge --no-ff $@ } # squash diff into one commit
 gu()   { git fetch && git status $@ } # git update
 gc()   { git commit $@ }
 gce()  { git commit --allow-empty -m $@ }

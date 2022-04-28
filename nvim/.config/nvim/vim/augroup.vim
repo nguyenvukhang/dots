@@ -23,11 +23,6 @@ function! __MDX__()
   let b:AutoPairs={'$':'$','(':')','[':']','{':'}',"'":"'",'"':'"','```':'```','"""':'"""',"'''":"'''","`":"`"}
 endfunction
 
-function! __CPP__()
-  set tabstop=4
-  set shiftwidth=4
-endfunction
-
 function! __LATEX__()
   set tw=70
 
@@ -41,6 +36,10 @@ function! __LATEX__()
   " makes letter become math'd vector: A -> `\v{A}`
   nnoremap <buffer> <leader>V s$\v{}$<esc>hP
   let g:AutoPairs={'$':'$','(':')','[':']','{':'}',"'":"'",'"':'"','```':'```','"""':'"""',"'''":"'''","`":"`"}
+endfunction
+
+function! __CPP__()
+  lua vim.api.nvim_buf_set_option(0, "commentstring", "// %s")
 endfunction
 
 aug THE_BREWERY
@@ -89,6 +88,7 @@ endfunction
 
 command! StanGlyphs :silent! call StanGlyphs()
 command! Date :call Date()
+command! Go :lua vim.fn.chdir(vim.fn.expand("%:p:h"))<CR>
 
 " show highlight group of char under cursor
 nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'

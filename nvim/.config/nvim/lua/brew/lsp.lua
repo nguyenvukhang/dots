@@ -2,7 +2,6 @@
 -- https://github.com/neovim/nvim-lspconfig
 --
 
-local env = require('brew.core').env
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 local nvim_lsp = require('lspconfig')
 local map = function (bufnr, ...)
@@ -18,11 +17,15 @@ local on_attach = function(_, bufnr)
   map(bufnr, 'n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts)
   map(bufnr, 'n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', opts)
   map(bufnr, 'n', 'K', ':lua vim.lsp.buf.hover()<CR>', opts)
+  print('LSP on_attach called!')
 end
 
 -- javascript lsp
 nvim_lsp.tsserver.setup {
-  on_attach = on_attach,
+  on_attach = function(_, bufnr)
+    on_attach(_, bufnr)
+    map(bufnr, 'n', '<leader>p', ':silent w<CR>:silent !prettier --write %<CR>', opts)
+  end,
   capabilities = capabilities,
 }
 
@@ -36,18 +39,22 @@ nvim_lsp.pyright.setup {
 }
 
 -- C++
-require'lspconfig'.clangd.setup{
+require("lspconfig").ccls.setup {
   on_attach = function(_, bufnr)
     on_attach(_, bufnr)
+    map(bufnr, 'n', '<leader>p', ':silent w<CR>:silent !clang-format -i %<CR>', opts)
   end,
   capabilities = capabilities,
 }
+
+-- require'lspconfig'.clangd.setup{
+-- }
 
 -- golang lsp
 nvim_lsp.gopls.setup {
   on_attach = function(_, bufnr)
     on_attach(_, bufnr)
-    map(bufnr, 'n', '<leader>p', ':silent !gofmt -w %<CR>', opts)
+    map(bufnr, 'n', '<leader>p', ':silent w<CR>silent !gofmt -w %<CR>', opts)
   end,
   capabilities = capabilities,
 }
