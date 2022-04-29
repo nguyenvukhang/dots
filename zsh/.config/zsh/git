@@ -22,12 +22,12 @@
 # 	merge = refs/heads/feature/scoreboard
 # ---------------------------------------------
 
-GIT=gitnu
+GIT=(git number)
 
 gn() {
   $EDITOR $(git rev-parse --git-dir)/gitnu.json
 }
-gs()   { $GIT status $@ } # git status
+gs()   { $GIT $@ } # git status
 ga()   { $GIT add $@ }
 gaa()  { git add --all $@ }
 gcf()  { git config --edit $@ }
