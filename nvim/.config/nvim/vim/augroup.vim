@@ -1,11 +1,15 @@
 " SAFE REMAPS ONLY
 " don't put <leader>anything or <C-anything>
 
+fu! ChaChing()
+  let b:AutoPairs = copy(g:AutoPairs)
+  let b:AutoPairs['$'] = '$'
+endf
+
 fu! __MARKDOWN__()
   set tw=70 ft=markdown
   hi link markdownError Normal
-  let b:AutoPairs={'$':'$','(':')','[':']','{':'}',"'":"'",
-    \ '"':'"','```':'```','"""':'"""',"'''":"'''","`":"`"}
+  call ChaChing()
   " use $ as bounding delimiters, kinda like () and {}
   onoremap <buffer> <silent> i$ :<c-u>normal! T$vt$<cr>
   onoremap <buffer> <silent> a$ :<c-u>normal! F$vf$<cr>
@@ -15,8 +19,7 @@ endfu
 
 fu! __LATEX__()
   set tw=70
-  let b:AutoPairs={'$':'$','(':')','[':']','{':'}',"'":"'",
-    \ '"':'"','```':'```','"""':'"""',"'''":"'''","`":"`"}
+  call ChaChing()
 endfu
 
 fu! __CPP__()
