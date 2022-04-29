@@ -97,7 +97,7 @@ nnoremap("<leader>c", ":ColorizerToggle<cr>", true)
 -- lua functions
 nnoremap("<leader>o", brew.ToggleQuickFix)
 nnoremap("<leader>O", brew.ToggleLocalList)
-nnoremap("<leader>e", diagnostics.diagnostics)
+nnoremap("<leader>d", diagnostics.diagnostics)
 
 nnoremap("[[", brew.OpenSq)
 nnoremap("]]", brew.CloseSq)
