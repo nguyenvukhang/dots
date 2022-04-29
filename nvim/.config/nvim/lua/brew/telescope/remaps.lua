@@ -1,58 +1,58 @@
 local sessions_path = require('brew.core').env.conf..'/data/sessions'
 
-local tele = function(keypress, search_type, search_function)
-  local final_type
-  if search_type == 'builtin' then
-    final_type = "telescope.builtin"
-  else
-    final_type = 'brew.telescope.'..search_type
-  end
-  vim.api.nvim_set_keymap('n', keypress,
-  ':lua require("'..final_type ..'").' ..search_function..'<cr>',
-  { noremap = true, silent = true })
+-- custom set keymap for telescope to shorten rhs
+local set_keymap = function(keypress, callback)
+  vim.api.nvim_set_keymap('n', keypress, "", { noremap = true, silent = true, callback=callback })
 end
 
-tele('<c-b>', 'builtin', 'buffers()')
+vim.api.nvim_set_keymap("n", "<leader>H", "", {
+    noremap = true,
+    callback = function()
+        print("Hello world!")
+    end,
+})
+
+set_keymap('<c-b>', 'builtin', 'buffers()')
 
 -- file search
-tele('<c-p>', 'file', 'repo()')
-tele('<c-f>', 'file', 'cwd()')
+set_keymap('<c-p>', 'file', 'repo()')
+set_keymap('<c-f>', 'file', 'cwd()')
 
 -- word search
-tele('<leader>ps', 'word', 'repo()')
-tele('<leader>pw', 'word', 'cwd()')
-tele('<leader>pf', 'word', 'this_in_repo()')
+set_keymap('<leader>ps', 'word', 'repo()')
+set_keymap('<leader>pw', 'word', 'cwd()')
+set_keymap('<leader>pf', 'word', 'this_in_repo()')
 
 -- search dots
-tele('<leader>sd', 'file', 'dots()')
+set_keymap('<leader>sd', 'file', 'dots()')
 
 -- search university
-tele('<leader>su', 'file', 'university()')
+set_keymap('<leader>su', 'file', 'university()')
 
 -- search notes
-tele('<leader>sn', 'file', 'notes()')
+set_keymap('<leader>sn', 'file', 'notes()')
 
 -- search telescope
-tele('<leader>st', 'file', 'telescope()')
+set_keymap('<leader>st', 'file', 'telescope()')
 
 -- search past-open files (recents)
-tele('<leader>sp', 'file', 'oldfiles()')
+set_keymap('<leader>sp', 'file', 'oldfiles()')
 
 -- search repos
-tele('<leader>sr', 'file', 'repo_search()')
-tele('<leader>so', 'file', 'other_repos_search()')
+set_keymap('<leader>sr', 'file', 'repo_search()')
+set_keymap('<leader>so', 'file', 'other_repos_search()')
 
 -- search vim help
-tele('<leader>sh', 'builtin', 'help_tags()')
+set_keymap('<leader>sh', 'builtin', 'help_tags()')
 
 -- search manpages
-tele('<leader>sm', 'builtin', 'man_pages()')
+set_keymap('<leader>sm', 'builtin', 'man_pages()')
 
 -- session
 local save_session = 'save_session({ path = "'..sessions_path..'"})'
-tele('<leader>ss', 'sessions', save_session)
-tele('<c-s>', 'sessions', 'sessions()')
-tele('<leader>rs', 'sessions', 'sessions()') -- restore session
+set_keymap('<leader>ss', 'sessions', save_session)
+set_keymap('<c-s>', 'sessions', 'sessions()')
+set_keymap('<leader>rs', 'sessions', 'sessions()') -- restore session
 
 -- git stuff
-tele('<leader>gs', 'builtin', 'git_status()')
+set_keymap('<leader>gs', 'builtin', 'git_status()')

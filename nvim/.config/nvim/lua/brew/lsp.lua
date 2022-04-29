@@ -81,7 +81,10 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 nvim_lsp.sumneko_lua.setup {
-  on_attach = on_attach,
+  on_attach = function(_, bufnr)
+    on_attach(_, bufnr)
+    set_keymap(bufnr, 'n', '<leader>p', ':silent w<CR>silent !gofmt -w %<CR>', opts)
+  end,
   capabilities = capabilities,
   settings = {
     Lua = {
