@@ -34,6 +34,10 @@ vim.opt.grepformat     = '%f:%l:%c:%m,%f:%l:%m'
 vim.opt.fillchars      = 'fold: '
 vim.opt.termguicolors  = true
 
+-- honorary set
+-- set leader to <space>
+vim.g.mapleader = " "
+
 -- color scheme
 vim.g.gruvbox_italics           = false
 vim.g.gruvbox_italicize_strings = false

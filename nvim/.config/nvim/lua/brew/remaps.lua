@@ -32,9 +32,6 @@ nnoremap("<right>", "<nop>")
 nnoremap("<up>", "<nop>")
 nnoremap("<down>", "<nop>")
 
--- set leader to <space>
-vim.g.mapleader = " "
-
 -- on-the-go reload vimrc
 nnoremap("<leader><cr>", ":so $MYVIMRC<cr>")
 

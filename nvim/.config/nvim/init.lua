@@ -7,9 +7,9 @@ require('brew.sets')
 source('vim/auto-pairs.vim')
 -- source('vim/remaps.vim')
 
+require('brew.remaps')
 require('brew.telescope')
 require('brew.lsp')
-require('brew.remaps')
 
 -- the lighter half
 require('brew.plugins.markdown_preview')

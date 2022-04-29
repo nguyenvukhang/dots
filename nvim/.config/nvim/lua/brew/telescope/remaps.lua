@@ -1,7 +1,7 @@
-local builtin = require('telescope.builtin')
-local file = require('brew.telescope.file')
-local word = require('brew.telescope.word')
-local sessions = require('brew.telescope.sessions')
+local builtin = require("telescope.builtin")
+local file = require("brew.telescope.file")
+local word = require("brew.telescope.word")
+local sessions = require("brew.telescope.sessions")
 
 -- custom set keymap for telescope to shorten rhs
 local nnoremap = function(keypress, callback)
