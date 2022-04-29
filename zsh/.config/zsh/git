@@ -162,9 +162,12 @@ function gur() {
 }
 
 function yeet() {
-  [ $TMUX ] && tmux neww -c "#{pane_current_path}" \
+  if [ $TMUX ]; then
+    tmux neww -c "#{pane_current_path}" \
     -n "pushing..." -d git push
-  echo "You're not in tmux, boo."
+  else
+    echo "You're not in tmux, boo."
+  fi
 }
 
 # delete branch
