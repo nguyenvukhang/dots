@@ -4,9 +4,8 @@
 
 local conf = require('brew.core').env.conf
 
+-- commit to using $0 snippets
 vim.g.UltiSnipsExpandTrigger       = '<Tab>'
-vim.g.UltiSnipsJumpForwardTrigger  = '<C-l>'
-vim.g.UltiSnipsJumpBackwardTrigger = '<C-h>'
 vim.g.UltiSnipsEditSplit           = 'vertical'
 vim.g.UltiSnipsSnippetDirectories  = { conf..'/ultisnips' }
 

@@ -14,42 +14,21 @@ local nnoremap = function(keypress, callback)
 end
 
 nnoremap("<c-b>", builtin.buffers)
-
--- file search
 nnoremap("<c-p>", file.repo)
 nnoremap("<c-f>", file.cwd)
-
--- word search
-nnoremap("<leader>ps", word.repo)
-nnoremap("<leader>pw", word.cwd)
+-- the only other remap that starts with p is reserved for code formatting
+nnoremap("<leader>pd", file.dots)
 nnoremap("<leader>pf", word.this_in_repo)
+nnoremap("<leader>ph", builtin.help_tags)
+nnoremap("<leader>pm", builtin.man_pages)
+nnoremap("<leader>pn", file.notes)
+nnoremap("<leader>po", file.other_repos_search)
+nnoremap("<leader>pp", file.oldfiles)
+nnoremap("<leader>pr", file.repo_search)
+nnoremap("<leader>ps", word.repo)
+nnoremap("<leader>pu", file.university)
+nnoremap("<leader>pw", word.cwd)
 
--- search dots
-nnoremap("<leader>sd", file.dots)
-
--- search university
-nnoremap("<leader>su", file.university)
-
--- search notes
-nnoremap("<leader>sn", file.notes)
-
--- search telescope
-nnoremap("<leader>st", file.telescope)
-
--- search past-open files (recents)
-nnoremap("<leader>sp", file.oldfiles)
-
--- search repos
-nnoremap("<leader>sr", file.repo_search)
-nnoremap("<leader>so", file.other_repos_search)
-
--- search vim help
-nnoremap("<leader>sh", builtin.help_tags)
-
--- search manpages
-nnoremap("<leader>sm", builtin.man_pages)
-
--- session
 nnoremap("<c-s>", sessions.save_session)
 nnoremap("<leader>rs", sessions.sessions) -- restore session
 

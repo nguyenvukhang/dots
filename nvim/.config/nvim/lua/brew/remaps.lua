@@ -1,8 +1,12 @@
 local brew = require("brew.core").functions
 local diagnostics = require("brew.diagnostics")
+local harpoon = {
+    mark = require("harpoon.mark"),
+    ui = require("harpoon.ui"),
+}
 
 local noremap = function(mode)
-    local fn = function(lhs, rhs, verbose)
+    return function(lhs, rhs, verbose)
         if type(rhs) == "string" then
             vim.api.nvim_set_keymap(mode, lhs, rhs, {
                 noremap = true,
@@ -16,7 +20,6 @@ local noremap = function(mode)
             })
         end
     end
-    return fn
 end
 
 local nnoremap = noremap("n")
@@ -100,7 +103,21 @@ nnoremap("[[", brew.OpenSq)
 nnoremap("]]", brew.CloseSq)
 
 -- harpoon
--- nnoremap ("<silent>", "<C-h> :lua require("harpoon.ui").toggle_quick_menu()<cr>")
+nnoremap("<C-h>", harpoon.ui.toggle_quick_menu)
+
+local jump = function(n)
+  return function()
+    harpoon.ui.nav_file(n)
+  end
+end
+
+local add = function()
+    harpoon.mark.add_file()
+    print('added file to harpoon')
+end
+
+nnoremap("mf", add, true)
+nnoremap("'a", jump(1), true)
 
 -- harpoon
 -- leader m to mark the file
