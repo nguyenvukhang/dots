@@ -9,7 +9,7 @@ nnoremap <up> <nop>
 nnoremap <down> <nop>
 
 " set leader to <space>
-let mapleader = ' '
+" let mapleader = ' '
 
 " on-the-go reload vimrc
 " nnoremap <leader><cr> :so $MYVIMRC<cr>

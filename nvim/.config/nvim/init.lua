@@ -5,10 +5,11 @@ local source = function(e) vim.cmd('source '..conf..'/'..e) end
 source('vim/plugged-in.vim')
 require('brew.sets')
 source('vim/auto-pairs.vim')
-source('vim/remaps.vim')
+-- source('vim/remaps.vim')
 
 require('brew.telescope')
 require('brew.lsp')
+require('brew.remaps')
 
 -- the lighter half
 require('brew.plugins.markdown_preview')
