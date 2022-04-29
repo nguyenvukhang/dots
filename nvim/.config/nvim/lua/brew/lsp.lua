@@ -17,7 +17,7 @@ local on_attach = function(_, bufnr)
   set_keymap(bufnr, 'n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts)
   set_keymap(bufnr, 'n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', opts)
   set_keymap(bufnr, 'n', 'K', ':lua vim.lsp.buf.hover()<CR>', opts)
-  print('LSP on_attach called!')
+  -- print('LSP on_attach called!')
 end
 
 -- javascript lsp
