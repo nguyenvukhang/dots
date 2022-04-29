@@ -1,3 +1,8 @@
+" SAFE REMAPS ONLY
+" don't put <leader>anything or <C-anything>
+
+let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '```':'```', '"""':'"""', "'''":"'''", "`":"`"}
+
 function! __MARKDOWN__()
   set ft=markdown
   set tw=70
@@ -7,10 +12,10 @@ function! __MARKDOWN__()
   " vnoremap <buffer> <leader>m c$$<esc>P
 
   " letter to vector: A -> \v{A}
-  nnoremap <buffer> <leader>v s\v{}<esc>P
+  " nnoremap <buffer> <leader>v s\v{}<esc>P
 
   " letter to math'd vector: A -> $\v{A}$
-  nnoremap <buffer> <leader>V s$\v{}$<esc>hP
+  " nnoremap <buffer> <leader>V s$\v{}$<esc>hP
 
   " use $ as bounding delimiters, kinda like () and {}
   onoremap <buffer> <silent> i$ :<c-u>normal! T$vt$<cr>
@@ -18,9 +23,9 @@ function! __MARKDOWN__()
   vnoremap <buffer> i$ T$ot$
   vnoremap <buffer> a$ F$of$
 
-  lua vim.api.nvim_buf_set_option(0, "commentstring", "{/* %s */}")
+  " let &l:commentstring="{/* %s */}"
   hi link markdownError Normal
-  let b:AutoPairs={'$':'$','(':')','[':']','{':'}',"'":"'",'"':'"','```':'```','"""':'"""',"'''":"'''","`":"`"}
+  let b:AutoPairs['$']='$'
 endfunction
 
 function! __LATEX__()
