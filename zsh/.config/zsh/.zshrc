@@ -1,5 +1,6 @@
 # mac problems (required for every single cli tool installed by brew)
-[ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+[ -f /opt/homebrew/bin/brew ] \
+  && eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # dependencies
 # git, fzf, rg, fd, nvim (placed at ~/.local/bin/nvim), git number
@@ -7,9 +8,8 @@
 # reference
 # https://zsh.sourceforge.io/Intro/intro_3.html
 
-# ===============
-# ZSHRC VARIABLES
-# ===============
+# .............................................. environment variables
+#
 # (to only be used in $ZDOTDIR)
 
 # for installed software
@@ -31,9 +31,7 @@ export LESSHISTFILE=-
 export DOTS=$HOME/dots
 export REPOS=$HOME/repos
 
-# =============
-# SHELL OPTIONS
-# =============
+# ...................................................... shell options
 
 unsetopt BEEP # prevents beeps in general
 setopt ignoreeof # prevents <C-d> from quitting the shell
@@ -43,11 +41,9 @@ SHELL_SESSIONS_DISABLE=1
 # HISTSIZE=0
 HISTFILE=$ZDOTDIR/.history
 
-# =============
-# BUILDING PATH
-# =============
-GOPATH=$HOME/go/bin
+# ............................................................... path
 
+GOPATH=$HOME/go/bin
 PATH=$HOME/.jenv/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
 PATH=$HOME/.local/bin/git:$PATH
@@ -59,9 +55,7 @@ PATH=$HOME/.cargo/bin:$PATH
 PATH=$GOPATH:$PATH
 export PATH
 
-# ==============
-# THE REAL ZSHRC
-# ==============
+# .......................................................... functions
 
 source $ZDOTDIR/prompt
 source $ZDOTDIR/ls
@@ -73,3 +67,10 @@ source $ZDOTDIR/nav
 source $ZDOTDIR/one-liners
 source $ZDOTDIR/tmux
 source $ZDOTDIR/pass
+
+# auto start tmux
+if command -v tmux &>/dev/null && [ -n "$PS1" ] \
+  && [[ ! "$TERM" =~ tmux ]] \
+  && [ -z "$TMUX" ]; then
+  exec tmux new-session -As base -n stalia
+fi

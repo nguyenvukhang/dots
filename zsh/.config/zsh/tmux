@@ -12,58 +12,28 @@ function tkl() {
   fi
 }
 
-# function ta() {
-#   local t="${1-base}"
-#   local v=true
-#   # first argument is target attach
-#   # default value: "base"
-# 
-#   if [ -z "$TMUX" ]; then
-#     # when outside of tmux
-#     $v && echo "outside TMUX"
-# 
-#     if tmux has-session -t "$t" 2>/dev/null; then
-#       # if target exists, attach to it 
-#       $v && echo "session exists"
-#       tmux attach -t $t; return
-#     else
-#       # else if target doesn't exist,
-#       # just start a new session first
-#       $v && echo "not existing, creating fresh"
-#       tmux new-session -s $t -d; return
-# 
-#       # if launch script exists, use it
-#       if [ -f $DOTS/tmux/$1.sh ]; then
-#         $v && echo "launch script exists"
-#         tmux send-keys -t $t "$DOTS/tmux/$1.sh" ENTER; return
-#       else
-#       fi
-#     fi
-#   else
-#     # when inside of tmux
-#     $v && echo "inside TMUX"
-# 
-#     if tmux has-session -t $t 2>/dev/null; then
-#       # if target exists, switch to it
-#       $v && echo "session exists"
-#       tmux switch-client -t $t; return
-#     else
-#       # else if target doesn't exist,
-#       # just start a new session first
-#       $v && echo "not existing, creating fresh"
-#       tmux new-session -As $t -d
-#       tmux switch-client -t $t; return
-# 
-#       # if launch script exists, use it
-#       if [ -f $DOTS/tmux/$1.sh ]; then
-#         $v && echo "launch script exists"
-#         tmux send-keys -t $t "$DOTS/tmux/$1.sh" ENTER; return
-#       else
-#       fi
-#     fi
-#   fi
-# }
-
 function spt() {
   ta "spt"
+}
+
+# wraps the standard exit script such that there is a base tmux
+# session that acts like terminal
+exit() {
+  # if outside of tmux, exit for real
+  [[ -z "$TMUX" ]] && return 0
+
+  # if inside base session, kill of current pane
+  local session_name=$(tmux display -p "#S")
+  if [[ $session_name == "base" ]]; then
+    tmux kill-pane
+    return 0
+  fi
+
+  # if inside other tmux sessions, always kill-pane.
+  # if down to last pane and window, then jump back to base
+  local one_left=$(tmux display -p "#{session_windows}#{window_panes}")
+  if [[ $one_left == "11" ]]; then
+    ta base
+  fi
+  tmux kill-pane
 }

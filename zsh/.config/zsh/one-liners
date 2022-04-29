@@ -28,7 +28,7 @@ bindkey '^[[Z' reverse-menu-complete
 # really short functions
 
 # fuzzy vim
-function v() {
+v() {
   local target=$(fzf $FZF_OPTS)
   [ $target ] && $EDITOR $target
 }
