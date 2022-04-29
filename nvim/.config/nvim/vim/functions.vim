@@ -28,3 +28,5 @@ endfunction
 
 command! StanGlyphs :silent! call StanGlyphs()
 " command! Date :call Date()
+
+command! CloseOtherBuffers execute '%bd|e #|norm `"'

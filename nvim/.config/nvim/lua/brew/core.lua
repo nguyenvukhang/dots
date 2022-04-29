@@ -136,11 +136,11 @@ local Todolist = function()
     end
 end
 
-local openSq = function()
+local OpenSq = function()
     vim.fn.searchpair("\\[", "", "\\]", "b")
 end
 
-local closeSq = function()
+local CloseSq = function()
     vim.fn.searchpair("\\[", "", "\\]")
 end
 
@@ -148,8 +148,8 @@ local functions = {
     Todolist = Todolist,
     ToggleQuickFix = ToggleQuickFix,
     ToggleLocalList = ToggleLocalList,
-    openSq = openSq,
-    closeSq = closeSq,
+    OpenSq = OpenSq,
+    CloseSq = CloseSq,
 }
 
 -- COLORS

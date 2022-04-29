@@ -73,33 +73,31 @@ nnoremap("<leader>rb", 'yiw:%s/<C-r>"//g<left><left>', true)
 nnoremap("<leader>rl", 'yiw:s/<C-r>"//g<left><left>', true)
 
 -- replace visual selection
--- vnoremap <C-s> y:%s/<C-r>"//g<left><left>
+vnoremap("<C-s>", 'y:%s/<C-r>"//g<left><left>', true)
 
 -- reverse visual lines
--- vnoremap <C-r> <esc>'<km<'>:'<,.g/^/m '><CR>
+vnoremap("<C-r>", "<esc>'<km<'>:'<,.g/^/m '><CR>")
 
 -- search visual selection
--- vnoremap * y/<C-r>"<cr>
+vnoremap("*", 'y/<C-r>"<cr>', true)
 
 -- refresh syntax highlighting
-nnoremap("<f1>", ":syntax sync fromstart<cr>")
+nnoremap("<f1>", ":syntax sync fromstart<cr>", true)
 
 -- toggle spell check
-nnoremap("<f5>", ":setlocal spell!<cr>:set spell?<cr>")
+nnoremap("<f5>", ":setlocal spell!<cr>:set spell?<cr>", true)
 
 -- vim functions
--- command! CloseOtherBuffers execute '%bd|e #|norm `"'
-nnoremap("<leader>x", ":CloseOtherBuffers")
-nnoremap("<leader>c", ":ColorizerToggle<cr>")
+nnoremap("<leader>x", ":CloseOtherBuffers", true)
+nnoremap("<leader>c", ":ColorizerToggle<cr>", true)
 
 -- lua functions
-nnoremap("<leader>t", ":lua require('brew.core').functions.Todolist()<cr>")
 nnoremap("<leader>o", brew.ToggleQuickFix)
 nnoremap("<leader>O", brew.ToggleLocalList)
 nnoremap("<leader>e", diagnostics.diagnostics)
 
-nnoremap("[[", brew.openSq)
-nnoremap("]]", brew.closeSq)
+nnoremap("[[", brew.OpenSq)
+nnoremap("]]", brew.CloseSq)
 
 -- harpoon
 -- nnoremap ("<silent>", "<C-h> :lua require("harpoon.ui").toggle_quick_menu()<cr>")
