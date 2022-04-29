@@ -81,3 +81,6 @@ nnoremap <silent> <leader>d :lua require('brew.diagnostics').diagnostics()<cr>
 " complete the trio of [{, [[, [(
 nnoremap <silent> [[ :call searchpair('\[', '', '\]', 'b')<cr>
 nnoremap <silent> ]] :call searchpair('\[', '', '\]')<cr>
+
+" harpoon
+nnoremap <silent> <C-h> :lua require("harpoon.ui").toggle_quick_menu()<cr>

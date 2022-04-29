@@ -5,9 +5,6 @@ Plug 'ambv/black'
 
 " sparklez
 Plug 'MaxMEllon/vim-jsx-pretty'
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install --frozen-lockfile --production',
-  \ 'for': ['javascript', 'typescript', 'css', 'json', 'markdown', 'yaml', 'html'] }
 
 " T-POPE
 Plug 'tpope/vim-surround'
@@ -49,5 +46,6 @@ Plug 'vimplug/nvim-colorizer.lua'
 Plug 'rust-lang/rust.vim'
 " Plug 'Rykka/InstantRst'
 Plug 'bfrg/vim-cpp-modern'
+Plug 'ThePrimeagen/harpoon'
 
 call plug#end()
