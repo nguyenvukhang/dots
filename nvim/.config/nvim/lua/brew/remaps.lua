@@ -52,8 +52,8 @@ nnoremap("<C-d>", "13jzz")
 nnoremap("<C-u>", "13kzz")
 
 -- quickfix list navigation
-nnoremap("<silent>", "<C-j> :cnext<cr>")
-nnoremap("<silent>", "<C-k> :cprev<cr>")
+nnoremap("<C-j>", ":cnext<cr>")
+nnoremap("<C-k>", ":cprev<cr>")
 
 -- color columns
 nnoremap("<leader>7", ":set colorcolumn=71<cr>")
@@ -102,22 +102,26 @@ nnoremap("<leader>e", diagnostics.diagnostics)
 nnoremap("[[", brew.OpenSq)
 nnoremap("]]", brew.CloseSq)
 
--- harpoon
-nnoremap("<C-h>", harpoon.ui.toggle_quick_menu)
-
 local jump = function(n)
-  return function()
-    harpoon.ui.nav_file(n)
-  end
+    return function()
+        print("harpooned to index " .. n .. "/4")
+        harpoon.ui.nav_file(n)
+    end
 end
 
 local add = function()
     harpoon.mark.add_file()
-    print('added file to harpoon')
+    harpoon.ui.toggle_quick_menu()
+    print("added file to harpoon")
 end
 
-nnoremap("mf", add, true)
-nnoremap("'a", jump(1), true)
+-- harpoon
+nnoremap("<leader>m", harpoon.ui.toggle_quick_menu)
+nnoremap("mm", add, true)
+nnoremap("<leader>4", jump(4), true)
+nnoremap("<leader>3", jump(3), true)
+nnoremap("<leader>2", jump(2), true)
+nnoremap("<leader>1", jump(1), true)
 
 -- harpoon
 -- leader m to mark the file

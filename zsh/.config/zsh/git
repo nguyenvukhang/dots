@@ -161,6 +161,11 @@ function gur() {
   git push
 }
 
+function yeet() {
+  [ $TMUX ] && tmux new-window "git push"
+  echo "You're not in tmux, boo."
+}
+
 # delete branch
 # git branch -d <branch_name>
 
