@@ -70,13 +70,12 @@ nnoremap <f5> :setlocal spell!<cr>:set spell?<cr>
 command! CloseOtherBuffers execute '%bd|e #|norm `"'
 nnoremap <leader>x :CloseOtherBuffers
 nnoremap <leader>c :ColorizerToggle<cr>
-nnoremap <leader>P :Prettier<cr>
 
 " lua functions
-nnoremap <silent> <leader>t :lua require('brew.core').functions.Todolist()<cr>
+" nnoremap <silent> <leader>t :lua require('brew.core').functions.Todolist()<cr>
 nnoremap <silent> <leader>o :lua require('brew.core').functions.ToggleQuickFix()<cr>
 nnoremap <silent> <leader>O :lua require('brew.core').functions.ToggleLocalList()<cr>
-nnoremap <silent> <leader>d :lua require('brew.diagnostics').diagnostics()<cr>
+nnoremap <silent> <leader>e :lua require('brew.diagnostics').diagnostics()<cr>
 
 " complete the trio of [{, [[, [(
 nnoremap <silent> [[ :call searchpair('\[', '', '\]', 'b')<cr>
@@ -84,3 +83,7 @@ nnoremap <silent> ]] :call searchpair('\[', '', '\]')<cr>
 
 " harpoon
 nnoremap <silent> <C-h> :lua require("harpoon.ui").toggle_quick_menu()<cr>
+
+" harpoon
+" leader m to mark the file
+" leader a,s,d,f to jump to files
