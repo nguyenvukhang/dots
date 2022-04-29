@@ -2,6 +2,7 @@ local themes = require('telescope.themes')
 local actions = require('telescope.actions')
 local action_state = require('telescope.actions.state')
 local conf = require('brew.core').env.conf
+local session_path = require("brew.core").env.conf .. "/data/sessions"
 
 local M = {}
 
@@ -10,10 +11,9 @@ local file_exists = function(name)
   if f~=nil then io.close(f) return true else return false end
 end
 
-M.save_session = function(opts)
+M.save_session = function()
   -- change path to enable autocomplete for session names
   local original_path = vim.api.nvim_eval("&path")
-  local session_path = vim.fn.expand(opts.path)
   vim.cmd('set path='..session_path)
 
   -- prompt for which session to restore
