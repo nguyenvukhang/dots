@@ -5,6 +5,7 @@ function birthday() {
   declare -A local birthdays=(
     # [$TODAY]="Linux"
     [14-Jan]="Shermaine"
+    [29-Apr]="Shermaine"
     [18-Jan]="Wei Seng"
     [20-Jan]="Dad"
     [01-Feb]="Lan"

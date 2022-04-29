@@ -52,7 +52,11 @@ nnoremap <leader>rb yiw:%s/<C-r>"//g<left><left>
 nnoremap <leader>rl yiw:s/<C-r>"//g<left><left>
 
 " replace visual selection
-vnoremap <C-r> y:%s/<C-r>"//g<left><left>
+vnoremap <C-s> y:%s/<C-r>"//g<left><left>
+
+" reverse visual lines
+vnoremap <C-r> <esc>'<km<'>:'<,.g/^/m '><CR>
+nnoremap <leader><CR> :source ~/.config/nvim/vim/remaps.vim<CR>
 
 " search visual selection
 vnoremap * y/<C-r>"<cr>
