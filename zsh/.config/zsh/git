@@ -162,7 +162,8 @@ function gur() {
 }
 
 function yeet() {
-  [ $TMUX ] && tmux new-window "git push"
+  [ $TMUX ] && tmux neww -c "#{pane_current_path}" \
+    -n "pushing..." -d git push
   echo "You're not in tmux, boo."
 }
 
