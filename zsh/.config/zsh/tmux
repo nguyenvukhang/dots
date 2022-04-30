@@ -18,9 +18,9 @@ function spt() {
 
 # wraps the standard exit script such that there is a base tmux
 # session that acts like terminal
-exit() {
+quit() {
   # if outside of tmux, exit for real
-  [[ -z "$TMUX" ]] && return 0
+  [[ -z "$TMUX" ]] && exit 0
 
   # if inside base session, kill of current pane
   local session_name=$(tmux display -p "#S")
