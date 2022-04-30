@@ -75,3 +75,5 @@ if [ "$START_TMUX" = true ] && command -v tmux &>/dev/null && [ -n "$PS1" ] \
   && [ -z "$TMUX" ]; then
   exec tmux new-session -As base -n stalia
 fi
+
+tmux_session_manager

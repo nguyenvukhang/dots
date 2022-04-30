@@ -4,6 +4,10 @@
 alias tls="tmux ls"
 
 function tkl() {
+  if [[ "$1" == "--all" ]]; then
+    tmux kill-server
+    return 0
+  fi
   if [ $1 ]; then
     tmux kill-session -t "$1"
   else
@@ -18,22 +22,22 @@ function spt() {
 
 # wraps the standard exit script such that there is a base tmux
 # session that acts like terminal
-quit() {
-  # if outside of tmux, exit for real
-  [[ -z "$TMUX" ]] && exit 0
-
-  # if inside base session, kill of current pane
-  local session_name=$(tmux display -p "#S")
-  if [[ $session_name == "base" ]]; then
-    tmux kill-pane
-    return 0
-  fi
-
-  # if inside other tmux sessions, always kill-pane.
-  # if down to last pane and window, then jump back to base
-  local one_left=$(tmux display -p "#{session_windows}#{window_panes}")
-  if [[ $one_left == "11" ]]; then
-    ta base
-  fi
-  tmux kill-pane
-}
+# quit() {
+#   # if outside of tmux, exit for real
+#   [[ -z "$TMUX" ]] && exit 0
+# 
+#   # if inside base session, kill of current pane
+#   local session_name=$(tmux display -p "#S")
+#   if [[ $session_name == "base" ]]; then
+#     tmux kill-pane
+#     return 0
+#   fi
+# 
+#   # if inside other tmux sessions, always kill-pane.
+#   # if down to last pane and window, then jump back to base
+#   local one_left=$(tmux display -p "#{session_windows}#{window_panes}")
+#   if [[ $one_left == "11" ]]; then
+#     ta base
+#   fi
+#   tmux kill-pane
+# }
