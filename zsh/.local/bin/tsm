@@ -1,0 +1,27 @@
+#!/usr/bin/env zsh
+
+# tmux session manager:
+# goal: make sure non-base sessions exit back to base session instead of quitting terminal.
+
+log() {
+  local timestamp=$(date '+%d-%b %R:%S')
+  echo "$timestamp: $@">>~/dots/zsh/.local/bin/tsm.log.txt
+}
+
+# always assume that thas script is ran from outside of tmux
+if [ $TMUX ]; then
+  log "already inside, quitting nested run."
+  exit 0 # silently quit if already in tmux
+fi
+
+
+log "gonna start the loop"
+while; do
+  log "opened"
+  RETURNCODE=$(exec tmux new-session -As base)
+  log "return code: |$RETURNCODE|"
+  [[ "$RETURNCODE" == "[detached (from session base)]" ]] && break
+  [[ $RETURNCODE == "[exited]" ]] && continue
+done
+
+log "exited the loop"
