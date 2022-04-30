@@ -68,6 +68,8 @@ source $ZDOTDIR/one-liners
 source $ZDOTDIR/tmux
 source $ZDOTDIR/pass
 
+# ............................................... tmux session manager
+
 # auto start tmux
 START_TMUX=false
 if [ "$START_TMUX" = true ] && command -v tmux &>/dev/null && [ -n "$PS1" ] \
@@ -76,4 +78,42 @@ if [ "$START_TMUX" = true ] && command -v tmux &>/dev/null && [ -n "$PS1" ] \
   exec tmux new-session -As base -n stalia
 fi
 
-tsm # tmux session manager
+# clear the tsm log
+# tsm # tmux session manager
+
+LOGFILE="$ZDOTDIR/tmux_session_log.txt"
+
+tsm_log() {
+  local timestamp=$(date '+%R:%S')
+  echo "$timestamp: $@">>$LOGFILE
+}
+
+# tmux session manager:
+#
+# end game: use tmux as default terminal, but also have a base session.
+# expected behavior:
+# [base]
+#   exit   -> exit and close terminal window
+#   detach -> detach without exiting and close terminal window
+# [non-base]
+#   exit   -> exit and always reattach to base (if it exists)
+#   detach -> detach without exiting attach back to base
+
+tmux_loop() {
+  ! command -v tmux &> /dev/null && return 0
+  [[ $RUN_TMUX != "true" ]] && return 0
+  [ $TMUX ] && return 0
+
+  tsm_log "entering tmux loop"
+  while; do
+    tsm_log "open tmux"
+    local EXITCODE=$(exec tmux new-session -As base -n stalia)
+    tsm_log "exit tmux:\n$EXITCODE"
+    [[ "$EXITCODE" == "[detached (from session base)]" ]] && exit 0
+    tmux has-session -t base 2> /dev/null && continue
+    exit 0
+  done
+}
+
+RUN_TMUX=true
+tmux_loop

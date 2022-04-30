@@ -4,6 +4,7 @@
 alias ct="printf '\033[2J\033[3J\033[1;1H'" # clear terminal
 alias mon="while; do; clear; lt; sleep 1; done" # monitor directory
 alias monls="while; do; clear; ls; sleep 1; done" # monitor directory
+alias monfile="tail -f" # monitor one file
 alias si="$EDITOR .stow-local-ignore"
 alias t="$EDITOR $REPOS/uni/todo.md"
 alias sr="brew services restart skhd" # skhd restart
@@ -12,7 +13,6 @@ alias zb="time zsh -i -c exit" # zsh benchmark
 alias zr="exec $SHELL -l" # reloads shell
 alias rg="rg --hidden"
 alias fd="fd --hidden"
-
 alias py=python3
 alias oc=octave
 alias vim=nvim

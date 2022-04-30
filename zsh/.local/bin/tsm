@@ -1,11 +1,22 @@
 #!/usr/bin/env zsh
 
 # tmux session manager:
-# goal: make sure non-base sessions exit back to base session instead of quitting terminal.
+#
+# end game: use tmux as default terminal, but also have a base session.
+# expected behavior:
+# [base]
+#   exit   -> exit and close terminal window
+#          or reattach back to new base
+#   detach -> detach without exiting and close terminal window
+# [non-base]
+#   exit   -> exit and reattach to base
+#   detach -> detach without exiting attach to base
+
+LOGFILE="$ZDOTDIR/tmux_session_log.txt"
 
 log() {
-  local timestamp=$(date '+%d-%b %R:%S')
-  echo "$timestamp: $@">>~/dots/zsh/.local/bin/tsm.log.txt
+  local timestamp=$(date '+%R:%S')
+  echo "$timestamp: $@">>$LOGFILE
 }
 
 # always assume that thas script is ran from outside of tmux
@@ -15,12 +26,12 @@ if [ $TMUX ]; then
 fi
 
 
-log "gonna start the loop"
+log "starting the loop"
 while; do
   log "opened"
   RETURNCODE=$(exec tmux new-session -As base)
-  log "return code: |$RETURNCODE|"
-  [[ "$RETURNCODE" == "[detached (from session base)]" ]] && break
+  log "exited: |$RETURNCODE|"
+  [[ "$RETURNCODE" == "[detached (from session base)]" ]] && return 0
   [[ $RETURNCODE == "[exited]" ]] && continue
 done
 

@@ -1,0 +1,811 @@
+
+30-Apr 11:19:00: starting the loop
+30-Apr 11:19:00: opened
+30-Apr 11:19:04: exited: |[exited]|
+30-Apr 11:19:04: opened
+30-Apr 11:19:04: already inside, quitting nested run.
+30-Apr 11:19:15: exited: |[exited]|
+30-Apr 11:19:15: opened
+11:19:15: already inside, quitting nested run.
+30-Apr 11:19:16: exited: |[exited]|
+30-Apr 11:19:16: opened
+11:19:16: already inside, quitting nested run.
+11:19:20: starting the loop
+11:19:20: opened
+11:19:28: exited: |[detached (from session base)]|
+11:19:32: starting the loop
+11:19:32: opened
+11:19:34: exited: |[exited]|
+11:19:34: opened
+11:19:34: already inside, quitting nested run.
+11:19:35: exited: |[exited]|
+11:19:35: opened
+11:19:36: already inside, quitting nested run.
+11:19:36: exited: |[exited]|
+11:19:36: opened
+11:19:36: already inside, quitting nested run.
+11:19:38: exited: |[detached (from session base)]|
+11:19:39: starting the loop
+11:19:39: opened
+11:22:48: exited: |[exited]|
+11:22:48: opened
+11:22:48: already inside, quitting nested run.
+11:22:48: exited: |[exited]|
+11:22:48: opened
+11:22:48: already inside, quitting nested run.
+11:22:48: exited: |[exited]|
+11:22:48: opened
+11:22:48: already inside, quitting nested run.
+11:22:48: exited: |[exited]|
+11:22:48: opened
+11:22:48: already inside, quitting nested run.
+11:22:48: exited: |[exited]|
+11:22:48: opened
+11:22:48: already inside, quitting nested run.
+11:22:48: exited: |[exited]|
+11:22:48: opened
+11:22:48: already inside, quitting nested run.
+11:22:48: exited: |[exited]|
+11:22:48: opened
+11:22:48: already inside, quitting nested run.
+11:22:48: exited: |[exited]|
+11:22:48: opened
+11:22:48: already inside, quitting nested run.
+11:22:48: exited: |[exited]|
+11:22:48: opened
+11:22:48: already inside, quitting nested run.
+11:22:48: exited: |[exited]|
+11:22:48: opened
+11:22:48: already inside, quitting nested run.
+11:22:48: exited: |[exited]|
+11:22:48: opened
+11:22:48: already inside, quitting nested run.
+11:22:48: exited: |[exited]|
+11:22:48: opened
+11:22:48: already inside, quitting nested run.
+11:22:48: exited: |[exited]|
+11:22:48: opened
+11:22:48: already inside, quitting nested run.
+11:22:48: exited: |[exited]|
+11:22:48: opened
+11:22:48: already inside, quitting nested run.
+11:22:48: exited: |[exited]|
+11:22:48: opened
+11:22:48: already inside, quitting nested run.
+11:22:48: exited: |[exited]|
+11:22:48: opened
+11:22:48: already inside, quitting nested run.
+11:22:48: exited: |[exited]|
+11:22:48: opened
+11:22:48: already inside, quitting nested run.
+11:22:48: exited: |[exited]|
+11:22:48: opened
+11:22:48: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:49: exited: |[exited]|
+11:22:49: opened
+11:22:49: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:50: exited: |[exited]|
+11:22:50: opened
+11:22:50: already inside, quitting nested run.
+11:22:52: starting the loop
+11:22:52: opened
+11:22:52: already inside, quitting nested run.
+11:22:52: exited: |[exited]|
+11:22:52: opened
+11:22:52: already inside, quitting nested run.
+11:22:52: exited: |[exited]|
+11:22:52: opened
+11:22:52: already inside, quitting nested run.
+11:22:52: exited: |[exited]|
+11:22:52: opened
+11:22:52: already inside, quitting nested run.
+11:22:52: exited: |[exited]|
+11:22:52: opened
+11:22:52: already inside, quitting nested run.
+11:22:52: exited: |[exited]|
+11:22:52: opened
+11:22:52: already inside, quitting nested run.
+11:22:52: exited: |[exited]|
+11:22:52: opened
+11:22:52: already inside, quitting nested run.
+11:22:52: exited: |[exited]|
+11:22:52: opened
+11:22:52: already inside, quitting nested run.
+11:22:52: exited: |[exited]|
+11:22:52: opened
+11:22:52: already inside, quitting nested run.
+11:22:52: exited: |[exited]|
+11:22:52: opened
+11:22:52: already inside, quitting nested run.
+11:22:52: exited: |[exited]|
+11:22:52: opened
+11:22:52: already inside, quitting nested run.
+11:22:52: exited: |[exited]|
+11:22:52: opened
+11:22:52: already inside, quitting nested run.
+11:22:52: exited: |[exited]|
+11:22:52: opened
+11:22:52: already inside, quitting nested run.
+11:22:52: exited: |[exited]|
+11:22:52: opened
+11:22:52: already inside, quitting nested run.
+11:22:52: exited: |[exited]|
+11:22:52: opened
+11:22:52: already inside, quitting nested run.
+11:22:52: exited: |[exited]|
+11:22:52: opened
+11:22:52: already inside, quitting nested run.
+11:22:52: exited: |[exited]|
+11:22:52: opened
+11:22:52: already inside, quitting nested run.
+11:22:52: exited: |[exited]|
+11:22:52: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:53: already inside, quitting nested run.
+11:22:53: exited: |[exited]|
+11:22:53: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:54: already inside, quitting nested run.
+11:22:54: exited: |[exited]|
+11:22:54: opened
+11:22:55: already inside, quitting nested run.
+11:22:55: exited: |[exited]|
+11:22:55: opened
+11:22:55: already inside, quitting nested run.
+11:22:55: exited: |[exited]|
+11:22:55: opened
+11:22:55: already inside, quitting nested run.
+11:22:55: exited: |[exited]|
+11:22:55: opened
+11:22:55: already inside, quitting nested run.
+11:22:55: exited: |[exited]|
+11:22:55: opened
+11:22:55: already inside, quitting nested run.
+11:22:55: exited: |[exited]|
+11:22:55: opened
+11:22:55: already inside, quitting nested run.
+11:22:55: exited: |[exited]|
+11:22:55: opened
+11:22:55: already inside, quitting nested run.
+11:22:55: exited: |[exited]|
+11:22:55: opened
+11:22:55: already inside, quitting nested run.
+11:22:55: exited: |[exited]|
+11:22:55: opened
+11:22:55: already inside, quitting nested run.
+11:22:55: exited: |[exited]|
+11:22:55: opened
+11:22:55: already inside, quitting nested run.
+11:22:55: exited: |[exited]|
+11:22:55: opened
+11:22:55: already inside, quitting nested run.
+11:22:55: exited: |[exited]|
+11:22:55: opened
+11:22:55: already inside, quitting nested run.
+11:22:55: exited: |[exited]|
+11:22:55: opened
+11:22:55: already inside, quitting nested run.
+11:22:55: exited: |[exited]|
+11:22:55: opened
+11:22:55: already inside, quitting nested run.
+11:22:55: exited: |[exited]|
+11:22:55: opened
+11:22:55: already inside, quitting nested run.
+11:22:55: exited: |[exited]|
+11:22:55: opened
+11:22:55: already inside, quitting nested run.
+11:22:55: exited: |[exited]|
+11:22:55: opened
+11:22:55: already inside, quitting nested run.
+11:22:55: exited: |[exited]|
+11:22:55: opened
+11:22:55: already inside, quitting nested run.
+11:23:21: starting the loop
+11:23:21: opened
+11:23:21: already inside, quitting nested run.
+11:23:23: exited: |[exited]|
+11:23:23: opened
+11:23:23: already inside, quitting nested run.
+11:23:24: exited: |[exited]|
+11:23:24: opened
+11:23:24: already inside, quitting nested run.
+11:23:27: exited: |[exited]|
+11:23:27: opened
+11:23:28: exited: |[exited]|
+11:23:28: opened
+11:23:28: already inside, quitting nested run.
+11:23:29: already inside, quitting nested run.
+11:23:31: exited: |[detached (from session uni)]|
+11:23:31: opened
+11:23:37: exited: |[exited]|
+11:23:37: opened
+11:23:39: exited: |[detached (from session base)]|
+11:23:41: starting the loop
+11:23:41: opened
+11:23:43: exited: |[exited]|
+11:23:43: opened
+11:23:43: already inside, quitting nested run.
+11:23:54: exited: |[exited]|
+11:23:54: opened
+11:23:54: already inside, quitting nested run.
+11:24:07: exited: |[exited]|
+11:24:07: opened
+11:24:09: starting the loop
+11:24:09: opened
+11:24:44: exited: |[exited]|
+11:24:44: opened
+11:24:54: exited: |[exited]|
+11:24:54: opened
+11:26:02: entering tmux loop
+11:26:02: open tmux
+11:26:04: exit tmux: |[detached (from session base)]|
+11:26:09: entering tmux loop
+11:26:09: open tmux
+11:27:20: entering tmux loop
+11:27:20: open tmux
+11:27:22: exit tmux: |[detached (from session base)]|
+11:27:24: entering tmux loop
+11:27:24: open tmux
+11:30:38: entering tmux loop
+11:30:38: open tmux
+11:30:39: exit tmux: |[exited]|
+11:30:39: open tmux
+11:31:02: exit tmux: |[exited]|
+11:31:02: open tmux
+11:31:06: entering tmux loop
+11:31:06: open tmux
+11:31:10: exit tmux: |[exited]|
+11:31:10: open tmux
+11:31:33: exit tmux: |[exited]|
+11:31:33: open tmux
+11:31:35: entering tmux loop
+11:31:35: open tmux
+11:31:41: exit tmux: |[exited]|
+11:31:51: entering tmux loop
+11:31:51: open tmux
+11:31:52: exit tmux: |[exited]|
+11:31:55: entering tmux loop
+11:31:55: open tmux
+11:33:08: entering tmux loop
+11:33:08: open tmux
+11:34:17: entering tmux loop
+11:34:17: open tmux
+11:34:24: exit tmux: |[exited]|
+11:34:24: open tmux
+11:34:38: exit tmux: |[exited]|
+11:34:38: open tmux
+11:34:43: entering tmux loop
+11:34:43: open tmux
+11:35:18: exit tmux: |[exited]|
+11:35:18: open tmux
+11:36:34: entering tmux loop
+11:36:34: open tmux
+11:36:36: exit tmux: |[detached (from session base)]|
+11:36:40: entering tmux loop
+11:36:40: open tmux
+11:36:44: exit tmux: |[exited]|
+11:36:44: exit tmux: |[exited]|
+11:36:44: open tmux
+11:36:44: open tmux
+11:36:46: exit tmux: |[detached (from session base)]|
+11:37:36: exit tmux: |[exited]|
+11:37:36: open tmux
+11:37:49: entering tmux loop
+11:37:49: open tmux
+11:37:52: exit tmux: |[exited]|
+11:37:52: open tmux
+11:37:54: exit tmux: |[exited]|
+11:37:54: open tmux
+11:37:55: exit tmux: |[exited]|
+11:37:55: open tmux
+11:38:03: exit tmux: |[exited]|
+11:38:03: open tmux
+11:38:14: entering tmux loop
+11:38:14: open tmux
+11:38:15: exit tmux: |[exited]|
+11:38:55: entering tmux loop
+11:38:55: open tmux
+11:38:56: exit tmux: |[exited]|
+11:39:09: entering tmux loop
+11:39:09: open tmux
+11:39:10: exit tmux: |[exited]|
+11:39:23: entering tmux loop
+11:39:23: open tmux
+11:39:24: exit tmux: |[exited]|
+11:39:38: entering tmux loop
+11:39:38: open tmux
+11:39:39: exit tmux: |[exited]|
+11:39:55: entering tmux loop
+11:39:55: open tmux
+11:39:56: exit tmux: |[exited]|
+11:39:56: got here
+11:40:10: entering tmux loop
+11:40:10: open tmux
+11:40:11: exit tmux: |[exited]|
+11:40:11: got here
+11:40:24: entering tmux loop
+11:40:24: open tmux
+11:40:24: exit tmux: |[exited]|
+11:40:24: got here
+11:40:27: entering tmux loop
+11:40:27: open tmux
+11:40:29: exit tmux: |[exited]|
+11:40:29: got here
+11:41:24: entering tmux loop
+11:41:24: open tmux
+11:41:25: exit tmux: |[exited]|
+11:41:25: got here
+11:41:25: servers: uni: 1 windows (created Sat Apr 30 11:34:21 2022)
+11:41:25: has base: tmux: option requires an argument -- t
+usage: has-session [-t target-session]
+11:41:25: open tmux
+11:41:29: exit tmux: |[exited]|
+11:41:29: got here
+11:41:29: servers: uni: 1 windows (created Sat Apr 30 11:34:21 2022)
+11:41:29: has base: tmux: option requires an argument -- t
+usage: has-session [-t target-session]
+11:41:29: open tmux
+11:41:30: exit tmux: |[exited]|
+11:41:30: got here
+11:41:30: servers: uni: 1 windows (created Sat Apr 30 11:34:21 2022)
+11:41:30: has base: tmux: option requires an argument -- t
+usage: has-session [-t target-session]
+11:41:30: open tmux
+11:41:41: entering tmux loop
+11:41:41: open tmux
+11:41:42: exit tmux: |[exited]|
+11:41:42: got here
+11:41:42: servers: uni: 1 windows (created Sat Apr 30 11:34:21 2022)
+11:41:42: has base: tmux: option requires an argument -- t
+usage: has-session [-t target-session]
+11:41:52: entering tmux loop
+11:41:52: open tmux
+11:41:53: exit tmux: |[exited]|
+11:41:53: got here
+11:41:53: servers: uni: 1 windows (created Sat Apr 30 11:34:21 2022)
+11:41:53: has base: can't find session: base
+11:41:58: entering tmux loop
+11:41:58: open tmux
+11:41:59: exit tmux: |[exited]|
+11:41:59: got here
+11:41:59: servers: uni: 1 windows (created Sat Apr 30 11:34:21 2022)
+11:41:59: has base: 
+11:42:13: entering tmux loop
+11:42:13: open tmux
+11:42:13: exit tmux: |[exited]|
+11:42:13: got here
+11:42:14: servers: uni: 1 windows (created Sat Apr 30 11:34:21 2022)
+11:42:14: has base: 1
+11:42:19: entering tmux loop
+11:42:19: open tmux
+11:42:26: exit tmux: |[exited]|
+11:42:26: got here
+11:42:26: servers: 
+11:42:26: has base: 1
+11:42:39: entering tmux loop
+11:42:39: open tmux
+11:42:41: exit tmux: |[exited]|
+11:42:41: got here
+11:42:41: servers: base: 1 windows (created Sat Apr 30 11:42:39 2022)
+11:42:41: has base: 0
+11:49:07: entering tmux loop
+11:49:07: open tmux
+11:49:09: exit tmux: |[exited]|
+11:49:09: got here
+11:49:09: servers: 
+11:49:09: has base: 1
+11:50:50: entering tmux loop
+11:50:50: open tmux
+11:50:53: exit tmux: |[exited]|
+11:50:53: got here
+11:50:53: has base: 0
+11:50:53: open tmux
+11:50:59: exit tmux: |[exited]|
+11:50:59: got here
+11:50:59: has base: 1
+11:51:01: entering tmux loop
+11:51:01: open tmux
+11:51:04: exit tmux: |[exited]|
+11:51:04: got here
+11:51:04: has base: 1
+11:51:20: entering tmux loop
+11:51:20: open tmux
+11:51:21: exit tmux: |[detached (from session base)]|
+11:51:25: entering tmux loop
+11:51:25: open tmux
+11:51:31: exit tmux: |[exited]|
+11:51:31: got here
+11:51:31: has base: 1
+11:51:33: entering tmux loop
+11:51:33: open tmux
+11:51:46: exit tmux: |[exited]|
+11:51:46: got here
+11:51:46: has base: 1
+11:51:49: entering tmux loop
+11:51:49: open tmux
+11:51:50: exit tmux: |[exited]|
+11:51:50: got here
+11:51:50: has base: 1
+11:51:52: entering tmux loop
+11:51:52: open tmux
+11:51:53: exit tmux: |[exited]|
+11:51:53: got here
+11:51:53: has base: 1
+11:53:31: entering tmux loop
+11:53:31: open tmux
+11:53:33: exit tmux: |[exited]|
+11:53:44: entering tmux loop
+11:53:44: open tmux
+11:53:46: exit tmux: [exited]
+11:53:59: entering tmux loop
+11:53:59: open tmux
+11:54:00: exit tmux:
+[exited]
+11:54:09: entering tmux loop
+11:54:09: open tmux
+11:54:10: exit tmux:
+    [exited]
+11:54:14: entering tmux loop
+11:54:15: open tmux
+11:54:15: exit tmux:
+         [exited]
+11:54:20: entering tmux loop
+11:54:20: open tmux
+11:54:20: exit tmux:
+          [exited]
+11:54:32: entering tmux loop
+11:54:32: open tmux
+11:54:40: exit tmux:
+[exited]
+11:54:42: entering tmux loop
+11:54:42: open tmux
+11:54:45: exit tmux:
+[exited]
+11:54:45: open tmux
+11:54:49: exit tmux:
+[exited]
+11:54:49: open tmux
+11:54:50: exit tmux:
+[exited]
+11:55:10: entering tmux loop
+11:55:10: open tmux
+11:55:11: exit tmux:
+[exited]
+11:55:12: entering tmux loop
+11:55:12: open tmux
+11:55:13: exit tmux:
+[detached (from session base)]
+11:55:14: entering tmux loop
+11:55:14: open tmux
+11:55:15: exit tmux:
+[detached (from session base)]
+11:55:16: entering tmux loop
+11:55:16: open tmux
+11:55:20: exit tmux:
+[exited]
+11:55:20: open tmux
+11:55:21: exit tmux:
+[exited]
+11:55:27: entering tmux loop
+11:55:27: open tmux
+11:55:28: exit tmux:
+[detached (from session uni)]
+11:55:28: open tmux
+11:55:35: exit tmux:
+[detached (from session uni)]
+11:55:35: open tmux
+11:55:39: exit tmux:
+[detached (from session uni)]
+11:55:39: open tmux
+11:55:39: exit tmux:
+[detached (from session base)]
+11:55:41: entering tmux loop
+11:55:41: open tmux
+11:55:50: exit tmux:
+[exited]
+11:55:50: open tmux
+11:58:37: exit tmux:
+[exited]
+12:01:01: entering tmux loop
+12:01:01: open tmux
+12:01:03: exit tmux:
+[exited]
+12:03:31: entering tmux loop
+12:03:31: open tmux
+12:03:32: exit tmux:
+[exited]
+12:03:34: entering tmux loop
+12:03:34: open tmux
+12:03:35: exit tmux:
+[detached (from session base)]
+12:04:10: entering tmux loop
+12:04:10: open tmux
+12:04:11: exit tmux:
+[exited]
+12:04:13: entering tmux loop
+12:04:13: open tmux
+12:04:15: exit tmux:
+[exited]
+12:04:15: open tmux
+12:04:16: exit tmux:
+[exited]
