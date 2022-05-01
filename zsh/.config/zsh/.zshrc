@@ -89,15 +89,26 @@ tsm_log() {
 }
 
 # tmux session manager:
-#
-# end game: use tmux as default terminal, but also have a base session.
-# expected behavior:
-# [base]
-#   exit   -> exit and close terminal window
-#   detach -> detach without exiting and close terminal window
-# [non-base]
-#   exit   -> exit and always reattach to base (if it exists)
-#   detach -> detach without exiting attach back to base
+# use tmux [base] session in the place of a terminal
+# ──────────────────────────────────────────────────────────
+# Default terminal behavior:
+#   exit shell  -> close GUI window
+#   exit tmux   -> go back to shell
+#   detach tmux -> go back to shell, keep tmux
+# ──────────────────────────────────────────────────────────
+# tmux [base] as terminal:
+#   exit [base]       -> close GUI window
+#   exit [non-base]   -> go back to [base]
+#   detach [non-base] -> go back to [base], keep [non-base]
+#   *** added feature ***
+#   detach [base]     -> close GUI window, keep [base]
+# ──────────────────────────────────────────────────────────
+# TODO: implement exit [non-base] -> go back to [base]
+# current behavior: exit [non-base] -> go back to [base],
+#                   but only if [base] is still running
+# exiting the last remaining session in tmux enters a state
+# that is not differentiable. You can't tell what was the
+# previously exited session name (not from tmux exit codes)
 
 tmux_loop() {
   ! command -v tmux &> /dev/null && return 0

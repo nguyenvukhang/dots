@@ -56,6 +56,7 @@ nnoremap("<C-j>", ":cnext<cr>")
 nnoremap("<C-k>", ":cprev<cr>")
 
 -- color columns
+nnoremap("<leader>6", ":set colorcolumn=61<cr>")
 nnoremap("<leader>7", ":set colorcolumn=71<cr>")
 nnoremap("<leader>8", ":set colorcolumn=81<cr>")
 

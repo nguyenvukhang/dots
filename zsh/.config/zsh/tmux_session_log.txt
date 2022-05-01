@@ -809,3 +809,150 @@ usage: has-session [-t target-session]
 12:04:15: open tmux
 12:04:16: exit tmux:
 [exited]
+12:04:38: entering tmux loop
+12:04:38: open tmux
+12:04:41: exit tmux:
+[exited]
+13:17:12: entering tmux loop
+13:17:12: open tmux
+13:39:44: exit tmux:
+[detached (from session mc)]
+13:39:44: open tmux
+13:39:45: exit tmux:
+[exited]
+14:57:12: entering tmux loop
+14:57:12: open tmux
+14:57:13: exit tmux:
+[exited]
+14:57:15: entering tmux loop
+14:57:15: open tmux
+14:58:27: exit tmux:
+[exited]
+14:58:27: open tmux
+14:58:28: exit tmux:
+[exited]
+14:58:31: entering tmux loop
+14:58:31: open tmux
+16:45:34: entering tmux loop
+16:45:34: open tmux
+16:45:37: exit tmux:
+[exited]
+16:59:17: entering tmux loop
+16:59:17: open tmux
+16:59:29: exit tmux:
+[exited]
+16:59:29: open tmux
+16:59:31: exit tmux:
+[exited]
+17:03:37: entering tmux loop
+17:03:37: open tmux
+22:26:17: exit tmux:
+[exited]
+22:26:19: entering tmux loop
+22:26:19: open tmux
+22:47:29: exit tmux:
+[detached (from session sun)]
+22:47:29: open tmux
+22:47:35: entering tmux loop
+22:47:35: open tmux
+22:47:47: entering tmux loop
+22:47:47: open tmux
+01:00:38: exit tmux:
+[exited]
+01:00:38: open tmux
+01:00:39: exit tmux:
+[exited]
+01:00:44: exit tmux:
+[exited]
+01:00:46: entering tmux loop
+01:00:46: open tmux
+01:00:47: exit tmux:
+[exited]
+09:13:13: entering tmux loop
+09:13:13: open tmux
+09:41:57: exit tmux:
+[detached (from session server)]
+09:41:57: open tmux
+09:42:09: entering tmux loop
+09:42:09: open tmux
+10:55:09: exit tmux:
+[detached (from session mc)]
+10:55:09: open tmux
+10:56:29: exit tmux:
+[detached (from session mc)]
+10:56:29: open tmux
+10:56:36: entering tmux loop
+10:56:36: open tmux
+10:58:57: exit tmux:
+[detached (from session editor)]
+10:58:57: open tmux
+10:58:58: exit tmux:
+[detached (from session base)]
+10:59:10: exit tmux:
+[detached (from session editor)]
+10:59:10: open tmux
+10:59:11: exit tmux:
+[detached (from session base)]
+10:59:14: entering tmux loop
+10:59:14: open tmux
+10:59:15: exit tmux:
+[detached (from session base)]
+10:59:24: exit tmux:
+[exited]
+10:59:24: open tmux
+10:59:29: exit tmux:
+[exited]
+12:21:05: entering tmux loop
+12:21:05: open tmux
+12:22:35: exit tmux:
+[exited]
+12:22:35: open tmux
+12:22:37: exit tmux:
+[detached (from session base)]
+12:22:39: entering tmux loop
+12:22:39: open tmux
+12:38:52: exit tmux:
+[server exited]
+12:39:20: entering tmux loop
+12:39:20: open tmux
+12:39:40: exit tmux:
+[exited]
+12:39:51: entering tmux loop
+12:39:51: open tmux
+12:39:59: exit tmux:
+[detached (from session base)]
+12:40:01: entering tmux loop
+12:40:01: open tmux
+12:40:04: exit tmux:
+[detached (from session base)]
+12:40:05: entering tmux loop
+12:40:05: open tmux
+12:40:12: exit tmux:
+[exited]
+12:40:12: open tmux
+12:41:08: exit tmux:
+[detached (from session 1)]
+12:41:08: open tmux
+12:41:38: exit tmux:
+[exited]
+12:41:38: open tmux
+12:42:07: exit tmux:
+[exited]
+12:42:14: entering tmux loop
+12:42:14: open tmux
+12:42:29: exit tmux:
+[exited]
+12:42:29: open tmux
+12:42:36: exit tmux:
+[exited]
+12:42:48: entering tmux loop
+12:42:48: open tmux
+14:31:35: exit tmux:
+[exited]
+14:31:39: entering tmux loop
+14:31:39: open tmux
+14:31:49: exit tmux:
+[detached (from session server)]
+14:31:49: open tmux
+14:32:08: entering tmux loop
+14:32:08: open tmux
