@@ -16,10 +16,17 @@
 # 	logallrefupdates = true
 # [remote "origin"]
 # 	url = git@github.com:sunnustech/app.git
-#   fetch = +refs/heads/*:refs/remotes/origin/*
+#   fetch = +refs/heads/*:refs/remotes/origin/* 
 # [branch "feature/scoreboard"]
 # 	remote = origin
 # 	merge = refs/heads/feature/scoreboard
+#  THIS IS THE IMPORTANT LINE
+#   fetch = +refs/heads/*:refs/remotes/origin/* 
+#   fetch = +refs/heads/*:refs/remotes/origin/* 
+#   fetch = +refs/heads/*:refs/remotes/origin/* 
+#   fetch = +refs/heads/*:refs/remotes/origin/* 
+#   fetch = +refs/heads/*:refs/remotes/origin/* 
+#   fetch = +refs/heads/*:refs/remotes/origin/* 
 # ---------------------------------------------
 
 GIT=(git number)
