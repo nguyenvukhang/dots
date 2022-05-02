@@ -1008,3 +1008,24 @@ usage: has-session [-t target-session]
 [exited]
 08:38:37: entering tmux loop
 08:38:37: open tmux
+08:58:02: exit tmux:
+[exited]
+08:58:05: entering tmux loop
+08:58:05: open tmux
+12:51:45: exit tmux:
+[exited]
+12:51:45: open tmux
+12:51:46: exit tmux:
+[exited]
+14:19:42: entering tmux loop
+14:19:42: open tmux
+14:19:58: exit tmux:
+[detached (from session mc)]
+14:19:58: open tmux
+14:19:59: exit tmux:
+[exited]
+15:54:10: entering tmux loop
+15:54:10: open tmux
+16:18:54: exit tmux:
+[exited]
+16:18:54: open tmux
