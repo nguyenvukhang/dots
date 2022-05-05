@@ -168,8 +168,9 @@ function gur() {
 
 function yeet() {
   if [ $TMUX ]; then
-    tmux neww -c "#{pane_current_path}" \
-    -n "pushing..." -d "git push; wait \"$!\"; notify pushed"
+    local task=$(exec tmux neww -c "#{pane_current_path}" \
+    -n "pushing..." -d git push)
+    notify pushed
   else
     echo "You're not in tmux, boo."
   fi
