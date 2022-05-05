@@ -29,36 +29,34 @@
 #   fetch = +refs/heads/*:refs/remotes/origin/* 
 # ---------------------------------------------
 
-GIT=(git number)
-
-gn() {
-  $EDITOR $(git rev-parse --git-dir)/gitnu.json
-}
-gs()   { $GIT $@ } # git status
-ga()   { $GIT add $@ }
-gaa()  { git add --all $@ }
-gcf()  { git config --edit $@ }
-gd()   { $GIT diff $@ }
-gds()  { $GIT diff --staged $@ }
-giti() { $EDITOR .gitignore $@ }
-gr()   { $GIT reset $@ }
-grh()  { $GIT reset --hard $@ }
-gitm() { $EDITOR .gitmodules $@ }
-gcan() { git commit --amend --no-edit $@ }
-gf()   { git fetch $@ }
-gap()  { $GIT add -p $@ }
-gms()  { git merge --squash $@ } # squash diff into one commit
-gm()   { git merge $@ } # squash diff into one commit
-gmn()   { git merge --no-ff $@ } # squash diff into one commit
-gu()   { git fetch && git status $@ } # git update
-gc()   { git commit $@ }
-gce()  { git commit --allow-empty -m $@ }
+gn() { $EDITOR $(git rev-parse --git-dir)/gitnu.json }
+alias gs="git number" # git status
+alias ga="git number add"
+alias gaa="git add --all"
+alias gcf="git config --edit"
+alias gd="git number diff"
+alias gds="git number diff --staged"
+alias giti="$EDITOR .gitignore"
+alias gr="git number reset"
+alias grh="git number reset --hard"
+alias gitm="$EDITOR .gitmodules"
+alias gcan="git commit --amend --no-edit"
+alias gf="git fetch"
+alias gap="git number add -p"
+alias gms="git merge --squash" # squash diff into one commit
+alias gm="git merge" # squash diff into one commit
+alias gmn="git merge --no-ff" # squash diff into one commit
+alias gu="git fetch && git status" # git update
+alias gc="git commit"
+alias gce="git commit --allow-empty -m"
+alias gcn="git clean -fxd --exclude=\"node_modules\""
+alias gp="git number -c nvim"
 
 function gco() {
   local OUTPUT TARGET MATCH CWD TARGET_ROOT TARGET_DIR
 
   # this will already execute the original command
-  OUTPUT=$($GIT checkout $@ 2>&1)
+  OUTPUT=$(git number checkout $@ 2>&1)
 
   # this function seeks to handle error messages
   TARGET="$1"

@@ -1,11 +1,13 @@
 #!/usr/bin/env zsh
 
 typeset -A local nav=(
-  [a]="$HOME/sunnus/app/dev"
+  # [t]="$HOME/.config/nvim/plugged/telescope.nvim/lua/telescope"
+  [A]="/Applications"
+  [a]="$HOME/sunnus/turbo/apps/frontend/src"
   [b]="$REPOS/blog/dev"
   [bo]="$REPOS/books"
+  [c]="$HOME/sunnus/turbo/apps/backend/functions"
   [cf]="$HOME/.config"
-  [c]="$HOME/sunnus/cloud/functions/src"
   [d]="$DOTS"
   [f]="$HOME/files"
   [g]="$REPOS/gitnu/src/gitnu"
@@ -23,13 +25,11 @@ typeset -A local nav=(
   [pw]="$DOTS/personal/.password-store"
   [q.]="$HOME/.local/src/qmk_firmware"
   [q]="$DOTS/qmk"
-  [s]="$HOME/sunnus"
-  # [t]="$HOME/.config/nvim/plugged/telescope.nvim/lua/telescope"
-  [t]="$HOME/sunnus/cloud/functions/src/tests/src"
+  [s]="$HOME/sunnus/turbo"
+  [t]="$HOME/sunnus/turbo/apps/tests/src"
   [v]="$DOTS/nvim/.config/nvim"
   [vl]="$DOTS/nvim/.config/nvim/lua/brew"
   [z]="$DOTS/zsh/.config/zsh"
-  [A]="/Applications"
 )
 
 for k dir in ${(kv)nav}; do

@@ -77,10 +77,10 @@ nnoremap("<leader>rb", 'yiw:%s/<C-r>"//g<left><left>', true)
 nnoremap("<leader>rl", 'yiw:s/<C-r>"//g<left><left>', true)
 
 -- replace visual selection
-vnoremap("<C-s>", 'y:%s/<C-r>"//g<left><left>', true)
+vnoremap("<C-r>", 'y:%s/<C-r>"//g<left><left>', true)
 
--- reverse visual lines
-vnoremap("<C-r>", "<esc>'<km<'>:'<,.g/^/m '><CR>")
+-- reverse (flip) visual lines
+vnoremap("<C-f>", "<esc>'<km<'>:'<,.g/^/m '><CR>")
 
 -- search visual selection
 vnoremap("*", 'y/<C-r>"<cr>', true)

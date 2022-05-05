@@ -7,7 +7,7 @@ SESSION_NAME="${1-uni}" # default value: "base"
 typeset -A START_DIRLIST=(
   [base]="$HOME"
   [uni]="$HOME/repos/uni"
-  [sun]="$HOME/sunnus/app/dev"
+  [sun]="$HOME/sunnus/turbo"
 )
 
 # results in c containing either $HOME or start dir

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+text="$1 is done executing"
+
+osascript -e "display notification \"${2-$text}\" with title \"$1\""

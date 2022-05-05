@@ -20,6 +20,7 @@ alias vim=nvim
 alias pi="pip install"
 
 alias yb="yarn build"
+alias yl="yarn lint"
 alias yd="yarn dev"
 
 # keybinds
