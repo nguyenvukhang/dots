@@ -5,3 +5,4 @@ node_modules
 .zsh_history
 .history
 plugged
+tmux_session_log.txt
