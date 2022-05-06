@@ -9,7 +9,9 @@ function g() {
   local check=$(command ls -Ap)
   [[ ! $check = *"/"* ]] && return true
 
-  local target=$(fd --hidden -d $depth -t d | fzf $FZF_OPTS \
+  local target=$(fd --strip-cwd-prefix --hidden \
+    -d $depth -t d --exclude ".git" \
+    | fzf $FZF_OPTS \
     --header=${PWD/#$HOME/'~'} \
     --expect "enter,esc,left,right" )
   target=${target#/*}
