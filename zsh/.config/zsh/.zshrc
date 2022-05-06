@@ -15,7 +15,7 @@
 # for installed software
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-export N_PREFIX=$HOME/.local/bin/n
+export N_PREFIX=$HOME/.local/n
 export PYENV_ROOT=$HOME/.local/src/pyenv
 export TERM="screen-256color"
 
@@ -45,6 +45,7 @@ HISTFILE=$ZDOTDIR/.history
 
 GOPATH=$HOME/go/bin
 PATH=$HOME/.jenv/bin:$PATH
+PATH=$N_PREFIX/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
 PATH=$HOME/.local/bin/git:$PATH
 PATH=$HOME/.yarn/bin:$PATH
