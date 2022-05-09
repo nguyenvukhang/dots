@@ -24,6 +24,21 @@ function lt() {
     $depth
 }
 
+# directory tree
+function dt() {
+  # usage: lt <depth> <directory>
+  # <depth> is optional, defaults to 2.
+  # <directory> is optional, defaults to $PWD.
+  local depth=()
+  [ -d $1 ] && [ -z $2 ] \
+    && depth=(--level=2 -- $1) \
+    || depth=(--level=${1-2} -- ${2-.})
+
+  exa -a --tree --only-dirs \
+    --ignore-glob="node_modules|.git" \
+    $depth
+}
+
 # directory-only tree
 function ld() {
   # usage: lt <depth> <directory>
