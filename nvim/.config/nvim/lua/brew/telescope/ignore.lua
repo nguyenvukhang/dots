@@ -4,7 +4,7 @@ local ignore = {
   "autoload/plug.vim",
   "yarn.lock",
   "error.log",
-  "%.git",
+  "%.git/%",
   "%.gpg",
   "%.DS_Store",
   "%.pdf",
