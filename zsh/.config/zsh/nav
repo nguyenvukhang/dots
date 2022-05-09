@@ -3,7 +3,7 @@
 typeset -A local nav=(
   # [t]="$HOME/.config/nvim/plugged/telescope.nvim/lua/telescope"
   [A]="/Applications"
-  [a]="$HOME/sunnus/app"
+  [a]="$HOME/sunnus/app/src"
   [b]="$REPOS/blog/dev"
   [bo]="$REPOS/books"
   [c]="$HOME/sunnus/cloud/functions/src"
@@ -16,7 +16,7 @@ typeset -A local nav=(
   [lb]="$HOME/.local/bin"
   [ls]="$HOME/.local/src"
   [m.]="/Applications/MultiMC.app/Data"
-  [m]="$REPOS/minnesoda/min"
+  [m]="$REPOS/modtree"
   [mc]="$HOME/.local/minecraft/server"
   [n]="$REPOS/notes"
   [o]="$HOME/other-repos"

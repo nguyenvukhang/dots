@@ -14,9 +14,14 @@ function lt() {
   # usage: lt <depth> <directory>
   # <depth> is optional, defaults to 2.
   # <directory> is optional, defaults to $PWD.
+  local depth=()
   [ -d $1 ] && [ -z $2 ] \
-    && exa -a --tree --level=2 -- $1 \
-    || exa -a --tree --level=${1-2} -- ${2-.}
+    && depth=(--level=2 -- $1) \
+    || depth=(--level=${1-2} -- ${2-.})
+
+  exa -a --tree \
+    --ignore-glob="node_modules|.git" \
+    $depth
 }
 
 # directory-only tree
