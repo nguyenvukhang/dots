@@ -19,6 +19,7 @@ alias py=python3
 alias oc=octave
 alias vim=nvim
 alias pi="pip install"
+alias qr="node ~/sunnus/qr-test/lib/index.js"
 
 alias yb="yarn build"
 alias yl="yarn lint"

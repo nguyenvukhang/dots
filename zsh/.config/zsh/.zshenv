@@ -6,3 +6,6 @@
 export XDG_CONFIG_HOME=$HOME/.config
 export ZDOTDIR=$XDG_CONFIG_HOME/zsh
 . "$HOME/.cargo/env"
+
+export DOTS=$HOME/dots
+export REPOS=$HOME/repos
