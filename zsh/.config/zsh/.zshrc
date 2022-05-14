@@ -18,6 +18,7 @@ export LC_ALL=en_US.UTF-8
 export N_PREFIX=$HOME/.local/n
 export PYENV_ROOT=$HOME/.local/src/pyenv
 export TERM="screen-256color"
+export ANDROID_SDK=$HOME/Library/Android/sdk
 
 FZF_OPTS=(--height=7 +m --no-mouse --reverse \
   --no-info --prompt="  " --color='pointer:green,header:white')
@@ -51,7 +52,7 @@ PATH=$HOME/.local/bin/git:$PATH
 PATH=$HOME/.yarn/bin:$PATH
 PATH=$HOME/.local/src/lua-language-server/bin:$PATH
 # android build tools
-PATH=$HOME/Library/Android/sdk/build-tools/32.0.0:$PATH
+PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
 PATH=$HOME/.cargo/bin:$PATH
 PATH=$GOPATH:$PATH
 export PATH
