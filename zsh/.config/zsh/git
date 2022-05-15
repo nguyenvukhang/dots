@@ -156,11 +156,15 @@ function gca() {
 
 # the laziest git function ever
 function gq() {
+  # read user input (requires enter)
+  read -r "COMMIT_MSG?Commit message > "
+  [ -z "$COMMIT_MSG" ] && echo "Empty commit message. Aborting."
   git add .
   [ "$1" = "-w" ] \
     && git commit --amend --no-edit \
     || git commit -m 'up'
   git push
+  echo $COMMIT_MSG
 }
 
 function gb() {
