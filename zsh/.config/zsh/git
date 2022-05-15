@@ -144,8 +144,10 @@ function gsl() {
 
 # git commit
 function gcm() {
-  [ $1 ] && git commit -m $1 && return true
-  git commit
+  local message="$@"
+  [ $1 ] && git commit -m "$message" && return true
+  echo "$@"
+  # git commit
 }
 
 # git commit --amend
