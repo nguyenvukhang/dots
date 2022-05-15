@@ -104,7 +104,6 @@ function gcl() {
     && git clone $1 && return
   [ ${1%%:*} = "git@github.com" ] \
     && git clone $1 && return
-  git clone git@github.com:$1.git
 }
 
 # git clone --bare
@@ -113,7 +112,6 @@ function gcb() {
     && git clone --bare $1 && return
   [ ${1%%:*} = "git@github.com" ] \
     && git clone --bare $1 && return
-  git clone --bare git@github.com:$1.git
 }
 
 function glt() { git log --since="24 hours ago" --oneline --graph --all } # git log (today)
