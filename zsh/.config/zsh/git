@@ -119,19 +119,29 @@ function gcb() {
 function glt() { git log --since="24 hours ago" --oneline --graph --all } # git log (today)
 
 # git logs
-function custom_git_log() {
+function git_log_pretty() {
   local pretty="%C(yellow)%h%C(auto)%d %Creset%s %C(dim)(%ar)"
-  git log $@ --graph --pretty=format:$pretty
+  git log $@ --pretty=format:$pretty
 }
-function gl()  { custom_git_log -n ${1-12} }
-function gla() { custom_git_log -n ${1-12} --all }
-function gll() { custom_git_log --all }
-function glf() { custom_git_log --follow }
+function git_log_message_only () {
+  local pretty="%C(yellow)%h %Creset%s"
+  git log $@ --pretty=format:$pretty
+}
+
+function gl()  { git_log_pretty --graph -n ${1-12} }
+function gla() { git_log_pretty --graph -n ${1-12} --all }
+function gll() { git_log_pretty --graph --all }
+function glf() { git_log_pretty --graph --follow }
 
 # git search log
 function gsl() {
-  custom_git_log --all \
-    | fzf $FZF_OPTS --multi 6 --bind 'enter:select-all+accept'
+  local get_commit_ids=$( git_log_message_only --color=always --all \
+    | fzf $FZF_OPTS --ansi --multi 6 --bind 'enter:select-all+accept' )
+
+  local commit_ids=()
+  while IFS= read -r line; do
+    git_log_message_only -1 "${line%% *}" 
+  done < <( echo $get_commit_ids )
 }
 
 # git commit
