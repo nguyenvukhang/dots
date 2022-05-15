@@ -146,14 +146,13 @@ function gsl() {
 function gcm() {
   local message="$@"
   [ $1 ] && git commit -m "$message" && return true
-  echo "$@"
-  # git commit
+  git commit
 }
 
 # git commit --amend
 function gca() {
-  [ $1 ] && git commit --amend -m $1 && return true
-  git commit --amend
+  [ $1 ] && git commit -m "$message" && return true
+  git commit
 }
 
 # the laziest git function ever
