@@ -156,11 +156,24 @@ function gca() {
 
 # the laziest git function ever
 function gq() {
+  _N='\033[0m'    # Normal
+  _G='\033[0;32m' # Green
+  _Y='\033[0;33m' # Yellow
+  _B='\033[0;34m' # Blue
+  _S='\033[0;37m' # Soft
+  # read user input (requires enter)
+  printf "${_S}Staging files:${_N}\n"
+  git status -s .
+  printf "${_S}Commit message > ${_N}"
+  read -r "COMMIT_MSG?"
+  # return on empty commit message
+  [ -z "$COMMIT_MSG" ] \
+    && echo "Empty commit message. Aborting." \
+    && return
+  # make the commit
+  echo "SHOULD NOT BE HERE"
   git add .
-  [ "$1" = "-w" ] \
-    && git commit --amend --no-edit \
-    || git commit -m 'up'
-  git push
+  git commit --message="$COMMIT_MSG"
 }
 
 function gb() {
