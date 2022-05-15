@@ -6,3 +6,4 @@ node_modules
 .history
 plugged
 tmux_session_log.txt
+.ccls-cache
