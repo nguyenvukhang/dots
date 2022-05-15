@@ -125,6 +125,7 @@ function custom_git_log() {
 }
 function gl()  { custom_git_log -n ${1-12} }
 function gla() { custom_git_log -n ${1-12} --all }
+function gll() { custom_git_log --all }
 function glf() { custom_git_log --follow }
 
 # git search log
