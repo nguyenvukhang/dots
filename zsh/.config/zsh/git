@@ -135,24 +135,33 @@ function glf() { git_log_pretty --graph --follow }
 function gsl() {
   local get_commit_ids=$( git_log_message_only --color=always --all \
     | fzf $FZF_OPTS --ansi --multi 6 --bind 'enter:select-all+accept' )
-
   local commit_ids=()
   while IFS= read -r line; do
     git_log_message_only -1 "${line%% *}" 
   done < <( echo $get_commit_ids )
 }
 
+# git search log (with filenames)
+function gslf() {
+  TMP_GIT_LOG_FILE=/tmp/search-git-log.txt
+  cleanup() {
+    rm $TMP_GIT_LOG_FILE
+  }
+  trap cleanup EXIT
+  git_log_message_only --compact-summary --all > $TMP_GIT_LOG_FILE
+  $EDITOR $TMP_GIT_LOG_FILE
+}
+
 # git commit
 function gcm() {
-  local message="$@"
-  [ $1 ] && git commit -m "$message" && return true
+  [ $1 ] && git commit -m $1 && return true
   git commit
 }
 
 # git commit --amend
 function gca() {
-  [ $1 ] && git commit -m "$message" && return true
-  git commit
+  [ $1 ] && git commit --amend -m $1 && return true
+  git commit --amend
 }
 
 # the laziest git function ever

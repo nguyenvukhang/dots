@@ -53,6 +53,8 @@ PATH=$HOME/.yarn/bin:$PATH
 PATH=$HOME/.local/src/lua-language-server/bin:$PATH
 # android build tools
 PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
+# use java 11
+PATH=/opt/homebrew/opt/openjdk@11/bin:$PATH
 PATH=$HOME/.cargo/bin:$PATH
 PATH=$GOPATH:$PATH
 export PATH

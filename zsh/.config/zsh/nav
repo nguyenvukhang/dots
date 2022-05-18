@@ -9,6 +9,7 @@ typeset -A local nav=(
   [c]="$HOME/sunnus/cloud/functions/src"
   [cf]="$HOME/.config"
   [d]="$DOTS"
+  [e]="$HOME/expo-apps"
   [f]="$HOME/files"
   [g]="$REPOS/gitnu/src/gitnu"
   [h]="/opt/homebrew"

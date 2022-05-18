@@ -33,6 +33,7 @@ vim.opt.grepprg        = "rg --color=never --no-heading --with-filename --line-n
 vim.opt.grepformat     = '%f:%l:%c:%m,%f:%l:%m'
 vim.opt.fillchars      = 'fold: '
 vim.opt.termguicolors  = true
+vim.opt.wildignore     = '*/node_modules/*'
 
 -- honorary set
 -- set leader to <space>
