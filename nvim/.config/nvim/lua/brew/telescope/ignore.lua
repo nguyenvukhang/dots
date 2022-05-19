@@ -11,6 +11,7 @@ local ignore = {
   "%.png",
   "%.jpg",
   "%.gif",
+  "%.sql",
 }
 
 return ignore
