@@ -5,7 +5,6 @@ alias ct="printf '\033[2J\033[3J\033[1;1H'" # clear terminal
 alias mon="while; do; clear; lt; sleep 1; done" # monitor directory
 alias monls="while; do; clear; ls; sleep 1; done" # monitor directory
 alias monfile="tail -f" # monitor one file
-alias mongl="while; do; clear; gla 30; sleep 2; done" # monitor git log
 alias montree="while; do; clear; exa --tree -L 2 -I node_modules; sleep 1; done" # monitor tree
 alias si="$EDITOR .stow-local-ignore"
 alias t="$EDITOR $REPOS/uni/todo.md"

@@ -52,6 +52,11 @@ alias gce="git commit --allow-empty -m"
 alias gcn="git clean -fxd --exclude=\"node_modules\""
 alias gp="git number -c nvim"
 
+function mongl() {
+  # monitor git log
+  while; do; clear; gla ${1-25}; sleep 2; done
+}
+
 function gco() {
   local OUTPUT TARGET MATCH CWD TARGET_ROOT TARGET_DIR
 

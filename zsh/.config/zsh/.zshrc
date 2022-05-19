@@ -19,6 +19,7 @@ export N_PREFIX=$HOME/.local/n
 export PYENV_ROOT=$HOME/.local/src/pyenv
 export TERM="screen-256color"
 export ANDROID_SDK=$HOME/Library/Android/sdk
+export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
 
 FZF_OPTS=(--height=7 +m --no-mouse --reverse \
   --no-info --prompt="  " --color='pointer:green,header:white')
