@@ -51,6 +51,7 @@ alias gc="git commit"
 alias gce="git commit --allow-empty -m"
 alias gcn="git clean -fxd --exclude=\"node_modules\""
 alias gp="git number -c nvim"
+alias grpo="git remote prune origin"
 
 function mongl() {
   # monitor git log
