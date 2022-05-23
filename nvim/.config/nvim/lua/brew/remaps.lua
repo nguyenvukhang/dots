@@ -124,6 +124,10 @@ nnoremap("<leader>3", jump(3), true)
 nnoremap("<leader>2", jump(2), true)
 nnoremap("<leader>1", jump(1), true)
 
+-- diagnostics
+-- nnoremap("E", vim.diagnostic.open_float(), true)
+nnoremap("E", vim.diagnostic.open_float, true)
+
 -- harpoon
 -- leader m to mark the file
 -- leader a,s,d,f to jump to files
