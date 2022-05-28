@@ -48,5 +48,6 @@ Plug 'vimplug/nvim-colorizer.lua'
 " Plug 'bfrg/vim-cpp-modern'
 Plug 'ThePrimeagen/harpoon'
 Plug 'sbdchd/neoformat'
+Plug 'jxnblk/vim-mdx-js'
 
 call plug#end()

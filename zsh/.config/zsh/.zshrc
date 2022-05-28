@@ -115,7 +115,14 @@ tsm_log() {
 # that is not differentiable. You can't tell what was the
 # previously exited session name (not from tmux exit codes)
 
+declare -A TERM_MAP=(
+  [iTerm.app]="iterm2"
+  [Apple_Terminal]="apple"
+  []="base"
+)
+
 tmux_loop() {
+  local base=$TERM_MAP[$TERM_PROGRAM]
   ! command -v tmux &> /dev/null && return 0
   [[ $RUN_TMUX != "true" ]] && return 0
   [ $TMUX ] && return 0
@@ -123,10 +130,10 @@ tmux_loop() {
   tsm_log "entering tmux loop"
   while; do
     tsm_log "open tmux"
-    local EXITCODE=$(exec tmux new-session -As base -n stalia)
+    local EXITCODE=$(exec tmux new-session -As $base -n stalia)
     tsm_log "exit tmux:\n$EXITCODE"
-    [[ "$EXITCODE" == "[detached (from session base)]" ]] && exit 0
-    tmux has-session -t base 2> /dev/null && continue
+    [[ "$EXITCODE" == "[detached (from session $base)]" ]] && exit 0
+    tmux has-session -t $base 2> /dev/null && continue
     exit 0
   done
 }

@@ -132,8 +132,3 @@ nnoremap("<leader>p", ":Neoformat<CR>", true)
 -- harpoon
 -- leader m to mark the file
 -- leader a,s,d,f to jump to files
-
--- show highlight group of char under cursor
--- nnoremap ("<F10>", ":echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'")
---   \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
---   \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>

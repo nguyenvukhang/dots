@@ -8,7 +8,7 @@ fu! ChaChing()
 endf
 
 fu! __MARKDOWN__()
-  set tw=70 ft=markdown
+  set tw=70
   hi link markdownError Normal
   call ChaChing()
   " use $ as bounding delimiters, kinda like () and {}
