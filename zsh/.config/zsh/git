@@ -50,6 +50,7 @@ alias gu="git fetch && git status" # git update
 alias gc="git commit"
 alias gce="git commit --allow-empty -m"
 alias gcn="git clean -fxd --exclude=\"node_modules\""
+alias gcnn="git clean -fxd"
 alias gp="git number -c nvim"
 alias grpo="git remote prune origin"
 

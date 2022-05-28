@@ -19,7 +19,6 @@ typeset -A local nav=(
   [lb]="$HOME/.local/bin"
   [ls]="$HOME/.local/src"
   [m.]="/Applications/MultiMC.app/Data"
-  [m]="$HOME/modtree/k/packages/database"
   [mc]="$HOME/.local/minecraft/server"
   [mk]="$HOME/modtree/k"
   [mt]="$HOME/modtree/k/packages/database/tests"
@@ -37,6 +36,16 @@ typeset -A local nav=(
   [vl]="$DOTS/nvim/.config/nvim/lua/brew"
   [z]="$DOTS/zsh/.config/zsh"
 )
+
+function 2m() {
+  local BASE=~/modtree
+  local DEFAULT=$BASE/k/packages/database
+  local REMOTE=$(git remote get-url --push origin 2>/dev/null)
+  local CORRECT="git@github.com:modtree/modtree.git"
+  [[ $REMOTE != $CORRECT || $PWD == $BASE ]] && cd $DEFAULT && return 0
+  local ROOT=$(git rev-parse --show-toplevel)
+  cd $ROOT/packages/database
+}
 
 for k dir in ${(kv)nav}; do
   [ ! -d $dir ] && echo "zsh nav: $dir doesn't exist" && continue

@@ -127,6 +127,7 @@ nnoremap("<leader>1", jump(1), true)
 -- diagnostics
 -- nnoremap("E", vim.diagnostic.open_float(), true)
 nnoremap("<leader>e", vim.diagnostic.open_float, true)
+nnoremap("<leader>p", ":Neoformat<CR>", true)
 
 -- harpoon
 -- leader m to mark the file

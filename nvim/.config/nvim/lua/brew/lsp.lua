@@ -26,13 +26,6 @@ end
 nvim_lsp.tsserver.setup({
     on_attach = function(_, bufnr)
         on_attach(_, bufnr)
-        set_keymap(
-            bufnr,
-            "n",
-            "<leader>p",
-            ":silent w<CR>:silent !prettier --write %<CR>",
-            opts
-        )
     end,
     capabilities = capabilities,
 })

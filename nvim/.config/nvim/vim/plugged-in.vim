@@ -43,9 +43,10 @@ Plug 'vimplug/nvim-colorizer.lua'
 " old friends
 " Plug 'lifepillar/vim-colortemplate'
 " Plug 'kyazdani42/nvim-tree.lua'
-Plug 'rust-lang/rust.vim'
+" Plug 'rust-lang/rust.vim'
 " Plug 'Rykka/InstantRst'
-Plug 'bfrg/vim-cpp-modern'
+" Plug 'bfrg/vim-cpp-modern'
 Plug 'ThePrimeagen/harpoon'
+Plug 'sbdchd/neoformat'
 
 call plug#end()

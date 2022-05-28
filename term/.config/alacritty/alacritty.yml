@@ -1,10 +1,20 @@
+# Window decorations
+#
+# Values for `decorations`:
+#     - full: Borders and title bar
+#     - none: Neither borders nor title bar
+#
+# Values for `decorations` (macOS only):
+#     - transparent: Title bar, transparent background and title bar buttons
+#     - buttonless: Title bar, transparent background and no title bar buttons
+#decorations: full
 window:
-  decorations: buttonless
+  decorations: full
+  opacity: 1
   padding:
     x: 8
     y: 4
   dynamic_padding: true
-  opacity: 1
 
 scrolling:
   history: 10000
