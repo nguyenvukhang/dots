@@ -10,6 +10,7 @@ endf
 fu! __MARKDOWN__()
   set tw=70
   hi link markdownError Normal
+  hi link xmlError Normal
   call ChaChing()
   " use $ as bounding delimiters, kinda like () and {}
   onoremap <buffer> <silent> i$ :<c-u>normal! T$vt$<cr>
