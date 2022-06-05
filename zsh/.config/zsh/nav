@@ -39,7 +39,8 @@ typeset -A local nav=(
 
 function 2m() {
   local BASE=~/modtree
-  local DEFAULT=$BASE/k/packages/database
+  local CURRENT_BRANCH=$(cat $BASE/.work)
+  local DEFAULT=$BASE/$CURRENT_BRANCH/packages/database
   local REMOTE=$(git remote get-url --push origin 2>/dev/null)
   local CORRECT="git@github.com:modtree/modtree.git"
   [[ $REMOTE != $CORRECT || $PWD == $BASE ]] && cd $DEFAULT && return 0
