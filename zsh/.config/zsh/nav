@@ -40,9 +40,9 @@ function 2m() {
   local DEFAULT=$BASE/$CURRENT_BRANCH/packages/database
   local REMOTE=$(git remote get-url --push origin 2>/dev/null)
   local CORRECT="git@github.com:modtree/modtree.git"
-  [[ $REMOTE != $CORRECT || $PWD == $BASE ]] && cd $DEFAULT && return 0
-  local ROOT=$(git rev-parse --show-toplevel)
-  cd $ROOT/packages/database
+  [[ $REMOTE != $CORRECT || $PWD == $BASE ]] && cd $DEFAULT 2>/dev/null && return 0
+  local ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
+  cd $ROOT/packages/database 2>/dev/null || cd $BASE
 }
 
 for k dir in ${(kv)nav}; do
