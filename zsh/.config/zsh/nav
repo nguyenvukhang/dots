@@ -13,7 +13,6 @@ typeset -A local nav=(
   [f]="$HOME/files"
   [g]="$REPOS/gitnu/src/gitnu"
   [h]="/opt/homebrew"
-  [i]="$HOME/iso"
   [j]="$HOME/Downloads"
   [l]="$HOME/.local"
   [lb]="$HOME/.local/bin"
@@ -36,13 +35,13 @@ typeset -A local nav=(
 
 function 2m() {
   local BASE=~/modtree
-  local CURRENT_BRANCH=$(cat $BASE/.work)
-  local DEFAULT=$BASE/$CURRENT_BRANCH/packages/database
+  local TARGET=$(head -n 1 $BASE/.work)
+  local DEFAULT=$BASE/$TARGET
   local REMOTE=$(git remote get-url --push origin 2>/dev/null)
   local CORRECT="git@github.com:modtree/modtree.git"
   [[ $REMOTE != $CORRECT || $PWD == $BASE ]] && cd $DEFAULT 2>/dev/null && return 0
   local ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
-  cd $ROOT/packages/database 2>/dev/null || cd $BASE
+  cd $DEFAULT 2>/dev/null || cd $BASE
 }
 
 for k dir in ${(kv)nav}; do
