@@ -9,6 +9,7 @@ alias montree="while; do; clear; exa --tree -L 2 -I node_modules; sleep 1; done"
 alias si="$EDITOR .stow-local-ignore"
 alias t="$EDITOR $REPOS/uni/todo.md"
 alias ka="killall"
+alias dka="docker kill $(docker ps -q)"
 alias zb="time zsh -i -c exit" # zsh benchmark
 alias zr="exec $SHELL -l" # reloads shell
 alias rg="rg --hidden"
