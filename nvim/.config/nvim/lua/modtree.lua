@@ -53,22 +53,19 @@ local modtree_log_action = function(action)
 	-- add the timestamp to current data
 	table.insert(data["timestamps"], timestamp)
 	-- write to json file
-	local result = json.write(modtree_data_filepath, data)
-	if result then
-		print("updated modtree log!")
-	end
+	json.write(modtree_data_filepath, data)
 end
 
 vim.api.nvim_create_autocmd("BufEnter", {
 	group = "modtree",
 	callback = function()
-    modtree_log_action('open')
+		modtree_log_action("open")
 	end,
 })
 
-vim.api.nvim_create_autocmd("BufLeave", {
+vim.api.nvim_create_autocmd({ "BufWrite" }, {
 	group = "modtree",
 	callback = function()
-    modtree_log_action('close')
+		modtree_log_action("write")
 	end,
 })

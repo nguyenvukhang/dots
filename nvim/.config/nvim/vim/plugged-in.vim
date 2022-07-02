@@ -50,4 +50,7 @@ Plug 'ThePrimeagen/harpoon'
 Plug 'sbdchd/neoformat'
 Plug 'jxnblk/vim-mdx-js'
 
+" time tracker
+Plug 'wakatime/vim-wakatime'
+
 call plug#end()
