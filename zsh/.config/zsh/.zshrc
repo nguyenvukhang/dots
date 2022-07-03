@@ -20,6 +20,7 @@ export PYENV_ROOT=$HOME/.local/src/pyenv
 export TERM="screen-256color"
 export ANDROID_SDK=$HOME/Library/Android/sdk
 export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
+export PNPM_HOME="/Users/khang/Library/pnpm"
 
 FZF_OPTS=(--height=7 +m --no-mouse --reverse \
   --no-info --prompt="  " --color='pointer:green,header:white')
@@ -57,6 +58,7 @@ PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
 # use java 11
 PATH=/opt/homebrew/opt/openjdk@11/bin:$PATH
 PATH=$HOME/.cargo/bin:$PATH
+PATH="$PNPM_HOME:$PATH"
 PATH=$GOPATH:$PATH
 export PATH
 
