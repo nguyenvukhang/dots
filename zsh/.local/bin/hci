@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+URL=https://dot-api.vercel.app/api/ip
+SSH_TARGET=$(curl $URL 2>/dev/null)
+ssh "runner@$SSH_TARGET" -p 15061
