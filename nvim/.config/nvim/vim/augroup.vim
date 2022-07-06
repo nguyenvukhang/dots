@@ -28,10 +28,6 @@ fu! __CPP__()
   let &l:commentstring="// %s"
 endfu
 
-fu! __JSON__()
-  nnoremap <leader>p :silent w<CR>:silent !prettier --write %<CR>
-endfu
-
 aug THE_BREWERY
   au!
   " make splits equally sized on window resize
@@ -41,6 +37,5 @@ aug THE_BREWERY
   au BufRead,BufNewFile *.mdx,*.md call __MARKDOWN__()
   au BufRead,BufNewFile *.cpp,*.h call __CPP__()
   au BufRead,BufNewFile *.tex call __LATEX__()
-  au BufRead,BufNewFile *.json call __JSON__()
 	au BufRead,BufNewFile *	if &ft == 'sh' | set ft=zsh | endif
 aug END

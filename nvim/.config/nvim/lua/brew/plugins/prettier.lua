@@ -13,7 +13,7 @@ vim.g['prettier#config#print_width'] = 80
 local remaps = function()
   local remap = vim.api.nvim_set_keymap
   local opts = { noremap = true, silent = true }
-  remap('n', '<Leader>p', ':Prettier<CR>', opts)
+  -- remap('n', '<Leader>p', ':Prettier<CR>', opts)
 end
 
 remaps()
