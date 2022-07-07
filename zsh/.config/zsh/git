@@ -60,43 +60,29 @@ function mongl() {
 }
 
 function gco() {
-  local OUTPUT TARGET MATCH CWD TARGET_ROOT TARGET_DIR RE
+  local OUTPUT MATCH CWD RE WORKTREES
 
   # this will already execute the original command
-  OUTPUT=$(git number checkout $@ 2>&1)
+  OUTPUT="$(git number checkout $@ 2>&1)"
 
-  # this function seeks to handle error messages
-  TARGET="$1"
-
-  MATCH="fatal: '$TARGET' is already checked out at '"
-
+  # just go to the place that's already checked out
   RE='^fatal: .* is already checked out at (.*)$'
+  [[ $OUTPUT =~ $RE ]] && cd ${match[1]:1:-1} && return
 
-  [[ $OUTPUT =~ $RE ]] \
-    && cd ${match[1]:1:-1} && return
-
+  # if it's any other message then this, then gco is no good
   MATCH="fatal: this operation must be run in a work tree"
+  [[ $OUTPUT != $MATCH ]] && echo $OUTPUT && return
 
-  # just outside a worktree
-  if [[ "$OUTPUT" == "$MATCH" ]]; then
-    # keys: branch name
-    # values: branch root dir
-    typeset -A local WORKTREES=()
-    local dir
-    while IFS= read -r line; do
-      if [[ "$line" == "worktree"* ]]; then
-        dir="${line#*worktree }"
-      elif [[ "$line" == "branch"* ]]; then
-        local branch="${line##*/}"
-        WORKTREES[$branch]="$dir"
-      fi
-    done < <(git worktree list --porcelain)
-    cd $WORKTREES[$TARGET]
-    return 0
-  fi
-
-  # when all fails, just echo original output
-  echo $OUTPUT
+  # iterate through worktrees and find target
+  WORKTREES=("${(@f)$(git worktree list --porcelain)}")
+  for line in ${WORKTREES[@]}; do
+    # if line begins with 'worktree', use it to set dir
+    [[ $line =~ '^worktree (.*)$' ]] && dir=${match[1]} && continue
+    # if line begins with 'branch' and matches target, go to it
+    [[ $line =~ '^branch refs/heads/(.*)$' ]] \
+      && [[ ${match[1]} == $1 ]] \
+      && cd $dir && return
+  done
 }
 
 # git clone
