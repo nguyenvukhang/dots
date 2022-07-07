@@ -159,11 +159,12 @@ function gb() {
 }
 
 function yeet() {
-  f() {
-    git push
-    notify 'git push' 'is done'
-  }
-  f &
+  f() { # (those are not spaces)
+    git push >/dev/null 2>&1 \
+      && notify '✅ git push successful' '⠀' \
+      || notify '🔥 git push failed' '⠀'
+  }; (f &)
+  echo "async pushed."
 }
 
 # delete branch
