@@ -97,7 +97,7 @@ function gco() {
         WORKTREES[$branch]="$dir"
       fi
     done < <(git worktree list --porcelain)
-    cd $WORKTREES[$branch]
+    cd $WORKTREES[$TARGET]
     return 0
   fi
 
