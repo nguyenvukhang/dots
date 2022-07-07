@@ -135,12 +135,16 @@ function gslf() {
 }
 
 # git commit
-cmd=(git commit)
-gcm() { [ $1 ] && $cmd -m $1 || $cmd }
+gcm() {
+  local cmd=(git commit)
+  [ $1 ] && $cmd -m $1 || $cmd
+}
 
 # git commit --amend
-cmd=(git commit --amend)
-gca() { [ $1 ] && $cmd -m $1 || $cmd }
+gca() {
+  local cmd=(git commit --amend)
+  [ $1 ] && $cmd -m $1 || $cmd
+}
 
 function gb() {
   [ $1 ] && git branch "$@" && return
