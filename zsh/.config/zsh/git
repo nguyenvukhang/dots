@@ -133,8 +133,8 @@ function git_log_message_only () {
   git log $@ --pretty=format:$pretty
 }
 
-function gl()  { git_log_pretty --graph -n ${1-12} }
-function gla() { git_log_pretty --graph -n ${1-12} --all }
+function gl()  { git_log_pretty --graph -n ${1-20} }
+function gla() { git_log_pretty --graph -n ${1-20} --all }
 function gll() { git_log_pretty --graph --all }
 function glf() { git_log_pretty --graph --follow }
 
