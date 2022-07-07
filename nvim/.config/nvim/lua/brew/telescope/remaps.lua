@@ -5,12 +5,7 @@ local sessions = require("brew.telescope.sessions")
 
 -- custom set keymap for telescope to shorten rhs
 local nnoremap = function(keypress, callback)
-    vim.api.nvim_set_keymap(
-        "n",
-        keypress,
-        "",
-        { noremap = true, silent = true, callback = callback }
-    )
+	vim.api.nvim_set_keymap("n", keypress, "", { noremap = true, silent = true, callback = callback })
 end
 
 nnoremap("<c-b>", builtin.buffers)

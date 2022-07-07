@@ -108,20 +108,22 @@ local ToggleQuickFix = function()
 end
 
 local ToggleDiagnostics = function()
-  -- close diagnostics if qflist is already open
-  if utils.qflist_is_open() then
-    vim.cmd('cclose') print(' ') return
-  end
+	-- close diagnostics if qflist is already open
+	if utils.qflist_is_open() then
+		vim.cmd("cclose")
+		print(" ")
+		return
+	end
 
-  -- load diagnostics
-  local d = vim.diagnostic.get()
+	-- load diagnostics
+	local d = vim.diagnostic.get()
 
-  -- check if there are any diagnostics
-  if vim.tbl_isempty(d) then
-    print "No diagnostics found"
-  else
-    vim.diagnostic.setqflist()
-  end
+	-- check if there are any diagnostics
+	if vim.tbl_isempty(d) then
+		print("No diagnostics found")
+	else
+		vim.diagnostic.setqflist()
+	end
 end
 
 local ToggleLocalList = function()
