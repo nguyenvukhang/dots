@@ -29,37 +29,38 @@
 #   fetch = +refs/heads/*:refs/remotes/origin/* 
 # ---------------------------------------------
 
-gn() { $EDITOR $(git rev-parse --git-dir)/gitnu.json }
+# highly used
 alias gs="git number" # git status
 alias ga="git number add"
 alias gaa="git add --all"
-alias gcf="git config --edit"
-alias gd="git number diff"
-alias gds="git number diff --staged"
-alias giti="$EDITOR .gitignore"
-alias gr="git number reset"
-alias grh="git number reset --hard"
-alias gitm="$EDITOR .gitmodules"
-alias gcan="git commit --amend --no-edit"
-alias gf="git fetch"
-alias gap="git number add -p"
-alias gms="git merge --squash" # squash diff into one commit
-alias gm="git merge" # squash diff into one commit
-alias gmn="git merge --no-ff" # squash diff into one commit
-alias gu="git fetch && git status" # git update
 alias gc="git commit"
-alias gce="git commit --allow-empty -m"
+alias gcan="git commit --amend --no-edit"
 alias gcn="git clean -fxd --exclude=\"node_modules\""
 alias gcnn="git clean -fxd"
+alias gd="git number diff"
+alias gds="git number diff --staged"
+alias gf="git fetch"
+alias giti="$EDITOR .gitignore"
+alias gm="git merge" # squash diff into one commit
+alias gmn="git merge --no-ff" # squash diff into one commit
+alias gms="git merge --squash" # squash diff into one commit
 alias gp="git number -c nvim"
+alias gr="git number reset"
+alias grh="git number reset --hard"
 alias grpo="git remote prune origin"
 
-function mongl() {
-  # monitor git log
-  while; do; clear; gla ${1-25}; sleep 2; done
-}
+# still essential
+alias gcf="git config --edit"
+alias gitm="$EDITOR .gitmodules"
 
-function gco() {
+# probably useless
+alias gce="git commit --allow-empty -m"
+alias gap="git number add -p"
+alias gu="git fetch && git status" # git update
+
+# git checkout, without speedbumps
+# just get there already.
+gco() {
   local OUTPUT MATCH RE WORKTREES
 
   # this will already execute the original command
@@ -69,7 +70,7 @@ function gco() {
   RE='^fatal: .* is already checked out at (.*)$'
   [[ $OUTPUT =~ $RE ]] && cd ${match[1]:1:-1} && return
 
-  # if it's any other message then this, then gco is no good
+  # if it's any other message then this, then this gco is no good
   MATCH="fatal: this operation must be run in a work tree"
   [[ $OUTPUT != $MATCH ]] && echo $OUTPUT && return
 
@@ -85,48 +86,48 @@ function gco() {
   done
 }
 
-# git clone
-function gcl() {
-  [ ${1%%:*} = "https" ] \
-    && git clone $1 && return
-  [ ${1%%:*} = "git@github.com" ] \
-    && git clone $1 && return
+# custom git clone
+cyclone() {
+  local repo=${@[-1]} # the last argument
+  local cmd=(${@:1:-1}) # everything but the last
+  ([[ $repo =~ '^https://.*/.*/' ]] && $cmd $repo) || \
+  ([[ $repo =~ '^git@.*:.*/' ]] && $cmd $repo) || \
+  ([[ $repo =~ '^(.*)/(.*)$' ]] && $cmd git@github.com:${match[1]}/${match[2]}.git)
 }
+
+# git clone
+gcl() { cyclone git clone $@ }
 
 # git clone --bare
-function gcb() {
-  [ ${1%%:*} = "https" ] \
-    && git clone --bare $1 && return
-  [ ${1%%:*} = "git@github.com" ] \
-    && git clone --bare $1 && return
-}
+gcb() { cyclone git clone --bare $@ }
 
-function glt() { git log --since="24 hours ago" --oneline --graph --all } # git log (today)
-
-# git logs
-log_pretty() {
+# git log + graph template
+log_graph() {
   local f="%C(yellow)%h%C(auto)%d %Creset%s %C(dim)(%ar)"
-  git log --pretty=format:$f $@ 
+  git log --graph --pretty=format:$f $@ 
 }
 
+# git log + message template
 log_message() {
   local f="%C(yellow)%h %Creset%s"
   git log --all --pretty=format:$f $@
 }
 
+# git logs
 let lines="$LINES - 10"
-function gl()  { log_pretty --graph -n ${1-$lines} }
-function gla() { log_pretty --graph -n ${1-$lines} --all }
-function gll() { log_pretty --graph --all }
-function glf() { log_pretty --graph --follow $1 }
+gl() { log_graph -n ${1-$lines} }
+gla() { log_graph -n ${1-$lines} --all }
+gll() { log_graph --all }
+glf() { log_graph --follow $1 }
+mongl() { while; do; clear; gla ${1-lines}; sleep 2; done }
 
 # git search log
-function gsl() {
+gsl() {
   log_message --color=always \
     | fzf $FZF_OPTS --ansi --multi 6 --bind 'enter:select-all+accept'
 }
 
-# git search log (with filenames)
+# git search log (with filenames) and open in editor
 gslf() {
   log_message --compact-summary | $EDITOR -
 }
@@ -143,13 +144,13 @@ gca() {
   [ $1 ] && $cmd -m $1 || $cmd
 }
 
-function gb() {
+gb() {
   [ $1 ] && git branch "$@" \
     || (branch=$(git branch | fzf $FZF_OPTS) \
     && [ $branch ] && gco ${branch[3,-1]})
 }
 
-function yeet() {
+yeet() {
   f() { # (those are not spaces)
     git push >/dev/null 2>&1 \
       && notify '✅ git push successful' '⠀' \
