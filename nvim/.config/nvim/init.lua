@@ -7,7 +7,6 @@ end
 source("vim/plugged-in.vim")
 require("brew.sets")
 source("vim/auto-pairs.vim")
--- source('vim/remaps.vim')
 
 require("brew.remaps")
 require("brew.telescope")
