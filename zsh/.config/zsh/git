@@ -60,7 +60,7 @@ function mongl() {
 }
 
 function gco() {
-  local OUTPUT TARGET MATCH CWD TARGET_ROOT TARGET_DIR
+  local OUTPUT TARGET MATCH CWD TARGET_ROOT TARGET_DIR RE
 
   # this will already execute the original command
   OUTPUT=$(git number checkout $@ 2>&1)
@@ -70,16 +70,10 @@ function gco() {
 
   MATCH="fatal: '$TARGET' is already checked out at '"
 
-  # inside a worktree
-  if [[ "$OUTPUT" == "$MATCH"* ]]; then
-    TARGET_ROOT=${${OUTPUT#*$MATCH}[0,-2]}
-    CWD=$(git rev-parse --show-prefix)
-    TARGET_DIR=$TARGET_ROOT/$CWD
-    [ -d $TARGET_DIR ] \
-      && cd $TARGET_DIR \
-      || cd $TARGET_ROOT
-    return 0
-  fi
+  RE='^fatal: .* is already checked out at (.*)$'
+
+  [[ $OUTPUT =~ $RE ]] \
+    && cd ${match[1]:1:-1} && return
 
   MATCH="fatal: this operation must be run in a work tree"
 
