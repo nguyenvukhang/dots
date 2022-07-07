@@ -29,196 +29,135 @@
 #   fetch = +refs/heads/*:refs/remotes/origin/* 
 # ---------------------------------------------
 
-gn() { $EDITOR $(git rev-parse --git-dir)/gitnu.json }
+# highly used
 alias gs="git number" # git status
 alias ga="git number add"
 alias gaa="git add --all"
-alias gcf="git config --edit"
-alias gd="git number diff"
-alias gds="git number diff --staged"
-alias giti="$EDITOR .gitignore"
-alias gr="git number reset"
-alias grh="git number reset --hard"
-alias gitm="$EDITOR .gitmodules"
-alias gcan="git commit --amend --no-edit"
-alias gf="git fetch"
-alias gap="git number add -p"
-alias gms="git merge --squash" # squash diff into one commit
-alias gm="git merge" # squash diff into one commit
-alias gmn="git merge --no-ff" # squash diff into one commit
-alias gu="git fetch && git status" # git update
 alias gc="git commit"
-alias gce="git commit --allow-empty -m"
+alias gcan="git commit --amend --no-edit"
 alias gcn="git clean -fxd --exclude=\"node_modules\""
 alias gcnn="git clean -fxd"
+alias gd="git number diff"
+alias gds="git number diff --staged"
+alias gf="git fetch"
+alias giti="$EDITOR .gitignore"
+alias gm="git merge" # squash diff into one commit
+alias gmn="git merge --no-ff" # squash diff into one commit
+alias gms="git merge --squash" # squash diff into one commit
 alias gp="git number -c nvim"
+alias gr="git number reset"
+alias grh="git number reset --hard"
 alias grpo="git remote prune origin"
 
-function mongl() {
-  # monitor git log
-  while; do; clear; gla ${1-25}; sleep 2; done
-}
+# still essential
+alias gcf="git config --edit"
+alias gitm="$EDITOR .gitmodules"
 
-function gco() {
-  local OUTPUT TARGET MATCH CWD TARGET_ROOT TARGET_DIR
+# probably useless
+alias gce="git commit --allow-empty -m"
+alias gap="git number add -p"
+alias gu="git fetch && git status" # git update
+
+# git checkout, without speedbumps
+# just get there already.
+gco() {
+  local OUTPUT MATCH RE WORKTREES
 
   # this will already execute the original command
-  OUTPUT=$(git number checkout $@ 2>&1)
+  OUTPUT="$(git number checkout $@ 2>&1)"
 
-  # this function seeks to handle error messages
-  TARGET="$1"
+  # just go to the place that's already checked out
+  RE='^fatal: .* is already checked out at (.*)$'
+  [[ $OUTPUT =~ $RE ]] && cd ${match[1]:1:-1} && return
 
-  MATCH="fatal: '$TARGET' is already checked out at '"
-
-  # inside a worktree
-  if [[ "$OUTPUT" == "$MATCH"* ]]; then
-    TARGET_ROOT=${${OUTPUT#*$MATCH}[0,-2]}
-    CWD=$(git rev-parse --show-prefix)
-    TARGET_DIR=$TARGET_ROOT/$CWD
-    [ -d $TARGET_DIR ] \
-      && cd $TARGET_DIR \
-      || cd $TARGET_ROOT
-    return 0
-  fi
-
+  # if it's any other message then this, then this gco is no good
   MATCH="fatal: this operation must be run in a work tree"
+  [[ $OUTPUT != $MATCH ]] && echo $OUTPUT && return
 
-  # just outside a worktree
-  if [[ "$OUTPUT" == "$MATCH" ]]; then
-    # keys: branch name
-    # values: branch root dir
-    typeset -A local WORKTREES=()
-    local dir
-    while IFS= read -r line; do
-      if [[ "$line" == "worktree"* ]]; then
-        dir="${line#*worktree }"
-      elif [[ "$line" == "branch"* ]]; then
-        local branch="${line##*/}"
-        WORKTREES[$branch]="$dir"
-      fi
-    done < <(git worktree list --porcelain)
-    cd $WORKTREES[$branch]
-    return 0
-  fi
+  # iterate through worktrees and find target
+  WORKTREES=("${(@f)$(git worktree list --porcelain)}")
+  for line in ${WORKTREES[@]}; do
+    # if line begins with 'worktree', use it to set dir
+    [[ $line =~ '^worktree (.*)$' ]] && dir=${match[1]} && continue
+    # if line begins with 'branch' and matches target, go to it
+    [[ $line =~ '^branch refs/heads/(.*)$' ]] \
+      && [[ ${match[1]} == $1 ]] \
+      && cd $dir && return
+  done
+}
 
-  # when all fails, just echo original output
-  echo $OUTPUT
+# custom git clone
+cyclone() {
+  local repo=${@[-1]} # the last argument
+  local cmd=(${@:1:-1}) # everything but the last
+  ([[ $repo =~ '^https://.*/.*/' ]] && $cmd $repo) || \
+  ([[ $repo =~ '^git@.*:.*/' ]] && $cmd $repo) || \
+  ([[ $repo =~ '^(.*)/(.*)$' ]] && $cmd git@github.com:${match[1]}/${match[2]}.git)
 }
 
 # git clone
-function gcl() {
-  [ ${1%%:*} = "https" ] \
-    && git clone $1 && return
-  [ ${1%%:*} = "git@github.com" ] \
-    && git clone $1 && return
-}
+gcl() { cyclone git clone $@ }
 
 # git clone --bare
-function gcb() {
-  [ ${1%%:*} = "https" ] \
-    && git clone --bare $1 && return
-  [ ${1%%:*} = "git@github.com" ] \
-    && git clone --bare $1 && return
+gcb() { cyclone git clone --bare $@ }
+
+# git log + graph template
+log_graph() {
+  local f="%C(yellow)%h%C(auto)%d %Creset%s %C(dim)(%ar)"
+  git log --graph --pretty=format:$f $@ 
 }
 
-function glt() { git log --since="24 hours ago" --oneline --graph --all } # git log (today)
+# git log + message template
+log_message() {
+  local f="%C(yellow)%h %Creset%s"
+  git log --all --pretty=format:$f $@
+}
 
 # git logs
-function git_log_pretty() {
-  local pretty="%C(yellow)%h%C(auto)%d %Creset%s %C(dim)(%ar)"
-  git log $@ --pretty=format:$pretty
-}
-function git_log_message_only () {
-  local pretty="%C(yellow)%h %Creset%s"
-  git log $@ --pretty=format:$pretty
-}
-
-function gl()  { git_log_pretty --graph -n ${1-20} }
-function gla() { git_log_pretty --graph -n ${1-20} --all }
-function gll() { git_log_pretty --graph --all }
-function glf() { git_log_pretty --graph --follow }
+let lines="$LINES - 10"
+gl() { log_graph -n ${1-$lines} }
+gla() { log_graph -n ${1-$lines} --all }
+gll() { log_graph --all }
+glf() { log_graph --follow $1 }
+mongl() { while; do; clear; gla ${1-lines}; sleep 2; done }
 
 # git search log
-function gsl() {
-  local get_commit_ids=$( git_log_message_only --color=always --all \
-    | fzf $FZF_OPTS --ansi --multi 6 --bind 'enter:select-all+accept' )
-  local commit_ids=()
-  while IFS= read -r line; do
-    git_log_message_only -1 "${line%% *}" 
-  done < <( echo $get_commit_ids )
+gsl() {
+  log_message --color=always \
+    | fzf $FZF_OPTS --ansi --multi 6 --bind 'enter:select-all+accept'
 }
 
-# git search log (with filenames)
-function gslf() {
-  TMP_GIT_LOG_FILE=/tmp/search-git-log.txt
-  cleanup() {
-    rm $TMP_GIT_LOG_FILE
-  }
-  trap cleanup EXIT
-  git_log_message_only --compact-summary --all > $TMP_GIT_LOG_FILE
-  $EDITOR $TMP_GIT_LOG_FILE
+# git search log (with filenames) and open in editor
+gslf() {
+  log_message --compact-summary | $EDITOR -
 }
 
 # git commit
-function gcm() {
-  [ $1 ] && git commit -m $1 && return true
-  git commit
+gcm() {
+  local cmd=(git commit)
+  [ $1 ] && $cmd -m $1 || $cmd
 }
 
 # git commit --amend
-function gca() {
-  [ $1 ] && git commit --amend -m $1 && return true
-  git commit --amend
+gca() {
+  local cmd=(git commit --amend)
+  [ $1 ] && $cmd -m $1 || $cmd
 }
 
-# the laziest git function ever
-function gq() {
-  _N='\033[0m'    # Normal
-  _G='\033[0;32m' # Green
-  _Y='\033[0;33m' # Yellow
-  _B='\033[0;34m' # Blue
-  _S='\033[0;37m' # Soft
-  # read user input (requires enter)
-  printf "${_S}Staging files:${_N}\n"
-  git status -s .
-  printf "${_S}Commit message > ${_N}"
-  read -r "COMMIT_MSG?"
-  # return on empty commit message
-  [ -z "$COMMIT_MSG" ] \
-    && echo "Empty commit message. Aborting." \
-    && return
-  # make the commit
-  echo "SHOULD NOT BE HERE"
-  git add .
-  git commit --message="$COMMIT_MSG"
+gb() {
+  [ $1 ] && git branch "$@" \
+    || (branch=$(git branch | fzf $FZF_OPTS) \
+    && [ $branch ] && gco ${branch[3,-1]})
 }
 
-function gb() {
-  if [ $1 ]; then; git branch "$@"; return; fi
-  # fzf-branch (switch branch)
-  branch=$(git branch | fzf $FZF_OPTS)
-  [ $branch ] && gco ${branch[3,-1]} || return 0
+yeet() {
+  f() { # (those are not spaces)
+    git push >/dev/null 2>&1 \
+      && notify '✅ git push successful' '⠀' \
+      || notify '🔥 git push failed' '⠀'
+  }; (f &)
+  echo "async pushed."
 }
-
-function gur() {
-  git commit -m "update ref"
-  git push
-}
-
-function yeet() {
-  if [ $TMUX ]; then
-    tmux neww -c "#{pane_current_path}" \
-    -n "pushing..." -d "git push && notify 'git push' 'is done'"
-  else
-    echo "You're not in tmux, boo."
-  fi
-}
-
-# delete branch
-# git branch -d <branch_name>
-
-# delete remote branch
-# git push origin -d <branch_name>
 
 # to remove a submodule completely:
 # 0. mv a/submodule a/submodule_tmp
@@ -243,16 +182,3 @@ function yeet() {
 # remove a secrets file from all git history:
 # [https://stackoverflow.com/questions/43762338/how-to-remove-file-from-git-history]
 # git filter-branch --index-filter "git rm -rf --cached --ignore-unmatch path_to_file" HEAD
-
-# ============
-# git worktree
-# ============
-#
-# git worktree add [-f] [--detach] [--checkout] [--lock] [-b <new-branch>] <path> [<commit-ish>]
-#
-# to add a new branch:
-# git worktree add -b <branch> ../<directory>
-
-function gwnb() {
-  git worktree add -b $1 ../$1
-}
