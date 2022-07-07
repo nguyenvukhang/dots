@@ -111,7 +111,7 @@ log_pretty() {
 
 log_message() {
   local f="%C(yellow)%h %Creset%s"
-  git log $@ --pretty=format:$f
+  git log $@ --all --pretty=format:$f
 }
 
 function gl()  { log_pretty --graph -n ${1-20} }
@@ -121,17 +121,13 @@ function glf() { log_pretty --graph --follow }
 
 # git search log
 function gsl() {
-  log_message --color=always --all \
+  log_message --color=always \
     | fzf $FZF_OPTS --ansi --multi 6 --bind 'enter:select-all+accept'
 }
 
 # git search log (with filenames)
-function gslf() {
-  TMP=/tmp/search-git-log.txt
-  # remove tmp file always
-  cleanup() { rm $TMP }; trap cleanup EXIT
-  log_message --compact-summary --all > $TMP
-  $EDITOR $TMP
+gslf() {
+  log_message --compact-summary | $EDITOR -
 }
 
 # git commit
