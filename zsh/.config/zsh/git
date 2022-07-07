@@ -106,18 +106,19 @@ function glt() { git log --since="24 hours ago" --oneline --graph --all } # git 
 # git logs
 log_pretty() {
   local f="%C(yellow)%h%C(auto)%d %Creset%s %C(dim)(%ar)"
-  git log $@ --pretty=format:$f
+  git log --pretty=format:$f $@ 
 }
 
 log_message() {
   local f="%C(yellow)%h %Creset%s"
-  git log $@ --all --pretty=format:$f
+  git log --all --pretty=format:$f $@
 }
 
-function gl()  { log_pretty --graph -n ${1-20} }
-function gla() { log_pretty --graph -n ${1-20} --all }
+let lines="$LINES - 10"
+function gl()  { log_pretty --graph -n ${1-$lines} }
+function gla() { log_pretty --graph -n ${1-$lines} --all }
 function gll() { log_pretty --graph --all }
-function glf() { log_pretty --graph --follow }
+function glf() { log_pretty --graph --follow $1 }
 
 # git search log
 function gsl() {
