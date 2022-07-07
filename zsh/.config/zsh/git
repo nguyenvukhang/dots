@@ -45,6 +45,7 @@ alias gm="git merge" # squash diff into one commit
 alias gmn="git merge --no-ff" # squash diff into one commit
 alias gms="git merge --squash" # squash diff into one commit
 alias gp="git number -c nvim"
+alias gpdo="git push -d origin"
 alias gr="git number reset"
 alias grh="git number reset --hard"
 alias grpo="git remote prune origin"
