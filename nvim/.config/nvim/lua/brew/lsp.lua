@@ -32,7 +32,6 @@ nvim_lsp.tsserver.setup({
 nvim_lsp.pyright.setup({
 	on_attach = function(_, bufnr)
 		on_attach(_, bufnr)
-		set_keymap(bufnr, "n", "<leader>p", ":Black<CR>", opts)
 	end,
 	capabilities = capabilities,
 })
@@ -43,7 +42,6 @@ nvim_lsp.pyright.setup({
 nvim_lsp.rls.setup({
 	on_attach = function(_, bufnr)
 		on_attach(_, bufnr)
-		set_keymap(bufnr, "n", "<leader>p", ":RustFmt<CR>", opts)
 	end,
 	capabilities = capabilities,
 	settings = {
@@ -78,11 +76,4 @@ nvim_lsp.sumneko_lua.setup({
 			},
 		},
 	},
-})
-
-local diagnostics_on = true
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-	virtual_text = diagnostics_on,
-	underline = diagnostics_on,
-	signs = diagnostics_on,
 })
