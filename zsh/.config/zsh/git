@@ -60,7 +60,7 @@ function mongl() {
 }
 
 function gco() {
-  local OUTPUT MATCH CWD RE WORKTREES
+  local OUTPUT MATCH RE WORKTREES
 
   # this will already execute the original command
   OUTPUT="$(git number checkout $@ 2>&1)"
@@ -141,7 +141,7 @@ function gslf() {
 
 # git commit
 function gcm() {
-  [ $1 ] && git commit -m $1 && return true
+  [ $1 ] && git commit -m $1 && return
   git commit
 }
 
