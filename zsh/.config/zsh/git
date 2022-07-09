@@ -115,7 +115,7 @@ log_message() {
 }
 
 # git logs
-let lines="$LINES - 10"
+let lines="$LINES - 15"
 gl() { log_graph -n ${1-$lines} }
 gla() { log_graph -n ${1-$lines} --all }
 gll() { log_graph --all }
@@ -146,9 +146,12 @@ gca() {
 }
 
 gb() {
-  [ $1 ] && git branch "$@" \
-    || (branch=$(git branch | fzf $FZF_OPTS) \
-    && [ $branch ] && gco ${branch[3,-1]})
+  if [ -z $1 ]; then
+    branch=$(git branch | fzf $FZF_OPTS)
+    [ $branch ] && gco ${branch[3,-1]}
+    return
+  fi
+  git branch "$@"
 }
 
 yeet() {
