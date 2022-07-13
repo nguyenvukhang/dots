@@ -47,8 +47,8 @@ vnoremap("L", "$")
 nnoremap("gF", ":vs <cfile><cr>")
 
 -- slowly increase this until I can use the default
-nnoremap("<C-d>", "13jzz")
-nnoremap("<C-u>", "13kzz")
+nnoremap("<C-d>", "13j")
+nnoremap("<C-u>", "13k")
 
 -- quickfix list navigation
 nnoremap("<C-j>", ":cnext<cr>")
