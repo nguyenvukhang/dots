@@ -62,7 +62,7 @@ alias gu="git fetch && git status" # git update
 # git checkout, without speedbumps
 # just get there already.
 gco() {
-  local OUTPUT MATCH RE WORKTREES
+  local OUTPUT MATCH RE WORKTREES BASENAME_DIR
   local GY='\033[0;37m'  # Gray
   local GN='\033[0;32m'  # Green
   local NC='\033[0m'     # No color
@@ -72,28 +72,32 @@ gco() {
   original() { printf "${GY}$OUTPUT${NC}\n" }
   jump() { printf "${GY}jumped to worktree ${GN}${1}${NC}\n" }
 
-  # nothing to do if outside git
-  RE='^fatal: not a git repository.*$'
+  # nothing to do if outside git/already there
+  RE='^(fatal: not a git repository|Already on).*$'
   [[ $OUTPUT =~ $RE ]] && original && return
 
   # just go to the place that's already checked out
   RE='^fatal: .* is already checked out at (.*)$'
   [[ $OUTPUT =~ $RE ]] && jump $1 && cd ${match[1]:1:-1} && return
 
-  # if it's any other message then this, then this gco is no good
-  MATCH="fatal: this operation must be run in a work tree"
-  if [[ $OUTPUT == $MATCH ]]; then
-    # iterate through worktrees and find target
-    WORKTREES=("${(@f)$(git worktree list --porcelain)}")
-    for line in ${WORKTREES[@]}; do
-      # if line begins with 'worktree', use it to set dir
-      [[ $line =~ '^worktree (.*)$' ]] && dir=${match[1]} && continue
-      # if line begins with 'branch' and matches target, go to it
-      [[ $line =~ '^branch refs/heads/(.*)$' ]] \
-        && [[ ${match[1]} == $1 ]] \
-        && jump $1 && cd $dir && return
-    done
-  fi
+  # try to jump to a worktree
+  WORKTREES=("${(@f)$(git worktree list --porcelain)}")
+  # iterate through worktrees and find target
+  for line in ${WORKTREES[@]}; do
+    # if line begins with 'worktree', use it to set dir and base
+    if [[ $line =~ '^worktree (.*)$' ]]; then
+      dir=${match[1]}; base=${line##*/}
+      [[ $base == $1 ]] && BASENAME_DIR=$dir
+      continue
+    fi
+    # if line begins with 'branch' and matches target, go to it
+    [[ $line =~ '^branch refs/heads/(.*)$' ]] \
+      && [[ ${match[1]} == $1 ]] \
+      && jump $1 && cd $dir && return
+  done
+
+  # if no branch matches, try to jump to a matching directory
+  [ $BASENAME_DIR ] && jump "@$1" && cd $BASENAME_DIR && return
 
   # finally, just echo out the original message
   original
