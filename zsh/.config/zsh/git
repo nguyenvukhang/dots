@@ -77,8 +77,8 @@ gco() {
   [[ $OUTPUT =~ $RE ]] && original && return
 
   # just go to the place that's already checked out
-  RE='^fatal: .* is already checked out at (.*)$'
-  [[ $OUTPUT =~ $RE ]] && jump $1 && cd ${match[1]:1:-1} && return
+  RE="^fatal: .* is already checked out at '(.*)'$"
+  [[ $OUTPUT =~ $RE ]] && jump $1 && cd ${match[1]} && return
 
   # try to jump to a worktree
   WORKTREES=("${(@f)$(git worktree list --porcelain)}")
