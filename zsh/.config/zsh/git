@@ -103,7 +103,7 @@ gco() {
   [ $BASENAME_DIR ] && jump "$BASENAME_BRANCH" "@$1" && cd $BASENAME_DIR && return
 
   # finally, just echo out the original message
-  original
+  [ $OUTPUT ] && original || return 0
 }
 
 # custom git clone
@@ -175,10 +175,10 @@ gb() {
 
 yeet() {
   f() { # (those are not spaces)
-    git push >/dev/null 2>&1 \
+    git push $@ >/dev/null 2>&1 \
       && notify '✅ git push successful' '⠀' \
       || notify '🔥 git push failed' '⠀'
-  }; (f &)
+  }; (f $@ &)
   echo "async pushed."
 }
 
