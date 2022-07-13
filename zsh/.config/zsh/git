@@ -63,28 +63,40 @@ alias gu="git fetch && git status" # git update
 # just get there already.
 gco() {
   local OUTPUT MATCH RE WORKTREES
+  local GY='\033[0;37m'  # Gray
+  local GN='\033[0;32m'  # Green
+  local NC='\033[0m'     # No color
 
   # this will already execute the original command
   OUTPUT="$(git number checkout $@ 2>&1)"
+  original() { printf "${GY}$OUTPUT${NC}\n" }
+  jump() { printf "${GY}jumped to worktree ${GN}${1}${NC}\n" }
+
+  # nothing to do if outside git
+  RE='^fatal: not a git repository.*$'
+  [[ $OUTPUT =~ $RE ]] && original && return
 
   # just go to the place that's already checked out
   RE='^fatal: .* is already checked out at (.*)$'
-  [[ $OUTPUT =~ $RE ]] && cd ${match[1]:1:-1} && return
+  [[ $OUTPUT =~ $RE ]] && jump $1 && cd ${match[1]:1:-1} && return
 
   # if it's any other message then this, then this gco is no good
   MATCH="fatal: this operation must be run in a work tree"
-  [[ $OUTPUT != $MATCH ]] && echo $OUTPUT && return
+  if [[ $OUTPUT == $MATCH ]]; then
+    # iterate through worktrees and find target
+    WORKTREES=("${(@f)$(git worktree list --porcelain)}")
+    for line in ${WORKTREES[@]}; do
+      # if line begins with 'worktree', use it to set dir
+      [[ $line =~ '^worktree (.*)$' ]] && dir=${match[1]} && continue
+      # if line begins with 'branch' and matches target, go to it
+      [[ $line =~ '^branch refs/heads/(.*)$' ]] \
+        && [[ ${match[1]} == $1 ]] \
+        && jump $1 && cd $dir && return
+    done
+  fi
 
-  # iterate through worktrees and find target
-  WORKTREES=("${(@f)$(git worktree list --porcelain)}")
-  for line in ${WORKTREES[@]}; do
-    # if line begins with 'worktree', use it to set dir
-    [[ $line =~ '^worktree (.*)$' ]] && dir=${match[1]} && continue
-    # if line begins with 'branch' and matches target, go to it
-    [[ $line =~ '^branch refs/heads/(.*)$' ]] \
-      && [[ ${match[1]} == $1 ]] \
-      && cd $dir && return
-  done
+  # finally, just echo out the original message
+  original
 }
 
 # custom git clone
