@@ -62,7 +62,7 @@ alias gu="git fetch && git status" # git update
 # git checkout, without speedbumps
 # just get there already.
 gco() {
-  local OUTPUT MATCH RE WORKTREES BASENAME_DIR
+  local OUTPUT MATCH RE WORKTREES BASENAME_DIR BASENAME_BRANCH
   local GY='\033[0;37m'  # Gray
   local GN='\033[0;32m'  # Green
   local NC='\033[0m'     # No color
@@ -70,7 +70,9 @@ gco() {
   # this will already execute the original command
   OUTPUT="$(git number checkout $@ 2>&1)"
   original() { printf "${GY}$OUTPUT${NC}\n" }
-  jump() { printf "${GY}jumped to worktree ${GN}${1}${NC}\n" }
+  jump() {
+    printf "${GY}jumped to worktree ${GN}${1}${GY} ${2}${NC}\n"
+  }
 
   # nothing to do if outside git/already there
   RE='^(fatal: not a git repository|Already on).*$'
@@ -91,13 +93,14 @@ gco() {
       continue
     fi
     # if line begins with 'branch' and matches target, go to it
-    [[ $line =~ '^branch refs/heads/(.*)$' ]] \
-      && [[ ${match[1]} == $1 ]] \
-      && jump $1 && cd $dir && return
+    if [[ $line =~ '^branch refs/heads/(.*)$' ]]; then
+      [[ ${match[1]} == $1 ]] && jump $1 && cd $dir && return
+      [[ -z $BASENAME_BRANCH && $BASENAME_DIR ]] && BASENAME_BRANCH=${match[1]}
+    fi
   done
 
   # if no branch matches, try to jump to a matching directory
-  [ $BASENAME_DIR ] && jump "@$1" && cd $BASENAME_DIR && return
+  [ $BASENAME_DIR ] && jump "$BASENAME_BRANCH" "@$1" && cd $BASENAME_DIR && return
 
   # finally, just echo out the original message
   original
