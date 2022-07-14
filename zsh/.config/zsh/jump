@@ -4,13 +4,15 @@
 # g for jump
 # requires fd
 g() {
-  local dir list fuzzy
+  local dir fuzzy list
+
 
   # if directory has no children directory, end
   [[ ! $(command ls -Ap) = *"/"* ]] && return
 
-  list=(fd -H -I -c never -d 4 -t d --strip-cwd-prefix
-    -E ".git")
+  list=(fd -H -I -c never -d 4 -t d --strip-cwd-prefix)
+  list+=(-E '.git')
+  list+=(-E 'node_modules')
 
   fuzzy=(fzf $FZF_OPTS
     --header=${PWD/$HOME/'~'}
@@ -26,3 +28,5 @@ g() {
   *) return ;;
   esac
 }
+
+
