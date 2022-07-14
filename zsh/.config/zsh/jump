@@ -3,33 +3,26 @@
 # generic navigation
 # g for jump
 # requires fd
-function g() {
-  local depth=4
+g() {
+  local dir list fuzzy
+
   # if directory has no children directory, end
-  local check=$(command ls -Ap)
-  [[ ! $check = *"/"* ]] && return true
+  [[ ! $(command ls -Ap) = *"/"* ]] && return
 
-  local target=$(fd --strip-cwd-prefix --hidden \
-    -d $depth -t d --exclude ".git" \
-    | fzf $FZF_OPTS \
-    --header=${PWD/#$HOME/'~'} \
-    --expect "enter,esc,left,right" )
-  target=${target#/*}
+  list=(fd -H -I -c never -d 4 -t d --strip-cwd-prefix
+    -E ".git")
 
-  local res=()
-  while IFS= read -r line; do
-    res+=( "$line" )
-  done < <( echo $target )
+  fuzzy=(fzf $FZF_OPTS
+    --header=${PWD/$HOME/'~'}
+    --expect "esc,left,enter,right")
 
-  local key=${res[1]}
-  local location=${res[2]}
+  [[ $($list | $fuzzy) =~ '^(.*)'$'\n''(.*)$' ]]
 
-  case $key in
-    'esc') return true ;;
-    'left') cd ../ && g ;;
-    'right') cd $location && g;;
-    'enter') cd $location ;;
-    *) return true ;;
+  case ${match[1]} in
+  'esc') return ;;
+  'left') cd .. && g ;;
+  'enter') [ -d ${match[2]} ] && cd ${match[2]} ;;
+  'right') [ -d ${match[2]} ] && cd ${match[2]} && g ;;
+  *) return ;;
   esac
-  unset key
 }
