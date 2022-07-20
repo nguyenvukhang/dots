@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 color='green'
-BRANCH="%(align:8,left)%(refname:short)%(end)"
+BRANCH="%(align:12,left)%(refname:short)%(end)"
 WORKTREE="%(worktreepath:short)"
 HEAD="%(if)%(HEAD)%(then)%(color:$color)*%(else)%(color:default) %(end)"
 SEP="%(color:white)│%(if)%(HEAD)%(then)%(color:$color)%(else)%(color:default)%(end)"

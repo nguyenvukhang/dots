@@ -106,6 +106,19 @@ gco() {
   [ $OUTPUT ] && original || return 0
 }
 
+# git worktree navigation, by directory name
+gw() {
+  # get all worktrees
+  WORKTREES=("${(@f)$(git worktree list --porcelain)}")
+  # iterate through worktrees and find target
+  for line in ${WORKTREES[@]}; do
+    # if line begins with 'worktree', use it to set dir and base
+    if [[ $line =~ '^worktree (.*)$' ]]; then
+      dir=${match[1]}; base=${line##*/}
+      [[ $base == $1 ]] && cd $dir
+    fi
+  done
+}
 # custom git clone
 cyclone() {
   local repo=${@[-1]} # the last argument

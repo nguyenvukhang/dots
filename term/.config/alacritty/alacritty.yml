@@ -10,7 +10,7 @@
 #decorations: full
 window:
   decorations: full
-  opacity: 1
+  opacity: 0.96
   padding:
     x: 8
     y: 4
