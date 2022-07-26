@@ -50,6 +50,24 @@ local git_root = function()
 	return vim.fn.systemlist("git rev-parse --show-toplevel")[1]
 end
 
+local noremap = function(mode)
+	return function(lhs, rhs, verbose)
+		if type(rhs) == "string" then
+			vim.api.nvim_set_keymap(mode, lhs, rhs, {
+				noremap = true,
+				silent = not (verbose or false),
+			})
+		else
+			vim.api.nvim_set_keymap(mode, lhs, "", {
+				noremap = true,
+				silent = not (verbose or false),
+				callback = rhs,
+			})
+		end
+	end
+end
+
+
 -- to clear command line area:
 -- vim.cmd('redraw!')
 
@@ -58,6 +76,8 @@ local utils = {
 	loclist_is_open = loclist_is_open,
 	is_git_repo = is_git_repo,
 	git_root = git_root,
+  nnoremap = noremap('n'),
+  vnoremap = noremap('v')
 }
 
 -- ENVIRONMENT VARIABLES
