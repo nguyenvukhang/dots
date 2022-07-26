@@ -1,6 +1,7 @@
 local env = require("brew.core").env
 local ignore = require("brew.telescope.ignore")
 local is_git_repo = require("brew.core").utils.is_git_repo
+local tele = require("telescope.builtin")
 
 local M = {}
 
@@ -9,14 +10,14 @@ M.repo = function()
 		print("not in a git repo")
 		return
 	end
-	require("telescope.builtin").git_files({
+	tele.git_files({
 		prompt_title = "Files In Repo",
 		file_ignore_patterns = ignore,
 	})
 end
 
 M.cwd = function()
-	require("telescope.builtin").find_files({
+	tele.find_files({
 		prompt_title = "Files In CWD",
 		file_ignore_patterns = ignore,
 	})
@@ -27,7 +28,7 @@ local function make_searcher(opts)
 		opts.hidden = true
 		opts.preview = false
 		opts.file_ignore_patterns = ignore
-		require("telescope.builtin").find_files(opts)
+		tele.find_files(opts)
 	end
 end
 
@@ -65,6 +66,7 @@ local config = {
 	},
 }
 
+-- put all the searchers together
 for _, v in ipairs(config) do
 	M[v.type] = make_searcher({
 		search_dirs = v.dirs,
