@@ -6,15 +6,30 @@
 -- COLORS
 ------------------------
 
+-- LOCAL UTILS
+
+local vimfn = function(vimscript_cmd)
+	return function()
+		vim.cmd(vimscript_cmd)
+		print(" ")
+	end
+end
+
+local list = {
+	qf = {
+		open = vimfn("botright copen"),
+		close = vimfn("cclose"),
+	},
+	loc = {
+		open = vimfn("botright lopen"),
+		close = vimfn("lclose"),
+	},
+}
+
 -- UTILITIES
---
 local list_is_open = function(listname)
 	return function()
-		if next(vim.fn.filter(vim.fn.getwininfo(), listname)) == nil then
-			return false
-		else
-			return true
-		end
+		return not (next(vim.fn.filter(vim.fn.getwininfo(), listname)) == nil)
 	end
 end
 
@@ -65,18 +80,17 @@ local env = {
 -- FUNCTIONS
 
 local ToggleQuickFix = function()
-	if utils.qflist_is_open() then
-		vim.cmd("cclose")
+	if qflist_is_open() then
+		list.qf.close()
 	else
-		vim.cmd("botright copen")
+		list.qf.open()
 	end
 end
 
 local ToggleDiagnostics = function()
 	-- close diagnostics if qflist is already open
-	if utils.qflist_is_open() then
-		vim.cmd("cclose")
-		print(" ")
+	if qflist_is_open() then
+		list.qf.close()
 		return
 	end
 
@@ -89,21 +103,7 @@ local ToggleDiagnostics = function()
 	else
 		vim.diagnostic.setloclist({ open = false })
 		vim.fn.setqflist(vim.fn.getloclist(0))
-		vim.cmd("botright copen")
-	end
-end
-
-local ToggleLocalList = function()
-	if
-		not pcall(function()
-			if utils.loclist_is_open() then
-				vim.cmd("lclose")
-			else
-				vim.cmd("botright lopen")
-			end
-		end)
-	then
-		print("local list doesn't exist")
+		list.qf.open()
 	end
 end
 
@@ -118,7 +118,6 @@ end
 local functions = {
 	ToggleQuickFix = ToggleQuickFix,
 	ToggleDiagnostics = ToggleDiagnostics,
-	ToggleLocalList = ToggleLocalList,
 	OpenSq = OpenSq,
 	CloseSq = CloseSq,
 }
