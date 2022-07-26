@@ -35,11 +35,6 @@ local git_root = function()
 	return vim.fn.systemlist("git rev-parse --show-toplevel")[1]
 end
 
-local git_root_from_path = function(path)
-	local cmd = "git -C " .. path .. " rev-parse --show-toplevel"
-	return vim.fn.systemlist(cmd)[1]
-end
-
 -- to clear command line area:
 -- vim.cmd('redraw!')
 
@@ -48,7 +43,6 @@ local utils = {
 	loclist_is_open = loclist_is_open,
 	is_git_repo = is_git_repo,
 	git_root = git_root,
-	git_root_from_path = git_root_from_path,
 }
 
 -- ENVIRONMENT VARIABLES
@@ -87,7 +81,7 @@ local ToggleDiagnostics = function()
 	end
 
 	-- load diagnostics
-	local d = vim.diagnostic.get()
+	local d = vim.diagnostic.get(0)
 
 	-- check if there are any diagnostics
 	if vim.tbl_isempty(d) then
