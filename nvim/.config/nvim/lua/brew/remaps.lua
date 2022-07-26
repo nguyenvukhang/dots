@@ -1,28 +1,11 @@
-local brew = require("brew.core").functions
+local core = require("brew.core")
+local brew = core.functions
+local nnoremap = core.utils.nnoremap
+local vnoremap = core.utils.vnoremap
 local harpoon = {
 	mark = require("harpoon.mark"),
 	ui = require("harpoon.ui"),
 }
-
-local noremap = function(mode)
-	return function(lhs, rhs, verbose)
-		if type(rhs) == "string" then
-			vim.api.nvim_set_keymap(mode, lhs, rhs, {
-				noremap = true,
-				silent = not (verbose or false),
-			})
-		else
-			vim.api.nvim_set_keymap(mode, lhs, "", {
-				noremap = true,
-				silent = not (verbose or false),
-				callback = rhs,
-			})
-		end
-	end
-end
-
-local nnoremap = noremap("n")
-local vnoremap = noremap("v")
 
 -- no-ops
 nnoremap("<space>", "<nop>")
@@ -96,7 +79,6 @@ nnoremap("<leader>c", ":ColorizerToggle<cr>", true)
 
 -- lua functions
 nnoremap("<leader>o", brew.ToggleQuickFix)
-nnoremap("<leader>O", brew.ToggleLocalList)
 nnoremap("<leader>d", brew.ToggleDiagnostics)
 
 nnoremap("[[", brew.OpenSq)

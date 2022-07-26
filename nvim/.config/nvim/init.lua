@@ -20,8 +20,5 @@ require("brew.plugins.nvim_comment")
 require("brew.plugins.ultisnips")
 require("brew.plugins.vimtex")
 
--- modtree hours tracker
-require("modtree")
-
 source("vim/functions.vim")
 source("vim/augroup.vim")

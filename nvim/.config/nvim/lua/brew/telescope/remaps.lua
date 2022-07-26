@@ -25,7 +25,7 @@ nnoremap("<leader>sp", file.oldfiles)
 nnoremap("<leader>sr", file.repo_search)
 nnoremap("<leader>su", file.university)
 
-nnoremap("<c-s>", sessions.save_session)
+nnoremap("<leader>ss", sessions.save_session)
 nnoremap("<leader>rs", sessions.sessions) -- restore session
 
 -- git stuff

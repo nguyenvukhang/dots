@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+echo "colors"
+find colors | xargs cat 2> /dev/null | wc -l
+
+echo "lua"
+find lua | xargs cat 2> /dev/null | wc -l
+
+echo "vim"
+find vim | xargs cat 2> /dev/null | wc -l

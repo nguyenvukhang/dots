@@ -6,52 +6,40 @@
 -- COLORS
 ------------------------
 
+-- LOCAL UTILS
+
+local vimfn = function(vimscript_cmd)
+	return function()
+		vim.cmd(vimscript_cmd)
+		print(" ")
+	end
+end
+
+local list = {
+	qf = {
+		open = vimfn("botright copen"),
+		close = vimfn("cclose"),
+	},
+	loc = {
+		open = vimfn("botright lopen"),
+		close = vimfn("lclose"),
+	},
+}
+
 -- UTILITIES
-
--- table operation: merges source into target
--- (source overwrites target)
-local assign = function(target, source)
-	if source then
-		for k, s in pairs(source) do
-			target[k] = s
-		end
+local list_is_open = function(listname)
+	return function()
+		return not (next(vim.fn.filter(vim.fn.getwininfo(), listname)) == nil)
 	end
 end
 
-local qflist_is_open = function()
-	if next(vim.fn.filter(vim.fn.getwininfo(), "v:val.quickfix")) == nil then
-		return false
-	else
-		return true
-	end
-end
-
-local loclist_is_open = function()
-	local next = next
-	if next(vim.fn.filter(vim.fn.getwininfo(), "v:val.loclist")) == nil then
-		return false
-	else
-		return true
-	end
-end
+local qflist_is_open = list_is_open("v:val.quickfix")
+local loclist_is_open = list_is_open("v:val.loclist")
 
 local is_git_repo = function()
-	local git_check = vim.fn.systemlist("git rev-parse --is-inside-work-tree")[1]
-	if git_check == "true" then
-		return true
-	else
-		return false
-	end
-end
-
-local cwd_in_git_repo = function(path)
-	local cmd = "git -C " .. path .. " rev-parse --is-inside-work-tree"
+	local cmd = "git rev-parse --is-inside-work-tree"
 	local git_check = vim.fn.systemlist(cmd)[1]
-	if git_check == "true" then
-		return true
-	else
-		return false
-	end
+	return git_check == "true"
 end
 
 local git_root = function()
@@ -62,22 +50,34 @@ local git_root = function()
 	return vim.fn.systemlist("git rev-parse --show-toplevel")[1]
 end
 
-local git_root_from_path = function(path)
-	local cmd = "git -C " .. path .. " rev-parse --show-toplevel"
-	return vim.fn.systemlist(cmd)[1]
+local noremap = function(mode)
+	return function(lhs, rhs, verbose)
+		if type(rhs) == "string" then
+			vim.api.nvim_set_keymap(mode, lhs, rhs, {
+				noremap = true,
+				silent = not (verbose or false),
+			})
+		else
+			vim.api.nvim_set_keymap(mode, lhs, "", {
+				noremap = true,
+				silent = not (verbose or false),
+				callback = rhs,
+			})
+		end
+	end
 end
+
 
 -- to clear command line area:
 -- vim.cmd('redraw!')
 
 local utils = {
-	assign = assign,
 	qflist_is_open = qflist_is_open,
 	loclist_is_open = loclist_is_open,
 	is_git_repo = is_git_repo,
 	git_root = git_root,
-	git_root_from_path = git_root_from_path,
-	cwd_in_git_repo = cwd_in_git_repo,
+  nnoremap = noremap('n'),
+  vnoremap = noremap('v')
 }
 
 -- ENVIRONMENT VARIABLES
@@ -100,55 +100,30 @@ local env = {
 -- FUNCTIONS
 
 local ToggleQuickFix = function()
-	if utils.qflist_is_open() then
-		vim.cmd("cclose")
+	if qflist_is_open() then
+		list.qf.close()
 	else
-		vim.cmd("botright copen")
+		list.qf.open()
 	end
 end
 
 local ToggleDiagnostics = function()
 	-- close diagnostics if qflist is already open
-	if utils.qflist_is_open() then
-		vim.cmd("cclose")
-		print(" ")
+	if qflist_is_open() then
+		list.qf.close()
 		return
 	end
 
 	-- load diagnostics
-	local d = vim.diagnostic.get()
+	local d = vim.diagnostic.get(0)
 
 	-- check if there are any diagnostics
 	if vim.tbl_isempty(d) then
 		print("No diagnostics found")
 	else
-		vim.diagnostic.setqflist()
-	end
-end
-
-local ToggleLocalList = function()
-	if
-		not pcall(function()
-			if utils.loclist_is_open() then
-				vim.cmd("lclose")
-			else
-				vim.cmd("botright lopen")
-			end
-		end)
-	then
-		print("local list doesn't exist")
-	end
-end
-
--- toggles a todo
-local Todolist = function()
-	local file = env.home .. "/repos/uni/todo.md"
-	local open = vim.fn.bufwinid(file)
-	if open < 0 then
-		local h = math.floor(vim.fn.winheight(0) * 0.5)
-		vim.cmd(h .. "sp " .. file)
-	else
-		vim.cmd("bd " .. file)
+		vim.diagnostic.setloclist({ open = false })
+		vim.fn.setqflist(vim.fn.getloclist(0))
+		list.qf.open()
 	end
 end
 
@@ -161,10 +136,8 @@ local CloseSq = function()
 end
 
 local functions = {
-	Todolist = Todolist,
 	ToggleQuickFix = ToggleQuickFix,
 	ToggleDiagnostics = ToggleDiagnostics,
-	ToggleLocalList = ToggleLocalList,
 	OpenSq = OpenSq,
 	CloseSq = CloseSq,
 }
