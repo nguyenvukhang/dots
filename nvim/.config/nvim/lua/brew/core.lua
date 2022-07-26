@@ -140,18 +140,6 @@ local ToggleLocalList = function()
 	end
 end
 
--- toggles a todo
-local Todolist = function()
-	local file = env.home .. "/repos/uni/todo.md"
-	local open = vim.fn.bufwinid(file)
-	if open < 0 then
-		local h = math.floor(vim.fn.winheight(0) * 0.5)
-		vim.cmd(h .. "sp " .. file)
-	else
-		vim.cmd("bd " .. file)
-	end
-end
-
 local OpenSq = function()
 	vim.fn.searchpair("\\[", "", "\\]", "b")
 end
@@ -161,7 +149,6 @@ local CloseSq = function()
 end
 
 local functions = {
-	Todolist = Todolist,
 	ToggleQuickFix = ToggleQuickFix,
 	ToggleDiagnostics = ToggleDiagnostics,
 	ToggleLocalList = ToggleLocalList,
