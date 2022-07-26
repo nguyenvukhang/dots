@@ -429,57 +429,20 @@ func! AutoPairsTryInit()
   if exists('b:autopairs_loaded')
     return
   end
-
-  " for auto-pairs starts with 'a', so the priority is higher than supertab and vim-endwise
-  "
-  " vim-endwise doesn't support <Plug>AutoPairsReturn
-  " when use <Plug>AutoPairsReturn will cause <Plug> isn't expanded
-  "
-  " supertab doesn't support <SID>AutoPairsReturn
-  " when use <SID>AutoPairsReturn  will cause Duplicated <CR>
-  "
-  " and when load after vim-endwise will cause unexpected endwise inserted.
-  " so always load AutoPairs at last
-
-  " Buffer level keys mapping
-  " comptible with other plugin
   if g:AutoPairsMapCR
-    if v:version == 703 && has('patch32') || v:version > 703
-      " VIM 7.3 supports advancer maparg which could get <expr> info
-      " then auto-pairs could remap <CR> in any case.
-      let info = maparg('<CR>', 'i', 0, 1)
-      if empty(info)
-        let old_cr = '<CR>'
-        let is_expr = 0
-      else
-        let old_cr = info['rhs']
-        let old_cr = s:ExpandMap(old_cr)
-        let old_cr = substitute(old_cr, '<SID>', '<SNR>' . info['sid'] . '_', 'g')
-        let is_expr = info['expr']
-        let wrapper_name = '<SID>AutoPairsOldCRWrapper73'
-      endif
+    let info = maparg('<CR>', 'i', 0, 1)
+    if empty(info)
+      let old_cr = '<CR>'
+      let is_expr = 0
     else
-      " VIM version less than 7.3
-      " the mapping's <expr> info is lost, so guess it is expr or not, it's
-      " not accurate.
-      let old_cr = maparg('<CR>', 'i')
-      if old_cr == ''
-        let old_cr = '<CR>'
-        let is_expr = 0
-      else
-        let old_cr = s:ExpandMap(old_cr)
-        " old_cr contain (, I guess the old cr is in expr mode
-        let is_expr = old_cr =~ '\V(' && toupper(old_cr) !~ '\V<C-R>'
-
-        " The old_cr start with " it must be in expr mode
-        let is_expr = is_expr || old_cr =~ '\v^"'
-        let wrapper_name = '<SID>AutoPairsOldCRWrapper'
-      end
-    end
-
+      let old_cr = info['rhs']
+      let old_cr = s:ExpandMap(old_cr)
+      let old_cr = substitute(old_cr, '<SID>', '<SNR>' . info['sid'] . '_', 'g')
+      let is_expr = info['expr']
+      let wrapper_name = '<SID>AutoPairsOldCRWrapper73'
+    endif
     if old_cr !~ 'AutoPairsReturn'
       if is_expr
-        " remap <expr> to `name` to avoid mix expr and non-expr mode
         execute 'inoremap <buffer> <expr> <script> '. wrapper_name . ' ' . old_cr
         let old_cr = wrapper_name
       end
@@ -490,9 +453,7 @@ func! AutoPairsTryInit()
   call AutoPairsInit()
 endf
 
-" Always silent the command
 inoremap <silent> <SID>AutoPairsReturn <C-R>=AutoPairsReturn()<CR>
 imap <script> <Plug>AutoPairsReturn <SID>AutoPairsReturn
-
 
 au BufEnter * :call AutoPairsTryInit()
