@@ -27,13 +27,13 @@ vim.opt.pumheight = 8 -- sets popup menu height
 vim.opt.signcolumn = "yes" -- always show sign column
 vim.opt.completeopt = "menu,menuone,noselect" -- recommended by nvim-cmp
 vim.opt.shortmess = vim.o.shortmess .. "c"
-vim.opt.undodir = dots_root .. "/personal/.config/nvim/data/undodir"
 vim.opt.spellfile = dots_root .. "/personal/.config/nvim/data/spell/en.utf-8.add"
 vim.opt.grepprg = "rg --color=never --no-heading --with-filename --line-number --column --smart-case"
 vim.opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
 vim.opt.fillchars = "fold: "
 vim.opt.termguicolors = true
 vim.opt.wildignore = "*/node_modules/*"
+-- vim.opt.undodir = dots_root .. "/personal/.config/nvim/data/undodir"
 
 -- honorary set
 -- set leader to <space>
