@@ -87,7 +87,9 @@ local ToggleDiagnostics = function()
 	if vim.tbl_isempty(d) then
 		print("No diagnostics found")
 	else
-		vim.diagnostic.setqflist()
+		vim.diagnostic.setloclist({ open = false })
+		vim.fn.setqflist(vim.fn.getloclist(0))
+		vim.cmd("botright copen")
 	end
 end
 
