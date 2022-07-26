@@ -22,12 +22,9 @@ local qflist_is_open = list_is_open("v:val.quickfix")
 local loclist_is_open = list_is_open("v:val.loclist")
 
 local is_git_repo = function()
-	local git_check = vim.fn.systemlist("git rev-parse --is-inside-work-tree")[1]
-	if git_check == "true" then
-		return true
-	else
-		return false
-	end
+	local cmd = "git rev-parse --is-inside-work-tree"
+	local git_check = vim.fn.systemlist(cmd)[1]
+	return git_check == "true"
 end
 
 local cwd_in_git_repo = function(path)
