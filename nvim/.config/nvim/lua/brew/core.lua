@@ -8,16 +8,6 @@
 
 -- UTILITIES
 
--- table operation: merges source into target
--- (source overwrites target)
-local assign = function(target, source)
-	if source then
-		for k, s in pairs(source) do
-			target[k] = s
-		end
-	end
-end
-
 local qflist_is_open = function()
 	if next(vim.fn.filter(vim.fn.getwininfo(), "v:val.quickfix")) == nil then
 		return false
@@ -71,7 +61,6 @@ end
 -- vim.cmd('redraw!')
 
 local utils = {
-	assign = assign,
 	qflist_is_open = qflist_is_open,
 	loclist_is_open = loclist_is_open,
 	is_git_repo = is_git_repo,
