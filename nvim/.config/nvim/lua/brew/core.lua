@@ -7,23 +7,19 @@
 ------------------------
 
 -- UTILITIES
-
-local qflist_is_open = function()
-	if next(vim.fn.filter(vim.fn.getwininfo(), "v:val.quickfix")) == nil then
-		return false
-	else
-		return true
+--
+local list_is_open = function(listname)
+	return function()
+		if next(vim.fn.filter(vim.fn.getwininfo(), listname)) == nil then
+			return false
+		else
+			return true
+		end
 	end
 end
 
-local loclist_is_open = function()
-	local next = next
-	if next(vim.fn.filter(vim.fn.getwininfo(), "v:val.loclist")) == nil then
-		return false
-	else
-		return true
-	end
-end
+local qflist_is_open = list_is_open("v:val.quickfix")
+local loclist_is_open = list_is_open("v:val.loclist")
 
 local is_git_repo = function()
 	local git_check = vim.fn.systemlist("git rev-parse --is-inside-work-tree")[1]
