@@ -16,10 +16,9 @@ local actions = setmetatable({}, {
 
 actions.select_default = {
 	pre = function(prompt_bufnr)
-		action_state.get_current_history():append(
-			action_state.get_current_line(),
-			action_state.get_current_picker(prompt_bufnr)
-		)
+		action_state
+			.get_current_history()
+			:append(action_state.get_current_line(), action_state.get_current_picker(prompt_bufnr))
 	end,
 	action = function(prompt_bufnr)
 		return action_set.select(prompt_bufnr, "default")
