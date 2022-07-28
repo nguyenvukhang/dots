@@ -148,10 +148,9 @@ log_message() {
 
 # git logs
 let lines="$LINES - 15"
-gl() { log_graph -n ${1-$lines} }
-gla() { log_graph -n ${1-$lines} --all }
+gl()  { log_graph -n ${1-$lines} --branches }
+gla()  { log_graph -n ${1-$lines} --all }
 gll() { log_graph --all }
-glf() { log_graph --follow $1 }
 mongl() { while; do; clear; gla ${1-lines}; sleep 2; done }
 
 # git search log
