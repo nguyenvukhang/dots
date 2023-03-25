@@ -37,6 +37,7 @@ function mac_setup() {
     "Hide Spotify" "\@\~\^\$y" \
     "Hide Safari" "\@\~\^\$y" \
     "Hide Telegram" "\@\~\^\$y" \
+    "Hide alacritty" "\@\~\^\$y" \
     "Hide others" "\@\~\^\$h"
 
   # chill out on keyboard smartness
