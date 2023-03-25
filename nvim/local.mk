@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 # install build prerequisites:
 # [https://github.com/neovim/neovim/wiki/Building-Neovim#build-prerequisites]
@@ -14,5 +14,5 @@ INSTALL_DIRECTORY=/usr/local
 
 sudo make \
   CMAKE_BUILD_TYPE=Release \
-  CMAKE_INSTALL_PREFIX=$INSTALL_DIRECTORY \
+  CMAKE_INSTALL_PREFIX=${INSTALL_DIRECTORY} \
   install
