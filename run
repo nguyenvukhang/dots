@@ -5,12 +5,20 @@
 help() {
   echo "khang's dotfiles bootstrapper
     -i    install
+    -p    personal
     -u    uninstall" && exit 0
 }
 [ $1 ] || help
 [ $1 = '-i' ] || [ $1 = 'i' ] && OP=install
 [ $1 = '-u' ] || [ $1 = 'u' ] && OP=uninstall
-[ $OP ] && echo "\033[1;32m${OP}ing...\033[1;0m" || help
+[ $1 = '-p' ] || [ $1 = 'p' ] && OP=personal
+[ $OP ] && echo "\033[1;32mrunning command: [${OP}]...\033[1;0m" || help
+
+if [[ $OP == "personal" ]]; then
+  git submodule update --init
+  git submodule foreach git checkout main
+  exit
+fi
 
 OS="$(uname)"
 ARCH="$(arch)"
