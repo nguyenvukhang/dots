@@ -1,5 +1,15 @@
 # ZSH CheatSheet
+
 vim:tw=80
+
+## Common use
+
+| Description                     | Syntax               |
+| ------------------------------- | -------------------- |
+| Get a string before first model | `${VARNAME%%model*}` |
+| Get a string before last model  | `${VARNAME%model*}`  |
+| Get a string after first model  | `${VARNAME#*model}`  |
+| Get a string after last model   | `${VARNAME##*model}` |
 
 This is a cheat sheet for how to perform various actions to ZSH, which can be
 tricky to find on the web as the syntax is not intuitive and it is generally not
@@ -232,6 +242,7 @@ If we want to display the message only if the condition is falsey:
 ## My own stuff
 
 list ip addresses on mac:
+
 ```zsh
 arp -a
 ```

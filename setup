@@ -6,12 +6,15 @@ help() {
   echo "khang's dotfiles bootstrapper
     -i    install
     -p    personal
-    -u    uninstall" && exit 0
+    -u    uninstall"
+  exit 0
 }
+
 [ $1 ] || help
 [ $1 = '-i' ] || [ $1 = 'i' ] && OP=install
 [ $1 = '-u' ] || [ $1 = 'u' ] && OP=uninstall
 [ $1 = '-p' ] || [ $1 = 'p' ] && OP=personal
+
 [ $OP ] && echo "\033[1;32mrunning command: [${OP}]...\033[1;0m" || help
 
 if [[ $OP == "personal" ]]; then
@@ -46,4 +49,3 @@ use() {
 }
 
 use -t ~ -d fs home
-# use -t / -d fs root
