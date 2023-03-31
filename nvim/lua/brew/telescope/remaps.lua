@@ -1,6 +1,6 @@
-local builtin = require 'telescope.builtin'
-local file = require 'brew.telescope.file'
-local word = require 'brew.telescope.word'
+local builtin = require('telescope.builtin')
+local file = require('brew.telescope.file')
+local word = require('brew.telescope.word')
 local nnoremap = require('brew.core').nnoremap
 
 nnoremap('<c-b>', builtin.buffers)

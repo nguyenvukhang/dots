@@ -29,8 +29,9 @@ vim.g.mkdp_preview_options = {
   disable_sync_scroll = false,
   disable_filename = 1,
 }
-vim.g.mkdp_markdown_css = vim.fn.stdpath 'config' .. '/data/github-markdown.css'
+vim.g.mkdp_markdown_css = vim.fn.stdpath('config')
+  .. '/data/github-markdown.css'
 
 -- abbreviations
-vim.cmd 'cnoreabbrev MP MarkdownPreview'
-vim.cmd 'cnoreabbrev MS MarkdownPreviewStop'
+vim.cmd('cnoreabbrev MP MarkdownPreview')
+vim.cmd('cnoreabbrev MS MarkdownPreviewStop')

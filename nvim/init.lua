@@ -13,19 +13,19 @@ local plugins = {
   {
     'iamcco/markdown-preview.nvim',
     build = function() vim.fn['mkdp#util#install']() end,
-    config = function() require 'brew.plugins.markdown-preview' end,
+    config = function() require('brew.plugins.markdown-preview') end,
   },
   {
     'windwp/nvim-autopairs',
     config = function()
-      local np = require 'nvim-autopairs'
-      local Rule = require 'nvim-autopairs.rule'
+      local np = require('nvim-autopairs')
+      local Rule = require('nvim-autopairs.rule')
       np.setup()
-      np.add_rules({
+      np.add_rules {
         Rule('$', '$', 'tex'):with_move(
           function(opts) return opts.next_char == opts.char end
         ),
-      })
+      }
     end,
   },
   'folke/neodev.nvim',
@@ -45,8 +45,8 @@ local plugins = {
 require('brew.core').load_plugins(plugins)
 
 -- independent of plugins, server-friendly
-require 'brew.core.sets'
-require 'brew.core.remaps'
-require 'brew.core.commands'
-require 'brew.core.autocmd'
-require 'brew.math'
+require('brew.core.sets')
+require('brew.core.remaps')
+require('brew.core.commands')
+require('brew.core.autocmd')
+-- require 'brew.math'

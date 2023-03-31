@@ -1,5 +1,5 @@
 local augroup = require('brew.core').augroup
-local autocmd = augroup 'BREW_MATH'
+local autocmd = augroup('BREW_MATH')
 local sep = package.config:sub(1, 1)
 
 local M = {}
@@ -8,7 +8,7 @@ local cmd
 
 local initialized_buffers = {}
 local bufdir = function()
-  return vim.fn.expand '%:p:h' -- dir of current buffer
+  return vim.fn.expand('%:p:h') -- dir of current buffer
 end
 
 local watchlist_path = function() return bufdir() .. sep .. '.watchtex' end
