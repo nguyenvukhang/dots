@@ -3,10 +3,10 @@
 -- close the telescope buffer, but I don't want that, since it's
 -- already part of select_default()
 
-local action_state = require 'telescope.actions.state'
-local actions = require 'telescope.actions'
-local action_set = require 'telescope.actions.set'
-local from_entry = require 'telescope.from_entry'
+local action_state = require('telescope.actions.state')
+local actions = require('telescope.actions')
+local action_set = require('telescope.actions.set')
+local from_entry = require('telescope.from_entry')
 local transform_mod = require('telescope.actions.mt').transform_mod
 
 actions.select_default = {
@@ -59,8 +59,9 @@ local send_all_to_qf = function(prompt_bufnr, mode, target)
   end
 end
 
-actions.send_to_qflist =
-  function(prompt_bufnr) send_all_to_qf(prompt_bufnr, 'r') end
+actions.send_to_qflist = function(prompt_bufnr)
+  send_all_to_qf(prompt_bufnr, 'r')
+end
 
 actions = transform_mod(actions)
 return actions

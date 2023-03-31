@@ -1,1 +1,1 @@
-vim.filetype.add({ extension = { prez = 'prez' } })
+vim.filetype.add { extension = { prez = 'prez' } }

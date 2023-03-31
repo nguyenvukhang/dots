@@ -1,5 +1,5 @@
-local actions = require 'brew.telescope.actions'
-local ignore = require 'brew.telescope.ignore'
+local actions = require('brew.telescope.actions')
+local ignore = require('brew.telescope.ignore')
 local git_workspace_root = require('brew.core').git_workspace_root
 
 local M = {}
@@ -17,9 +17,9 @@ end
 M.repo = function()
   local search_dir = git_workspace_root()
   if search_dir == nil then return end
-  local q = vim.fn.input 'Search For > '
+  local q = vim.fn.input('Search For > ')
   if q == '' then return end
-  grep({ prompt_title = 'Word In Repo', cwd = search_dir, search = q })
+  grep { prompt_title = 'Word In Repo', cwd = search_dir, search = q }
 end
 
 -- searches cwd
@@ -27,14 +27,14 @@ M.cwd = function()
   local cwd = vim.fn.getcwd():gsub(vim.env.HOME, '~')
   local q = vim.fn.input('Search In [' .. cwd .. '] > ')
   if q == '' then return end
-  grep({ prompt_title = 'Word In CWD', search = q })
+  grep { prompt_title = 'Word In CWD', search = q }
 end
 
 -- searches repo for word under cursor
 M.this_in_repo = function()
   local search_dir = git_workspace_root()
   if search_dir == nil then return end
-  grep({ prompt_title = 'Word In Repo', cwd = search_dir })
+  grep { prompt_title = 'Word In Repo', cwd = search_dir }
 end
 
 return M

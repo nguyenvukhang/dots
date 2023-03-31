@@ -2,10 +2,10 @@
 -- https://github.com/hrsh7th/nvim-cmp
 --
 
-local cmp = require 'cmp'
-local types = require 'cmp.types'
+local cmp = require('cmp')
+local types = require('cmp.types')
 
-cmp.setup({
+cmp.setup {
   formatting = {
     expandable_indicator = false,
     -- remove extra flair from completion menu item
@@ -21,7 +21,7 @@ cmp.setup({
   mapping = {
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-l>'] = cmp.mapping.confirm({ select = true }),
+    ['<C-l>'] = cmp.mapping.confirm { select = true },
   },
   sources = cmp.config.sources({
     {
@@ -35,7 +35,7 @@ cmp.setup({
     { name = 'buffer' },
     { name = 'path' },
   }),
-})
+}
 
 -- Use buffer source for `/` search
 cmp.setup.cmdline('/', { sources = { { name = 'buffer' } } })

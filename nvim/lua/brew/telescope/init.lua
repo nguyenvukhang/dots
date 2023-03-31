@@ -2,7 +2,7 @@
 -- https://github.com/nvim-telescope/telescope.nvim
 --
 
-local actions = require 'telescope.actions'
+local actions = require('telescope.actions')
 
 local compact = {
   previewer = false,
@@ -11,8 +11,8 @@ local compact = {
   theme = 'dropdown',
 }
 
-require 'brew.telescope.remaps'
-require('telescope').setup({
+require('brew.telescope.remaps')
+require('telescope').setup {
   defaults = {
     vimgrep_arguments = {
       'rg',
@@ -51,4 +51,4 @@ require('telescope').setup({
       },
     },
   },
-})
+}

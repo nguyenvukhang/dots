@@ -1,4 +1,4 @@
-local lsp = require 'lspconfig'
+local lsp = require('lspconfig')
 
 local M = {}
 
@@ -34,22 +34,22 @@ lsp.astro.setup(base()) -- astro.js
 lsp.pyright.setup(base()) -- python
 
 -- go
-lsp.gopls.setup(base({ root_dir = lsp.util.root_pattern('go.mod', '.git') }))
+lsp.gopls.setup(base { root_dir = lsp.util.root_pattern('go.mod', '.git') })
 
 -- rust
 -- lsp.rls.setup(base({ root_dir = lsp.util.root_pattern 'Cargo.toml' }))
-lsp.rust_analyzer.setup(base({ root_dir = lsp.util.root_pattern 'Cargo.toml' }))
+lsp.rust_analyzer.setup(base { root_dir = lsp.util.root_pattern('Cargo.toml') })
 
 -- swift
 -- require('lspconfig').sourcekit.setup(base())
 
 -- lua
-require('neodev').setup({})
+require('neodev').setup {}
 local runtime_path = vim.split(package.path, ';', {})
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
-lsp.lua_ls.setup(base({
+lsp.lua_ls.setup(base {
   settings = {
     Lua = {
       runtime = { version = 'LuaJIT', path = runtime_path },
@@ -61,7 +61,7 @@ lsp.lua_ls.setup(base({
       telemetry = { enable = false },
     },
   },
-}))
+})
 
 -- To install, head over to https://download.eclipse.org/jdtls/snapshots
 -- and download the latest version.
@@ -71,13 +71,13 @@ M.java_lsp = function()
   local setup_status, setup = pcall(require, 'jdtls.setup')
 
   if not (jdtls_status and setup_status) then
-    vim.notify '[jdtls] java lsp not installed.'
+    vim.notify('[jdtls] java lsp not installed.')
     return
   end
 
   local jdtls_dir = vim.env.HOME .. '/.local/jdtls'
 
-  jdtls.start_or_attach(base({
+  jdtls.start_or_attach(base {
     cmd = {
       'java',
       '-Declipse.application=org.eclipse.jdt.ls.core.id1',
@@ -95,14 +95,14 @@ M.java_lsp = function()
       '-configuration',
       jdtls_dir .. '/config_mac',
       '-data',
-      vim.fn.stdpath 'cache'
+      vim.fn.stdpath('cache')
         .. '/jdtls/'
         .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t'),
     },
-    root_dir = setup.find_root({ '.git', '.clang-format' }),
+    root_dir = setup.find_root { '.git', '.clang-format' },
     settings = { java = {} },
     init_options = { bundles = {} },
-  }))
+  })
 end
 
 return M

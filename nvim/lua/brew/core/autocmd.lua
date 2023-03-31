@@ -1,9 +1,9 @@
 local group = vim.api.nvim_create_augroup('FILETYPES', { clear = true })
-local core = require 'brew.core'
+local core = require('brew.core')
 local vnoremap = core.vnoremap
 local onoremap = core.onoremap
 local nnoremap = core.nnoremap
-local git_branch = require 'brew.git_branch'
+local git_branch = require('brew.git_branch')
 
 local dollarDollar = function()
   -- require('nvim-autopairs').add_rule;
@@ -68,12 +68,10 @@ autocmd(general_entry, {
 autocmd({ 'BufEnter', 'FocusGained', 'BufWritePost' }, {
   callback = function()
     local set_line = function(branch)
-      vim.opt.statusline = '%#StatusLine#'
-        .. ' %f %h%w%m%r '
-        .. '%#StatusLineDim#'
-        .. branch
-        .. '%#StatusLine#'
-        .. '%=.'
+      -- print('set branch -> [' .. branch .. ']')
+      local L = '%#StatusLine# %f %h%w%m%r %#StatusLineDim#'
+      local R = '%=.'
+      vim.opt.statusline = L .. branch .. R
     end
     git_branch.init(set_line)
   end,
@@ -82,7 +80,7 @@ autocmd({ 'BufEnter', 'FocusGained', 'BufWritePost' }, {
 autocmd({ 'BufWritePost' }, {
   pattern = { '*.tex' },
   callback = function()
-    vim.fn.system('pdflatex -halt-on-error ' .. vim.fn.expand '%:p')
+    vim.fn.system('pdflatex -halt-on-error ' .. vim.fn.expand('%:p'))
   end,
 })
 

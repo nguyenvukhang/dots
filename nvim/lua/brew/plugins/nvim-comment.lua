@@ -10,8 +10,9 @@ local remaps = function()
   remap('v', '<C-c>', ':CommentToggle<CR>', opts)
 end
 
-local setup =
-  function() require('nvim_comment').setup({ create_mappings = false }) end
+local setup = function()
+  require('nvim_comment').setup { create_mappings = false }
+end
 
 setup()
 remaps()

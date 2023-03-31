@@ -1,4 +1,4 @@
-local core = require 'brew.core'
+local core = require('brew.core')
 local nnoremap = core.nnoremap
 local vnoremap = core.vnoremap
 local inoremap = core.inoremap
@@ -62,7 +62,7 @@ vnoremap('<C-r>', 'y:%s/<C-r>"//g<left><left>', true)
 vnoremap('<C-f>', "<esc>'<km<'>:'<,.g/^/m '><CR>")
 
 -- sort visual lines
-vnoremap('<C-s>', ":sort<CR>")
+vnoremap('<C-s>', ':sort<CR>')
 
 -- search visual selection
 vnoremap('*', 'y/<C-r>"<cr>', true)

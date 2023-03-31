@@ -43,4 +43,4 @@ vim.opt.cinoptions:append('L0') -- so that typing `std::` in cpp doesn't de-dent
 vim.g.mapleader = ' '
 
 -- color scheme
-vim.cmd.colorscheme 'gruvbox8'
+vim.cmd.colorscheme('gruvbox8')

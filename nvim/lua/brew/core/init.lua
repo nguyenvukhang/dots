@@ -9,8 +9,8 @@ end
 -- Get path to the root of the git workspace
 M.git_workspace_root = function()
   local stdout = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
-  if stdout:match 'fatal: not a git repository' then
-    vim.notify 'not in a git repo'
+  if stdout:match('fatal: not a git repository') then
+    vim.notify('not in a git repo')
     return nil
   else
     return stdout
@@ -26,47 +26,47 @@ M.onoremap=function(L,R,v)vim.keymap.set('o',L,R,{noremap=true,silent=not v})end
 
 -- Toggles the quickfix list/window
 M.toggle_qflist = function()
-  vim.cmd(list_is_open 'v:val.quickfix' and 'cclose' or 'copen')
+  vim.cmd(list_is_open('v:val.quickfix') and 'cclose' or 'copen')
 end
 
 -- Toggle diagnostics quickfix list
 M.toggle_diagnostics = function()
   -- close diagnostics if qflist is already open
-  if list_is_open 'v:val.quickfix' then
-    vim.cmd 'cclose' -- close quickfix window
+  if list_is_open('v:val.quickfix') then
+    vim.cmd('cclose') -- close quickfix window
     return
   end
 
   -- load diagnostics
-  vim.diagnostic.setloclist({ open = false })
+  vim.diagnostic.setloclist { open = false }
   local diagnostics = vim.fn.getloclist(0)
 
   -- check if there are any diagnostics
   if vim.tbl_isempty(diagnostics) then
-    vim.notify 'No diagnostics found'
+    vim.notify('No diagnostics found')
     return
   end
 
   vim.fn.setqflist(diagnostics)
-  vim.cmd 'copen' -- open quickfix window
+  vim.cmd('copen') -- open quickfix window
 end
 
 -- load plugins using lazy.nvim
 ---@param plugins table list of plugins to pass straight to lazy.nvim
 M.load_plugins = function(plugins)
-  local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+  local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
   if not vim.loop.fs_stat(lazypath) then
-    vim.notify 'lazy.nvim not installed. Run `:Boot` to install it.'
+    vim.notify('lazy.nvim not installed. Run `:Boot` to install it.')
     vim.api.nvim_create_user_command('Boot', function()
-      vim.fn.system({
+      vim.fn.system {
         'git',
         'clone',
         '--filter=blob:none',
         '--single-branch',
         'https://github.com/folke/lazy.nvim.git',
         lazypath,
-      })
-      print 'done installing lazy.nvim'
+      }
+      print('done installing lazy.nvim')
     end, {})
   else
     vim.opt.runtimepath:prepend(lazypath)
