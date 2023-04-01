@@ -1969,7 +1969,9 @@
             <TypeIndicator type="integer">0</TypeIndicator>
           </TransducerID>
           <TransducerLowerButtonSettings type="map">
-            <ButtonFunction type="integer">0</ButtonFunction>
+            <ApplicationName type="string">/Users/khang/dots/intuous/Cycle.app</ApplicationName>
+            <ButtonApplicationRunName type="string">Cycle.app</ButtonApplicationRunName>
+            <ButtonFunction type="integer">23</ButtonFunction>
             <ButtonName type="string">barrel</ButtonName>
           </TransducerLowerButtonSettings>
           <TransducerName type="string">\~111:0</TransducerName>
