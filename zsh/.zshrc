@@ -477,4 +477,4 @@ wreset() {
 
 alias clangf="cp $DOTS/zsh/.clang-format ."
 
-alias gitd="$REPOS/gitnu/bash/gitnu" # gitnu dev
+alias gitd="$REPOS/gitnu/target/debug/git-nu" # gitnu dev
