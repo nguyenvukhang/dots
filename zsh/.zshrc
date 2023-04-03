@@ -348,6 +348,7 @@ ed() {
 
 alias 2A="cd /Applications"
 alias 2c="cd $HOME/.config"
+alias 2ca="cd $HOME/.cache"
 alias 2d="cd $DOTS"
 alias 2e="cd $HOME/expo-apps"
 alias 2f="cd $HOME/files"
