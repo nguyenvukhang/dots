@@ -18,13 +18,13 @@ scrolling:
 font:
   normal:
     family: JetBrains Mono
-    style: Regular
+    style: Light
   bold:
-    style: Regular
+    style: Light
   italic:
-    style: Regular
+    style: Light
   bold_italic:
-    style: Regular
+    style: Light
   size: 15
   offset:
     x: 0
@@ -58,15 +58,6 @@ key_bindings:
 
 # Colors (Gruvbox Dark)
 colors:
-  bright:
-    black: "#7c6f64"
-    blue: "#83a598"
-    cyan: "#8ec07c"
-    green: "#b8bb26"
-    magenta: "#d3869b"
-    red: "#fb4934"
-    white: "#ebdbb2"
-    yellow: "#fabd2f"
   cursor:
     cursor: "#ebdbb2"
     text: "#282828"
