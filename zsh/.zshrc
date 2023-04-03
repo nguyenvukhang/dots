@@ -280,17 +280,23 @@ gca() {
 }
 
 yeet() {
-  notify() {
-    osascript -e "display notification \"${2-$text}\" with title \"$1\""
-  }
-  f() { # (those are not spaces)
-    $GIT push $@ >/dev/null 2>&1 &&
-      notify '✅ git push successful' '⠀' ||
-      notify '🔥 git push failed' '⠀'
-    unset -f f
-  }
-  (f $@ &)
-  echo "async pushed."
+  if has notif; then
+    notify() {
+      notif -identifier com.apple.terminal -title "$1" -subtitle "$2"
+    }
+    f() {
+      $GIT push $@ >/dev/null 2>&1 &&
+        notify 'git push' '✅ push successful' ||
+        notify 'git push' '🔥 push failed'
+      unset -f f
+    }
+    (f $@ &)
+    echo "async pushed."
+  else
+    # no notif binary found
+    echo "pushing sychronously..."
+    $GIT push $@
+  fi
 }
 
 # to remove a submodule completely:
