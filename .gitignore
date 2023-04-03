@@ -4,5 +4,3 @@ node_modules
 .zsh_history
 .zsh_sessions
 .history
-
-# vim:ft=sh
