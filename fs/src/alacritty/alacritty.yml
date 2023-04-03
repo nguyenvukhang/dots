@@ -5,7 +5,7 @@ env:
 
 window:
   decorations: buttonless
-  opacity: 0.98
+  opacity: 1
   padding:
     x: 8
     y: 4
