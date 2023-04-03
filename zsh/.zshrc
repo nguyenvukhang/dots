@@ -118,7 +118,7 @@ PATH=$HOME/.yarn/bin:$PATH
 PATH=/opt/homebrew/opt/node@16/bin:$PATH # node@16 via brew
 export PATH
 
-has git-nu && GIT=git-nu
+has git-nu && GIT=git-nu || GIT=git
 
 # to use with worktrees
 # [remote "origin"]
