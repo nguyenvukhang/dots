@@ -41,13 +41,10 @@ prompt_git() {
     echo " %F{241}($branch)"
 }
 
-ARROW='> '
-PROMPT=$'%F{blue}%~$(prompt_git)%f
-%(?.%F{green}${ARROW}%f.%F{red}${ARROW}%f)'
+PROMPT=$'%F{blue}%~$(prompt_git)%f\n%(?.%F{green}> %f.%F{red}> %f)'
 
 # generic fzf options
 # use with fzf --color=$FZF_COLORS
-# FZF_COLORS='pointer:green,header:white,hl:yellow,hl+:yellow'
 FZF_COLORS='pointer:green,header:white'
 export FZF_OPTS=(--height=7 +m --no-mouse --reverse
   --no-info --prompt="  " --color=$FZF_COLORS)
@@ -62,11 +59,11 @@ export MODTREE_ENV_SOURCE=$DOTS/personal/.secrets/modtree
 BUN_INSTALL=$HOME/.bun
 
 PATH=$HOME/.local/bin:$PATH
-PATH="$BUN_INSTALL/bin:$PATH"
+PATH=$BUN_INSTALL/bin:$PATH
 PATH=$HOME/Qt/6.4.2/macos/bin:$PATH
 PATH=$HOME/Qt/Tools/QtInstallerFramework/4.5/bin:$PATH
 PATH=$HOME/.yarn/bin:$PATH
-PATH=/opt/homebrew/opt/node@16/bin:$PATH # node@16 via brew
+PATH=$HOMEBREW_PREFIX/opt/node@16/bin:$PATH # node@16 via brew
 export PATH
 
 has git-nu && GIT=git-nu || GIT=git
@@ -105,49 +102,39 @@ gp() {
 alias gcf="$GIT config --edit"
 alias gitm="$EDITOR .gitmodules"
 
-load_worktrees() {
-  local WORKTREES=() i
-  while IFS= read -r i; do WORKTREES+=("$i"); done < <(git worktree list --porcelain)
-}
-
-# # git checkout, without speedbumps
-# # just get there already.
+# git checkout, without speedbumps. just get there already.
 gco() {
-  local OUTPUT="$($GIT checkout $@ 2>&1)" # execute original command
-  local greyed="\033[0;37m$OUTPUT\033[0m"
+  local OUTPUT="$($GIT checkout $@ 2>&1)" # original output
+  local greyed="\033[0;37m$OUTPUT\033[0m" T_DIR BRANCH
   jump() {
-    echo "\033[0;37mjumped to \033[0;32m${1}\033[0;37m ${2}\033[0m"
-    unset -f jump
+    echo "\033[0;37m -> \033[0;32m${1}\033[0;37m ${2}\033[0m" && unset -f jump
   }
   [[ $OUTPUT =~ '^(fatal: not a git repository|Already on).*$' ]] && echo $greyed && return
   [[ $OUTPUT =~ "^fatal: .* is already checked out at '(.*)'$" ]] && jump $1 && cd ${match[1]} && return
   [[ $OUTPUT =~ 'Aborting' ]] && echo $greyed && return
-  load_worktrees
-  local T_DIR BRANCH
-  for line in ${WORKTREES[@]}; do
+  while IFS= read -r line; do
     if [[ $line =~ '^worktree (.*)$' ]]; then
-      dir=${match[1]}                       # save absolute path
-      [[ ${line##*/} == $1 ]] && T_DIR=$dir # not used in loop
+      dir=${match[1]}
+      [[ ${line##*/} == $1 ]] && T_DIR=$dir
     elif [[ $line =~ '^branch refs/heads/(.*)$' ]]; then
-      [[ ${match[1]} == $1 && -d $dir ]] && jump $1 && cd $dir && return # jump with branch
-      [[ -z $BRANCH && $T_DIR ]] && BRANCH=${match[1]}                   # not used in loop
+      [[ ${match[1]} == $1 && -d $dir ]] && jump $1 && cd $dir && return
+      [[ -z $BRANCH && $T_DIR ]] && BRANCH=${match[1]}
     fi
-  done
-  [ $T_DIR ] && jump "$BRANCH" "@$1" && cd $T_DIR && return # jump with dir
-  [ $OUTPUT ] && echo $greyed || return 0                   # bypass
+  done < <(git worktree list --porcelain)
+  [ $T_DIR ] && jump "$BRANCH" "(dir: $1)" && cd $T_DIR && return # jump with dir
+  [ $OUTPUT ] && echo $greyed || return 0
 }
 
 # git worktree navigation, by directory name
 gw() {
-  load_worktrees
-  for line in ${WORKTREES[@]}; do
+  while IFS= read -r line; do
     # if line begins with 'worktree', use it to set dir and base
     if [[ $line =~ '^worktree (.*)$' ]]; then
       dir=${match[1]}
       base=${line##*/}
       [[ $base == $1 ]] && cd $dir
     fi
-  done
+  done < <(git worktree list --porcelain)
 }
 
 # custom git clone
@@ -179,12 +166,12 @@ log_message() {
 }
 
 # git logs
-LINES=15
+log_line_count=15
 gl() {
-  log_graph -n ${1-$LINES} --branches
+  log_graph -n ${1-$log_line_count} --branches
 }
 gla() {
-  log_graph -n ${1-$LINES} --all
+  log_graph -n ${1-$log_line_count} --all
 }
 gll() {
   log_graph --all
@@ -192,7 +179,7 @@ gll() {
 mongl() {
   for i in {1..120}; do
     clear
-    gla ${1:-$LINES}
+    gla ${1:-$log_line_count}
     sleep 2
   done
 }
@@ -303,7 +290,7 @@ alias 2ca="cd $HOME/.cache"
 alias 2d="cd $DOTS"
 alias 2e="cd $HOME/expo-apps"
 alias 2f="cd $HOME/files"
-alias 2h="cd /opt/homebrew"
+alias 2h="cd $HOMEBREW_PREFIX"
 alias 2j="cd $HOME/Downloads"
 alias 2l="cd $HOME/.local"
 alias 2lb="cd $HOME/.local/bin"
