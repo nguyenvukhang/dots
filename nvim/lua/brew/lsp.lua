@@ -41,7 +41,7 @@ lsp.gopls.setup(base { root_dir = lsp.util.root_pattern('go.mod', '.git') })
 lsp.rust_analyzer.setup(base { root_dir = lsp.util.root_pattern('Cargo.toml') })
 
 -- swift
--- require('lspconfig').sourcekit.setup(base())
+require('lspconfig').sourcekit.setup(base())
 
 -- lua
 require('neodev').setup {}
