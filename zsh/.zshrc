@@ -13,6 +13,7 @@ tmux_loop() {
     tmux has-session -t $BASE && continue || exit
   done
 }
+export EDITOR=nvim # somehow this export is needed for tmux select to work
 [[ $START_TMUX == true ]] && tmux_loop
 
 # cargo (rust)
@@ -25,7 +26,6 @@ has() {
 # exports
 export UNI=$HOME/uni
 export SHELL_SESSIONS_DISABLE=1 # remove ~/.zsh_sessions
-export EDITOR=nvim
 
 unsetopt BEEP    # prevents beeps in general
 setopt IGNOREEOF # prevents <C-d> from quitting the shell
@@ -107,7 +107,7 @@ gco() {
   local OUTPUT="$($GIT checkout $@ 2>&1)" # original output
   local greyed="\033[0;37m$OUTPUT\033[0m" T_DIR BRANCH
   jump() {
-    echo "\033[0;37m -> \033[0;32m${1}\033[0;37m ${2}\033[0m" && unset -f jump
+    echo "\033[0;37m>> \033[0;32m${1}\033[0;37m ${2}\033[0m" && unset -f jump
   }
   [[ $OUTPUT =~ '^(fatal: not a git repository|Already on).*$' ]] && echo $greyed && return
   [[ $OUTPUT =~ "^fatal: .* is already checked out at '(.*)'$" ]] && jump $1 && cd ${match[1]} && return
