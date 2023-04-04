@@ -24,14 +24,15 @@ func press(_ key: KeyPress) {
     press(key.key, withModifiers: key.modifiers)
 }
 
-let tool_file = getCacheDir().appendingPathComponent("intuous-cache").appendingPathComponent("tool")
-
 let tools = [
     KeyPress.p, // Pen
     KeyPress.e // Eraser
 ]
 
-let a = readToolIndex(toolFile: tool_file)
+let d = UserDefaults.standard, t = tools.count
+let key = "wacom-tablet-cycle-tool"
+
+let a = d.integer(forKey: key)
 press(tools[a])
-writeToolIndex(toolFile: tool_file, current: a, size: tools.count)
-usleep(10_000)
+d.setValue((a == 0 ? t : a) - 1, forKey: key)
+usleep(5000)
