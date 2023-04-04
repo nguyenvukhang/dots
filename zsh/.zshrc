@@ -1,80 +1,31 @@
 START_TMUX=true
 
-function demo_size() {
-  kitty @ resize-os-window --width=56 --height=15
+# load homebrew
+[ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Use tmux session $BASE as a shell wrapper.
+# Only quitting $BASE will exit the terminal emulator.
+tmux_loop() {
+  ([ $TMUX ] || ! command -v tmux) && return || local BASE=tmux
+  while; do
+    local EC=$(tmux new-session -As $BASE -n editor)
+    [[ $EC == "[detached (from session $BASE)]" ]] && exit
+    tmux has-session -t $BASE && continue || exit
+  done
 }
+[[ $START_TMUX == true ]] && tmux_loop
 
-# load homebrew if exists
-if [ -f /opt/homebrew/bin/brew ]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
-
-# load cargo (rust) if exists
-if [ -f ~/.cargo/env ]; then
-  source ~/.cargo/env
-fi
+# cargo (rust)
+[ -f ~/.cargo/env ] && source ~/.cargo/env
 
 has() {
   command -v $1 >/dev/null
 }
 
+# exports
 export UNI=$HOME/uni
-UNI_LAUNCH=$UNI/.session # use this file's first line as initial directory
-[ ! -f $UNI_LAUNCH ] && printf "$UNI" >$UNI_LAUNCH
-2u() {
-  local f c n && let n=1 && LIST= && let c=0
-  [[ "$1" =~ [0-9]+ ]] && let n=$1
-  [[ $1 == 'l' ]] && LIST=true # list targets
-  # list target dirs
-  while read -r i; do
-    [[ $i =~ ^#.* ]] && continue             # comment line
-    f=${i/\~/$HOME} && [ -d $f ] || continue # not a path
-    let c++
-    if [[ "$LIST" == 'true' ]]; then
-      echo "$c\t$i" # list lines
-    else
-      [[ "$n" -eq "$c" ]] && cd $f && return # jump if match
-    fi
-  done < <(cat $UNI_LAUNCH)
-}
-[ $PWD = $HOME ] && 2u
-
-# somehow important
-# export LANG=en_US.UTF-8       # used to need
-# export LC_ALL=en_US.UTF-8     # used to need
-# export TERM="screen-256color" # used to need
-export LESSHISTFILE=- # remove ~/.lesshst
-export SAVEHIST=0     # remove ~/.zsh_sessions
+export SHELL_SESSIONS_DISABLE=1 # remove ~/.zsh_sessions
 export EDITOR=nvim
-
-# checks to see if required apps are installed
-require=(fzf nvim fd rg tmux)
-for app in ${require[@]}; do
-  has $app || echo "zshrc needs: $app"
-done
-
-# use tmux as a shell wrapper
-# when a terminal emulator opens, immediately enter tmux
-# quitting tmux, exit the terminal emulator too
-tmux_loop() {
-  # stop if already running tmux/tmux not installed
-  ([ $TMUX ] || ! has tmux) && return
-  # get base session name (one per terminal)
-  local BASE EXITCODE
-  case ${TERM_PROGRAM} in
-  'iTerm.app') BASE='iterm2' ;;
-  'Apple_Terminal') BASE='apple' ;;
-  *) BASE='base' ;;
-  esac
-  # loop to stay within tmux
-  while; do
-    EXITCODE=$(tmux new-session -As $BASE -n flow)
-    [[ $EXITCODE == "[detached (from session $BASE)]" ]] && exit
-    tmux has-session -t $BASE && continue
-    exit 0
-  done
-}
-[[ $START_TMUX == 'true' ]] && tmux_loop
 
 unsetopt BEEP    # prevents beeps in general
 setopt IGNOREEOF # prevents <C-d> from quitting the shell
@@ -188,9 +139,7 @@ gco() {
 
 # git worktree navigation, by directory name
 gw() {
-  # get all worktrees
   load_worktrees
-  # iterate through worktrees and find target
   for line in ${WORKTREES[@]}; do
     # if line begins with 'worktree', use it to set dir and base
     if [[ $line =~ '^worktree (.*)$' ]]; then
@@ -200,6 +149,7 @@ gw() {
     fi
   done
 }
+
 # custom git clone
 cyclone() {
   local repo="${@: -1}" # the last argument
@@ -220,24 +170,21 @@ gcb() {
 
 # git log + graph template
 log_graph() {
-  local commit='%C(yellow)%h%C(auto)%d'
-  local f="%C(yellow)%h%C(auto)%d %Creset%s %C(dim)(%ar)"
-  $GIT log --graph --pretty=$f $@
+  $GIT log --graph --pretty='%C(yellow)%h%C(auto)%d %Creset%s %C(dim)(%ar)' $@
 }
 
 # git log + message template
 log_message() {
-  local f="%C(yellow)%h %Creset%s"
-  $GIT log --all --pretty=format:$f $@
+  $GIT log --all --pretty=format:"%C(yellow)%h %Creset%s" $@
 }
 
 # git logs
-lines=15
+LINES=15
 gl() {
-  log_graph -n ${1-$lines} --branches
+  log_graph -n ${1-$LINES} --branches
 }
 gla() {
-  log_graph -n ${1-$lines} --all
+  log_graph -n ${1-$LINES} --all
 }
 gll() {
   log_graph --all
@@ -245,7 +192,7 @@ gll() {
 mongl() {
   for i in {1..120}; do
     clear
-    gla ${1:-$lines}
+    gla ${1:-$LINES}
     sleep 2
   done
 }
@@ -321,9 +268,7 @@ p() {
   [ -z $target ] && echo "nothing selected." && return
   case $1 in
   '')
-    local data=$(pass $target)
-    local YELLOW="\e[1;33m"
-    local NORMAL="\e[1;0m"
+    local data=$(pass $target) YELLOW="\e[1;33m" NORMAL="\e[1;0m"
     # print the second line to stdout
     [[ "$data" = *$'\n'* ]] && echo ${YELLOW}${data#*$'\n'}${NORMAL}
     read -ks "_?Press any key to continue..."
@@ -385,8 +330,22 @@ alias b="cd -"  # back
   cd $($GIT rev-parse --show-toplevel)
 }
 
-EXA_OPTS=(--group-directories-first --sort=Filename --ignore-glob='.DS_Store')
+UNI_LAUNCH=$UNI/.session # use this file's first line as initial directory
+[ ! -f $UNI_LAUNCH ] && echo "$UNI" >$UNI_LAUNCH
+2u() {
+  local INDEX=0 TARGET LINE
+  # use first arg as target index, if it's a number from 1-9 inclusive
+  [[ $1 =~ ^[0-9]$ ]] && TARGET=$1 || TARGET=0
+  while read -r LINE; do
+    [[ $LINE =~ ^#.* ]] && continue                           # ignore lines starting with '#'
+    [[ $TARGET -eq $INDEX ]] && cd ${LINE/\~/$HOME} && return # jump if match
+    let INDEX++
+  done < <(cat $UNI_LAUNCH)
+}
+[ $PWD = $HOME ] && 2u
+
 if has exa; then
+  EXA_OPTS=(--group-directories-first --sort=Filename --ignore-glob='.DS_Store')
   alias ls="exa -a $EXA_OPTS"
   alias ll="exa -al $EXA_OPTS"
 else
@@ -415,15 +374,6 @@ g() {
 # pdfgrep with nice setup
 pd() {
   pdfgrep --with-filename --page-number $@
-}
-
-# search for a string in all uni pdfs
-pdfs() {
-  local PDF_DIR=$UNI
-  echo "\033[1;37msearching for pdfs in ${PDF_DIR/$HOME/~}\033[0m"
-  [ -z $1 ] && echo "No search terms. Aborting" && return 0
-  pushd $PDF_DIR >/dev/null
-  fd -t f -e pdf --exclude '.meta' --strip-cwd-prefix | xargs pdfgrep -l $1
 }
 
 alias ct="printf '\033[2J\033[3J\033[1;1H'"                       # clear terminal
@@ -465,22 +415,20 @@ t() {
   fi
 }
 
-tl() {
-  t $@ >/tmp/uni-tl
-  [ -f /tmp/uni-tl ] && $EDITOR /tmp/uni-tl
-}
-
 # clears jdtls (nvim) cache
 jclear() {
   rm -rf $HOME/.cache/nvim/jdtls
   mkdir -p $HOME/.cache/nvim/jdtls
 }
 
-# resets wacom drivers
-wreset() {
-  '/Applications/Wacom Tablet.localized/Wacom Tablet Utility.app/Contents/MacOS/Wacom Tablet Utility' --restart
-}
-
+# newer aliases
 alias clangf="cp $DOTS/zsh/.clang-format ."
-
 alias gitd="$REPOS/gitnu/target/debug/git-nu" # gitnu dev
+
+# checks to see if required apps are installed
+checkhealth() {
+  local REQUIRE=(fzf nvim fd rg tmux)
+  for app in ${REQUIRE[@]}; do
+    has $app || echo "zshrc needs: $app"
+  done
+}
