@@ -240,6 +240,12 @@ yeet() {
 # 3. git rm -f a/submodule
 # Note: a/submodule (no trailing slash)
 
+# alt way (derived):
+# 1. rm -rf a/submodule
+# 2. git submodule deinit -f -- a/submodule
+# 3. rm -rf .git/modules/a/submodule
+# 4. git rm -f a/submodule
+
 # remove a secrets file from all git history:
 # [https://stackoverflow.com/questions/43762338/how-to-remove-file-from-git-history]
 # git filter-branch --index-filter "git rm -rf --cached --ignore-unmatch path_to_file" HEAD
