@@ -4,22 +4,25 @@ import convert from 'xml-js'
 import { RootNode } from './types'
 import { getAreaElements } from './area'
 import { rect, Rect } from './rect'
-import { rmf, apply, hasElement, mkdir } from './util'
+import { rmf, apply, hasElement } from './util'
+
+// $ROOT_DIR
+// ├── dots.wacomprefs/
+// │  ├── .stable                       <-- base state
+// │  ├── com.wacom.wacomtablet.prefs   <-- base state + generated
+// │  ├── com.wacom.wacomtouch.prefs
+// │  └── version.plist
+// └── generate-prefs/
+//    └── index.ts
 
 const ROOT_DIR = join(__dirname, '..')
-const PRESET_DIR = join(ROOT_DIR, 'presets')
 const TARGET_DIR = join(ROOT_DIR, 'dots.wacomprefs')
 const XML_TARGET = join(TARGET_DIR, 'com.wacom.wacomtablet.prefs')
-const XML_STABLE = join(TARGET_DIR, '.stable', 'com.wacom.wacomtablet.prefs')
+const XML_SOURCE = join(TARGET_DIR, '.stable', 'com.wacom.wacomtablet.prefs')
 
-mkdir(PRESET_DIR)
+const stableJs = convert.xml2js(fs.readFileSync(XML_SOURCE, 'utf8')) as RootNode
 
-const stableXml = fs.readFileSync(XML_STABLE, 'utf8')
-console.log(XML_STABLE)
-const stableJs = convert.xml2js(stableXml) as RootNode
-const preset = (p: string) => join(PRESET_DIR, p + '.prefs')
-
-function buildPreset(name: string, rect: Rect) {
+function buildPreset(name: string, rect: Rect): string {
   for (let i = 0; i < stableJs.elements.length; i++) {
     apply(
       stableJs.elements[i],
@@ -37,12 +40,11 @@ function buildPreset(name: string, rect: Rect) {
         )
     )
   }
-  rmf(preset(name))
-  fs.writeFileSync(preset(name), convert.js2xml(stableJs))
-  console.log(`Preset: [${name}]\n`, rect.export(), '\n')
+  console.log(`build: [${name}]\n`, rect.export(), '\n')
+  return convert.js2xml(stableJs)
 }
 
 rect.setHorizontalMargin(0)
-buildPreset('full', rect)
 
-fs.copyFileSync(preset('full'), XML_TARGET)
+rmf(XML_TARGET)
+fs.writeFileSync(XML_TARGET, buildPreset('full', rect))
