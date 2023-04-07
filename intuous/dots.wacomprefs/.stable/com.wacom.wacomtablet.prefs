@@ -990,7 +990,7 @@
               <ButtonFunction type="integer">8</ButtonFunction>
               <ButtonKeystrokeShortcutName type="string">Toggle Precision</ButtonKeystrokeShortcutName>
               <ButtonName type="string">Button3</ButtonName>
-              <Keystroke type="kestring"><![CDATA[&command;&shift;&vk=78:cc=10:kb=5b;]]></Keystroke>
+              <Keystroke type="kestring"><![CDATA[&command;&option;&shift;&control;&vk=11:cc=74:kb=5b;]]></Keystroke>
             </ArrayElement>
             <ArrayElement type="map">
               <ButtonFunction type="integer">8</ButtonFunction>
