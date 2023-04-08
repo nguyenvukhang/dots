@@ -28,6 +28,7 @@ local plugins = {
       }
     end,
   },
+  'ChesleyTan/wordCount.vim',
   'folke/neodev.nvim',
   'nvim-lua/plenary.nvim',
   'mfussenegger/nvim-jdtls',
