@@ -16,6 +16,10 @@ all:
 	@make release
 	@rm -f $(TARGET_BIN)
 	@cp $(OUTPUT_BIN) $(TARGET_BIN)
+	wc -c $(TARGET_BIN)
 
 open:
 	open ../Cycle.app
+
+size:
+	wc -c $(TARGET_BIN)

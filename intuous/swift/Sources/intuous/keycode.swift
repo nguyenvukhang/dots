@@ -14,7 +14,6 @@ enum KeyCode: UInt16 {
     // Layout-independent Keys
     // eg.These key codes are always the same key on all layouts.
     case returnKey = 0x24
-//    case enter = 0x4C //0x24
     case tab = 0x30
     case space = 0x31
     case delete = 0x33
