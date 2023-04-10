@@ -89,9 +89,12 @@ autocmd({ 'BufWritePost' }, {
     local ok = output[1] == '0'
     local msg = ok and 'successful build!' or 'build failed.'
     if not ok then
+      local qf = {}
       for _, v in pairs(output) do
-        print(v)
+        table.insert(qf, { text = v })
       end
+      vim.fn.setqflist(qf)
+      vim.cmd('copen') -- open quickfix window
     end
     print('[pdflatex] ' .. msg)
   end,
