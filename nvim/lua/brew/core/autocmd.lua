@@ -85,14 +85,14 @@ autocmd({ 'BufWritePost' }, {
   pattern = { '*.tex' },
   callback = function()
     vim.cmd('redraw')
-    local dir = vim.fn.expand('%:p:h')
-    local ok = core.status(
-      'pdflatex -halt-on-error -output-directory='
-        .. dir
-        .. ' '
-        .. vim.fn.expand('%:p')
-    )
+    local output = vim.fn.systemlist('latext ' .. vim.fn.expand('%:p'))
+    local ok = output[1] == '0'
     local msg = ok and 'successful build!' or 'build failed.'
+    if not ok then
+      for _, v in pairs(output) do
+        print(v)
+      end
+    end
     print('[pdflatex] ' .. msg)
   end,
 })
