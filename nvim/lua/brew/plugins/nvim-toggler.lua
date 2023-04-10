@@ -3,6 +3,10 @@ nt.setup {
   inverses = {
     ['- [ ]'] = '- [x]',
     ['row'] = 'column',
+    ['width'] = 'height',
+    ['sin'] = 'cos',
+    ['cot'] = 'tan',
+    ['sec'] = 'csc',
     ['good'] = 'bad',
     ['ON'] = 'OFF',
   },
