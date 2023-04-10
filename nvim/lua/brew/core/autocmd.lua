@@ -84,7 +84,16 @@ autocmd({ 'BufEnter', 'FocusGained', 'BufWritePost' }, {
 autocmd({ 'BufWritePost' }, {
   pattern = { '*.tex' },
   callback = function()
-    vim.fn.system('pdflatex -halt-on-error ' .. vim.fn.expand('%:p'))
+    vim.cmd('redraw')
+    local dir = vim.fn.expand('%:p:h')
+    local ok = core.status(
+      'pdflatex -halt-on-error -output-directory='
+        .. dir
+        .. ' '
+        .. vim.fn.expand('%:p')
+    )
+    local msg = ok and 'successful build!' or 'build failed.'
+    print('[pdflatex] ' .. msg)
   end,
 })
 

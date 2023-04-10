@@ -85,6 +85,12 @@ M.augroup = function(group_name)
   end
 end
 
+-- returns true on successful execution (sh return code 0)
+---@param cmd string
+M.status = function(cmd)
+  return vim.fn.systemlist(cmd .. ' >/dev/null && echo 0 || echo 1')[1] == '0'
+end
+
 -- to clear command line area:
 -- vim.cmd('redraw!')
 
