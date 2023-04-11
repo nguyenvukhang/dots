@@ -3,9 +3,6 @@
 env:
   TERM: xterm-256color
 
-import:
-  - ~/dots/fs/src/alacritty/rose-pine.yml
-
 window:
   decorations: buttonless
   opacity: 1
@@ -101,3 +98,23 @@ cursor:
   unfocused_hollow: true
 
 live_config_reload: false
+
+colors: # (gruvbox dark)
+  cursor:
+    cursor: "#ebdbb2"
+    text: "#282828"
+  normal:
+    black: "#7c6f64"
+    blue: "#83a598"
+    cyan: "#8ec07c"
+    green: "#b8bb26"
+    magenta: "#d3869b"
+    red: "#fb4934"
+    white: "#ebdbb2"
+    yellow: "#fabd2f"
+  primary:
+    background: "#282828"
+    foreground: "#ebdbb2"
+  selection:
+    background: "#ebdbb2"
+    text: "#504945"

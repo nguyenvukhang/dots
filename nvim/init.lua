@@ -53,6 +53,7 @@ local plugins = {
 }
 
 require('brew.core').load_plugins(plugins)
+require('gruvbox')
 
 -- independent of plugins, server-friendly
 require('brew.core.sets')

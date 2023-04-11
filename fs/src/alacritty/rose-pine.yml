@@ -13,7 +13,7 @@ colors:
     white: "#e0def4"
     yellow: "#f6c177"
   primary:
-    background: "#2a273f"
+    background: "#2F2D39"
     foreground: "#e0def4"
   selection:
     background: "#e0def4"
