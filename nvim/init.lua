@@ -50,4 +50,4 @@ require('brew.core.sets')
 require('brew.core.remaps')
 require('brew.core.commands')
 require('brew.core.autocmd')
--- require 'brew.math'
+require('brew.latex')
