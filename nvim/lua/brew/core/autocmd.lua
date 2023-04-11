@@ -86,17 +86,15 @@ autocmd({ 'BufWritePost' }, {
   callback = function()
     vim.cmd('redraw')
     local output = vim.fn.systemlist('latext ' .. vim.fn.expand('%:p'))
-    local ok = output[1] == '0'
+    local ok = #output == 0
     local msg = ok and 'successful build!' or 'build failed.'
-    if not ok then
-      local qf = {}
-      for _, v in pairs(output) do
-        table.insert(qf, { text = v })
-      end
-      vim.fn.setqflist(qf)
-      vim.cmd('copen') -- open quickfix window
-    end
     print('[pdflatex] ' .. msg)
+    if ok then return end
+    local qf = {}
+    for _, v in pairs(output) do
+      table.insert(qf, { text = v })
+    end
+    vim.fn.setqflist(qf)
   end,
 })
 
