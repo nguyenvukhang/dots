@@ -28,6 +28,15 @@ local plugins = {
       }
     end,
   },
+  {
+    'rose-pine/neovim',
+    config = function()
+      require('rose-pine').setup {
+        variant = 'moon',
+        disable_background = true,
+      }
+    end,
+  },
   'ChesleyTan/wordCount.vim',
   'folke/neodev.nvim',
   'nvim-lua/plenary.nvim',
