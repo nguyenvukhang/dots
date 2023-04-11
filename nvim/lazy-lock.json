@@ -9,6 +9,7 @@
   "markdown-preview.nvim": { "branch": "master", "commit": "02cc3874738bc0f86e4b91f09b8a0ac88aef8e96" },
   "neodev.nvim": { "branch": "main", "commit": "50eaabc6645b43ded9126f97080bff767063b1c6" },
   "neoformat": { "branch": "master", "commit": "891fad5829f91cbc3d0866f7abd028d233b8763e" },
+  "neovim": { "branch": "main", "commit": "f8e210df52a4f418eae3690eb744b06c13a6c556" },
   "nvim-autopairs": { "branch": "master", "commit": "e755f366721bc9e189ddecd39554559045ac0a18" },
   "nvim-cmp": { "branch": "main", "commit": "feed47fd1da7a1bad2c7dca456ea19c8a5a9823a" },
   "nvim-colorizer.lua": { "branch": "master", "commit": "911ce3676cd28fa6651a6c53d20e3b01914fe6da" },
