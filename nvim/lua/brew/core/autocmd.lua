@@ -86,16 +86,17 @@ autocmd({ 'BufWritePost' }, {
   pattern = { '*.tex' },
   callback = function()
     vim.cmd('redraw')
-    local output = vim.fn.systemlist('latext ' .. vim.fn.expand('%:p'))
-    local ok = #output == 0
-    local msg = ok and 'successful build!' or 'build failed.'
-    print('[pdflatex] ' .. msg)
-    if ok then return end
-    local qf = {}
-    for _, v in pairs(output) do
-      table.insert(qf, { text = v })
-    end
-    vim.fn.setqflist(qf)
+    -- local output = vim.fn.systemlist('latext ' .. vim.fn.expand('%:p'))
+    vim.fn.systemlist('make build')
+    -- local ok = #output == 0
+    -- local msg = ok and 'successful build!' or 'build failed.'
+    -- print('[pdflatex] ' .. msg)
+    -- if ok then return end
+    -- local qf = {}
+    -- for _, v in pairs(output) do
+    --   table.insert(qf, { text = v })
+    -- end
+    -- vim.fn.setqflist(qf)
   end,
 })
 

@@ -74,7 +74,7 @@ M.setup = function()
     GruvboxAquaUnderline = { sp = colors.aqua },
     GruvboxOrangeUnderline = { sp = colors.orange },
     Normal = { fg = colors.fg1, bg = nil },
-    NormalFloat = { fg = colors.fg1, bg = colors.bg1 },
+    NormalFloat = { fg = colors.fg1, bg = nil },
     NormalNC = { link = 'Normal' },
     CursorLine = { bg = colors.bg1 },
     CursorColumn = { link = 'CursorLine' },
