@@ -72,11 +72,9 @@ autocmd(general_entry, {
 autocmd({ 'BufEnter', 'FocusGained', 'BufWritePost' }, {
   callback = function()
     local set_line = function(branch)
-      -- print('set branch -> [' .. branch .. ']')
-      local L = '%#StatusLine# %f %h%w%m%r %#StatusLineDim#'
-      -- local R = '%=%{wordCount#WordCount()} '
-      local R = '%=.'
-      vim.opt.statusline = L .. branch .. R
+      branch = '%#StatusLineBranch#' .. branch .. '%#StatusLine#'
+      local b = { ' %f %h%w%m%r ', branch, '%=*' }
+      vim.opt.statusline = table.concat(b)
     end
     git_branch.init(set_line)
   end,
