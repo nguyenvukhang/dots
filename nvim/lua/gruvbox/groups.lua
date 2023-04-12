@@ -304,6 +304,8 @@ M.setup = function()
     diffOldFile = { link = 'GruvboxOrange' },
     diffLine = { link = 'GruvboxBlue' },
     diffIndexLine = { link = 'diffChanged' },
+    -- custom
+    rustCommentLineDoc = { link = "Comment" },
   }
 end
 
