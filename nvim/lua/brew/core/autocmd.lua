@@ -84,7 +84,21 @@ autocmd({ 'BufEnter', 'FocusGained', 'BufWritePost' }, {
 
 autocmd({ 'BufWritePost' }, {
   pattern = { '*.tex' },
-  callback = function() require('brew.latex').entry() end,
+  callback = function()
+    local full_path = vim.fn.expand('%:p')
+    local output = vim.fn.systemlist('latext ' .. full_path)
+    local ok = #output == 1 and output[1] == '[successful build!]'
+    vim.cmd('redraw!')
+    if ok then
+      print('[pdflatex] successful build!')
+    else
+      print('[pdflatex] build failed.')
+      for i, v in pairs(output) do
+        output[i] = { text = v }
+      end
+      vim.fn.setqflist(output)
+    end
+  end,
 })
 
 -- temporary for writing math

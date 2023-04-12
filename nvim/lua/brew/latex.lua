@@ -75,3 +75,9 @@ M.entry = function()
 end
 
 return M
+
+-- USAGE
+-- autocmd({ 'BufWritePost' }, {
+--   pattern = { '*.tex' },
+--   callback = function() require('brew.latex').entry() end,
+-- })
