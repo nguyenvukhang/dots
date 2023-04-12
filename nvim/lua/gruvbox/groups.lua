@@ -15,8 +15,7 @@ local colors = {
 }
 -- stylua: ignore stop
 
--- neovim terminal mode colors
-local function set_terminal_colors()
+M.setup = function()
   vim.g.terminal_color_0 = colors.bg0
   vim.g.terminal_color_8 = colors.gray
   vim.g.terminal_color_1 = colors.red
@@ -33,13 +32,8 @@ local function set_terminal_colors()
   vim.g.terminal_color_14 = colors.aqua
   vim.g.terminal_color_7 = colors.fg4
   vim.g.terminal_color_15 = colors.fg1
-end
 
-M.setup = function()
-  local config = require('gruvbox').config
-  set_terminal_colors()
-
-  local groups = {
+  return {
     -- Base groups
     GruvboxFg0 = { fg = colors.fg0 },
     GruvboxFg1 = { fg = colors.fg1 },
@@ -95,20 +89,20 @@ M.setup = function()
     SpecialKey = { link = 'GruvboxFg4' },
     Visual = { bg = colors.bg3 },
     VisualNOS = { link = 'Visual' },
-    Search = { fg = colors.yellow, bg = colors.bg0, reverse = config.inverse },
+    Search = { fg = colors.yellow, bg = colors.bg0, reverse = true },
     IncSearch = {
       fg = colors.orange,
       bg = colors.bg0,
-      reverse = config.inverse,
+      reverse = true,
     },
     CurSearch = { link = 'IncSearch' },
     QuickFixLine = { fg = colors.bg0, bg = colors.yellow },
     Underlined = { fg = colors.blue },
-    StatusLine = { fg = colors.bg2, bg = colors.fg1, reverse = config.inverse },
+    StatusLine = { fg = colors.bg2, bg = colors.fg1, reverse = true },
     StatusLineNC = {
       fg = colors.bg1,
       bg = colors.fg1,
-      reverse = config.inverse,
+      reverse = true,
     },
     WinBar = { fg = colors.fg4, bg = colors.bg0 },
     WinBarNC = { fg = colors.fg3, bg = colors.bg1 },
@@ -125,7 +119,7 @@ M.setup = function()
     SignColumn = { bg = nil },
     Folded = { fg = colors.gray, bg = colors.bg1, italic = false },
     FoldColumn = { fg = colors.gray, bg = nil },
-    Cursor = { reverse = config.inverse },
+    Cursor = { reverse = true },
     vCursor = { link = 'Cursor' },
     iCursor = { link = 'Cursor' },
     lCursor = { link = 'Cursor' },
@@ -133,7 +127,7 @@ M.setup = function()
     Comment = { fg = colors.gray, italic = false },
     Todo = { fg = colors.fg0, italic = false },
     Done = { fg = colors.orange, italic = false },
-    Error = { fg = colors.red, reverse = config.inverse },
+    Error = { fg = colors.red, reverse = true },
     Statement = { link = 'GruvboxRed' },
     Conditional = { link = 'GruvboxRed' },
     Repeat = { link = 'GruvboxRed' },
@@ -162,10 +156,10 @@ M.setup = function()
     PmenuSel = { fg = colors.bg2, bg = colors.blue },
     PmenuSbar = { bg = colors.bg2 },
     PmenuThumb = { bg = colors.bg4 },
-    DiffDelete = { fg = colors.red, bg = colors.bg0, reverse = config.inverse },
-    DiffAdd = { fg = colors.green, bg = colors.bg0, reverse = config.inverse },
-    DiffChange = { fg = colors.aqua, bg = colors.bg0, reverse = config.inverse },
-    DiffText = { fg = colors.yellow, bg = colors.bg0, reverse = config.inverse },
+    DiffDelete = { fg = colors.red, bg = colors.bg0, reverse = true },
+    DiffAdd = { fg = colors.green, bg = colors.bg0, reverse = true },
+    DiffChange = { fg = colors.aqua, bg = colors.bg0, reverse = true },
+    DiffText = { fg = colors.yellow, bg = colors.bg0, reverse = true },
     SpellCap = { link = 'GruvboxBlueUnderline' },
     SpellBad = { link = 'GruvboxRedUnderline' },
     SpellLocal = { link = 'GruvboxAquaUnderline' },
@@ -311,8 +305,6 @@ M.setup = function()
     diffLine = { link = 'GruvboxBlue' },
     diffIndexLine = { link = 'diffChanged' },
   }
-
-  return groups
 end
 
 return M

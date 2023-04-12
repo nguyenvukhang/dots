@@ -1,1 +1,1 @@
-require('brew.lsp').java_lsp()
+require('brew.lsp').java()

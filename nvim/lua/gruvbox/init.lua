@@ -1,12 +1,5 @@
 local M = {}
 
--- default configs
-M.config = {
-  inverse = true, -- invert background for search, diffs, statuslines and errors
-  contrast = '', -- can be "hard", "soft" or empty string
-  dim_inactive = false,
-}
-
 function M.setup(config)
   M.config = vim.tbl_deep_extend('force', M.config, config or {})
 end
