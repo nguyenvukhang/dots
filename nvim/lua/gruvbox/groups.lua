@@ -13,7 +13,7 @@ local colors = {
   orange = '#fe8019',
   gray = '#928374',
 }
--- stylua: ignore stop
+-- stylua: ignore end
 
 M.setup = function()
   vim.g.terminal_color_0 = colors.bg0
@@ -74,7 +74,7 @@ M.setup = function()
     GruvboxAquaUnderline = { sp = colors.aqua },
     GruvboxOrangeUnderline = { sp = colors.orange },
     Normal = { fg = colors.fg1, bg = nil },
-    NormalFloat = { fg = colors.fg1, bg = nil },
+    NormalFloat = { fg = colors.fg1, bg = colors.bg1 },
     NormalNC = { link = 'Normal' },
     CursorLine = { bg = colors.bg1 },
     CursorColumn = { link = 'CursorLine' },
@@ -273,29 +273,29 @@ M.setup = function()
     CmpItemMenu = { link = 'GruvboxGray' },
     CmpItemKindText = { link = 'GruvboxOrange' },
     CmpItemKindVariable = { link = 'GruvboxOrange' },
-    CmpItemKindMethod = { link = 'GruvboxBlue' },
-    CmpItemKindFunction = { link = 'GruvboxBlue' },
-    CmpItemKindConstructor = { link = 'GruvboxYellow' },
+    CmpItemKindMethod = { link = 'GruvboxOrange' },
+    CmpItemKindFunction = { link = 'GruvboxOrange' },
+    CmpItemKindConstructor = { link = 'GruvboxOrange' },
     CmpItemKindUnit = { link = 'GruvboxBlue' },
     CmpItemKindField = { link = 'GruvboxBlue' },
-    CmpItemKindClass = { link = 'GruvboxYellow' },
-    CmpItemKindInterface = { link = 'GruvboxYellow' },
-    CmpItemKindModule = { link = 'GruvboxBlue' },
-    CmpItemKindProperty = { link = 'GruvboxBlue' },
+    CmpItemKindClass = { link = 'GruvboxOrange' },
+    CmpItemKindInterface = { link = 'GruvboxOrange' },
+    CmpItemKindModule = { link = 'GruvboxOrange' },
+    CmpItemKindProperty = { link = 'GruvboxOrange' },
     CmpItemKindValue = { link = 'GruvboxOrange' },
-    CmpItemKindEnum = { link = 'GruvboxYellow' },
-    CmpItemKindOperator = { link = 'GruvboxYellow' },
-    CmpItemKindKeyword = { link = 'GruvboxPurple' },
+    CmpItemKindEnum = { link = 'GruvboxOrange' },
+    CmpItemKindOperator = { link = 'GruvboxOrange' },
+    CmpItemKindKeyword = { link = 'GruvboxOrange' },
     CmpItemKindEvent = { link = 'GruvboxPurple' },
     CmpItemKindReference = { link = 'GruvboxPurple' },
     CmpItemKindColor = { link = 'GruvboxPurple' },
     CmpItemKindSnippet = { link = 'GruvboxGreen' },
     CmpItemKindFile = { link = 'GruvboxBlue' },
     CmpItemKindFolder = { link = 'GruvboxBlue' },
-    CmpItemKindEnumMember = { link = 'GruvboxAqua' },
+    CmpItemKindEnumMember = { link = 'GruvboxOrange' },
     CmpItemKindConstant = { link = 'GruvboxOrange' },
-    CmpItemKindStruct = { link = 'GruvboxYellow' },
-    CmpItemKindTypeParameter = { link = 'GruvboxYellow' },
+    CmpItemKindStruct = { link = 'GruvboxOrange' },
+    CmpItemKindTypeParameter = { link = 'GruvboxOrange' },
     diffAdded = { link = 'GruvboxGreen' },
     diffRemoved = { link = 'GruvboxRed' },
     diffChanged = { link = 'GruvboxAqua' },
@@ -305,7 +305,9 @@ M.setup = function()
     diffLine = { link = 'GruvboxBlue' },
     diffIndexLine = { link = 'diffChanged' },
     -- custom
-    rustCommentLineDoc = { link = "Comment" },
+    rustCommentLineDoc = { link = 'Comment' },
+    HarpoonWindow = { link = 'Normal' },
+    HarpoonBorder = { link = 'GruvboxFg2' },
   }
 end
 
