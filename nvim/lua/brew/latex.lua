@@ -31,4 +31,47 @@ M.transform = function(line)
   return table.concat(buffer, ' ')
 end
 
+--- @return boolean, string[]
+local function pdflatex(doc)
+  vim.fn.delete('.build/tmp', 'rf')
+  vim.fn.mkdir('.build', 'p')
+  local args = {
+    'pdflatex',
+    '--halt-on-error',
+    '--output-directory=.build',
+    '--jobname',
+    vim.fn.expand('%:t:r'),
+  }
+  local cmd = table.concat(args, ' ') .. '>.build/tmp;echo $?>.build/status'
+  local handle = io.popen(cmd, 'w')
+  if handle ~= nil then
+    local transform = require('brew.latex').transform
+    for _, v in pairs(doc) do
+      handle:write(transform(v) .. '\n')
+    end
+    handle:flush()
+    handle:close()
+    local ok = vim.fn.readfile('.build/status')[1] == '0'
+    local output = ok and {} or vim.fn.readfile('.build/tmp')
+    return ok, output
+  end
+  return false, {}
+end
+
+M.entry = function()
+  local buffer = vim.fn.getline(1, '$')
+  local success, output = pdflatex(buffer)
+  vim.cmd('redraw')
+  if not success then
+    print('[pdflatex] build failed.')
+    local qf = {}
+    for _, v in pairs(output) do
+      table.insert(qf, { text = v })
+    end
+    vim.fn.setqflist(qf)
+  else
+    print('[pdflatex] build successful!')
+  end
+end
+
 return M
