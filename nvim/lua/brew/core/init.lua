@@ -18,9 +18,14 @@ M.git_workspace_root = function()
 end
 
 -- stylua: ignore start
+
+-- nnoremap(LHS, RHS, verbose)
 M.nnoremap=function(L,R,v)vim.keymap.set('n',L,R,{noremap=true,silent=not v})end
+-- vnoremap(LHS, RHS, verbose)
 M.vnoremap=function(L,R,v)vim.keymap.set('v',L,R,{noremap=true,silent=not v})end
+-- inoremap(LHS, RHS, verbose)
 M.inoremap=function(L,R,v)vim.keymap.set('i',L,R,{noremap=true,silent=not v})end
+-- onoremap(LHS, RHS, verbose)
 M.onoremap=function(L,R,v)vim.keymap.set('o',L,R,{noremap=true,silent=not v})end
 -- stylua: ignore end
 
