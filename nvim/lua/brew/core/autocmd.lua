@@ -3,7 +3,7 @@ local core = require('brew.core')
 local vnoremap = core.vnoremap
 local onoremap = core.onoremap
 local nnoremap = core.nnoremap
-local git_branch = require('brew.git_branch')
+local git_branch = require('brew.git-branch')
 
 local dollarDollar = function()
   -- require('nvim-autopairs').add_rule;
@@ -74,7 +74,8 @@ autocmd({ 'BufEnter', 'FocusGained', 'BufWritePost' }, {
     local set_line = function(branch)
       -- print('set branch -> [' .. branch .. ']')
       local L = '%#StatusLine# %f %h%w%m%r %#StatusLineDim#'
-      local R = '%=%{wordCount#WordCount()} '
+      -- local R = '%=%{wordCount#WordCount()} '
+      local R = '%=.'
       vim.opt.statusline = L .. branch .. R
     end
     git_branch.init(set_line)
