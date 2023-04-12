@@ -28,45 +28,58 @@ local base = function(opts)
   })
 end
 
-lsp.clangd.setup(base()) -- C, C++, Java
-lsp.tsserver.setup(base()) -- javascript, typescript
-lsp.astro.setup(base()) -- astro.js
-lsp.pyright.setup(base()) -- python
+-- C, C++, Java
+M.clangd = function() lsp.clangd.setup(base()) end
+
+-- javascript, typescript
+M.typescript = function() lsp.tsserver.setup(base()) end
+
+-- astro.js
+M.astro = function() lsp.astro.setup(base()) end
+
+-- snek
+M.python = function() lsp.pyright.setup(base()) end
 
 -- go
-lsp.gopls.setup(base { root_dir = lsp.util.root_pattern('go.mod', '.git') })
+M.go = function()
+  lsp.gopls.setup(base { root_dir = lsp.util.root_pattern('go.mod', '.git') })
+end
 
 -- rust
--- lsp.rls.setup(base({ root_dir = lsp.util.root_pattern 'Cargo.toml' }))
-lsp.rust_analyzer.setup(base { root_dir = lsp.util.root_pattern('Cargo.toml') })
+M.rust = function()
+  lsp.rust_analyzer.setup(
+    base { root_dir = lsp.util.root_pattern('Cargo.toml') }
+  )
+end
 
 -- swift
-require('lspconfig').sourcekit.setup(base())
+M.swift = function() require('lspconfig').sourcekit.setup(base()) end
 
 -- lua
-require('neodev').setup {}
-local runtime_path = vim.split(package.path, ';', {})
-table.insert(runtime_path, 'lua/?.lua')
-table.insert(runtime_path, 'lua/?/init.lua')
-
-lsp.lua_ls.setup(base {
-  settings = {
-    Lua = {
-      runtime = { version = 'LuaJIT', path = runtime_path },
-      diagnostics = { globals = { 'vim' } },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file('', true),
-        checkThirdParty = false,
+M.lua = function()
+  require('neodev').setup {}
+  local rtp = vim.split(package.path, ';', {})
+  table.insert(rtp, 'lua/?.lua')
+  table.insert(rtp, 'lua/?/init.lua')
+  lsp.lua_ls.setup(base {
+    settings = {
+      Lua = {
+        runtime = { version = 'LuaJIT', path = rtp },
+        diagnostics = { globals = { 'vim' } },
+        workspace = {
+          library = vim.api.nvim_get_runtime_file('', true),
+          checkThirdParty = false,
+        },
+        telemetry = { enable = false },
       },
-      telemetry = { enable = false },
     },
-  },
-})
+  })
+end
 
 -- To install, head over to https://download.eclipse.org/jdtls/snapshots
 -- and download the latest version.
 -- Unpack it at `jdtls_opts.dir` and make sure the exact filenames below match.
-M.java_lsp = function()
+M.java = function()
   local jdtls_status, jdtls = pcall(require, 'jdtls')
   local setup_status, setup = pcall(require, 'jdtls.setup')
 

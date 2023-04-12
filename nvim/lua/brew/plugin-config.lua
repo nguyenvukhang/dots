@@ -131,7 +131,17 @@ end
 config['telescope.nvim'] = function() require('brew.telescope') end
 
 -- https://github.com/neovim/nvim-lspconfig
-config['nvim-lspconfig'] = function() require('brew.lsp') end
+config['nvim-lspconfig'] = function()
+  local lsp = require('brew.lsp')
+  lsp.rust()
+  lsp.clangd()
+  lsp.lua()
+  lsp.typescript()
+  lsp.python()
+  -- lsp.swift()
+  -- lsp.astro()
+  -- lsp.go()
+end
 
 -- https://github.com/rose-pine/neovim (rip name convention tbh)
 config['rose-pine'] = function()
