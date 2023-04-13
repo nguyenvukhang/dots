@@ -74,7 +74,4 @@ end
 
 M.load_plugins = require('brew.core.lazy').load_plugins
 
--- to clear command line area:
--- vim.cmd('redraw!')
-
 return M
