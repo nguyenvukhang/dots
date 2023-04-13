@@ -27,40 +27,32 @@ local setup = {
   swift = function() vim.api.nvim_buf_set_option(0, 'commentstring', '// %s') end,
 }
 
-local autocmd = function(events, opts)
-  vim.api.nvim_create_autocmd(
-    events,
-    vim.tbl_extend('force', { group = group }, opts)
-  )
-end
-
 local general_entry = { 'BufRead', 'BufNewFile', 'BufEnter' }
 
-autocmd(general_entry, {
+core.autocmd(general_entry, {
   pattern = '*.tex',
   callback = setup.latex,
 })
 
-autocmd(general_entry, {
+core.autocmd(general_entry, {
   pattern = { '*.cpp', '*.h', '*.c', '*.cc' },
   callback = setup.cpp,
 })
 
-autocmd(general_entry, {
+core.autocmd(general_entry, {
   pattern = { '*.mdx', '*.md' },
   callback = setup.markdown,
 })
 
-autocmd(general_entry, {
+core.autocmd(general_entry, {
   pattern = { '*.swift' },
   callback = setup.swift,
 })
 
-autocmd(general_entry, {
+core.autocmd(general_entry, {
   pattern = { '*.java' },
   callback = function()
-    vim.opt.tabstop = 4
-    vim.opt.shiftwidth = 4
+    vim.opt.tabstop, vim.opt.shiftwidth = 4, 4
   end,
 })
 
@@ -74,7 +66,7 @@ core.autocmd(nil, {
   end,
 })
 
-autocmd({ 'BufWritePost' }, {
+core.autocmd({ 'BufWritePost' }, {
   pattern = { '*.tex' },
   callback = function()
     local full_path = vim.fn.expand('%:p')
@@ -94,4 +86,4 @@ autocmd({ 'BufWritePost' }, {
 })
 
 -- automatically redistribute splits when vim is resized
-autocmd('VimResized', { command = 'wincmd =' })
+core.autocmd({ 'VimResized' }, { command = 'wincmd =' })
