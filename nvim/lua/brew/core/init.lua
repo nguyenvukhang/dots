@@ -74,19 +74,18 @@ M.status = function(cmd)
   return vim.fn.systemlist(cmd .. ' >/dev/null && echo 0 || echo 1')[1] == '0'
 end
 
-local augroups = {}
+vim.api.nvim_create_augroup('GROUP_THEORY', { clear = true })
 
----@param group string
+M.autocmd = {
+  entry = { 'BufRead', 'BufNewFile', 'BufEnter' },
+}
+
+---@param _ any
 ---@param events string[]
----@param pattern string
----@param callback function
-M.autocmd = function(group, events, pattern, callback)
-  group = string.upper(group) .. '_GROUP'
-  if augroups[group] == nil then
-    augroups[group] = vim.api.nvim_create_augroup(group, { clear = true })
-  end
-  local x = { pattern = pattern, callback = callback, group = augroups[group] }
-  vim.api.nvim_create_autocmd(events, x)
+local function autocmd(_, events, opts)
+  vim.api.nvim_create_autocmd(events or M.autocmd.entry, opts)
 end
+
+setmetatable(M.autocmd, { __call = autocmd })
 
 return M

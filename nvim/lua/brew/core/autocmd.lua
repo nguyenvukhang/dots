@@ -64,14 +64,13 @@ autocmd(general_entry, {
   end,
 })
 
-autocmd({ 'BufEnter', 'FocusGained', 'BufWritePost' }, {
+core.autocmd(nil, {
   callback = function()
-    local set_line = function(branch)
+    git_branch.init(function(branch)
       branch = '%#StatusLineBranch#' .. branch .. '%#StatusLine#'
-      local b = { ' %f %h%w%m%r ', branch, '%=*' }
+      local b = { ' %f %h%w%m%r ', branch, '%=+ ' }
       vim.opt.statusline = table.concat(b)
-    end
-    git_branch.init(set_line)
+    end)
   end,
 })
 
@@ -91,21 +90,6 @@ autocmd({ 'BufWritePost' }, {
       end
       vim.fn.setqflist(output)
     end
-  end,
-})
-
--- temporary for writing math
--- autocmd({ 'BufWritePost' }, { pattern = { '*.tex.lua' }, callback = function() vim.cmd('redraw') vim.fn.systemlist('make build') end, })
-
-autocmd(general_entry, {
-  pattern = { '*.prez' },
-  callback = function()
-    vim.opt.ft = 'markdown'
-    vim.opt.scrolloff = 0
-    nnoremap('<c-j>', '/^#\\s<CR>zt')
-    nnoremap('<c-k>', '?^#\\s<CR>zt')
-    -- nnoremap('<c-j>', '/\\~\\~\\~\\~\\~ \\d\\+$<CR>zt')
-    -- nnoremap('<c-k>', '?\\~\\~\\~\\~\\~ \\d\\+<CR>zt')
   end,
 })
 
