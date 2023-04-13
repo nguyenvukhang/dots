@@ -1,4 +1,4 @@
-local plugins = require('brew.plugin-config') {
+local plugins = {
   'ThePrimeagen/harpoon',
   'nvim-telescope/telescope.nvim',
   'nguyenvukhang/nvim-toggler',
@@ -23,7 +23,6 @@ local plugins = require('brew.plugin-config') {
 }
 
 require('brew.core').load_plugins(plugins)
-require('gruvbox')
 
 -- independent of plugins, server-friendly
 require('brew.core.sets')

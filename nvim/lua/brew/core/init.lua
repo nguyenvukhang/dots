@@ -1,9 +1,9 @@
 local M = {}
 
 -- checks if quickfix/loclist is open
----@param listname 'v:val.quickfix' | 'v:val.loclist'
-local list_is_open = function(listname)
-  return not (next(vim.fn.filter(vim.fn.getwininfo(), listname)) == nil)
+---@param name 'quickfix' | 'loclist'
+local list_is_open = function(name)
+  return #vim.fn.filter(vim.fn.getwininfo(), 'v:val.' .. name) > 0
 end
 
 -- Get path to the root of the git workspace
@@ -31,13 +31,13 @@ M.onoremap=function(L,R,v)vim.keymap.set('o',L,R,{noremap=true,silent=not v})end
 
 -- Toggles the quickfix list/window
 M.toggle_qflist = function()
-  vim.cmd(list_is_open('v:val.quickfix') and 'cclose' or 'copen')
+  vim.cmd(list_is_open('quickfix') and 'cclose' or 'bel copen')
 end
 
 -- Toggle diagnostics quickfix list
 M.toggle_diagnostics = function()
   -- close diagnostics if qflist is already open
-  if list_is_open('v:val.quickfix') then
+  if list_is_open('quickfix') then
     vim.cmd('cclose') -- close quickfix window
     return
   end
@@ -53,31 +53,7 @@ M.toggle_diagnostics = function()
   end
 
   vim.fn.setqflist(diagnostics)
-  vim.cmd('copen') -- open quickfix window
-end
-
--- load plugins using lazy.nvim
----@param plugins table list of plugins to pass straight to lazy.nvim
-M.load_plugins = function(plugins)
-  local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-  if not vim.loop.fs_stat(lazypath) then
-    vim.notify('lazy.nvim not installed. Run `:Boot` to install it.')
-    vim.api.nvim_create_user_command('Boot', function()
-      vim.fn.system {
-        'git',
-        'clone',
-        '--filter=blob:none',
-        '--single-branch',
-        'https://github.com/folke/lazy.nvim.git',
-        lazypath,
-      }
-      print('done installing lazy.nvim')
-    end, {})
-  else
-    vim.opt.runtimepath:prepend(lazypath)
-    vim.g.mapleader = ' '
-    require('lazy').setup(plugins, {})
-  end
+  vim.cmd('bel copen') -- open quickfix window
 end
 
 M.augroup = function(group_name)
@@ -95,6 +71,8 @@ end
 M.status = function(cmd)
   return vim.fn.systemlist(cmd .. ' >/dev/null && echo 0 || echo 1')[1] == '0'
 end
+
+M.load_plugins = require('brew.core.lazy').load_plugins
 
 -- to clear command line area:
 -- vim.cmd('redraw!')
