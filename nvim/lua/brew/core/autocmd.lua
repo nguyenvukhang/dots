@@ -1,8 +1,6 @@
-local group = vim.api.nvim_create_augroup('FILETYPES', { clear = true })
 local core = require('brew.core')
 local vnoremap = core.vnoremap
 local onoremap = core.onoremap
-local nnoremap = core.nnoremap
 local git_branch = require('brew.git-branch')
 
 local dollarDollar = function()
@@ -13,7 +11,10 @@ local dollarDollar = function()
   vnoremap('a$', 'F$of$')
 end
 
-local setup = {
+local cfg = {
+  java = function()
+    vim.opt.tabstop, vim.opt.shiftwidth = 4, 4
+  end,
   latex = function()
     vim.opt.textwidth = 70
     dollarDollar()
@@ -27,34 +28,14 @@ local setup = {
   swift = function() vim.api.nvim_buf_set_option(0, 'commentstring', '// %s') end,
 }
 
-local general_entry = { 'BufRead', 'BufNewFile', 'BufEnter' }
-
-core.autocmd(general_entry, {
-  pattern = '*.tex',
-  callback = setup.latex,
-})
-
-core.autocmd(general_entry, {
-  pattern = { '*.cpp', '*.h', '*.c', '*.cc' },
-  callback = setup.cpp,
-})
-
-core.autocmd(general_entry, {
-  pattern = { '*.mdx', '*.md' },
-  callback = setup.markdown,
-})
-
-core.autocmd(general_entry, {
-  pattern = { '*.swift' },
-  callback = setup.swift,
-})
-
-core.autocmd(general_entry, {
-  pattern = { '*.java' },
-  callback = function()
-    vim.opt.tabstop, vim.opt.shiftwidth = 4, 4
-  end,
-})
+core.autocmd(nil, { pattern = '*.tex', callback = cfg.latex })
+core.autocmd(nil, { pattern = { '*.swift' }, callback = cfg.swift })
+core.autocmd(nil, { pattern = { '*.mdx', '*.md' }, callback = cfg.markdown })
+core.autocmd(nil, { pattern = { '*.java' }, callback = cfg.java })
+core.autocmd(
+  nil,
+  { pattern = { '*.cpp', '*.h', '*.c', '*.cc' }, callback = cfg.cpp }
+)
 
 core.autocmd(nil, {
   callback = function()
