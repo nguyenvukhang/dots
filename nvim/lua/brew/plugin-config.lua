@@ -148,12 +148,10 @@ config['rose-pine'] = function()
   require('rose-pine').setup { variant = 'moon', disable_background = true }
 end
 
-local setup = function(list)
+return function(list)
   for i, name in pairs(list) do
     local key = name:match('/(.*)')
     list[i] = { name, config = config[key], build = build[key] }
   end
   return list
 end
-
-return setup
