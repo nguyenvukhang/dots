@@ -37,11 +37,6 @@ end
 local general_entry = { 'BufRead', 'BufNewFile', 'BufEnter' }
 
 autocmd(general_entry, {
-  pattern = 'kanban.md',
-  callback = function() require('brew.kanban').init() end,
-})
-
-autocmd(general_entry, {
   pattern = '*.tex',
   callback = setup.latex,
 })

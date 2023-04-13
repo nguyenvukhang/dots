@@ -1,5 +1,7 @@
 local M = {}
 
+M.load_plugins = require('brew.core.lazy').load_plugins
+
 -- checks if quickfix/loclist is open
 ---@param name 'quickfix' | 'loclist'
 local list_is_open = function(name)
@@ -72,6 +74,19 @@ M.status = function(cmd)
   return vim.fn.systemlist(cmd .. ' >/dev/null && echo 0 || echo 1')[1] == '0'
 end
 
-M.load_plugins = require('brew.core.lazy').load_plugins
+local augroups = {}
+
+---@param group string
+---@param events string[]
+---@param pattern string
+---@param callback function
+M.autocmd = function(group, events, pattern, callback)
+  group = string.upper(group) .. '_GROUP'
+  if augroups[group] == nil then
+    augroups[group] = vim.api.nvim_create_augroup(group, { clear = true })
+  end
+  local x = { pattern = pattern, callback = callback, group = augroups[group] }
+  vim.api.nvim_create_autocmd(events, x)
+end
 
 return M
