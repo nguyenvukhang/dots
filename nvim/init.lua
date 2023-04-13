@@ -1,4 +1,4 @@
-local plugins = {
+require('brew.core').load_plugins {
   'ThePrimeagen/harpoon',
   'nvim-telescope/telescope.nvim',
   'nguyenvukhang/nvim-toggler',
@@ -21,8 +21,6 @@ local plugins = {
   'vimplug/nvim-colorizer.lua',
   'sbdchd/neoformat',
 }
-
-require('brew.core').load_plugins(plugins)
 
 -- independent of plugins, server-friendly
 require('brew.core.sets')
