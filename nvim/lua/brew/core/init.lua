@@ -58,16 +58,6 @@ M.toggle_diagnostics = function()
   vim.cmd('bel copen') -- open quickfix window
 end
 
-M.augroup = function(group_name)
-  return function(events, opts)
-    local group = vim.api.nvim_create_augroup(group_name, { clear = true })
-    vim.api.nvim_create_autocmd(
-      events,
-      vim.tbl_extend('force', { group = group }, opts)
-    )
-  end
-end
-
 -- returns true on successful execution (sh return code 0)
 ---@param cmd string
 M.status = function(cmd)
@@ -76,16 +66,12 @@ end
 
 vim.api.nvim_create_augroup('GROUP_THEORY', { clear = true })
 
-M.autocmd = {
-  entry = { 'BufRead', 'BufNewFile', 'BufEnter' },
-}
-
----@param _ any
----@param events string[]
-local function autocmd(_, events, opts)
-  vim.api.nvim_create_autocmd(events or M.autocmd.entry, opts)
+---@param events? string[]
+---@param opts any
+M.autocmd = function(events, opts)
+  opts['group'] = 'GROUP_THEORY'
+  events = events or { 'BufRead', 'BufNewFile', 'BufEnter' }
+  vim.api.nvim_create_autocmd(events, opts)
 end
-
-setmetatable(M.autocmd, { __call = autocmd })
 
 return M
