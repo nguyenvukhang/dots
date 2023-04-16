@@ -4,40 +4,41 @@ local sub = function(find, replace)
   pcall(vim.cmd, 'silent! %s/' .. find .. '/' .. replace .. '/g')
 end
 
+local cmd = function(name, fn) vim.api.nvim_create_user_command(name, fn, {}) end
+
 -- normalize all non-standard glyphs
-vim.api.nvim_create_user_command('StanGlyphs', function()
+cmd('StanGlyphs', function()
   sub('“', '"')
   sub('”', '"')
   sub('’', "'")
   sub('‘', "'")
   print('Standardized glyphs!')
-end, {})
+end)
 
 -- strip buffer of ANSI color codes
-vim.api.nvim_create_user_command('StripColors', function()
+cmd('StripColors', function()
   sub('\\e\\[[0-9;]\\+[mK]', '')
   sub('\\e\\[\\+[mK]', '')
   print('Stripped ANSI color codes!')
-end, {})
+end)
 
 -- list loaded packages
-vim.api.nvim_create_user_command('Packs', function()
+cmd('Packs', function()
   print(vim.inspect(vim.tbl_map(function(p) return p end, package.loaded)))
-end, {})
+end)
 
 -- get highlight group under cursor
-vim.api.nvim_create_user_command('UnderMe', function()
+cmd('UnderMe', function()
   if not vim.fn.exists('*synstack') then return end
-  local groups = {}
-  local highlights = vim.fn.synstack(vim.fn.line('.'), vim.fn.col('.'))
-  for _, v in pairs(highlights) do
-    table.insert(groups, vim.fn.synIDattr(v, 'name'))
+  local hl = vim.fn.synstack(vim.fn.line('.'), vim.fn.col('.'))
+  for i, v in pairs(hl) do
+    hl[i] = vim.fn.synIDattr(v, 'name')
   end
-  print(vim.inspect(groups))
-end, {})
+  print(vim.inspect(hl))
+end)
 
 -- create new line (at current cursor position) and insert date
-vim.api.nvim_create_user_command('Date', function()
+cmd('Date', function()
   local date = vim.fn.strftime('%-d %b')
   vim.api.nvim_put({ date }, 'l', false, false)
-end, {})
+end)

@@ -4,7 +4,6 @@ local onoremap = core.onoremap
 local git_branch = require('brew.git-branch')
 
 local dollarDollar = function()
-  -- require('nvim-autopairs').add_rule;
   onoremap('i$', ':<c-u>norm! T$vt$<cr>')
   onoremap('a$', ':<c-u>norm! F$vf$<cr>')
   vnoremap('i$', 'T$ot$')

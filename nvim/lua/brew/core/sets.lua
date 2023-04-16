@@ -27,8 +27,6 @@ vim.opt.autochdir = false -- follow/keep pwd static
 vim.opt.pumheight = 8 -- sets popup menu height
 vim.opt.signcolumn = 'yes' -- always show sign column
 vim.opt.shortmess = vim.o.shortmess .. 'c'
-vim.opt.spellfile = vim.env.DOTS
-  .. '/personal/.config/nvim/data/spell/en.utf-8.add'
 vim.opt.grepprg =
   'rg --color=never --no-heading --with-filename --line-number --column --smart-case'
 vim.opt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
@@ -41,7 +39,3 @@ vim.opt.cinoptions:append('L0') -- so that typing `std::` in cpp doesn't de-dent
 -- honorary set
 -- set leader to <space>
 vim.g.mapleader = ' '
-
--- color scheme
-vim.cmd.colorscheme('gruvbox')
--- vim.cmd.colorscheme('rose-pine')

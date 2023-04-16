@@ -1,7 +1,5 @@
-local core = require('brew.core')
-local nnoremap = core.nnoremap
-local vnoremap = core.vnoremap
-local inoremap = core.inoremap
+local c = require('brew.core')
+local nnoremap, vnoremap, inoremap = c.nnoremap, c.vnoremap, c.inoremap
 
 -- no-ops
 nnoremap('<space>', '<nop>')
@@ -79,8 +77,8 @@ nnoremap('<leader>x', ':CloseOtherBuffers', true)
 nnoremap('<leader>c', ':ColorizerToggle<cr>', true)
 
 -- lua functions
-nnoremap('<leader>o', core.toggle_qflist)
-nnoremap('<leader>d', core.toggle_diagnostics)
+nnoremap('<leader>o', c.toggle_qflist)
+nnoremap('<leader>d', c.toggle_diagnostics)
 
 -- to copy the behavior of `[(` and `[{` to `[[`
 nnoremap('[[', function() vim.fn.searchpair('\\[', '', '\\]', 'b') end)
