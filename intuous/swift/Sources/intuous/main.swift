@@ -10,8 +10,14 @@ import Foundation
 
 func press(_ key: KeyCode) {
     let v = key.rawValue, s = CGEventSource(stateID: .hidSystemState)
-    CGEvent(keyboardEventSource: s, virtualKey: v, keyDown: true)!.post(tap: .cghidEventTap)
-    CGEvent(keyboardEventSource: s, virtualKey: v, keyDown: false)!.post(tap: .cghidEventTap)
+
+    let down = CGEvent(keyboardEventSource: s, virtualKey: v, keyDown: true)!
+    down.flags = [.maskCommand, .maskShift, .maskControl, .maskAlternate]
+    down.post(tap: .cghidEventTap)
+
+    let up = CGEvent(keyboardEventSource: s, virtualKey: v, keyDown: true)!
+    up.flags = [.maskCommand, .maskShift, .maskControl, .maskAlternate]
+    up.post(tap: .cghidEventTap)
 }
 
 let tools = [
