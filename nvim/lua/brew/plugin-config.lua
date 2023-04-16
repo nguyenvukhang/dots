@@ -36,6 +36,7 @@ config['nvim-toggler'] = function()
     ['row'] = 'column',
     ['width'] = 'height',
     ['sin'] = 'cos',
+    ['begin'] = 'end',
     ['cot'] = 'tan',
     ['sec'] = 'csc',
     ['good'] = 'bad',
