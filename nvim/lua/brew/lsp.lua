@@ -84,8 +84,7 @@ M.java = function()
   local setup_status, setup = pcall(require, 'jdtls.setup')
 
   if not (jdtls_status and setup_status) then
-    vim.notify('[jdtls] java lsp not installed.')
-    return
+    return vim.notify('[jdtls] java lsp not installed.')
   end
 
   local jdtls_dir = vim.env.HOME .. '/.local/jdtls'

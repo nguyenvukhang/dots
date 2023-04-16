@@ -1,8 +1,7 @@
 local M = {}
-local lazy = {}
 
 ---@param lazypath string
-lazy.prime_bootstrap = function(lazypath)
+local function prime_bootstrap(lazypath)
   vim.notify('lazy.nvim not installed. Run `:Boot` to install it.')
   vim.api.nvim_create_user_command('Boot', function()
     vim.fn.system {
@@ -20,18 +19,11 @@ end
 -- load plugins using lazy.nvim
 ---@param plugins table list of plugins to pass straight to lazy.nvim
 M.load_plugins = function(plugins)
-  local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-
-  if not vim.loop.fs_stat(lazypath) then
-    lazy.prime_bootstrap(lazypath)
-    return
-  end
-
-  -- load the plugins!
-  vim.opt.runtimepath:prepend(lazypath)
+  local lp = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+  if not vim.loop.fs_stat(lp) then return prime_bootstrap(lp) end
+  vim.opt.runtimepath:prepend(lp)
   vim.g.mapleader = ' '
-  local configure = require('brew.plugin-config')
-  require('lazy').setup(configure(plugins), {})
+  require('lazy').setup(require('brew.plugin-config')(plugins))
 end
 
 return M

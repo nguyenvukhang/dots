@@ -15,7 +15,7 @@ local colors = {
 }
 -- stylua: ignore end
 
-M.setup = function()
+local setup_groups = function()
   vim.g.terminal_color_0 = colors.bg0
   vim.g.terminal_color_8 = colors.gray
   vim.g.terminal_color_1 = colors.red
@@ -304,6 +304,18 @@ M.setup = function()
     HarpoonWindow = { link = 'Normal' },
     HarpoonBorder = { link = 'GruvboxFg2' },
   }
+end
+
+M.load = function()
+  if vim.version().minor < 8 then
+    return vim.notify_once('[gruvbox] needs nvim ≥0.8')
+  end
+  vim.cmd.hi('clear')
+  vim.g.colors_name, vim.o.termguicolors = 'gruvbox', true
+  local groups = setup_groups()
+  for group, opts in pairs(groups) do
+    vim.api.nvim_set_hl(0, group, opts)
+  end
 end
 
 return M
