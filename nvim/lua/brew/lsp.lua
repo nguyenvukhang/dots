@@ -1,6 +1,4 @@
-local lsp = require('lspconfig')
-
-local M = {}
+local lsp, M = require('lspconfig'), {}
 
 -- buffer-specific remap
 local function nmap(bufnr, lhs, fn)
