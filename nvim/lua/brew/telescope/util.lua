@@ -16,7 +16,7 @@ M.search.string = function(title, cwd, query)
   tele.grep_string {
     file_ignore_patterns = ignore,
     attach_mappings = function(_, map)
-      map('i', '<CR>', actions.send_to_qflist + actions.select_default)
+      map('i', '<CR>', actions.select_default)
       return true
     end,
     prompt_title = title,
