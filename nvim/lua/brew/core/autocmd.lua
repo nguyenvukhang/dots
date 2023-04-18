@@ -1,7 +1,6 @@
 local core = require('brew.core')
 local vnoremap = core.vnoremap
 local onoremap = core.onoremap
-local git_branch = require('brew.git-branch')
 
 local dollarDollar = function()
   onoremap('i$', ':<c-u>norm! T$vt$<cr>')
@@ -15,6 +14,7 @@ local cfg = {
     vim.opt.tabstop, vim.opt.shiftwidth = 4, 4
   end,
   latex = function()
+    vim.opt.formatoptions = 'jcroql'
     vim.opt.textwidth = 70
     dollarDollar()
   end,
@@ -36,16 +36,6 @@ core.autocmd(
   { pattern = { '*.cpp', '*.h', '*.c', '*.cc' }, callback = cfg.cpp }
 )
 
-core.autocmd(nil, {
-  callback = function()
-    git_branch.init(function(branch)
-      branch = '%#StatusLineBranch#' .. branch .. '%#StatusLine#'
-      local b = { ' %f %h%w%m%r ', branch, '%=+ ' }
-      vim.opt.statusline = table.concat(b)
-    end)
-  end,
-})
-
 core.autocmd({ 'BufWritePost' }, {
   pattern = { '*.tex' },
   callback = function()
@@ -57,8 +47,8 @@ core.autocmd({ 'BufWritePost' }, {
       print('[pdflatex] successful build!')
     else
       print('[pdflatex] build failed.')
-      for i, v in pairs(output) do
-        output[i] = { text = v }
+      for i = 1, #output do
+        output[i] = { text = output[i] }
       end
       vim.fn.setqflist(output)
     end

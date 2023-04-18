@@ -5,27 +5,24 @@ local build = {}
 
 -- https://github.com/ThePrimeagen/harpoon
 config.harpoon = function()
-  local hp = { mark = require('harpoon.mark'), ui = require('harpoon.ui') }
-
-  hp.jump = function(n)
+  local mark = require('harpoon.mark')
+  local ui = require('harpoon.ui')
+  local jump = function(n)
     return function()
-      hp.ui.nav_file(n)
-      vim.notify_once('[harpoon] -> ' .. n .. '/4')
+      ui.nav_file(n)
+      vim.notify('[harpoon] -> ' .. n .. '/4')
     end
   end
-
-  hp.add = function()
-    hp.mark.add_file()
-    hp.ui.toggle_quick_menu()
+  nnoremap('<leader>m', ui.toggle_quick_menu)
+  nnoremap('<leader>1', jump(1), true)
+  nnoremap('<leader>2', jump(2), true)
+  nnoremap('<leader>3', jump(3), true)
+  nnoremap('<leader>4', jump(4), true)
+  nnoremap('mm', function()
+    mark.add_file()
+    ui.toggle_quick_menu()
     vim.notify_once('[harpoon] added file')
-  end
-
-  nnoremap('<leader>m', hp.ui.toggle_quick_menu)
-  nnoremap('mm', hp.add, true)
-  nnoremap('<leader>1', hp.jump(1), true)
-  nnoremap('<leader>2', hp.jump(2), true)
-  nnoremap('<leader>3', hp.jump(3), true)
-  nnoremap('<leader>4', hp.jump(4), true)
+  end, true)
 end
 
 -- https://github.com/nguyenvukhang/nvim-toggler
@@ -48,7 +45,7 @@ end
 
 -- https://github.com/hrsh7th/nvim-cmp
 config['nvim-cmp'] = function()
-  local cmp, types = require('cmp'), require('cmp.types')
+  local cmp, ct, ls = require('cmp'), require('cmp.types'), require('luasnip')
   cmp.setup {
     formatting = {
       expandable_indicator = false,
@@ -56,10 +53,6 @@ config['nvim-cmp'] = function()
         item.menu = nil -- remove flair from completion item
         return item
       end,
-    },
-    preselect = cmp.PreselectMode.None,
-    snippet = {
-      expand = function(args) require('luasnip').lsp_expand(args.body) end,
     },
     mapping = {
       ['<C-n>'] = cmp.mapping.select_next_item(),
@@ -70,10 +63,12 @@ config['nvim-cmp'] = function()
       {
         name = 'nvim_lsp',
         entry_filter = function(e) -- remove `Snippet` entries
-          return types.lsp.CompletionItemKind[e:get_kind()] ~= 'Snippet'
+          return ct.lsp.CompletionItemKind[e:get_kind()] ~= 'Snippet'
         end,
       },
     }, { { name = 'buffer' }, { name = 'path' } }),
+    preselect = cmp.PreselectMode.None,
+    snippet = { expand = function(args) ls.lsp_expand(args.body) end },
   }
   -- Use buffer source for `/` search
   cmp.setup.cmdline('/', { sources = { { name = 'buffer' } } })
@@ -150,9 +145,9 @@ config['rose-pine'] = function()
 end
 
 return function(list)
-  for i, name in pairs(list) do
-    local key = name:match('/(.*)')
-    list[i] = { name, config = config[key], build = build[key] }
+  for i = 1, #list do
+    local key = list[i]:match('/(.*)')
+    list[i] = { list[i], config = config[key], build = build[key] }
   end
   return list
 end
