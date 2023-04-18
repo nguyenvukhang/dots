@@ -1,0 +1,29 @@
+shuffle = true
+repeat = "off"
+volnorm = false
+notify = true
+library_tabs = ["playlists", "tracks", "browse"]
+
+[keybindings]
+"q" = "back"
+"Enter" = "open selected"
+"Space" = "play"
+"Esc" = "back"
+"Ctrl+p" = "search"
+"Backspace" = "focus library"
+
+[theme]
+primary = "light white"
+secondary = "light black"
+title = "green"
+playing = "green"
+playing_bg = "black"
+highlight = "light white"
+highlight_bg = "#484848"
+error = "light white"
+error_bg = "black"
+statusbar = "black"
+statusbar_progress = "green"
+statusbar_bg = "green"
+cmdline = "light white"
+cmdline_bg = "black"
