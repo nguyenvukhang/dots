@@ -23,6 +23,9 @@ nnoremap('J', 'mZJ`Z')
 -- open file under cursor in a split
 nnoremap('gF', ':vs <cfile><cr>')
 
+-- open file under cursor with `open` (macOS)
+nnoremap('go', ':silent! !open <cfile><cr>')
+
 -- slowly increase this until I can use the default
 nnoremap('<C-d>', '13j')
 nnoremap('<C-u>', '13k')

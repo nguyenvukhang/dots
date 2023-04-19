@@ -3,39 +3,28 @@
 -- close the telescope buffer, but I don't want that, since it's
 -- already part of select_default()
 
-local action_state = require('telescope.actions.state')
-local actions = require('telescope.actions')
-local action_select = require('telescope.actions.set').select
-local path = require('telescope.from_entry').path
-local transform_mod = require('telescope.actions.mt').transform_mod
-
-local entry_text = function(entry)
-  if entry.text then return entry.text end
-  return type(entry.value) == 'table' and entry.value.text or entry.value
-end
+local as = require('telescope.actions.state')
+local actions, pk = require('telescope.actions'), as.get_current_picker
+local hist = as.get_current_history
 
 actions.select_default = {
-  pre = function(prompt_bufnr)
-    action_state.get_current_history():append(
-      action_state.get_current_line(),
-      action_state.get_current_picker(prompt_bufnr),
-      false
-    )
-  end,
-  action = function(prompt_bufnr)
-    local m, qf = action_state.get_current_picker(prompt_bufnr).manager, {}
-    for entry in m:iter() do
+  pre = function(bf) hist():append(as.get_current_line(), pk(bf), false) end,
+  action = function(bf)
+    local m, qf = pk(bf).manager, {}
+    for e in m:iter() do
       table.insert(qf, {
-        bufnr = entry.bufnr,
-        filename = path(entry, false, false),
-        lnum = vim.F.if_nil(entry.lnum, 1),
-        col = vim.F.if_nil(entry.col, 1),
-        text = entry_text(entry),
+        bufnr = e.bufnr,
+        lnum = vim.F.if_nil(e.lnum, 1),
+        col = vim.F.if_nil(e.col, 1),
+        filename = require('telescope.from_entry').path(e, false, false),
+        text = e.text and e.text
+          or type(e.value) == 'table' and e.value.text
+          or e.value,
       })
     end
     vim.fn.setqflist(qf, 'r')
-    return action_select(prompt_bufnr, 'default')
+    return require('telescope.actions.set').select(bf, 'default')
   end,
 }
 
-return transform_mod(actions)
+return require('telescope.actions.mt').transform_mod(actions)

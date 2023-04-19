@@ -11,6 +11,8 @@ library_tabs = ["playlists", "tracks", "browse"]
 "Esc" = "back"
 "Ctrl+p" = "search"
 "Backspace" = "focus library"
+"Ctrl+l" = "focus library"
+"Shift+q" = "focus queue"
 
 [theme]
 primary = "light white"
