@@ -59,6 +59,7 @@ M.lua = function()
   local luapath = vim.split(package.path, ';', {})
   table.insert(luapath, 'lua/?.lua')
   table.insert(luapath, 'lua/?/init.lua')
+  local laze = vim.fn.stdpath('data') .. '/lazy'
   lsp.lua_ls.setup(base {
     settings = {
       Lua = {
@@ -68,7 +69,8 @@ M.lua = function()
           library = {
             [vim.fn.expand('$VIMRUNTIME/lua')] = true,
             [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-            [vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy'] = true,
+            [laze .. '/lazy.nvim/lua/lazy'] = true,
+            [laze .. '/telescope.nvim/lua/telescope'] = true,
           },
           maxPreload = 100000,
           preloadFileSize = 10000,
