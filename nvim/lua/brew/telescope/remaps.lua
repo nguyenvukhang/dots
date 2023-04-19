@@ -3,6 +3,7 @@ local nnoremap = require('brew.core').nnoremap
 local util = require('brew.telescope.util')
 local git_workspace_root = require('brew.core').git_workspace_root
 local search = { files = {}, string = {} }
+local t = require('telescope.builtin')
 
 -- git repo operations
 search.files.repo = function()
@@ -33,7 +34,9 @@ search.string.cursor = function()
 end
 
 search.files.dots = function() util.search.files('dotfiles', vim.env.DOTS) end
-search.files.university = function() util.search.files('university', vim.env.UNI) end
+search.files.university = function()
+  util.search.files('university', vim.env.UNI)
+end
 
 -- remaps!
 

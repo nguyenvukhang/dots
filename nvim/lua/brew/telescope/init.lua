@@ -3,6 +3,7 @@
 --
 
 local actions = require('telescope.actions')
+local bctions = require('brew.telescope.actions')
 
 local compact = {
   previewer = false,
@@ -29,6 +30,7 @@ require('telescope').setup {
     entry_prefix = '  ',
     mappings = {
       i = {
+        ['<CR>'] = bctions.select_default,
         ['<C-j>'] = actions.move_selection_next,
         ['<C-k>'] = actions.move_selection_previous,
         ['<esc>'] = actions.close,
