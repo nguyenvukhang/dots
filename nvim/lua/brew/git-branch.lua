@@ -1,26 +1,18 @@
 local M = {}
 
-local current_git_branch = ''
-local first_set = false
-local current_git_dir = ''
--- os specific path separator
-local sep = package.config:sub(1, 1)
--- event watcher to watch head file
--- Use file watch for non Windows and poll for Windows.
--- Windows doesn't like file watch for some reason.
-local file_changed = sep ~= '\\' and vim.loop.new_fs_event()
-  or vim.loop.new_fs_poll()
-local git_dir_cache = {} -- Stores git paths that we already know of
+local curr, first_set = { branch = '', gdir = '' }, false
+local sep, l = package.config:sub(1, 1), vim.loop
+local file_changed = sep ~= '\\' and l.new_fs_event() or l.new_fs_poll()
+local gdir_cache = {} -- Stores git paths that we already know of
 
 ---sets git_branch variable to branch name or commit hash if not on branch
 ---@param head_file string full path of .git/HEAD file
 local function get_git_head(head_file)
   local f_head = io.open(head_file)
   if f_head then
-    local HEAD = f_head:read()
-    f_head:close()
+    local HEAD, _ = f_head:read(), f_head:close()
     local branch = HEAD:match('ref: refs/heads/(.+)$')
-    current_git_branch = branch and branch or HEAD:sub(1, 7)
+    curr.branch = branch and branch or HEAD:sub(1, 7)
   end
 end
 
@@ -28,77 +20,66 @@ end
 local function update_branch()
   if file_changed == nil then return end
   file_changed:stop()
-  local git_dir = current_git_dir
-  if git_dir and #git_dir > 0 then
-    local head_file = git_dir .. sep .. 'HEAD'
-    get_git_head(head_file)
-    file_changed:start(
-      head_file,
-      sep ~= '\\' and {} or 1000,
-      vim.schedule_wrap(update_branch)
-    )
+  if curr.gdir and #curr.gdir > 0 then
+    local f_head = curr.gdir .. sep .. 'HEAD'
+    get_git_head(f_head)
+    file_changed:start(f_head, {}, vim.schedule_wrap(update_branch))
   else
-    current_git_branch = '' -- when git dir was not found
+    curr.branch = '' -- git dir not found
   end
-  M.set_statusline(current_git_branch)
+  M.set_statusline(curr.branch)
 end
 
 ---@return string, boolean
-M.git_dir_from_root = function(root_dir, git_dir)
-  local git_path = root_dir .. sep .. '.git'
+M.gdir_from_root = function(root, gdir)
+  local git_path = root .. sep .. '.git'
   local git_file_stat = vim.loop.fs_stat(git_path)
   if git_file_stat then
     if git_file_stat.type == 'directory' then
-      git_dir = git_path
+      gdir = git_path
     elseif git_file_stat.type == 'file' then
       -- separate git-dir or submodule is used
       local file = io.open(git_path)
       if file then
-        git_dir = file:read()
-        git_dir = git_dir and git_dir:match('gitdir: (.+)$')
-        file:close()
+        gdir, _ = file:read(), file:close()
+        gdir = gdir and gdir:match('gitdir: (.+)$')
       end
       -- submodule / relative file path
-      if
-        git_dir
-        and git_dir:sub(1, 1) ~= sep
-        and not git_dir:match('^%a:.*$')
-      then
-        git_dir = git_path:match('(.*).git') .. git_dir
+      if gdir and gdir:sub(1, 1) ~= sep and not gdir:match('^%a:.*$') then
+        gdir = git_path:match('(.*).git') .. gdir
       end
     end
-    if git_dir then
-      local head_file_stat = vim.loop.fs_stat(git_dir .. sep .. 'HEAD')
-      if head_file_stat and head_file_stat.type == 'file' then
-        return git_dir, true
+    if gdir then
+      local hfs = vim.loop.fs_stat(gdir .. sep .. 'HEAD')
+      if hfs and hfs.type == 'file' then
+        return gdir, true
       else
         return '', false
       end
     end
   end
-  return git_dir, false
+  return gdir, false
 end
 
 ---returns full path to git directory for dir_path or current directory
 ---@return string
-function M.find_git_dir()
-  local file_dir = vim.fn.expand('%:p:h') -- dir of current buffer
-  local root_dir, git_dir = file_dir, ''
-  local to_break = false
+function M.find_gdir()
+  local dir = vim.fn.expand('%:p:h')
+  local root, gdir, found = dir, '', false
   -- Search upward (through parents) for .git file or folder
-  while root_dir do
-    if git_dir_cache[root_dir] then
-      git_dir = git_dir_cache[root_dir]
+  while root do
+    if gdir_cache[root] then
+      gdir = gdir_cache[root]
       break
     end
-    git_dir, to_break = M.git_dir_from_root(root_dir, git_dir)
-    if to_break then break end
-    root_dir = root_dir:match('(.*)' .. sep .. '.-')
+    gdir, found = M.gdir_from_root(root, gdir)
+    if found then break end
+    root = root:match('(.*)' .. sep .. '.-')
   end
-  git_dir_cache[file_dir] = git_dir
-  if current_git_dir ~= git_dir then current_git_dir = git_dir end
+  gdir_cache[dir] = gdir
+  if curr.gdir ~= gdir then curr.gdir = gdir end
   update_branch()
-  return git_dir
+  return gdir
 end
 
 function M.init(set_statusline)
@@ -107,7 +88,7 @@ function M.init(set_statusline)
     first_set = true
     M.set_statusline('')
   end
-  M.find_git_dir()
+  M.find_gdir()
 end
 
 return M

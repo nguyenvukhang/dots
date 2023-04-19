@@ -4,6 +4,24 @@
 
 local actions = require('telescope.actions')
 local bctions = require('brew.telescope.actions')
+local builtin = require('telescope.builtin')
+local search = require('brew.telescope.search')
+local nnoremap = require('brew.core').nnoremap
+
+nnoremap('<c-p>', search.files.repo)
+nnoremap('<c-f>', search.files.cwd)
+
+-- the only other remap that starts with p is reserved for code formatting
+nnoremap('<leader>ps', search.string.repo)
+nnoremap('<leader>pf', search.string.cursor)
+nnoremap('<leader>pw', search.string.cwd)
+
+nnoremap('<leader>sd', search.files.dots)
+nnoremap('<leader>su', search.files.university)
+
+nnoremap('<leader>sh', builtin.help_tags)
+nnoremap('<leader>sm', builtin.man_pages)
+nnoremap('<leader>gs', builtin.git_status)
 
 local compact = {
   previewer = false,
@@ -12,7 +30,6 @@ local compact = {
   theme = 'dropdown',
 }
 
-require('brew.telescope.remaps')
 require('telescope').setup {
   defaults = {
     vimgrep_arguments = {
@@ -41,16 +58,5 @@ require('telescope').setup {
     git_files = { hidden = true },
     file_browser = compact,
     find_files = compact,
-    oldfiles = compact,
-    buffers = {
-      ignore_current_buffer = true,
-      sort_lastused = true,
-      previewer = false,
-      theme = 'dropdown',
-      path_display = { smart = 1 },
-      mappings = {
-        i = { ['<c-d>'] = require('telescope.actions').delete_buffer },
-      },
-    },
   },
 }
