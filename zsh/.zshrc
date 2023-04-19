@@ -340,6 +340,8 @@ UNI_LAUNCH=$UNI/.session # use this file's first line as initial directory
 if has exa; then
   EXA_OPTS=(--group-directories-first --sort=Filename --ignore-glob='.DS_Store')
   alias ls="exa -a $EXA_OPTS"
+  alias lss="exa -a --tree --level=2 $EXA_OPTS"
+  alias lsss="exa -a --tree --level=3 $EXA_OPTS"
   alias ll="exa -al $EXA_OPTS"
 else
   alias ls="ls -A --color=auto"
