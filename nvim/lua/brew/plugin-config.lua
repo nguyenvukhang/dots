@@ -134,7 +134,7 @@ config['nvim-lspconfig'] = function()
   lsp.lua()
   lsp.typescript()
   lsp.python()
-  -- lsp.swift()
+  lsp.swift()
   -- lsp.astro()
   -- lsp.go()
 end

@@ -24,7 +24,10 @@ local cfg = {
     dollarDollar()
   end,
   cpp = function() vim.api.nvim_buf_set_option(0, 'commentstring', '// %s') end,
-  swift = function() vim.api.nvim_buf_set_option(0, 'commentstring', '// %s') end,
+  swift = function()
+    vim.opt.formatoptions = 'jcroql'
+    vim.api.nvim_buf_set_option(0, 'commentstring', '// %s')
+  end,
 }
 
 core.autocmd(nil, { pattern = '*.tex', callback = cfg.latex })
