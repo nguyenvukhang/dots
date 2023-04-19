@@ -1,6 +1,4 @@
-local actions = require('brew.telescope.actions')
-local tele = require('telescope.builtin')
-local M = { search = {} }
+local t, M = require('telescope.builtin'), { search = {} }
 
 -- stylua: ignore
 local ignore = {
@@ -11,33 +9,29 @@ local ignore = {
 
 --- @param title string
 --- @param cwd string
---- @param query? string
-M.search.string = function(title, cwd, query)
-  tele.grep_string {
-    file_ignore_patterns = ignore,
-    attach_mappings = function(_, map)
-      map('i', '<CR>', actions.select_default)
-      return true
-    end,
+--- @param search? string
+M.search.string = function(title, cwd, search)
+  t.grep_string {
     prompt_title = title,
     cwd = cwd,
-    search = query,
+    search = search,
+    file_ignore_patterns = ignore,
   }
 end
 
 --- @param title string
 --- @param cwd? string
 M.search.files = function(title, cwd)
-  tele.find_files {
-    file_ignore_patterns = ignore,
+  t.find_files {
     prompt_title = title,
     cwd = cwd,
+    file_ignore_patterns = ignore,
   }
 end
 
 --- @param title string
 M.search.git_files = function(title)
-  tele.git_files { file_ignore_patterns = ignore, prompt_title = title }
+  t.git_files { prompt_title = title, file_ignore_patterns = ignore }
 end
 
 return M

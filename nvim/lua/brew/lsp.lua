@@ -56,16 +56,22 @@ M.swift = function() require('lspconfig').sourcekit.setup(base()) end
 -- lua
 M.lua = function()
   require('neodev').setup {}
-  local rtp = vim.split(package.path, ';', {})
-  table.insert(rtp, 'lua/?.lua')
-  table.insert(rtp, 'lua/?/init.lua')
+  local luapath = vim.split(package.path, ';', {})
+  table.insert(luapath, 'lua/?.lua')
+  table.insert(luapath, 'lua/?/init.lua')
   lsp.lua_ls.setup(base {
     settings = {
       Lua = {
-        runtime = { version = 'LuaJIT', path = rtp },
+        runtime = { version = 'LuaJIT', path = luapath },
         diagnostics = { globals = { 'vim' } },
         workspace = {
-          library = vim.api.nvim_get_runtime_file('', true),
+          library = {
+            [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+            [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+            [vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy'] = true,
+          },
+          maxPreload = 100000,
+          preloadFileSize = 10000,
           checkThirdParty = false,
         },
         telemetry = { enable = false },
