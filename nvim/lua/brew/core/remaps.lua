@@ -1,10 +1,11 @@
 local c = require('brew.core')
-local nnoremap, vnoremap, inoremap = c.nnoremap, c.vnoremap, c.inoremap
+local nnoremap, vnoremap = c.nnoremap, c.vnoremap
 
 -- no-ops
 nnoremap('<space>', '<nop>')
 nnoremap('<bs>', '<nop>')
 nnoremap('Q', '<nop>')
+nnoremap('q:', '<nop>')
 nnoremap('K', '<nop>')
 nnoremap('<left>', '<nop>')
 nnoremap('<right>', '<nop>')
@@ -51,16 +52,16 @@ nnoremap('<leader>j', ':wincmd j<cr>')
 nnoremap('<leader>k', ':wincmd k<cr>')
 
 -- replace in buffer
-nnoremap('<leader>rb', 'yiw:%s/<C-r>"//g<left><left>', true)
+-- :%s/\<foo\>/bar/g
+nnoremap('<leader>rb', ':%s/<C-r><C-w>//g<left><left>', true)
+nnoremap('<leader>rB', ':%s/\\<<C-r><C-w>\\>//g<left><left>', true)
 
 -- replace in line
-nnoremap('<leader>rl', 'yiw:s/<C-r>"//g<left><left>', true)
-
--- replace visual selection
-vnoremap('<C-r>', 'y:%s/<C-r>"//g<left><left>', true)
+nnoremap('<leader>rl', ':s/<C-r><C-w>//g<left><left>', true)
+nnoremap('<leader>rL', ':s/\\<<C-r><C-w>\\>//g<left><left>', true)
 
 -- reverse (flip) visual lines
-vnoremap('<C-f>', "<esc>'<km<'>:'<,.g/^/m '><CR>")
+vnoremap('<C-f>', "<esc>'<V'><esc>'<O<esc>m<'>:'<,.g/^/m '><CR>'<dd")
 
 -- sort visual lines
 vnoremap('<C-s>', ':sort<CR>')
@@ -76,7 +77,6 @@ nnoremap('<leader>ph', ':syntax sync fromstart<CR>', true)
 nnoremap('<f5>', ':setlocal spell!<cr>:set spell?<cr>', true)
 
 -- vim functions
-nnoremap('<leader>x', ':CloseOtherBuffers', true)
 nnoremap('<leader>c', ':ColorizerToggle<cr>', true)
 
 -- lua functions
@@ -90,7 +90,3 @@ nnoremap(']]', function() vim.fn.searchpair('\\[', '', '\\]') end)
 -- diagnostics
 nnoremap('<leader>e', vim.diagnostic.open_float, true)
 nnoremap('<leader>p', ':Neoformat<CR>', true)
-inoremap('<S-Tab>', '<C-V><Tab>', false)
-
--- fold markers
-nnoremap('<leader>zz', 'o{{{}}}<esc>:CommentToggle<CR>^f}i  <left>', false)

@@ -1,9 +1,6 @@
 -- finds all instances of `find` in buffer,
 -- and replaces it with `replace`
-local sub = function(find, replace)
-  pcall(vim.cmd, 'silent! %s/' .. find .. '/' .. replace .. '/g')
-end
-
+local sub = function(f, r) vim.cmd('silent! %s/' .. f .. '/' .. r .. '/g') end
 local cmd = function(name, fn) vim.api.nvim_create_user_command(name, fn, {}) end
 
 -- normalize all non-standard glyphs
@@ -23,16 +20,14 @@ cmd('StripColors', function()
 end)
 
 -- list loaded packages
-cmd('Packs', function()
-  print(vim.inspect(vim.tbl_map(function(p) return p end, package.loaded)))
-end)
+-- cmd('Packs', function() print(vim.inspect(package.loaded)) end)
 
 -- get highlight group under cursor
 cmd('UnderMe', function()
   if not vim.fn.exists('*synstack') then return end
   local hl = vim.fn.synstack(vim.fn.line('.'), vim.fn.col('.'))
-  for i, v in pairs(hl) do
-    hl[i] = vim.fn.synIDattr(v, 'name')
+  for i = 1, #hl do
+    hl[i] = vim.fn.synIDattr(hl[i], 'name')
   end
   print(vim.inspect(hl))
 end)
