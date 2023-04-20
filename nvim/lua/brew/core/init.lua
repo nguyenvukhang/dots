@@ -10,8 +10,7 @@ local function is_open(n) return #fn.filter(fn.getwininfo(), 'v:val.' .. n) > 0 
 M.git_workspace_root = function()
   local stdout = fn.systemlist('git rev-parse --show-toplevel')[1]
   if stdout:match('fatal: not a git repository') then
-    vim.notify('not in a git repo')
-    return nil
+    return vim.notify('not in a git repo')
   else
     return stdout
   end
