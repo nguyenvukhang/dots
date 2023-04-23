@@ -26,6 +26,6 @@ require('brew.core').load_plugins {
 require('brew.core.sets')
 require('brew.core.remaps')
 require('brew.core.commands')
-require('brew.core.autocmd')
 require('brew.statusline').start()
 require('gruvbox').load()
+require('brew.core.autocmd')

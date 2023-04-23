@@ -1,6 +1,5 @@
 local git_workspace_root = require('brew.core').git_workspace_root
-local M = { files = {}, string = {} }
-local builtin = require('telescope.builtin')
+local M, builtin = { files = {}, string = {} }, require('telescope.builtin')
 
 -- stylua: ignore
 local t = { file_ignore_patterns = {

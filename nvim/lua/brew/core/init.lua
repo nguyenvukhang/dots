@@ -48,9 +48,9 @@ function M.status(cmd) return vim.fn.system(cmd) and vim.v.shell_error == 0 end
 
 vim.api.nvim_create_augroup('BREW', { clear = true })
 
----@param ev? string[]
 ---@param opts any
-M.autocmd = function(ev, opts)
+---@param ev? string[]
+M.autocmd = function(opts, ev)
   opts['group'], ev = 'BREW', ev or { 'BufRead', 'BufNewFile', 'BufEnter' }
   vim.api.nvim_create_autocmd(ev, opts)
 end
