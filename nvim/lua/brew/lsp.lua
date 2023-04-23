@@ -1,29 +1,21 @@
 local lsp, M = require('lspconfig'), {}
 
--- buffer-specific remap
-local function nmap(bufnr, lhs, fn)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', lhs, '', {
-    noremap = true,
-    silent = true,
-    callback = fn,
-  })
-end
-
 -- base settings for lsp
 local base = function(opts)
-  return vim.tbl_extend('keep', opts or {}, {
-    on_attach = function(_, bufnr)
-      nmap(bufnr, 'gd', vim.lsp.buf.definition)
-      nmap(bufnr, 'gD', vim.lsp.buf.declaration)
-      nmap(bufnr, 'gt', vim.lsp.buf.type_definition)
-      nmap(bufnr, 'gr', vim.lsp.buf.references)
-      nmap(bufnr, 'gi', vim.lsp.buf.implementation)
-      nmap(bufnr, 'K', vim.lsp.buf.hover)
-    end,
-    capabilities = require('cmp_nvim_lsp').default_capabilities(
-      vim.lsp.protocol.make_client_capabilities()
-    ),
-  })
+  opts = opts or {}
+  opts.on_attach = function(_, bufnr)
+    local x = { buffer = bufnr, noremap = true }
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, x)
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, x)
+    vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, x)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, x)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, x)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, x)
+  end
+  opts.capabilities = require('cmp_nvim_lsp').default_capabilities(
+    vim.lsp.protocol.make_client_capabilities()
+  )
+  return opts
 end
 
 -- C, C++, Java
