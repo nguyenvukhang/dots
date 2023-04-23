@@ -2,9 +2,8 @@ local M, fn = {}, vim.fn
 
 M.load_plugins = require('brew.core.lazy').load_plugins
 
--- checks if quickfix/loclist is open
----@param n 'quickfix' | 'loclist'
-local function is_open(n) return #fn.filter(fn.getwininfo(), 'v:val.' .. n) > 0 end
+-- checks if quickfix is open
+local function qf_is_open() return vim.fn.getqflist({ winid = 0 }).winid ~= 0 end
 
 -- Get path to the root of the git workspace
 M.git_workspace_root = function()
@@ -29,14 +28,12 @@ M.onoremap=function(L,R,v)vim.keymap.set('o',L,R,{noremap=true,silent=not v})end
 -- stylua: ignore end
 
 -- Toggles the quickfix list/window
-M.toggle_qflist = function()
-  vim.cmd(is_open('quickfix') and 'cclose' or 'bel copen')
-end
+M.toggle_qflist = function() vim.cmd(qf_is_open() and 'cclose' or 'bel copen') end
 
 -- Toggle diagnostics quickfix list
 M.toggle_diagnostics = function()
   -- close diagnostics if qflist is already open
-  if is_open('quickfix') then return vim.cmd('cclose') end
+  if qf_is_open() then return vim.cmd('cclose') end
 
   -- load diagnostics
   vim.diagnostic.setloclist { open = false }
