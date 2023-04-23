@@ -50,10 +50,9 @@ require('telescope').setup {
           local action_state = require('telescope.actions.state')
           local manager, qf = action_state.get_current_picker(bufnr).manager, {}
           for e in manager:iter() do
-            local i = { bufnr = e.bufnr }
+            local i, t, v = { bufnr = e.bufnr }, e.text, e.value
             i.filename = require('telescope.from_entry').path(e, false, false)
             i.lnum, i.col = vim.F.if_nil(e.lnum, 1), vim.F.if_nil(e.col, 1)
-            local v, t = e.value, e.text
             i.text = t and t or type(v) == 'table' and v.text or v
             table.insert(qf, i)
           end
