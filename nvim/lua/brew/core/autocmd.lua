@@ -1,6 +1,5 @@
-local core = require('brew.core')
-local vnoremap = core.vnoremap
-local onoremap = core.onoremap
+local c = require('brew.core')
+local vnoremap, onoremap, autocmd = c.vnoremap, c.onoremap, c.autocmd
 
 local dollarDollar = function()
   onoremap('i$', ':<c-u>norm! T$vt$<cr>')
@@ -30,16 +29,13 @@ local cfg = {
   end,
 }
 
-core.autocmd(nil, { pattern = '*.tex', callback = cfg.latex })
-core.autocmd(nil, { pattern = { '*.swift' }, callback = cfg.swift })
-core.autocmd(nil, { pattern = { '*.mdx', '*.md' }, callback = cfg.markdown })
-core.autocmd(nil, { pattern = { '*.java' }, callback = cfg.java })
-core.autocmd(
-  nil,
-  { pattern = { '*.cpp', '*.h', '*.c', '*.cc' }, callback = cfg.cpp }
-)
+autocmd { pattern = '*.tex', callback = cfg.latex }
+autocmd { pattern = { '*.swift' }, callback = cfg.swift }
+autocmd { pattern = { '*.mdx', '*.md' }, callback = cfg.markdown }
+autocmd { pattern = { '*.java' }, callback = cfg.java }
+autocmd { pattern = { '*.cpp', '*.h', '*.c', '*.cc' }, callback = cfg.cpp }
 
-core.autocmd({ 'BufWritePost' }, {
+autocmd({
   pattern = { '*.tex' },
   callback = function()
     local full_path = vim.fn.expand('%:p')
@@ -56,7 +52,7 @@ core.autocmd({ 'BufWritePost' }, {
       vim.fn.setqflist(output)
     end
   end,
-})
+}, { 'BufWritePost' })
 
 -- automatically redistribute splits when vim is resized
-core.autocmd({ 'VimResized' }, { command = 'wincmd =' })
+autocmd({ command = 'wincmd =' }, { 'VimResized' })

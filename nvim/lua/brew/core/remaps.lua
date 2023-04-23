@@ -18,9 +18,6 @@ nnoremap('L', '$')
 vnoremap('H', '^')
 vnoremap('L', '$')
 
--- non-disruptive join
-nnoremap('J', 'mZJ`Z')
-
 -- open file under cursor in a split
 nnoremap('gF', ':vs <cfile><cr>')
 
@@ -36,10 +33,8 @@ nnoremap('<C-j>', ':cnext<cr>')
 nnoremap('<C-k>', ':cprev<cr>')
 
 -- color columns
-nnoremap('<leader>6', ':set colorcolumn=61<cr>')
 nnoremap('<leader>7', ':set colorcolumn=71<cr>')
 nnoremap('<leader>8', ':set colorcolumn=81<cr>')
-nnoremap('<leader>0', ':set colorcolumn=<cr>')
 
 -- yank to clipboard (confirmed to work on mac)
 nnoremap('<leader>y', '"+y')

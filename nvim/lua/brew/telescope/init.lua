@@ -1,9 +1,4 @@
---
--- https://github.com/nvim-telescope/telescope.nvim
---
-
 local actions = require('telescope.actions')
-local builtin = require('telescope.builtin')
 local search = require('brew.telescope.search')
 local nnoremap = require('brew.core').nnoremap
 
@@ -18,56 +13,39 @@ nnoremap('<leader>pw', search.string.cwd)
 nnoremap('<leader>sd', search.files.dots)
 nnoremap('<leader>su', search.files.university)
 
-nnoremap('<leader>sh', builtin.help_tags)
-nnoremap('<leader>sm', builtin.man_pages)
-nnoremap('<leader>gs', builtin.git_status)
-
-local compact = {
-  previewer = false,
-  hidden = true,
-  sorting_strategy = 'ascending',
-  theme = 'dropdown',
-}
+-- local builtin = require('telescope.builtin')
+-- nnoremap('<leader>sh', builtin.help_tags)
+-- nnoremap('<leader>sm', builtin.man_pages)
+-- nnoremap('<leader>gs', builtin.git_status)
 
 require('telescope').setup {
   defaults = {
-    vimgrep_arguments = {
-      'rg',
-      '--hidden',
-      '--color=never',
-      '--no-heading',
-      '--with-filename',
-      '--line-number',
-      '--column',
-      '--smart-case',
-    },
+    vimgrep_arguments = { 'rg', '--vimgrep', '--hidden', '--smart-case' },
     color_devicons = false,
     selection_caret = '  ',
-    entry_prefix = '  ',
-    mappings = {
-      i = {
-        ['<CR>'] = function(bufnr)
-          local action_state = require('telescope.actions.state')
-          local manager, qf = action_state.get_current_picker(bufnr).manager, {}
-          for e in manager:iter() do
-            local i, t, v = { bufnr = e.bufnr }, e.text, e.value
-            i.filename = require('telescope.from_entry').path(e, false, false)
-            i.lnum, i.col = vim.F.if_nil(e.lnum, 1), vim.F.if_nil(e.col, 1)
-            i.text = t and t or type(v) == 'table' and v.text or v
-            table.insert(qf, i)
-          end
-          vim.fn.setqflist(qf, 'r')
-          return require('telescope.actions.set').select(bufnr, 'default')
-        end,
-        ['<C-j>'] = actions.move_selection_next,
-        ['<C-k>'] = actions.move_selection_previous,
-        ['<esc>'] = actions.close,
-      },
-    },
+    mappings = { i = { ['<esc>'] = actions.close } },
   },
   pickers = {
     git_files = { hidden = true },
-    file_browser = compact,
-    find_files = compact,
+    find_files = { hidden = true, previewer = false, theme = 'dropdown' },
+    grep_string = {
+      mappings = {
+        i = {
+          ['<CR>'] = function(bufnr)
+            local as = require('telescope.actions.state')
+            local m, qf = as.get_current_picker(bufnr).manager, {}
+            for e in m:iter() do
+              local i, t, v = { bufnr = e.bufnr }, e.text, e.value
+              i.filename = require('telescope.from_entry').path(e, false, false)
+              i.lnum, i.col = vim.F.if_nil(e.lnum, 1), vim.F.if_nil(e.col, 1)
+              i.text = t and t or type(v) == 'table' and v.text or v
+              table.insert(qf, i)
+            end
+            vim.fn.setqflist(qf, 'r')
+            return require('telescope.actions.set').select(bufnr, 'default')
+          end,
+        },
+      },
+    },
   },
 }

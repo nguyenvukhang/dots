@@ -5,8 +5,7 @@ local build = {}
 
 -- https://github.com/ThePrimeagen/harpoon
 config.harpoon = function()
-  local mark = require('harpoon.mark')
-  local ui = require('harpoon.ui')
+  local mark, ui = require('harpoon.mark'), require('harpoon.ui')
   local jump = function(n)
     return function()
       ui.nav_file(n)
@@ -95,13 +94,6 @@ end
 -- https://github.com/iamcco/markdown-preview.nvim
 build['markdown-preview.nvim'] = function() vim.fn['mkdp#util#install']() end
 config['markdown-preview.nvim'] = function()
-  vim.g.mkdp_auto_close = 0
-  vim.g.mkdp_preview_options = {
-    katex = { macros = { ['\\R'] = '\\mathbb{R}', ['\\C'] = '\\mathbb{C}' } },
-    disable_sync_scroll = false,
-    disable_filename = 1,
-  }
-  -- abbreviations
   vim.cmd('cnoreabbrev MP MarkdownPreview')
   vim.cmd('cnoreabbrev MS MarkdownPreviewStop')
 end
@@ -140,9 +132,9 @@ config['nvim-lspconfig'] = function()
 end
 
 -- https://github.com/rose-pine/neovim (rip name convention tbh)
-config['rose-pine'] = function()
-  require('rose-pine').setup { variant = 'moon', disable_background = true }
-end
+-- config['rose-pine'] = function()
+--   require('rose-pine').setup { variant = 'moon', disable_background = true }
+-- end
 
 return function(list)
   for i = 1, #list do

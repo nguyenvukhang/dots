@@ -18,32 +18,21 @@ local base = function(opts)
   return opts
 end
 
--- C, C++, Java
 M.clangd = function() lsp.clangd.setup(base()) end
-
--- javascript, typescript
 M.typescript = function() lsp.tsserver.setup(base()) end
-
--- astro.js
 M.astro = function() lsp.astro.setup(base()) end
-
--- snek
 M.python = function() lsp.pyright.setup(base()) end
+M.swift = function() lsp.sourcekit.setup(base()) end
 
--- go
-M.go = function()
-  lsp.gopls.setup(base { root_dir = lsp.util.root_pattern('go.mod', '.git') })
-end
-
--- rust
 M.rust = function()
   lsp.rust_analyzer.setup(
     base { root_dir = lsp.util.root_pattern('Cargo.toml') }
   )
 end
 
--- swift
-M.swift = function() require('lspconfig').sourcekit.setup(base()) end
+M.go = function()
+  lsp.gopls.setup(base { root_dir = lsp.util.root_pattern('go.mod', '.git') })
+end
 
 -- lua
 M.lua = function()
@@ -59,8 +48,8 @@ M.lua = function()
         diagnostics = { globals = { 'vim' } },
         workspace = {
           library = {
-            [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-            [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+            [vim.env.VIMRUNTIME .. '/lua'] = true,
+            [vim.env.VIMRUNTIME .. '/lua/vim/lsp'] = true,
             [laze .. '/lazy.nvim/lua/lazy'] = true,
             [laze .. '/telescope.nvim/lua/telescope'] = true,
           },
@@ -78,12 +67,9 @@ end
 -- and download the latest version.
 -- Unpack it at `jdtls_opts.dir` and make sure the exact filenames below match.
 M.java = function()
-  local jdtls_status, jdtls = pcall(require, 'jdtls')
-  local setup_status, setup = pcall(require, 'jdtls.setup')
-
-  if not (jdtls_status and setup_status) then
-    return vim.notify('[jdtls] java lsp not installed.')
-  end
+  local j, jdtls = pcall(require, 'jdtls')
+  local s, setup = pcall(require, 'jdtls.setup')
+  if not (j and s) then return vim.notify('[jdtls] setup err.') end
 
   local jdtls_dir = vim.env.HOME .. '/.local/jdtls'
 

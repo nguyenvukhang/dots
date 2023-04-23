@@ -17,7 +17,13 @@ const lines = (f) => {
   const lines = readFileSync(f, "utf8")
     .split("\n")
     .filter((v) => v.trim().length !== 0)
-    .filter((v) => !v.trimStart().startsWith("--"));
+    .filter((v) => !v.trimStart().startsWith("--"))
+    .map((v) => {
+      if (!v.includes("--")) return v.trim();
+      const parts = v.split("--");
+      const clean = parts.every((v) => !v.includes("'") && !v.includes('"'));
+      return clean ? parts[0].trim() : v.trim();
+    });
   lines.forEach((v) => lineLengths.push(v.trim().length));
   const estd = lines.reduce((a, c) => a + c.length, 0) / avgLL;
   return [lines.length, Math.round(estd)];

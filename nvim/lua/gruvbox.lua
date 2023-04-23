@@ -312,8 +312,7 @@ M.load = function()
   end
   vim.cmd.hi('clear')
   vim.g.colors_name, vim.o.termguicolors = 'gruvbox', true
-  local groups = setup_groups()
-  for group, opts in pairs(groups) do
+  for group, opts in pairs(setup_groups()) do
     vim.api.nvim_set_hl(0, group, opts)
   end
 end

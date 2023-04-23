@@ -1,82 +1,70 @@
-local M = {}
-local curr, first_set = { branch = '', gdir = '' }, false
+local M, c, cache = {}, { b = '', d = '' }, {}
 local sep, l = package.config:sub(1, 1), vim.loop
-local file_changed = sep ~= '\\' and l.new_fs_event() or l.new_fs_poll()
-local gdir_cache = {} -- Stores git paths that we already know of
+local df = sep ~= '\\' and l.new_fs_event() or l.new_fs_poll()
 
----sets git_branch variable to branch name or commit hash if not on branch
----@param head_file string full path of .git/HEAD file
-local function get_git_head(head_file)
-  local f_head = io.open(head_file)
-  if not f_head then return end
-  local HEAD, _ = f_head:read(), f_head:close()
-  local branch = HEAD:match('ref: refs/heads/(.+)$')
-  curr.branch = branch and branch or HEAD:sub(1, 7)
+local function get_head(f)
+  local h = io.open(f)
+  if not h then return end
+  local HEAD, _ = h:read(), h:close()
+  local b = HEAD:match('ref: refs/heads/(.+)$')
+  c.b = b and b or HEAD:sub(1, 7)
 end
 
----updates the current value of git_branch and sets up file watch on HEAD file
 local function update_branch()
-  if file_changed == nil then return end
-  file_changed:stop()
-  if curr.gdir and #curr.gdir > 0 then
-    local f_head = curr.gdir .. sep .. 'HEAD'
-    get_git_head(f_head)
-    file_changed:start(f_head, {}, vim.schedule_wrap(update_branch))
+  if df == nil then return end
+  df:stop()
+  if c.d and #c.d > 0 then
+    local f = c.d .. sep .. 'HEAD'
+    get_head(f)
+    df:start(f, {}, vim.schedule_wrap(update_branch))
   else
-    curr.branch = '' -- git dir not found
+    c.b = '' -- git dir not found
   end
-  M.set_statusline(curr.branch)
+  M.set_statusline(c.b)
 end
 
----@return string
-M.gdir_from_root = function(root, gdir)
-  local git_path, stat = root .. sep .. '.git', vim.loop.fs_stat
-  local git_fs = stat(git_path)
-  if not git_fs then return gdir end
-  if git_fs.type == 'directory' then
-    gdir = git_path
-  elseif git_fs.type == 'file' then
+M.find = function(rt, gd)
+  local gp, stat = rt .. sep .. '.git', vim.loop.fs_stat
+  local gf = stat(gp)
+  if not gf then return gd end
+  if gf.type == 'directory' then
+    gd = gp
+  elseif gf.type == 'file' then
     -- separate git-dir or submodule is used
-    local file = io.open(git_path)
+    local file = io.open(gp)
     if file then
-      gdir, _ = file:read(), file:close()
-      gdir = gdir and gdir:match('gitdir: (.+)$')
+      gd, _ = file:read(), file:close()
+      gd = gd and gd:match('gitdir: (.+)$')
     end
     -- submodule / relative file path
-    if gdir and gdir:sub(1, 1) ~= sep and not gdir:match('^%a:.*$') then
-      gdir = git_path:match('(.*).git') .. gdir
+    if gd and gd:sub(1, 1) ~= sep and not gd:match('^%a:.*$') then
+      gd = gp:match('(.*).git') .. gd
     end
   end
-  if not gdir then return gdir end
-  local hfs = stat(gdir .. sep .. 'HEAD')
-  return (hfs and hfs.type == 'file') and gdir or ''
+  if not gd then return gd end
+  local h = stat(gd .. sep .. 'HEAD')
+  return (h and h.type == 'file') and gd or ''
 end
 
----returns full path to git directory for dir_path or current directory
----@return string
-function M.find_gdir(dir)
+function M.find_git_dir(dir)
   dir = dir or vim.fn.expand('%:p:h')
-  local root, gdir = dir, ''
+  local rt, gd = dir, ''
   -- Search parents for .git file or folder
-  while root do
-    gdir = gdir_cache[root]
-    if gdir then break end
-    gdir = M.gdir_from_root(root, gdir)
-    if gdir and #gdir > 0 then break end
-    root = root:match('(.*)' .. sep .. '.-')
+  while rt do
+    gd = cache[rt]
+    if gd then break end
+    gd = M.find(rt, gd)
+    if gd and #gd > 0 then break end
+    rt = rt:match('(.*)' .. sep .. '.-')
   end
-  gdir_cache[dir], curr.gdir = gdir, gdir
+  cache[dir], c.d = gd, gd
   update_branch()
-  return gdir
+  return gd
 end
 
 function M.init(set_statusline)
   M.set_statusline = set_statusline
-  if not first_set then
-    first_set = true
-    M.set_statusline('')
-  end
-  M.find_gdir()
+  M.find_git_dir()
 end
 
 --[[
@@ -90,8 +78,8 @@ nvim --headless -c "lua require('brew.git-branch').test()" -c q
 --   t.log = false
 --   local cwd = t.tmp_dir
 --   local test = function(at, dir, branch)
---     t.assert_eq(M.find_gdir(cwd .. at), cwd .. dir)
---     t.assert_eq(curr.branch, branch)
+--     t.assert_eq(M.find_git_dir(cwd .. at), cwd .. dir)
+--     t.assert_eq(c.b, branch)
 --   end
 --
 --   -- create regular git repo and find git branch
@@ -133,8 +121,8 @@ nvim --headless -c "lua require('brew.git-branch').test()" -c q
 --
 --   -- not a git repository
 --   t.run('mkdir -p r5')
---   t.assert_eq(M.find_gdir(cwd .. '/r5'), nil)
---   t.assert_eq(curr.branch, '')
+--   t.assert_eq(M.find_git_dir(cwd .. '/r5'), nil)
+--   t.assert_eq(c.b, '')
 --
 --   -- t.ls()
 --   t.teardown()
