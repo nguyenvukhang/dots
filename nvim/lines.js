@@ -16,6 +16,7 @@ let lineLengths = [];
 const lines = (f) => {
   const lines = readFileSync(f, "utf8")
     .split("\n")
+    .filter((v) => v.trim().length !== 0)
     .filter((v) => !v.trimStart().startsWith("--"));
   lines.forEach((v) => lineLengths.push(v.trim().length));
   const estd = lines.reduce((a, c) => a + c.length, 0) / avgLL;

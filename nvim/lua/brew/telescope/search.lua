@@ -19,7 +19,7 @@ end
 
 M.string.repo = function()
   local repo_dir = git_workspace_root()
-  if repo_dir == nil then return end
+  if not repo_dir then return end
   local query = vim.fn.input('Search For > ')
   if query == '' then return end
   t.prompt_title, t.cwd, t.search = 'Word in Repo', repo_dir, query
