@@ -8,11 +8,8 @@ local function qf_is_open() return vim.fn.getqflist({ winid = 0 }).winid ~= 0 en
 -- Get path to the root of the git workspace
 M.git_workspace_root = function()
   local stdout = fn.systemlist('git rev-parse --show-toplevel')[1]
-  if stdout:match('fatal: not a git repository') then
-    return vim.notify('not in a git repo')
-  else
-    return stdout
-  end
+  if vim.v.shell_error == 0 then return stdout end
+  vim.notify('not in a git repo')
 end
 
 -- stylua: ignore start
