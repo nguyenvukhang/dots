@@ -36,13 +36,12 @@ M.toggle_diagnostics = function()
   if qf_is_open() then return vim.cmd('cclose') end
 
   -- load diagnostics
-  vim.diagnostic.setloclist { open = false }
-  local diagnostics = fn.getloclist(0)
+  local diagnostics = vim.diagnostic.get(0)
 
   -- check if there are any diagnostics
   if vim.tbl_isempty(diagnostics) then return vim.notify('No diagnostics') end
 
-  fn.setqflist(diagnostics)
+  fn.setqflist(vim.diagnostic.toqflist(diagnostics))
   vim.cmd('bel copen') -- open quickfix window
 end
 
