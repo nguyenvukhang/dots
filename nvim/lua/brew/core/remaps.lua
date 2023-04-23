@@ -45,6 +45,9 @@ nnoremap('<leader>0', ':set colorcolumn=<cr>')
 nnoremap('<leader>y', '"+y')
 vnoremap('<leader>y', '"+y')
 
+-- preserve yank buffer on Visual Mode paste
+vnoremap('<leader>p', '"_dP')
+
 -- split jumping
 nnoremap('<leader>h', ':wincmd h<cr>')
 nnoremap('<leader>l', ':wincmd l<cr>')
