@@ -28,12 +28,13 @@ const pre = __dirname.length + 1;
 const lua = getAllFiles(__dirname)
   .filter((v) => v.endsWith(".lua"))
   .filter((v) => !v.includes("gruvbox"))
+  .filter((v) => !v.includes("test"))
   .map((v) => {
     const [real, estd] = lines(v);
     return { filename: v.slice(pre), real, estd };
   });
 
-lua.sort((a, b) => a.lines - b.lines);
+lua.sort((a, b) => a.estd - b.estd);
 lua.forEach((v) => console.log(pad(v.real), pad(v.estd), v.filename));
 console.log(
   "real total:",
