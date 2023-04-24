@@ -35,7 +35,7 @@ def fetch_data():
     first_line = str(l.stdout).split("\\n")[0]
     token = str(first_line)[2:]
     headers = {'Authorization': 'token ' + token}
-    res = requests.get('https://api.github.com/user/repos', headers=headers)
+    res = requests.get('https://api.github.com/user/repos?per_page=100', headers=headers)
     return res.json()
 
 # create new folder to pull all data to
