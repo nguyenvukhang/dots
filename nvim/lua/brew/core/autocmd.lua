@@ -15,6 +15,23 @@ local cfg = {
   latex = function()
     vim.opt.formatoptions = 'jcroql'
     vim.opt.textwidth = 70
+    local ls = require('luasnip')
+    local s, t = ls.snippet, ls.text_node
+    ls.setup()
+    vim.keymap.set(
+      'i',
+      '<tab>',
+      function()
+        return ls.expand_or_jumpable() and '<Plug>luasnip-expand-or-jump'
+          or '<tab>'
+      end,
+      { noremap = true, expr = true }
+    )
+
+    ls.add_snippets('tex', {
+      s('x', { t { '\\times' } }),
+      s('*', { t { '\\ast' } }),
+    })
     dollarDollar()
   end,
   markdown = function()
