@@ -168,7 +168,7 @@ log_message() {
 # git logs
 log_line_count=15
 gl() {
-  log_graph -n ${1-$log_line_count} --branches
+  log_graph -n ${1-$log_line_count}
 }
 gla() {
   log_graph -n ${1-$log_line_count} --all

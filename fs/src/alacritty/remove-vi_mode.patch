@@ -1,0 +1,1965 @@
+From 1bfffe282d8cc68e6f051a0989c89676693e4d98 Mon Sep 17 00:00:00 2001
+From: nguyenvukhang <brew4k@gmail.com>
+Date: Mon, 24 Apr 2023 14:34:40 +0800
+Subject: [PATCH] patch: remove vi_mode
+
+---
+ Makefile                           |   7 +-
+ alacritty/src/config/bindings.rs   | 134 +----
+ alacritty/src/config/mod.rs        |   4 +-
+ alacritty/src/display/mod.rs       |  42 +-
+ alacritty/src/event.rs             | 112 +---
+ alacritty/src/input.rs             | 145 +----
+ alacritty/src/window_context.rs    |   8 +-
+ alacritty_terminal/src/lib.rs      |   1 -
+ alacritty_terminal/src/term/mod.rs | 134 +----
+ alacritty_terminal/src/vi_mode.rs  | 821 -----------------------------
+ 10 files changed, 33 insertions(+), 1375 deletions(-)
+ delete mode 100644 alacritty_terminal/src/vi_mode.rs
+
+diff --git a/Makefile b/Makefile
+index 399f2fb5..19dfb034 100644
+--- a/Makefile
++++ b/Makefile
+@@ -75,7 +75,12 @@ install-universal: $(INSTALL)-native ## Mount universal disk image
+ $(INSTALL)-%: $(DMG_NAME)-%
+ 	@open $(DMG_DIR)/$(DMG_NAME)
+ 
+-.PHONY: app binary clean dmg install $(TARGET) $(TARGET)-universal
++khang:
++	cargo build --release
++	rm -f /Applications/Alacritty.app/Contents/MacOS/alacritty
++	cp ./target/release/alacritty /Applications/Alacritty.app/Contents/MacOS/alacritty
++
++.PHONY: app binary clean dmg install $(TARGET) $(TARGET)-universal khang
+ 
+ clean: ## Remove all build artifacts
+ 	@cargo clean
+diff --git a/alacritty/src/config/bindings.rs b/alacritty/src/config/bindings.rs
+index e3ee41e7..87b1f86f 100644
+--- a/alacritty/src/config/bindings.rs
++++ b/alacritty/src/config/bindings.rs
+@@ -13,7 +13,6 @@ use alacritty_config_derive::{ConfigDeserialize, SerdeReplace};
+ 
+ use alacritty_terminal::config::Program;
+ use alacritty_terminal::term::TermMode;
+-use alacritty_terminal::vi_mode::ViMotion;
+ 
+ use crate::config::ui_config::Hint;
+ 
+@@ -96,14 +95,6 @@ pub enum Action {
+     #[config(skip)]
+     Hint(Hint),
+ 
+-    /// Move vi mode cursor.
+-    #[config(skip)]
+-    ViMotion(ViMotion),
+-
+-    /// Perform vi mode action.
+-    #[config(skip)]
+-    Vi(ViAction),
+-
+     /// Perform search mode action.
+     #[config(skip)]
+     Search(SearchAction),
+@@ -196,9 +187,6 @@ pub enum Action {
+     /// Clear active selection.
+     ClearSelection,
+ 
+-    /// Toggle vi mode.
+-    ToggleViMode,
+-
+     /// Allow receiving char input.
+     ReceiveChar,
+ 
+@@ -218,18 +206,6 @@ impl From<&'static str> for Action {
+     }
+ }
+ 
+-impl From<ViAction> for Action {
+-    fn from(action: ViAction) -> Self {
+-        Self::Vi(action)
+-    }
+-}
+-
+-impl From<ViMotion> for Action {
+-    fn from(motion: ViMotion) -> Self {
+-        Self::ViMotion(motion)
+-    }
+-}
+-
+ impl From<SearchAction> for Action {
+     fn from(action: SearchAction) -> Self {
+         Self::Search(action)
+@@ -246,39 +222,12 @@ impl From<MouseAction> for Action {
+ impl Display for Action {
+     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+         match self {
+-            Action::ViMotion(motion) => motion.fmt(f),
+-            Action::Vi(action) => action.fmt(f),
+             Action::Mouse(action) => action.fmt(f),
+             _ => write!(f, "{:?}", self),
+         }
+     }
+ }
+ 
+-/// Vi mode specific actions.
+-#[derive(ConfigDeserialize, Debug, Copy, Clone, PartialEq, Eq)]
+-pub enum ViAction {
+-    /// Toggle normal vi selection.
+-    ToggleNormalSelection,
+-    /// Toggle line vi selection.
+-    ToggleLineSelection,
+-    /// Toggle block vi selection.
+-    ToggleBlockSelection,
+-    /// Toggle semantic vi selection.
+-    ToggleSemanticSelection,
+-    /// Jump to the beginning of the next match.
+-    SearchNext,
+-    /// Jump to the beginning of the previous match.
+-    SearchPrevious,
+-    /// Jump to the next start of a match to the left of the origin.
+-    SearchStart,
+-    /// Jump to the next end of a match to the right of the origin.
+-    SearchEnd,
+-    /// Launch the URL below the vi mode cursor.
+-    Open,
+-    /// Centers the screen around the vi mode cursor.
+-    CenterAroundViCursor,
+-}
+-
+ /// Search mode specific actions.
+ #[allow(clippy::enum_variant_names)]
+ #[derive(ConfigDeserialize, Debug, Copy, Clone, PartialEq, Eq)]
+@@ -451,18 +400,12 @@ pub fn default_key_bindings() -> Vec<KeyBinding> {
+         F19,         ~BindingMode::VI, ~BindingMode::SEARCH; Action::Esc("\x1b[33~".into());
+         F20,         ~BindingMode::VI, ~BindingMode::SEARCH; Action::Esc("\x1b[34~".into());
+         NumpadEnter, ~BindingMode::VI, ~BindingMode::SEARCH; Action::Esc("\n".into());
+-        Space, ModifiersState::SHIFT | ModifiersState::CTRL, ~BindingMode::SEARCH;
+-            Action::ToggleViMode;
+         Space, ModifiersState::SHIFT | ModifiersState::CTRL, +BindingMode::VI, ~BindingMode::SEARCH;
+             Action::ScrollToBottom;
+         Escape,                        +BindingMode::VI, ~BindingMode::SEARCH;
+             Action::ClearSelection;
+-        I,                             +BindingMode::VI, ~BindingMode::SEARCH;
+-            Action::ToggleViMode;
+         I,                             +BindingMode::VI, ~BindingMode::SEARCH;
+             Action::ScrollToBottom;
+-        C,      ModifiersState::CTRL,  +BindingMode::VI, ~BindingMode::SEARCH;
+-            Action::ToggleViMode;
+         Y,      ModifiersState::CTRL,  +BindingMode::VI, ~BindingMode::SEARCH;
+             Action::ScrollLineUp;
+         E,      ModifiersState::CTRL,  +BindingMode::VI, ~BindingMode::SEARCH;
+@@ -486,64 +429,6 @@ pub fn default_key_bindings() -> Vec<KeyBinding> {
+             Action::SearchForward;
+         Slash,  ModifiersState::SHIFT, +BindingMode::VI, ~BindingMode::SEARCH;
+             Action::SearchBackward;
+-        V,                             +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViAction::ToggleNormalSelection;
+-        V,      ModifiersState::SHIFT, +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViAction::ToggleLineSelection;
+-        V,      ModifiersState::CTRL,  +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViAction::ToggleBlockSelection;
+-        V,      ModifiersState::ALT,   +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViAction::ToggleSemanticSelection;
+-        N,                             +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViAction::SearchNext;
+-        N,      ModifiersState::SHIFT, +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViAction::SearchPrevious;
+-        Return,                        +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViAction::Open;
+-        Z,                             +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViAction::CenterAroundViCursor;
+-        K,                             +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::Up;
+-        J,                             +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::Down;
+-        H,                             +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::Left;
+-        L,                             +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::Right;
+-        Up,                            +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::Up;
+-        Down,                          +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::Down;
+-        Left,                          +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::Left;
+-        Right,                         +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::Right;
+-        Key0,                          +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::First;
+-        Key4,   ModifiersState::SHIFT, +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::Last;
+-        Key6,   ModifiersState::SHIFT, +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::FirstOccupied;
+-        H,      ModifiersState::SHIFT, +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::High;
+-        M,      ModifiersState::SHIFT, +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::Middle;
+-        L,      ModifiersState::SHIFT, +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::Low;
+-        B,                             +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::SemanticLeft;
+-        W,                             +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::SemanticRight;
+-        E,                             +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::SemanticRightEnd;
+-        B,      ModifiersState::SHIFT, +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::WordLeft;
+-        W,      ModifiersState::SHIFT, +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::WordRight;
+-        E,      ModifiersState::SHIFT, +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::WordRightEnd;
+-        Key5,   ModifiersState::SHIFT, +BindingMode::VI, ~BindingMode::SEARCH;
+-            ViMotion::Bracket;
+         Return,                        +BindingMode::SEARCH, +BindingMode::VI;
+             SearchAction::SearchConfirm;
+         Escape,                        +BindingMode::SEARCH; SearchAction::SearchCancel;
+@@ -803,7 +688,7 @@ impl<'a> Deserialize<'a> for ModeWrapper {
+ 
+             fn expecting(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+                 f.write_str(
+-                    "a combination of AppCursor | AppKeypad | Alt | Vi, possibly with negation (~)",
++                    "a combination of AppCursor | AppKeypad | Alt, possibly with negation (~)",
+                 )
+             }
+ 
+@@ -1048,11 +933,7 @@ impl<'a> Deserialize<'a> for RawBinding {
+ 
+                             let value = map.next_value::<SerdeValue>()?;
+ 
+-                            action = if let Ok(vi_action) = ViAction::deserialize(value.clone()) {
+-                                Some(vi_action.into())
+-                            } else if let Ok(vi_motion) = ViMotion::deserialize(value.clone()) {
+-                                Some(vi_motion.into())
+-                            } else if let Ok(search_action) =
++                            action = if let Ok(search_action) =
+                                 SearchAction::deserialize(value.clone())
+                             {
+                                 Some(search_action.into())
+@@ -1113,17 +994,6 @@ impl<'a> Deserialize<'a> for RawBinding {
+                 let mods = mods.unwrap_or_default();
+ 
+                 let action = match (action, chars, command) {
+-                    (Some(action @ Action::ViMotion(_)), None, None)
+-                    | (Some(action @ Action::Vi(_)), None, None) => {
+-                        if !mode.intersects(BindingMode::VI) || not_mode.intersects(BindingMode::VI)
+-                        {
+-                            return Err(V::Error::custom(format!(
+-                                "action `{}` is only available in vi mode, try adding `mode: Vi`",
+-                                action,
+-                            )));
+-                        }
+-                        action
+-                    },
+                     (Some(action @ Action::Search(_)), None, None) => {
+                         if !mode.intersects(BindingMode::SEARCH) {
+                             return Err(V::Error::custom(format!(
+diff --git a/alacritty/src/config/mod.rs b/alacritty/src/config/mod.rs
+index df49db31..dafcb11a 100644
+--- a/alacritty/src/config/mod.rs
++++ b/alacritty/src/config/mod.rs
+@@ -22,9 +22,7 @@ mod bindings;
+ mod mouse;
+ 
+ use crate::cli::Options;
+-pub use crate::config::bindings::{
+-    Action, Binding, BindingMode, Key, MouseAction, SearchAction, ViAction,
+-};
++pub use crate::config::bindings::{Action, Binding, BindingMode, Key, MouseAction, SearchAction};
+ #[cfg(test)]
+ pub use crate::config::mouse::{ClickHandler, Mouse};
+ pub use crate::config::ui_config::UiConfig;
+diff --git a/alacritty/src/display/mod.rs b/alacritty/src/display/mod.rs
+index f1757ae6..711c75a3 100644
+--- a/alacritty/src/display/mod.rs
++++ b/alacritty/src/display/mod.rs
+@@ -343,9 +343,6 @@ pub struct Display {
+     /// Hint highlighted by the mouse.
+     pub highlighted_hint: Option<HintMatch>,
+ 
+-    /// Hint highlighted by the vi mode cursor.
+-    pub vi_highlighted_hint: Option<HintMatch>,
+-
+     pub is_wayland: bool,
+ 
+     /// UI cursor visibility for blinking.
+@@ -512,7 +509,6 @@ impl Display {
+             size_info,
+             ime: Ime::new(),
+             highlighted_hint: None,
+-            vi_highlighted_hint: None,
+             is_wayland,
+             cursor_hidden: false,
+             frame_timer: FrameTimer::new(),
+@@ -784,9 +780,6 @@ impl Display {
+         let metrics = self.glyph_cache.font_metrics();
+         let size_info = self.size_info;
+ 
+-        let vi_mode = terminal.mode().contains(TermMode::VI);
+-        let vi_cursor_point = if vi_mode { Some(terminal.vi_mode_cursor.point) } else { None };
+-
+         if self.collect_damage() {
+             self.update_damage(&mut terminal, selection_range, search_state);
+         }
+@@ -801,8 +794,7 @@ impl Display {
+         let mut lines = RenderLines::new();
+ 
+         // Optimize loop hint comparator.
+-        let has_highlighted_hint =
+-            self.highlighted_hint.is_some() || self.vi_highlighted_hint.is_some();
++        let has_highlighted_hint = self.highlighted_hint.is_some();
+ 
+         // Draw grid.
+         {
+@@ -814,7 +806,6 @@ impl Display {
+ 
+             let glyph_cache = &mut self.glyph_cache;
+             let highlighted_hint = &self.highlighted_hint;
+-            let vi_highlighted_hint = &self.vi_highlighted_hint;
+ 
+             self.renderer.draw_cells(
+                 &size_info,
+@@ -829,9 +820,6 @@ impl Display {
+                         if highlighted_hint
+                             .as_ref()
+                             .map_or(false, |hint| hint.should_highlight(point, hyperlink))
+-                            || vi_highlighted_hint
+-                                .as_ref()
+-                                .map_or(false, |hint| hint.should_highlight(point, hyperlink))
+                         {
+                             cell.flags.insert(Flags::UNDERLINE);
+                         }
+@@ -847,17 +835,10 @@ impl Display {
+ 
+         let mut rects = lines.rects(&metrics, &size_info);
+ 
+-        if let Some(vi_cursor_point) = vi_cursor_point {
+-            // Indicate vi mode by showing the cursor's position in the top right corner.
+-            let line = (-vi_cursor_point.line.0 + size_info.bottommost_line().0) as usize;
+-            let obstructed_column = Some(vi_cursor_point)
+-                .filter(|point| point.line == -(display_offset as i32))
+-                .map(|point| point.column);
+-            self.draw_line_indicator(config, total_lines, obstructed_column, line);
+-        } else if search_state.regex().is_some() {
++        if search_state.regex().is_some() {
+             // Show current display offset in vi-less search to indicate match position.
+             self.draw_line_indicator(config, total_lines, None, display_offset);
+-        };
++        }
+ 
+         // Draw cursor.
+         rects.extend(cursor.rects(&size_info, config.terminal_config.cursor.thickness()));
+@@ -974,8 +955,7 @@ impl Display {
+ 
+         // Draw hyperlink uri preview.
+         if has_highlighted_hint {
+-            let cursor_point = vi_cursor_point.or(Some(cursor_point));
+-            self.draw_hyperlink_preview(config, cursor_point, display_offset);
++            self.draw_hyperlink_preview(config, Some(cursor_point), display_offset);
+         }
+ 
+         // Frame event should be requested before swapping buffers on Wayland, since it requires
+@@ -1024,16 +1004,7 @@ impl Display {
+         mouse: &Mouse,
+         modifiers: ModifiersState,
+     ) -> bool {
+-        // Update vi mode cursor hint.
+-        let vi_highlighted_hint = if term.mode().contains(TermMode::VI) {
+-            let mods = ModifiersState::all();
+-            let point = term.vi_mode_cursor.point;
+-            hint::highlighted_at(term, config, point, mods)
+-        } else {
+-            None
+-        };
+-        let mut dirty = vi_highlighted_hint != self.vi_highlighted_hint;
+-        self.vi_highlighted_hint = vi_highlighted_hint;
++        let mut dirty = false;
+ 
+         // Abort if mouse highlighting conditions are not met.
+         if !mouse.inside_text_area || !term.selection.as_ref().map_or(true, Selection::is_empty) {
+@@ -1193,7 +1164,6 @@ impl Display {
+         let uris: Vec<_> = self
+             .highlighted_hint
+             .iter()
+-            .chain(&self.vi_highlighted_hint)
+             .filter_map(|hint| hint.hyperlink().map(|hyperlink| hyperlink.uri()))
+             .map(|uri| StrShortener::new(uri, num_cols, ShortenDirection::Right, Some(SHORTENER)))
+             .collect();
+@@ -1356,7 +1326,7 @@ impl Display {
+     fn damage_highlighted_hints<T: EventListener>(&self, terminal: &mut Term<T>) {
+         let display_offset = terminal.grid().display_offset();
+         let last_visible_line = terminal.screen_lines() - 1;
+-        for hint in self.highlighted_hint.iter().chain(&self.vi_highlighted_hint) {
++        for hint in self.highlighted_hint.iter() {
+             for point in
+                 (hint.bounds().start().line.0..=hint.bounds().end().line.0).flat_map(|line| {
+                     term::point_to_viewport(display_offset, Point::new(Line(line), Column(0)))
+diff --git a/alacritty/src/event.rs b/alacritty/src/event.rs
+index 2ccd42cb..89bb1606 100644
+--- a/alacritty/src/event.rs
++++ b/alacritty/src/event.rs
+@@ -242,11 +242,7 @@ impl<'a, N: Notify + 'a, T: EventListener> input::ActionContext<T> for ActionCon
+         }
+ 
+         // Update selection.
+-        if self.terminal.mode().contains(TermMode::VI)
+-            && self.terminal.selection.as_ref().map_or(false, |s| !s.is_empty())
+-        {
+-            self.update_selection(self.terminal.vi_mode_cursor.point, Side::Right);
+-        } else if self.mouse.left_button_state == ElementState::Pressed
++        if self.mouse.left_button_state == ElementState::Pressed
+             || self.mouse.right_button_state == ElementState::Pressed
+         {
+             let display_offset = self.terminal.grid().display_offset();
+@@ -295,12 +291,6 @@ impl<'a, N: Notify + 'a, T: EventListener> input::ActionContext<T> for ActionCon
+         // Update selection.
+         selection.update(point, side);
+ 
+-        // Move vi cursor and expand selection.
+-        if self.terminal.mode().contains(TermMode::VI) && !self.search_active() {
+-            self.terminal.vi_mode_cursor.point = point;
+-            selection.include_all();
+-        }
+-
+         self.terminal.selection = Some(selection);
+         *self.dirty = true;
+     }
+@@ -312,21 +302,6 @@ impl<'a, N: Notify + 'a, T: EventListener> input::ActionContext<T> for ActionCon
+         self.copy_selection(ClipboardType::Selection);
+     }
+ 
+-    fn toggle_selection(&mut self, ty: SelectionType, point: Point, side: Side) {
+-        match &mut self.terminal.selection {
+-            Some(selection) if selection.ty == ty && !selection.is_empty() => {
+-                self.clear_selection();
+-            },
+-            Some(selection) if !selection.is_empty() => {
+-                selection.ty = ty;
+-                *self.dirty = true;
+-
+-                self.copy_selection(ClipboardType::Selection);
+-            },
+-            _ => self.start_selection(ty, point, side),
+-        }
+-    }
+-
+     #[inline]
+     fn mouse_mode(&self) -> bool {
+         self.terminal.mode().intersects(TermMode::MOUSE_MODE)
+@@ -475,23 +450,13 @@ impl<'a, N: Notify + 'a, T: EventListener> input::ActionContext<T> for ActionCon
+         self.search_state.focused_match = None;
+ 
+         // Store original search position as origin and reset location.
+-        if self.terminal.mode().contains(TermMode::VI) {
+-            self.search_state.origin = self.terminal.vi_mode_cursor.point;
+-            self.search_state.display_offset_delta = 0;
+-
+-            // Adjust origin for content moving upward on search start.
+-            if self.terminal.grid().cursor.point.line + 1 == self.terminal.screen_lines() {
+-                self.search_state.origin.line -= 1;
+-            }
+-        } else {
+-            let viewport_top = Line(-(self.terminal.grid().display_offset() as i32)) - 1;
+-            let viewport_bottom = viewport_top + self.terminal.bottommost_line();
+-            let last_column = self.terminal.last_column();
+-            self.search_state.origin = match direction {
+-                Direction::Right => Point::new(viewport_top, Column(0)),
+-                Direction::Left => Point::new(viewport_bottom, last_column),
+-            };
+-        }
++        let viewport_top = Line(-(self.terminal.grid().display_offset() as i32)) - 1;
++        let viewport_bottom = viewport_top + self.terminal.bottommost_line();
++        let last_column = self.terminal.last_column();
++        self.search_state.origin = match direction {
++            Direction::Right => Point::new(viewport_top, Column(0)),
++            Direction::Left => Point::new(viewport_bottom, last_column),
++        };
+ 
+         // Enable IME so we can input into the search bar with it if we were in Vi mode.
+         self.window().set_ime_allowed(true);
+@@ -735,12 +700,6 @@ impl<'a, N: Notify + 'a, T: EventListener> input::ActionContext<T> for ActionCon
+             },
+             // Move the vi mode cursor.
+             HintAction::Action(HintInternalAction::MoveViModeCursor) => {
+-                // Enter vi mode if we're not in it already.
+-                if !self.terminal.mode().contains(TermMode::VI) {
+-                    self.terminal.toggle_vi_mode();
+-                }
+-
+-                self.terminal.vi_goto_point(*hint_bounds.start());
+                 self.mark_dirty();
+             },
+         }
+@@ -775,11 +734,6 @@ impl<'a, N: Notify + 'a, T: EventListener> input::ActionContext<T> for ActionCon
+ 
+         selection.ty = selection_type;
+         self.update_selection(point, cell_side);
+-
+-        // Move vi mode cursor to mouse click position.
+-        if self.terminal().mode().contains(TermMode::VI) && !self.search_active() {
+-            self.terminal_mut().vi_mode_cursor.point = point;
+-        }
+     }
+ 
+     /// Paste a text into the terminal.
+@@ -811,35 +765,6 @@ impl<'a, N: Notify + 'a, T: EventListener> input::ActionContext<T> for ActionCon
+         }
+     }
+ 
+-    /// Toggle the vi mode status.
+-    #[inline]
+-    fn toggle_vi_mode(&mut self) {
+-        let was_in_vi_mode = self.terminal.mode().contains(TermMode::VI);
+-        if was_in_vi_mode {
+-            // If we had search running when leaving Vi mode we should mark terminal fully damaged
+-            // to cleanup highlighted results.
+-            if self.search_state.dfas.take().is_some() {
+-                self.terminal.mark_fully_damaged();
+-            } else {
+-                // Damage line indicator.
+-                self.terminal.damage_line(0, 0, self.terminal.columns() - 1);
+-            }
+-        } else {
+-            self.clear_selection();
+-        }
+-
+-        if self.search_active() {
+-            self.cancel_search();
+-        }
+-
+-        // We don't want IME in Vi mode.
+-        self.window().set_ime_allowed(was_in_vi_mode);
+-
+-        self.terminal.toggle_vi_mode();
+-
+-        *self.dirty = true;
+-    }
+-
+     fn message(&self) -> Option<&Message> {
+         self.message_buffer.message()
+     }
+@@ -905,7 +830,6 @@ impl<'a, N: Notify + 'a, T: EventListener> ActionContext<'a, N, T> {
+         }
+ 
+         // Reset display offset and cursor position.
+-        self.terminal.vi_mode_cursor.point = self.search_state.origin;
+         self.terminal.scroll_display(Scroll::Delta(self.search_state.display_offset_delta));
+         self.search_state.display_offset_delta = 0;
+ 
+@@ -929,14 +853,6 @@ impl<'a, N: Notify + 'a, T: EventListener> ActionContext<'a, N, T> {
+             Some(regex_match) => {
+                 let old_offset = self.terminal.grid().display_offset() as i32;
+ 
+-                if self.terminal.mode().contains(TermMode::VI) {
+-                    // Move vi cursor to the start of the match.
+-                    self.terminal.vi_goto_point(*regex_match.start());
+-                } else {
+-                    // Select the match when vi mode is not active.
+-                    self.terminal.scroll_to_point(*regex_match.start());
+-                }
+-
+                 // Update the focused match.
+                 self.search_state.focused_match = Some(regex_match);
+ 
+@@ -968,9 +884,6 @@ impl<'a, N: Notify + 'a, T: EventListener> ActionContext<'a, N, T> {
+ 
+     /// Cleanup the search state.
+     fn exit_search(&mut self) {
+-        let vi_mode = self.terminal.mode().contains(TermMode::VI);
+-        self.window().set_ime_allowed(!vi_mode);
+-
+         self.display.pending_update.dirty = true;
+         self.search_state.history_index = None;
+ 
+@@ -981,17 +894,12 @@ impl<'a, N: Notify + 'a, T: EventListener> ActionContext<'a, N, T> {
+     /// Update the cursor blinking state.
+     fn update_cursor_blinking(&mut self) {
+         // Get config cursor style.
+-        let mut cursor_style = self.config.terminal_config.cursor.style;
+-        let vi_mode = self.terminal.mode().contains(TermMode::VI);
+-        if vi_mode {
+-            cursor_style = self.config.terminal_config.cursor.vi_mode_style.unwrap_or(cursor_style);
+-        }
++        let cursor_style = self.config.terminal_config.cursor.style;
+ 
+         // Check terminal cursor style.
+         let terminal_blinking = self.terminal.cursor_style().blinking;
+         let mut blinking = cursor_style.blinking_override().unwrap_or(terminal_blinking);
+-        blinking &= (vi_mode || self.terminal().mode().contains(TermMode::SHOW_CURSOR))
+-            && self.display().ime.preedit().is_none();
++        blinking &= self.display().ime.preedit().is_none();
+ 
+         // Update cursor blinking state.
+         let window_id = self.display.window.id();
+diff --git a/alacritty/src/input.rs b/alacritty/src/input.rs
+index 5728665a..4834fa32 100644
+--- a/alacritty/src/input.rs
++++ b/alacritty/src/input.rs
+@@ -27,14 +27,13 @@ use winit::window::CursorIcon;
+ use alacritty_terminal::ansi::{ClearMode, Handler};
+ use alacritty_terminal::event::EventListener;
+ use alacritty_terminal::grid::{Dimensions, Scroll};
+-use alacritty_terminal::index::{Boundary, Column, Direction, Point, Side};
++use alacritty_terminal::index::{Column, Direction, Point, Side};
+ use alacritty_terminal::selection::SelectionType;
+ use alacritty_terminal::term::search::Match;
+ use alacritty_terminal::term::{ClipboardType, Term, TermMode};
+-use alacritty_terminal::vi_mode::ViMotion;
+ 
+ use crate::clipboard::Clipboard;
+-use crate::config::{Action, BindingMode, Key, MouseAction, SearchAction, UiConfig, ViAction};
++use crate::config::{Action, BindingMode, Key, MouseAction, SearchAction, UiConfig};
+ use crate::display::hint::HintMatch;
+ use crate::display::window::Window;
+ use crate::display::{Display, SizeInfo};
+@@ -77,7 +76,6 @@ pub trait ActionContext<T: EventListener> {
+     fn size_info(&self) -> SizeInfo;
+     fn copy_selection(&mut self, _ty: ClipboardType) {}
+     fn start_selection(&mut self, _ty: SelectionType, _point: Point, _side: Side) {}
+-    fn toggle_selection(&mut self, _ty: SelectionType, _point: Point, _side: Side) {}
+     fn update_selection(&mut self, _point: Point, _side: Side) {}
+     fn clear_selection(&mut self) {}
+     fn selection_is_empty(&self) -> bool;
+@@ -115,7 +113,6 @@ pub trait ActionContext<T: EventListener> {
+     fn search_direction(&self) -> Direction;
+     fn search_active(&self) -> bool;
+     fn on_typing_start(&mut self) {}
+-    fn toggle_vi_mode(&mut self) {}
+     fn hint_input(&mut self, _character: char) {}
+     fn trigger_hint(&mut self, _hint: &HintMatch) {}
+     fn expand_selection(&mut self) {}
+@@ -128,21 +125,6 @@ pub trait ActionContext<T: EventListener> {
+     }
+ }
+ 
+-impl Action {
+-    fn toggle_selection<T, A>(ctx: &mut A, ty: SelectionType)
+-    where
+-        A: ActionContext<T>,
+-        T: EventListener,
+-    {
+-        ctx.toggle_selection(ty, ctx.terminal().vi_mode_cursor.point, Side::Left);
+-
+-        // Make sure initial selection is not empty.
+-        if let Some(selection) = &mut ctx.terminal_mut().selection {
+-            selection.include_all();
+-        }
+-    }
+-}
+-
+ trait Execute<T: EventListener> {
+     fn execute<A: ActionContext<T>>(&self, ctx: &mut A);
+ }
+@@ -162,94 +144,6 @@ impl<T: EventListener> Execute<T> for Action {
+                 ctx.display().hint_state.start(hint.clone());
+                 ctx.mark_dirty();
+             },
+-            Action::ToggleViMode => {
+-                ctx.on_typing_start();
+-                ctx.toggle_vi_mode()
+-            },
+-            Action::ViMotion(motion) => {
+-                ctx.on_typing_start();
+-                ctx.terminal_mut().vi_motion(*motion);
+-                ctx.mark_dirty();
+-            },
+-            Action::Vi(ViAction::ToggleNormalSelection) => {
+-                Self::toggle_selection(ctx, SelectionType::Simple);
+-            },
+-            Action::Vi(ViAction::ToggleLineSelection) => {
+-                Self::toggle_selection(ctx, SelectionType::Lines);
+-            },
+-            Action::Vi(ViAction::ToggleBlockSelection) => {
+-                Self::toggle_selection(ctx, SelectionType::Block);
+-            },
+-            Action::Vi(ViAction::ToggleSemanticSelection) => {
+-                Self::toggle_selection(ctx, SelectionType::Semantic);
+-            },
+-            Action::Vi(ViAction::Open) => {
+-                let hint = ctx.display().vi_highlighted_hint.take();
+-                if let Some(hint) = &hint {
+-                    ctx.mouse_mut().block_hint_launcher = false;
+-                    ctx.trigger_hint(hint);
+-                }
+-                ctx.display().vi_highlighted_hint = hint;
+-            },
+-            Action::Vi(ViAction::SearchNext) => {
+-                ctx.on_typing_start();
+-
+-                let terminal = ctx.terminal();
+-                let direction = ctx.search_direction();
+-                let vi_point = terminal.vi_mode_cursor.point;
+-                let origin = match direction {
+-                    Direction::Right => vi_point.add(terminal, Boundary::None, 1),
+-                    Direction::Left => vi_point.sub(terminal, Boundary::None, 1),
+-                };
+-
+-                if let Some(regex_match) = ctx.search_next(origin, direction, Side::Left) {
+-                    ctx.terminal_mut().vi_goto_point(*regex_match.start());
+-                    ctx.mark_dirty();
+-                }
+-            },
+-            Action::Vi(ViAction::SearchPrevious) => {
+-                ctx.on_typing_start();
+-
+-                let terminal = ctx.terminal();
+-                let direction = ctx.search_direction().opposite();
+-                let vi_point = terminal.vi_mode_cursor.point;
+-                let origin = match direction {
+-                    Direction::Right => vi_point.add(terminal, Boundary::None, 1),
+-                    Direction::Left => vi_point.sub(terminal, Boundary::None, 1),
+-                };
+-
+-                if let Some(regex_match) = ctx.search_next(origin, direction, Side::Left) {
+-                    ctx.terminal_mut().vi_goto_point(*regex_match.start());
+-                    ctx.mark_dirty();
+-                }
+-            },
+-            Action::Vi(ViAction::SearchStart) => {
+-                let terminal = ctx.terminal();
+-                let origin = terminal.vi_mode_cursor.point.sub(terminal, Boundary::None, 1);
+-
+-                if let Some(regex_match) = ctx.search_next(origin, Direction::Left, Side::Left) {
+-                    ctx.terminal_mut().vi_goto_point(*regex_match.start());
+-                    ctx.mark_dirty();
+-                }
+-            },
+-            Action::Vi(ViAction::SearchEnd) => {
+-                let terminal = ctx.terminal();
+-                let origin = terminal.vi_mode_cursor.point.add(terminal, Boundary::None, 1);
+-
+-                if let Some(regex_match) = ctx.search_next(origin, Direction::Right, Side::Right) {
+-                    ctx.terminal_mut().vi_goto_point(*regex_match.end());
+-                    ctx.mark_dirty();
+-                }
+-            },
+-            Action::Vi(ViAction::CenterAroundViCursor) => {
+-                let term = ctx.terminal();
+-                let display_offset = term.grid().display_offset() as i32;
+-                let target = -display_offset + term.screen_lines() as i32 / 2 - 1;
+-                let line = term.vi_mode_cursor.point.line;
+-                let scroll_lines = target - line.0;
+-
+-                ctx.scroll(Scroll::Delta(scroll_lines));
+-            },
+             Action::Search(SearchAction::SearchFocusNext) => {
+                 ctx.advance_search_origin(ctx.search_direction());
+             },
+@@ -297,35 +191,18 @@ impl<T: EventListener> Execute<T> for Action {
+             Action::IncreaseFontSize => ctx.change_font_size(FONT_SIZE_STEP),
+             Action::DecreaseFontSize => ctx.change_font_size(FONT_SIZE_STEP * -1.),
+             Action::ResetFontSize => ctx.reset_font_size(),
+-            Action::ScrollPageUp => {
+-                // Move vi mode cursor.
+-                let term = ctx.terminal_mut();
+-                let scroll_lines = term.screen_lines() as i32;
+-                term.vi_mode_cursor = term.vi_mode_cursor.scroll(term, scroll_lines);
+-
+-                ctx.scroll(Scroll::PageUp);
+-            },
+-            Action::ScrollPageDown => {
+-                // Move vi mode cursor.
+-                let term = ctx.terminal_mut();
+-                let scroll_lines = -(term.screen_lines() as i32);
+-                term.vi_mode_cursor = term.vi_mode_cursor.scroll(term, scroll_lines);
+-
+-                ctx.scroll(Scroll::PageDown);
+-            },
++            Action::ScrollPageUp => ctx.scroll(Scroll::PageUp),
++            Action::ScrollPageDown => ctx.scroll(Scroll::PageDown),
+             Action::ScrollHalfPageUp => {
+                 // Move vi mode cursor.
+                 let term = ctx.terminal_mut();
+                 let scroll_lines = term.screen_lines() as i32 / 2;
+-                term.vi_mode_cursor = term.vi_mode_cursor.scroll(term, scroll_lines);
+-
+                 ctx.scroll(Scroll::Delta(scroll_lines));
+             },
+             Action::ScrollHalfPageDown => {
+                 // Move vi mode cursor.
+                 let term = ctx.terminal_mut();
+                 let scroll_lines = -(term.screen_lines() as i32 / 2);
+-                term.vi_mode_cursor = term.vi_mode_cursor.scroll(term, scroll_lines);
+ 
+                 ctx.scroll(Scroll::Delta(scroll_lines));
+             },
+@@ -333,23 +210,10 @@ impl<T: EventListener> Execute<T> for Action {
+             Action::ScrollLineDown => ctx.scroll(Scroll::Delta(-1)),
+             Action::ScrollToTop => {
+                 ctx.scroll(Scroll::Top);
+-
+-                // Move vi mode cursor.
+-                let topmost_line = ctx.terminal().topmost_line();
+-                ctx.terminal_mut().vi_mode_cursor.point.line = topmost_line;
+-                ctx.terminal_mut().vi_motion(ViMotion::FirstOccupied);
+                 ctx.mark_dirty();
+             },
+             Action::ScrollToBottom => {
+                 ctx.scroll(Scroll::Bottom);
+-
+-                // Move vi mode cursor.
+-                let term = ctx.terminal_mut();
+-                term.vi_mode_cursor.point.line = term.bottommost_line();
+-
+-                // Move to beginning twice, to always jump across linewraps.
+-                term.vi_motion(ViMotion::FirstOccupied);
+-                term.vi_motion(ViMotion::FirstOccupied);
+                 ctx.mark_dirty();
+             },
+             Action::ClearHistory => ctx.terminal_mut().clear_screen(ClearMode::Saved),
+@@ -607,7 +471,6 @@ impl<T: EventListener, A: ActionContext<T>> Processor<T, A> {
+ 
+         // Move vi mode cursor to mouse click position.
+         if self.ctx.terminal().mode().contains(TermMode::VI) && !self.ctx.search_active() {
+-            self.ctx.terminal_mut().vi_mode_cursor.point = point;
+             self.ctx.mark_dirty();
+         }
+     }
+diff --git a/alacritty/src/window_context.rs b/alacritty/src/window_context.rs
+index 885d71a4..b11d57f4 100644
+--- a/alacritty/src/window_context.rs
++++ b/alacritty/src/window_context.rs
+@@ -32,7 +32,7 @@ use alacritty_terminal::grid::{Dimensions, Scroll};
+ use alacritty_terminal::index::Direction;
+ use alacritty_terminal::sync::FairMutex;
+ use alacritty_terminal::term::test::TermSize;
+-use alacritty_terminal::term::{Term, TermMode};
++use alacritty_terminal::term::Term;
+ use alacritty_terminal::tty;
+ 
+ #[cfg(unix)]
+@@ -562,11 +562,7 @@ impl WindowContext {
+         // Compute cursor positions before resize.
+         let num_lines = terminal.screen_lines();
+         let cursor_at_bottom = terminal.grid().cursor.point.line + 1 == num_lines;
+-        let origin_at_bottom = if terminal.mode().contains(TermMode::VI) {
+-            terminal.vi_mode_cursor.point.line == num_lines - 1
+-        } else {
+-            search_state.direction == Direction::Left
+-        };
++        let origin_at_bottom = search_state.direction == Direction::Left;
+ 
+         display.handle_update(
+             terminal,
+diff --git a/alacritty_terminal/src/lib.rs b/alacritty_terminal/src/lib.rs
+index c1ba3690..8e6a2fc1 100644
+--- a/alacritty_terminal/src/lib.rs
++++ b/alacritty_terminal/src/lib.rs
+@@ -15,7 +15,6 @@ pub mod sync;
+ pub mod term;
+ pub mod thread;
+ pub mod tty;
+-pub mod vi_mode;
+ 
+ pub use crate::grid::Grid;
+ pub use crate::term::Term;
+diff --git a/alacritty_terminal/src/term/mod.rs b/alacritty_terminal/src/term/mod.rs
+index fe9c7794..87590f06 100644
+--- a/alacritty_terminal/src/term/mod.rs
++++ b/alacritty_terminal/src/term/mod.rs
+@@ -14,11 +14,10 @@ use crate::ansi::{
+ use crate::config::Config;
+ use crate::event::{Event, EventListener};
+ use crate::grid::{Dimensions, Grid, GridIterator, Scroll};
+-use crate::index::{self, Boundary, Column, Direction, Line, Point, Side};
++use crate::index::{self, Boundary, Column, Direction, Line, Point};
+ use crate::selection::{Selection, SelectionRange, SelectionType};
+ use crate::term::cell::{Cell, Flags, Hyperlink, LineLength};
+ use crate::term::color::{Colors, Rgb};
+-use crate::vi_mode::{ViModeCursor, ViMotion};
+ 
+ pub mod cell;
+ pub mod color;
+@@ -245,9 +244,6 @@ pub struct Term<T> {
+     /// Terminal focus controlling the cursor shape.
+     pub is_focused: bool,
+ 
+-    /// Cursor for keyboard selection.
+-    pub vi_mode_cursor: ViModeCursor,
+-
+     pub selection: Option<Selection>,
+ 
+     /// Currently active grid.
+@@ -314,13 +310,6 @@ impl<T> Term<T> {
+         self.grid.scroll_display(scroll);
+         self.event_proxy.send_event(Event::MouseCursorDirty);
+ 
+-        // Clamp vi mode cursor to the viewport.
+-        let viewport_start = -(self.grid.display_offset() as i32);
+-        let viewport_end = viewport_start + self.bottommost_line().0;
+-        let vi_cursor_line = &mut self.vi_mode_cursor.point.line.0;
+-        *vi_cursor_line = cmp::min(viewport_end, cmp::max(viewport_start, *vi_cursor_line));
+-        self.vi_mode_recompute_selection();
+-
+         // Damage everything if display offset changed.
+         if old_display_offset != self.grid().display_offset() {
+             self.mark_fully_damaged();
+@@ -346,7 +335,6 @@ impl<T> Term<T> {
+             grid,
+             inactive_grid: alt,
+             active_charset: Default::default(),
+-            vi_mode_cursor: Default::default(),
+             tabs,
+             mode: Default::default(),
+             scroll_region,
+@@ -375,16 +363,9 @@ impl<T> Term<T> {
+         // Update tracking of cursor, selection, and vi mode cursor.
+ 
+         let display_offset = self.grid().display_offset();
+-        let vi_cursor_point = if self.mode.contains(TermMode::VI) {
+-            point_to_viewport(display_offset, self.vi_mode_cursor.point)
+-        } else {
+-            None
+-        };
+ 
+         let previous_cursor = mem::replace(&mut self.damage.last_cursor, self.grid.cursor.point);
+         let previous_selection = mem::replace(&mut self.damage.last_selection, selection);
+-        let previous_vi_cursor_point =
+-            mem::replace(&mut self.damage.last_vi_cursor_point, vi_cursor_point);
+ 
+         // Early return if the entire terminal is damaged.
+         if self.damage.is_fully_damaged {
+@@ -402,12 +383,6 @@ impl<T> Term<T> {
+         // Always damage current cursor.
+         self.damage_cursor();
+ 
+-        // Vi mode doesn't update the terminal content, thus only last vi cursor position and the
+-        // new one should be damaged.
+-        if let Some(previous_vi_cursor_point) = previous_vi_cursor_point {
+-            self.damage.damage_point(previous_vi_cursor_point)
+-        }
+-
+         // Damage Vi cursor if it's present.
+         if let Some(vi_cursor_point) = self.damage.last_vi_cursor_point {
+             self.damage.damage_point(vi_cursor_point);
+@@ -609,7 +584,6 @@ impl<T> Term<T> {
+         let mut delta = num_lines as i32 - old_lines as i32;
+         let min_delta = cmp::min(0, num_lines as i32 - self.grid.cursor.point.line.0 - 1);
+         delta = cmp::min(cmp::max(delta, min_delta), history_size as i32);
+-        self.vi_mode_cursor.point.line += delta;
+ 
+         // Invalidate selection and tabs only when necessary.
+         if old_cols != num_cols {
+@@ -626,14 +600,6 @@ impl<T> Term<T> {
+         self.grid.resize(!is_alt, num_lines, num_cols);
+         self.inactive_grid.resize(is_alt, num_lines, num_cols);
+ 
+-        // Clamp vi cursor to viewport.
+-        let vi_point = self.vi_mode_cursor.point;
+-        let viewport_top = Line(-(self.grid.display_offset() as i32));
+-        let viewport_bottom = viewport_top + self.bottommost_line();
+-        self.vi_mode_cursor.point.line =
+-            cmp::max(cmp::min(vi_point.line, viewport_bottom), viewport_top);
+-        self.vi_mode_cursor.point.column = cmp::min(vi_point.column, self.last_column());
+-
+         // Reset scrolling region.
+         self.scroll_region = Line(0)..Line(self.screen_lines() as i32);
+ 
+@@ -683,12 +649,6 @@ impl<T> Term<T> {
+         self.selection =
+             self.selection.take().and_then(|s| s.rotate(self, &region, -(lines as i32)));
+ 
+-        // Scroll vi mode cursor.
+-        let line = &mut self.vi_mode_cursor.point.line;
+-        if region.start <= *line && region.end > *line {
+-            *line = cmp::min(*line + lines, region.end - 1);
+-        }
+-
+         // Scroll between origin and bottom
+         self.grid.scroll_down(&region, lines);
+         self.mark_fully_damaged();
+@@ -710,14 +670,6 @@ impl<T> Term<T> {
+         self.selection = self.selection.take().and_then(|s| s.rotate(self, &region, lines as i32));
+ 
+         self.grid.scroll_up(&region, lines);
+-
+-        // Scroll vi mode cursor.
+-        let viewport_top = Line(-(self.grid.display_offset() as i32));
+-        let top = if region.start == 0 { viewport_top } else { region.start };
+-        let line = &mut self.vi_mode_cursor.point.line;
+-        if (top <= *line) && region.end > *line {
+-            *line = cmp::max(*line - lines, top);
+-        }
+         self.mark_fully_damaged();
+     }
+ 
+@@ -750,68 +702,10 @@ impl<T> Term<T> {
+     {
+         self.mode ^= TermMode::VI;
+ 
+-        if self.mode.contains(TermMode::VI) {
+-            let display_offset = self.grid.display_offset() as i32;
+-            if self.grid.cursor.point.line > self.bottommost_line() - display_offset {
+-                // Move cursor to top-left if terminal cursor is not visible.
+-                let point = Point::new(Line(-display_offset), Column(0));
+-                self.vi_mode_cursor = ViModeCursor::new(point);
+-            } else {
+-                // Reset vi mode cursor position to match primary cursor.
+-                self.vi_mode_cursor = ViModeCursor::new(self.grid.cursor.point);
+-            }
+-        }
+-
+         // Update UI about cursor blinking state changes.
+         self.event_proxy.send_event(Event::CursorBlinkingChange);
+     }
+ 
+-    /// Move vi mode cursor.
+-    #[inline]
+-    pub fn vi_motion(&mut self, motion: ViMotion)
+-    where
+-        T: EventListener,
+-    {
+-        // Require vi mode to be active.
+-        if !self.mode.contains(TermMode::VI) {
+-            return;
+-        }
+-
+-        // Move cursor.
+-        self.vi_mode_cursor = self.vi_mode_cursor.motion(self, motion);
+-        self.vi_mode_recompute_selection();
+-    }
+-
+-    /// Move vi cursor to a point in the grid.
+-    #[inline]
+-    pub fn vi_goto_point(&mut self, point: Point)
+-    where
+-        T: EventListener,
+-    {
+-        // Move viewport to make point visible.
+-        self.scroll_to_point(point);
+-
+-        // Move vi cursor to the point.
+-        self.vi_mode_cursor.point = point;
+-
+-        self.vi_mode_recompute_selection();
+-    }
+-
+-    /// Update the active selection to match the vi mode cursor position.
+-    #[inline]
+-    fn vi_mode_recompute_selection(&mut self) {
+-        // Require vi mode to be active.
+-        if !self.mode.contains(TermMode::VI) {
+-            return;
+-        }
+-
+-        // Update only if non-empty selection is present.
+-        if let Some(selection) = self.selection.as_mut().filter(|s| !s.is_empty()) {
+-            selection.update(self.vi_mode_cursor.point, Side::Left);
+-            selection.include_all();
+-        }
+-    }
+-
+     /// Scroll display to point if it is outside of viewport.
+     pub fn scroll_to_point(&mut self, point: Point)
+     where
+@@ -1597,15 +1491,7 @@ impl<T: EventListener> Handler for Term<T> {
+                 if self.mode.contains(TermMode::ALT_SCREEN) {
+                     self.grid.reset_region(..);
+                 } else {
+-                    let old_offset = self.grid.display_offset();
+-
+                     self.grid.clear_viewport();
+-
+-                    // Compute number of lines scrolled by clearing the viewport.
+-                    let lines = self.grid.display_offset().saturating_sub(old_offset);
+-
+-                    self.vi_mode_cursor.point.line =
+-                        (self.vi_mode_cursor.point.line - lines).grid_clamp(self, Boundary::Grid);
+                 }
+ 
+                 self.selection = None;
+@@ -1613,9 +1499,6 @@ impl<T: EventListener> Handler for Term<T> {
+             ansi::ClearMode::Saved if self.history_size() > 0 => {
+                 self.grid.clear_history();
+ 
+-                self.vi_mode_cursor.point.line =
+-                    self.vi_mode_cursor.point.line.grid_clamp(self, Boundary::Cursor);
+-
+                 self.selection = self.selection.take().filter(|s| !s.intersects_range(..Line(0)));
+             },
+             // We have no history to clear.
+@@ -1653,7 +1536,6 @@ impl<T: EventListener> Handler for Term<T> {
+         self.title_stack = Vec::new();
+         self.title = None;
+         self.selection = None;
+-        self.vi_mode_cursor = Default::default();
+ 
+         // Preserve vi mode across resets.
+         self.mode &= TermMode::VI;
+@@ -2037,7 +1919,7 @@ impl RenderableCursor {
+     fn new<T>(term: &Term<T>) -> Self {
+         // Cursor position.
+         let vi_mode = term.mode().contains(TermMode::VI);
+-        let mut point = if vi_mode { term.vi_mode_cursor.point } else { term.grid.cursor.point };
++        let mut point = term.grid.cursor.point;
+         if term.grid[point].flags.contains(Flags::WIDE_CHAR_SPACER) {
+             point.column -= 1;
+         }
+@@ -2225,21 +2107,17 @@ mod tests {
+ 
+         // Change display_offset to topmost.
+         term.grid_mut().scroll_display(Scroll::Top);
+-        term.vi_mode_cursor = ViModeCursor::new(Point::new(Line(-11), Column(0)));
+ 
+         // Scrollable amount to bottom is 11.
+         term.scroll_display(Scroll::PageDown);
+-        assert_eq!(term.vi_mode_cursor.point, Point::new(Line(-1), Column(0)));
+         assert_eq!(term.grid.display_offset(), 1);
+ 
+         // Scrollable amount to bottom is 1.
+         term.scroll_display(Scroll::PageDown);
+-        assert_eq!(term.vi_mode_cursor.point, Point::new(Line(0), Column(0)));
+         assert_eq!(term.grid.display_offset(), 0);
+ 
+         // Scrollable amount to bottom is 0.
+         term.scroll_display(Scroll::PageDown);
+-        assert_eq!(term.vi_mode_cursor.point, Point::new(Line(0), Column(0)));
+         assert_eq!(term.grid.display_offset(), 0);
+     }
+ 
+@@ -2714,14 +2592,6 @@ mod tests {
+ 
+         // Check that `Vi` cursor in vi mode is being always damaged.
+ 
+-        term.toggle_vi_mode();
+-        // Put Vi cursor to a different location than normal cursor.
+-        term.vi_goto_point(Point::new(Line(5), Column(5)));
+-        // Reset damage, so the damage information from `vi_goto_point` won't affect test.
+-        term.reset_damage();
+-        let vi_cursor_point = term.vi_mode_cursor.point;
+-        let line = vi_cursor_point.line.0 as usize;
+-        let left = vi_cursor_point.column.0;
+         let right = left;
+ 
+         let mut damaged_lines = match term.damage(None) {
+diff --git a/alacritty_terminal/src/vi_mode.rs b/alacritty_terminal/src/vi_mode.rs
+deleted file mode 100644
+index 0cdc6a69..00000000
+--- a/alacritty_terminal/src/vi_mode.rs
++++ /dev/null
+@@ -1,821 +0,0 @@
+-use std::cmp::min;
+-
+-use alacritty_config_derive::ConfigDeserialize;
+-
+-use crate::event::EventListener;
+-use crate::grid::{Dimensions, GridCell};
+-use crate::index::{Boundary, Column, Direction, Line, Point, Side};
+-use crate::term::cell::Flags;
+-use crate::term::Term;
+-
+-/// Possible vi mode motion movements.
+-#[derive(ConfigDeserialize, Debug, Copy, Clone, PartialEq, Eq)]
+-pub enum ViMotion {
+-    /// Move up.
+-    Up,
+-    /// Move down.
+-    Down,
+-    /// Move left.
+-    Left,
+-    /// Move right.
+-    Right,
+-    /// Move to start of line.
+-    First,
+-    /// Move to end of line.
+-    Last,
+-    /// Move to the first non-empty cell.
+-    FirstOccupied,
+-    /// Move to top of screen.
+-    High,
+-    /// Move to center of screen.
+-    Middle,
+-    /// Move to bottom of screen.
+-    Low,
+-    /// Move to start of semantically separated word.
+-    SemanticLeft,
+-    /// Move to start of next semantically separated word.
+-    SemanticRight,
+-    /// Move to end of previous semantically separated word.
+-    SemanticLeftEnd,
+-    /// Move to end of semantically separated word.
+-    SemanticRightEnd,
+-    /// Move to start of whitespace separated word.
+-    WordLeft,
+-    /// Move to start of next whitespace separated word.
+-    WordRight,
+-    /// Move to end of previous whitespace separated word.
+-    WordLeftEnd,
+-    /// Move to end of whitespace separated word.
+-    WordRightEnd,
+-    /// Move to opposing bracket.
+-    Bracket,
+-}
+-
+-/// Cursor tracking vi mode position.
+-#[derive(Default, Copy, Clone, PartialEq, Eq)]
+-pub struct ViModeCursor {
+-    pub point: Point,
+-}
+-
+-impl ViModeCursor {
+-    pub fn new(point: Point) -> Self {
+-        Self { point }
+-    }
+-
+-    /// Move vi mode cursor.
+-    #[must_use = "this returns the result of the operation, without modifying the original"]
+-    pub fn motion<T: EventListener>(mut self, term: &mut Term<T>, motion: ViMotion) -> Self {
+-        match motion {
+-            ViMotion::Up => {
+-                if self.point.line > term.topmost_line() {
+-                    self.point.line -= 1;
+-                }
+-            },
+-            ViMotion::Down => {
+-                if self.point.line + 1 < term.screen_lines() as i32 {
+-                    self.point.line += 1;
+-                }
+-            },
+-            ViMotion::Left => {
+-                self.point = term.expand_wide(self.point, Direction::Left);
+-                let wrap_point = Point::new(self.point.line - 1, term.last_column());
+-                if self.point.column == 0
+-                    && self.point.line > term.topmost_line()
+-                    && is_wrap(term, wrap_point)
+-                {
+-                    self.point = wrap_point;
+-                } else {
+-                    self.point.column = Column(self.point.column.saturating_sub(1));
+-                }
+-            },
+-            ViMotion::Right => {
+-                self.point = term.expand_wide(self.point, Direction::Right);
+-                if is_wrap(term, self.point) {
+-                    self.point = Point::new(self.point.line + 1, Column(0));
+-                } else {
+-                    self.point.column = min(self.point.column + 1, term.last_column());
+-                }
+-            },
+-            ViMotion::First => {
+-                self.point = term.expand_wide(self.point, Direction::Left);
+-                while self.point.column == 0
+-                    && self.point.line > term.topmost_line()
+-                    && is_wrap(term, Point::new(self.point.line - 1, term.last_column()))
+-                {
+-                    self.point.line -= 1;
+-                }
+-                self.point.column = Column(0);
+-            },
+-            ViMotion::Last => self.point = last(term, self.point),
+-            ViMotion::FirstOccupied => self.point = first_occupied(term, self.point),
+-            ViMotion::High => {
+-                let line = Line(-(term.grid().display_offset() as i32));
+-                let col = first_occupied_in_line(term, line).unwrap_or_default().column;
+-                self.point = Point::new(line, col);
+-            },
+-            ViMotion::Middle => {
+-                let display_offset = term.grid().display_offset() as i32;
+-                let line = Line(-display_offset + term.screen_lines() as i32 / 2 - 1);
+-                let col = first_occupied_in_line(term, line).unwrap_or_default().column;
+-                self.point = Point::new(line, col);
+-            },
+-            ViMotion::Low => {
+-                let display_offset = term.grid().display_offset() as i32;
+-                let line = Line(-display_offset + term.screen_lines() as i32 - 1);
+-                let col = first_occupied_in_line(term, line).unwrap_or_default().column;
+-                self.point = Point::new(line, col);
+-            },
+-            ViMotion::SemanticLeft => {
+-                self.point = semantic(term, self.point, Direction::Left, Side::Left);
+-            },
+-            ViMotion::SemanticRight => {
+-                self.point = semantic(term, self.point, Direction::Right, Side::Left);
+-            },
+-            ViMotion::SemanticLeftEnd => {
+-                self.point = semantic(term, self.point, Direction::Left, Side::Right);
+-            },
+-            ViMotion::SemanticRightEnd => {
+-                self.point = semantic(term, self.point, Direction::Right, Side::Right);
+-            },
+-            ViMotion::WordLeft => {
+-                self.point = word(term, self.point, Direction::Left, Side::Left);
+-            },
+-            ViMotion::WordRight => {
+-                self.point = word(term, self.point, Direction::Right, Side::Left);
+-            },
+-            ViMotion::WordLeftEnd => {
+-                self.point = word(term, self.point, Direction::Left, Side::Right);
+-            },
+-            ViMotion::WordRightEnd => {
+-                self.point = word(term, self.point, Direction::Right, Side::Right);
+-            },
+-            ViMotion::Bracket => self.point = term.bracket_search(self.point).unwrap_or(self.point),
+-        }
+-
+-        term.scroll_to_point(self.point);
+-
+-        self
+-    }
+-
+-    /// Get target cursor point for vim-like page movement.
+-    #[must_use = "this returns the result of the operation, without modifying the original"]
+-    pub fn scroll<T: EventListener>(mut self, term: &Term<T>, lines: i32) -> Self {
+-        // Clamp movement to within visible region.
+-        let line = (self.point.line - lines).grid_clamp(term, Boundary::Grid);
+-
+-        // Find the first occupied cell after scrolling has been performed.
+-        let column = first_occupied_in_line(term, line).unwrap_or_default().column;
+-
+-        // Move cursor.
+-        self.point = Point::new(line, column);
+-
+-        self
+-    }
+-}
+-
+-/// Find next end of line to move to.
+-fn last<T>(term: &Term<T>, mut point: Point) -> Point {
+-    // Expand across wide cells.
+-    point = term.expand_wide(point, Direction::Right);
+-
+-    // Find last non-empty cell in the current line.
+-    let occupied = last_occupied_in_line(term, point.line).unwrap_or_default();
+-
+-    if point.column < occupied.column {
+-        // Jump to last occupied cell when not already at or beyond it.
+-        occupied
+-    } else if is_wrap(term, point) {
+-        // Jump to last occupied cell across linewraps.
+-        while is_wrap(term, point) {
+-            point.line += 1;
+-        }
+-
+-        last_occupied_in_line(term, point.line).unwrap_or(point)
+-    } else {
+-        // Jump to last column when beyond the last occupied cell.
+-        Point::new(point.line, term.last_column())
+-    }
+-}
+-
+-/// Find next non-empty cell to move to.
+-fn first_occupied<T>(term: &Term<T>, mut point: Point) -> Point {
+-    let last_column = term.last_column();
+-
+-    // Expand left across wide chars, since we're searching lines left to right.
+-    point = term.expand_wide(point, Direction::Left);
+-
+-    // Find first non-empty cell in current line.
+-    let occupied = first_occupied_in_line(term, point.line)
+-        .unwrap_or_else(|| Point::new(point.line, last_column));
+-
+-    // Jump across wrapped lines if we're already at this line's first occupied cell.
+-    if point == occupied {
+-        let mut occupied = None;
+-
+-        // Search for non-empty cell in previous lines.
+-        for line in (term.topmost_line().0..point.line.0).rev().map(Line::from) {
+-            if !is_wrap(term, Point::new(line, last_column)) {
+-                break;
+-            }
+-
+-            occupied = first_occupied_in_line(term, line).or(occupied);
+-        }
+-
+-        // Fallback to the next non-empty cell.
+-        let mut line = point.line;
+-        occupied.unwrap_or_else(|| loop {
+-            if let Some(occupied) = first_occupied_in_line(term, line) {
+-                break occupied;
+-            }
+-
+-            let last_cell = Point::new(line, last_column);
+-            if !is_wrap(term, last_cell) {
+-                break last_cell;
+-            }
+-
+-            line += 1;
+-        })
+-    } else {
+-        occupied
+-    }
+-}
+-
+-/// Move by semantically separated word, like w/b/e/ge in vi.
+-fn semantic<T: EventListener>(
+-    term: &mut Term<T>,
+-    mut point: Point,
+-    direction: Direction,
+-    side: Side,
+-) -> Point {
+-    // Expand semantically based on movement direction.
+-    let expand_semantic = |point: Point| {
+-        // Do not expand when currently on a semantic escape char.
+-        let cell = &term.grid()[point];
+-        if term.semantic_escape_chars().contains(cell.c)
+-            && !cell.flags.intersects(Flags::WIDE_CHAR_SPACER | Flags::LEADING_WIDE_CHAR_SPACER)
+-        {
+-            point
+-        } else if direction == Direction::Left {
+-            term.semantic_search_left(point)
+-        } else {
+-            term.semantic_search_right(point)
+-        }
+-    };
+-
+-    // Make sure we jump above wide chars.
+-    point = term.expand_wide(point, direction);
+-
+-    // Move to word boundary.
+-    if direction != side && !is_boundary(term, point, direction) {
+-        point = expand_semantic(point);
+-    }
+-
+-    // Skip whitespace.
+-    let mut next_point = advance(term, point, direction);
+-    while !is_boundary(term, point, direction) && is_space(term, next_point) {
+-        point = next_point;
+-        next_point = advance(term, point, direction);
+-    }
+-
+-    // Assure minimum movement of one cell.
+-    if !is_boundary(term, point, direction) {
+-        point = advance(term, point, direction);
+-    }
+-
+-    // Move to word boundary.
+-    if direction == side && !is_boundary(term, point, direction) {
+-        point = expand_semantic(point);
+-    }
+-
+-    point
+-}
+-
+-/// Move by whitespace separated word, like W/B/E/gE in vi.
+-fn word<T: EventListener>(
+-    term: &mut Term<T>,
+-    mut point: Point,
+-    direction: Direction,
+-    side: Side,
+-) -> Point {
+-    // Make sure we jump above wide chars.
+-    point = term.expand_wide(point, direction);
+-
+-    if direction == side {
+-        // Skip whitespace until right before a word.
+-        let mut next_point = advance(term, point, direction);
+-        while !is_boundary(term, point, direction) && is_space(term, next_point) {
+-            point = next_point;
+-            next_point = advance(term, point, direction);
+-        }
+-
+-        // Skip non-whitespace until right inside word boundary.
+-        let mut next_point = advance(term, point, direction);
+-        while !is_boundary(term, point, direction) && !is_space(term, next_point) {
+-            point = next_point;
+-            next_point = advance(term, point, direction);
+-        }
+-    }
+-
+-    if direction != side {
+-        // Skip non-whitespace until just beyond word.
+-        while !is_boundary(term, point, direction) && !is_space(term, point) {
+-            point = advance(term, point, direction);
+-        }
+-
+-        // Skip whitespace until right inside word boundary.
+-        while !is_boundary(term, point, direction) && is_space(term, point) {
+-            point = advance(term, point, direction);
+-        }
+-    }
+-
+-    point
+-}
+-
+-/// Find first non-empty cell in line.
+-fn first_occupied_in_line<T>(term: &Term<T>, line: Line) -> Option<Point> {
+-    (0..term.columns())
+-        .map(|col| Point::new(line, Column(col)))
+-        .find(|&point| !is_space(term, point))
+-}
+-
+-/// Find last non-empty cell in line.
+-fn last_occupied_in_line<T>(term: &Term<T>, line: Line) -> Option<Point> {
+-    (0..term.columns())
+-        .map(|col| Point::new(line, Column(col)))
+-        .rfind(|&point| !is_space(term, point))
+-}
+-
+-/// Advance point based on direction.
+-fn advance<T>(term: &Term<T>, point: Point, direction: Direction) -> Point {
+-    if direction == Direction::Left {
+-        point.sub(term, Boundary::Grid, 1)
+-    } else {
+-        point.add(term, Boundary::Grid, 1)
+-    }
+-}
+-
+-/// Check if cell at point contains whitespace.
+-fn is_space<T>(term: &Term<T>, point: Point) -> bool {
+-    let cell = &term.grid()[point.line][point.column];
+-    !cell.flags().intersects(Flags::WIDE_CHAR_SPACER | Flags::LEADING_WIDE_CHAR_SPACER)
+-        && (cell.c == ' ' || cell.c == '\t')
+-}
+-
+-/// Check if the cell at a point contains the WRAPLINE flag.
+-fn is_wrap<T>(term: &Term<T>, point: Point) -> bool {
+-    term.grid()[point].flags.contains(Flags::WRAPLINE)
+-}
+-
+-/// Check if point is at screen boundary.
+-fn is_boundary<T>(term: &Term<T>, point: Point, direction: Direction) -> bool {
+-    (point.line <= term.topmost_line() && point.column == 0 && direction == Direction::Left)
+-        || (point.line == term.bottommost_line()
+-            && point.column + 1 >= term.columns()
+-            && direction == Direction::Right)
+-}
+-
+-#[cfg(test)]
+-mod tests {
+-    use super::*;
+-
+-    use crate::ansi::Handler;
+-    use crate::config::Config;
+-    use crate::event::VoidListener;
+-    use crate::index::{Column, Line};
+-    use crate::term::test::TermSize;
+-    use crate::term::Term;
+-
+-    fn term() -> Term<VoidListener> {
+-        let size = TermSize::new(20, 20);
+-        Term::new(&Config::default(), &size, VoidListener)
+-    }
+-
+-    #[test]
+-    fn motion_simple() {
+-        let mut term = term();
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(0), Column(0)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::Right);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(1)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::Left);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(0)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::Down);
+-        assert_eq!(cursor.point, Point::new(Line(1), Column(0)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::Up);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(0)));
+-    }
+-
+-    #[test]
+-    fn simple_wide() {
+-        let mut term = term();
+-        term.grid_mut()[Line(0)][Column(0)].c = 'a';
+-        term.grid_mut()[Line(0)][Column(1)].c = '汉';
+-        term.grid_mut()[Line(0)][Column(1)].flags.insert(Flags::WIDE_CHAR);
+-        term.grid_mut()[Line(0)][Column(2)].c = ' ';
+-        term.grid_mut()[Line(0)][Column(2)].flags.insert(Flags::WIDE_CHAR_SPACER);
+-        term.grid_mut()[Line(0)][Column(3)].c = 'a';
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(0), Column(1)));
+-        cursor = cursor.motion(&mut term, ViMotion::Right);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(3)));
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(0), Column(2)));
+-        cursor = cursor.motion(&mut term, ViMotion::Left);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(0)));
+-    }
+-
+-    #[test]
+-    fn motion_start_end() {
+-        let mut term = term();
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(0), Column(0)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::Last);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(19)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::First);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(0)));
+-    }
+-
+-    #[test]
+-    fn motion_first_occupied() {
+-        let mut term = term();
+-        term.grid_mut()[Line(0)][Column(0)].c = ' ';
+-        term.grid_mut()[Line(0)][Column(1)].c = 'x';
+-        term.grid_mut()[Line(0)][Column(2)].c = ' ';
+-        term.grid_mut()[Line(0)][Column(3)].c = 'y';
+-        term.grid_mut()[Line(0)][Column(19)].flags.insert(Flags::WRAPLINE);
+-        term.grid_mut()[Line(1)][Column(19)].flags.insert(Flags::WRAPLINE);
+-        term.grid_mut()[Line(2)][Column(0)].c = 'z';
+-        term.grid_mut()[Line(2)][Column(1)].c = ' ';
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(2), Column(1)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::FirstOccupied);
+-        assert_eq!(cursor.point, Point::new(Line(2), Column(0)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::FirstOccupied);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(1)));
+-    }
+-
+-    #[test]
+-    fn motion_high_middle_low() {
+-        let mut term = term();
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(0), Column(0)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::High);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(0)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::Middle);
+-        assert_eq!(cursor.point, Point::new(Line(9), Column(0)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::Low);
+-        assert_eq!(cursor.point, Point::new(Line(19), Column(0)));
+-    }
+-
+-    #[test]
+-    fn motion_bracket() {
+-        let mut term = term();
+-        term.grid_mut()[Line(0)][Column(0)].c = '(';
+-        term.grid_mut()[Line(0)][Column(1)].c = 'x';
+-        term.grid_mut()[Line(0)][Column(2)].c = ')';
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(0), Column(0)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::Bracket);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(2)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::Bracket);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(0)));
+-    }
+-
+-    fn motion_semantic_term() -> Term<VoidListener> {
+-        let mut term = term();
+-
+-        term.grid_mut()[Line(0)][Column(0)].c = 'x';
+-        term.grid_mut()[Line(0)][Column(1)].c = ' ';
+-        term.grid_mut()[Line(0)][Column(2)].c = 'x';
+-        term.grid_mut()[Line(0)][Column(3)].c = 'x';
+-        term.grid_mut()[Line(0)][Column(4)].c = ' ';
+-        term.grid_mut()[Line(0)][Column(5)].c = ' ';
+-        term.grid_mut()[Line(0)][Column(6)].c = ':';
+-        term.grid_mut()[Line(0)][Column(7)].c = ' ';
+-        term.grid_mut()[Line(0)][Column(8)].c = 'x';
+-        term.grid_mut()[Line(0)][Column(9)].c = ':';
+-        term.grid_mut()[Line(0)][Column(10)].c = 'x';
+-        term.grid_mut()[Line(0)][Column(11)].c = ' ';
+-        term.grid_mut()[Line(0)][Column(12)].c = ' ';
+-        term.grid_mut()[Line(0)][Column(13)].c = ':';
+-        term.grid_mut()[Line(0)][Column(14)].c = ' ';
+-        term.grid_mut()[Line(0)][Column(15)].c = 'x';
+-
+-        term
+-    }
+-
+-    #[test]
+-    fn motion_semantic_right_end() {
+-        let mut term = motion_semantic_term();
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(0), Column(0)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticRightEnd);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(3)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticRightEnd);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(6)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticRightEnd);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(8)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticRightEnd);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(9)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticRightEnd);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(10)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticRightEnd);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(13)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticRightEnd);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(15)));
+-    }
+-
+-    #[test]
+-    fn motion_semantic_left_start() {
+-        let mut term = motion_semantic_term();
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(0), Column(15)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticLeft);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(13)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticLeft);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(10)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticLeft);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(9)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticLeft);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(8)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticLeft);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(6)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticLeft);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(2)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticLeft);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(0)));
+-    }
+-
+-    #[test]
+-    fn motion_semantic_right_start() {
+-        let mut term = motion_semantic_term();
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(0), Column(0)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticRight);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(2)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticRight);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(6)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticRight);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(8)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticRight);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(9)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticRight);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(10)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticRight);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(13)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticRight);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(15)));
+-    }
+-
+-    #[test]
+-    fn motion_semantic_left_end() {
+-        let mut term = motion_semantic_term();
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(0), Column(15)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticLeftEnd);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(13)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticLeftEnd);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(10)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticLeftEnd);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(9)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticLeftEnd);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(8)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticLeftEnd);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(6)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticLeftEnd);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(3)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticLeftEnd);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(0)));
+-    }
+-
+-    #[test]
+-    fn scroll_semantic() {
+-        let mut term = term();
+-        term.grid_mut().scroll_up(&(Line(0)..Line(20)), 5);
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(0), Column(0)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticLeft);
+-        assert_eq!(cursor.point, Point::new(Line(-5), Column(0)));
+-        assert_eq!(term.grid().display_offset(), 5);
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticRight);
+-        assert_eq!(cursor.point, Point::new(Line(19), Column(19)));
+-        assert_eq!(term.grid().display_offset(), 0);
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticLeftEnd);
+-        assert_eq!(cursor.point, Point::new(Line(-5), Column(0)));
+-        assert_eq!(term.grid().display_offset(), 5);
+-
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticRightEnd);
+-        assert_eq!(cursor.point, Point::new(Line(19), Column(19)));
+-        assert_eq!(term.grid().display_offset(), 0);
+-    }
+-
+-    #[test]
+-    fn semantic_wide() {
+-        let mut term = term();
+-        term.grid_mut()[Line(0)][Column(0)].c = 'a';
+-        term.grid_mut()[Line(0)][Column(1)].c = ' ';
+-        term.grid_mut()[Line(0)][Column(2)].c = '汉';
+-        term.grid_mut()[Line(0)][Column(2)].flags.insert(Flags::WIDE_CHAR);
+-        term.grid_mut()[Line(0)][Column(3)].c = ' ';
+-        term.grid_mut()[Line(0)][Column(3)].flags.insert(Flags::WIDE_CHAR_SPACER);
+-        term.grid_mut()[Line(0)][Column(4)].c = ' ';
+-        term.grid_mut()[Line(0)][Column(5)].c = 'a';
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(0), Column(2)));
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticRight);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(5)));
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(0), Column(3)));
+-        cursor = cursor.motion(&mut term, ViMotion::SemanticLeft);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(0)));
+-    }
+-
+-    #[test]
+-    fn motion_word() {
+-        let mut term = term();
+-        term.grid_mut()[Line(0)][Column(0)].c = 'a';
+-        term.grid_mut()[Line(0)][Column(1)].c = ';';
+-        term.grid_mut()[Line(0)][Column(2)].c = ' ';
+-        term.grid_mut()[Line(0)][Column(3)].c = ' ';
+-        term.grid_mut()[Line(0)][Column(4)].c = 'a';
+-        term.grid_mut()[Line(0)][Column(5)].c = ';';
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(0), Column(0)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::WordRightEnd);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(1)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::WordRightEnd);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(5)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::WordLeft);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(4)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::WordLeft);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(0)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::WordRight);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(4)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::WordLeftEnd);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(1)));
+-    }
+-
+-    #[test]
+-    fn scroll_word() {
+-        let mut term = term();
+-        term.grid_mut().scroll_up(&(Line(0)..Line(20)), 5);
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(0), Column(0)));
+-
+-        cursor = cursor.motion(&mut term, ViMotion::WordLeft);
+-        assert_eq!(cursor.point, Point::new(Line(-5), Column(0)));
+-        assert_eq!(term.grid().display_offset(), 5);
+-
+-        cursor = cursor.motion(&mut term, ViMotion::WordRight);
+-        assert_eq!(cursor.point, Point::new(Line(19), Column(19)));
+-        assert_eq!(term.grid().display_offset(), 0);
+-
+-        cursor = cursor.motion(&mut term, ViMotion::WordLeftEnd);
+-        assert_eq!(cursor.point, Point::new(Line(-5), Column(0)));
+-        assert_eq!(term.grid().display_offset(), 5);
+-
+-        cursor = cursor.motion(&mut term, ViMotion::WordRightEnd);
+-        assert_eq!(cursor.point, Point::new(Line(19), Column(19)));
+-        assert_eq!(term.grid().display_offset(), 0);
+-    }
+-
+-    #[test]
+-    fn word_wide() {
+-        let mut term = term();
+-        term.grid_mut()[Line(0)][Column(0)].c = 'a';
+-        term.grid_mut()[Line(0)][Column(1)].c = ' ';
+-        term.grid_mut()[Line(0)][Column(2)].c = '汉';
+-        term.grid_mut()[Line(0)][Column(2)].flags.insert(Flags::WIDE_CHAR);
+-        term.grid_mut()[Line(0)][Column(3)].c = ' ';
+-        term.grid_mut()[Line(0)][Column(3)].flags.insert(Flags::WIDE_CHAR_SPACER);
+-        term.grid_mut()[Line(0)][Column(4)].c = ' ';
+-        term.grid_mut()[Line(0)][Column(5)].c = 'a';
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(0), Column(2)));
+-        cursor = cursor.motion(&mut term, ViMotion::WordRight);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(5)));
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(0), Column(3)));
+-        cursor = cursor.motion(&mut term, ViMotion::WordLeft);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(0)));
+-    }
+-
+-    #[test]
+-    fn scroll_simple() {
+-        let mut term = term();
+-
+-        // Create 1 line of scrollback.
+-        for _ in 0..20 {
+-            term.newline();
+-        }
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(0), Column(0)));
+-
+-        cursor = cursor.scroll(&term, -1);
+-        assert_eq!(cursor.point, Point::new(Line(1), Column(0)));
+-
+-        cursor = cursor.scroll(&term, 1);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(0)));
+-
+-        cursor = cursor.scroll(&term, 1);
+-        assert_eq!(cursor.point, Point::new(Line(-1), Column(0)));
+-    }
+-
+-    #[test]
+-    fn scroll_over_top() {
+-        let mut term = term();
+-
+-        // Create 40 lines of scrollback.
+-        for _ in 0..59 {
+-            term.newline();
+-        }
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(19), Column(0)));
+-
+-        cursor = cursor.scroll(&term, 20);
+-        assert_eq!(cursor.point, Point::new(Line(-1), Column(0)));
+-
+-        cursor = cursor.scroll(&term, 20);
+-        assert_eq!(cursor.point, Point::new(Line(-21), Column(0)));
+-
+-        cursor = cursor.scroll(&term, 20);
+-        assert_eq!(cursor.point, Point::new(Line(-40), Column(0)));
+-
+-        cursor = cursor.scroll(&term, 20);
+-        assert_eq!(cursor.point, Point::new(Line(-40), Column(0)));
+-    }
+-
+-    #[test]
+-    fn scroll_over_bottom() {
+-        let mut term = term();
+-
+-        // Create 40 lines of scrollback.
+-        for _ in 0..59 {
+-            term.newline();
+-        }
+-
+-        let mut cursor = ViModeCursor::new(Point::new(Line(-40), Column(0)));
+-
+-        cursor = cursor.scroll(&term, -20);
+-        assert_eq!(cursor.point, Point::new(Line(-20), Column(0)));
+-
+-        cursor = cursor.scroll(&term, -20);
+-        assert_eq!(cursor.point, Point::new(Line(0), Column(0)));
+-
+-        cursor = cursor.scroll(&term, -20);
+-        assert_eq!(cursor.point, Point::new(Line(19), Column(0)));
+-
+-        cursor = cursor.scroll(&term, -20);
+-        assert_eq!(cursor.point, Point::new(Line(19), Column(0)));
+-    }
+-}
+-- 
+2.40.0
+
