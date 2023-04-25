@@ -368,7 +368,7 @@ g() {
 
 # pdfgrep with nice setup
 pd() {
-  pdfgrep --with-filename --page-number $@
+  pdfgrep --with-filename --page-number $@ -- **/*.pdf
 }
 
 alias ct="printf '\033[2J\033[3J\033[1;1H'"                       # clear terminal
@@ -426,4 +426,10 @@ checkhealth() {
   for app in ${REQUIRE[@]}; do
     has $app || echo "zshrc needs: $app"
   done
+}
+
+# file opener
+v() {
+  local x=$(fd -t f -e pdf | fzf ${FZF_OPTS})
+  [ $x ] && open "$x"
 }
