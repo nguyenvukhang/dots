@@ -434,4 +434,3 @@ v() {
   local x=$(fd -t f -e pdf | fzf ${FZF_OPTS})
   [ $x ] && open "$x"
 }
-alias t='cargo build'
