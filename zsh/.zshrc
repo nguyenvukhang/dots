@@ -26,7 +26,7 @@ has() {
 # exports
 export UNI=$HOME/uni
 export SHELL_SESSIONS_DISABLE=1 # remove ~/.zsh_sessions
-export LANG=en_US.UTF-8 # for manpagers
+export LANG=en_US.UTF-8         # for manpagers
 
 unsetopt BEEP    # prevents beeps in general
 setopt IGNOREEOF # prevents <C-d> from quitting the shell
@@ -158,7 +158,7 @@ gcb() {
 
 # git log + graph template
 log_graph() {
-  $GIT log --graph --pretty='%C(yellow)%h%C(auto)%d %Creset%s %C(dim)(%ar)' $@
+  $GIT log --graph --pretty='%C(yellow)%h%C(auto)%d %Creset%s %C(black)(%ar)' $@
 }
 
 # git log + message template
