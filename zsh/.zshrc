@@ -26,6 +26,7 @@ has() {
 # exports
 export UNI=$HOME/uni
 export SHELL_SESSIONS_DISABLE=1 # remove ~/.zsh_sessions
+export LANG=en_US.UTF-8 # for manpagers
 
 unsetopt BEEP    # prevents beeps in general
 setopt IGNOREEOF # prevents <C-d> from quitting the shell
@@ -433,3 +434,4 @@ v() {
   local x=$(fd -t f -e pdf | fzf ${FZF_OPTS})
   [ $x ] && open "$x"
 }
+alias t='cargo build'
