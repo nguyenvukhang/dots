@@ -31,7 +31,7 @@ font:
 key_bindings:
   - { key: A, mods: Command, chars: "\x1ba" }
   - { key: B, mods: Command, chars: "\x1bb" }
-  # - { key: C, mods: Command, chars: "\x1bc" } # (copy)
+  - { key: C, mods: Command, chars: "\x1bc" }
   - { key: D, mods: Command, chars: "\x1bd" }
   - { key: E, mods: Command, chars: "\x1be" }
   - { key: F, mods: Command, chars: "\x1bf" }
@@ -50,7 +50,7 @@ key_bindings:
   - { key: S, mods: Command, chars: "\x1bs" }
   - { key: T, mods: Command, chars: "\x1bt" }
   - { key: U, mods: Command, chars: "\x1bu" }
-  # - { key: V, mods: Command, chars: "\x1bv" } # (paste)
+  - { key: V, mods: Command, action: Paste }
   - { key: W, mods: Command, chars: "\x1bw" }
   - { key: X, mods: Command, chars: "\x1bx" }
   - { key: Y, mods: Command, chars: "\x1by" }
@@ -71,7 +71,7 @@ key_bindings:
   - { key: K, mods: Shift|Command, chars: "\x1bK" }
   - { key: L, mods: Shift|Command, chars: "\x1bL" }
   - { key: M, mods: Shift|Command, chars: "\x1bM" }
-  - { key: N, mods: Shift|Command, chars: "\x1bN" }
+  - { key: N, mods: Shift|Command, action: CreateNewWindow }
   - { key: O, mods: Shift|Command, chars: "\x1bO" }
   - { key: P, mods: Shift|Command, chars: "\x1bP" }
   - { key: Q, mods: Shift|Command, chars: "\x1bQ" }
