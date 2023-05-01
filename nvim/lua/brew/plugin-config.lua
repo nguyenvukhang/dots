@@ -101,7 +101,7 @@ end
 -- https://github.com/nvim-treesitter/nvim-treesitter
 config['nvim-treesitter'] = function()
   -- list of languages that use treesitter for syntax highlighting
-  local enabled = { 'astro', 'markdown', 'latex' }
+  local enabled = { 'astro', 'markdown', 'latex', 'swift' }
   require('nvim-treesitter.configs').setup {
     highlight = {
       enable = true,
@@ -111,7 +111,7 @@ config['nvim-treesitter'] = function()
     },
     -- stylua: ignore
     ensure_installed = { 'javascript', 'typescript', 'c', 'lua', 'rust',
-      'astro', 'java', 'latex', 'markdown', 'markdown_inline', 'python' },
+      'astro', 'java', 'latex', 'markdown', 'markdown_inline', 'python', 'swift' },
   }
 end
 
