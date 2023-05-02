@@ -5,7 +5,6 @@ local nnoremap, vnoremap = c.nnoremap, c.vnoremap
 nnoremap('<space>', '<nop>')
 nnoremap('<bs>', '<nop>')
 nnoremap('Q', '<nop>')
-nnoremap('q:', '<nop>')
 nnoremap('K', '<nop>')
 nnoremap('<left>', '<nop>')
 nnoremap('<right>', '<nop>')
