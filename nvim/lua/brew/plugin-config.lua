@@ -85,7 +85,7 @@ config['nvim-autopairs'] = function()
   local np, Rule = require('nvim-autopairs'), require('nvim-autopairs.rule')
   np.setup()
   np.add_rules {
-    Rule('$', '$', 'tex'):with_move(
+    Rule('$', '$', { 'tex', 'markdown' }):with_move(
       function(opts) return opts.next_char == opts.char end
     ),
   }
