@@ -15,18 +15,36 @@ scrolling:
 
 font:
   normal:
-    family: JetBrains Mono
-    style: Light
+    family: SF Mono
+    style: Regular
   bold:
-    style: Light
+    style: Regular
   italic:
-    style: Light
+    style: Regular
   bold_italic:
-    style: Light
-  size: 15
+    style: Regular
+  size: 12.5
   offset:
     x: 0
-    y: 0
+    y: 4
+  glyph_offset:
+    y: 1
+
+# XCode defaults
+# font:
+#   normal:
+#     family: SF Mono
+#     style: Regular
+#   bold:
+#     style: Regular
+#   italic:
+#     style: Regular
+#   bold_italic:
+#     style: Regular
+#   size: 12.5
+#   offset:
+#     x: 0
+#     y: 4
 
 key_bindings:
   - { key: A, mods: Command, chars: "\x1ba" }
