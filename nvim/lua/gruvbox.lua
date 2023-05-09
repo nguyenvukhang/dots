@@ -13,6 +13,21 @@ local colors = {
   orange = '#fe8019',
   gray = '#928374',
 }
+
+local material = {
+  bg0 = '#282828', bg1 = '#3c3836', bg2 = '#504945', bg3 = '#665c54', bg4 = '#7c6f64',
+  fg0 = '#fbf1c7', fg1 = '#ebdbb2', fg2 = '#d5c4a1', fg3 = '#bdae93', fg4 = '#a89984',
+  red = '#ea6962',
+  green = '#a9b665',
+  yellow = '#d8a657',
+  blue = '#7daea3',
+  purple = '#d3869b',
+  aqua = '#89b48c',
+  orange = '#e78a4e',
+  gray = '#928374',
+}
+
+colors = material
 -- stylua: ignore end
 
 local setup_groups = function()

@@ -15,20 +15,15 @@ scrolling:
 
 font:
   normal:
-    family: SF Mono
-    style: Regular
+    family: JetBrains Mono
+    style: Light
   bold:
-    style: Regular
+    style: Light
   italic:
-    style: Regular
+    style: Light
   bold_italic:
-    style: Regular
-  size: 12.5
-  offset:
-    x: 0
-    y: 4
-  glyph_offset:
-    y: 1
+    style: Light
+  size: 14
 
 # XCode defaults
 # font:
@@ -115,19 +110,19 @@ cursor:
 
 live_config_reload: false
 
-colors: # (gruvbox dark)
+colors: # (gruvbox material)
   cursor:
-    cursor: "#bdae93"
+    cursor: "#d5c4a1"
     text: "#282828"
   normal:
     black: "#7c6f64"
-    blue: "#83a598"
-    cyan: "#8ec07c"
-    green: "#b8bb26"
+    blue: "#7daea3"
+    cyan: "#89b482"
+    green: "#a9b665"
     magenta: "#d3869b"
-    red: "#fb4934"
+    red: "#ea6962"
     white: "#ebdbb2"
-    yellow: "#fabd2f"
+    yellow: "#d8a657"
   primary:
     background: "#282828"
     foreground: "#ebdbb2"
