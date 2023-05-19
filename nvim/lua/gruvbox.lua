@@ -278,6 +278,7 @@ local setup_groups = function()
     TelescopePreviewBorder = { link = 'TelescopeCustomBorder' },
     TelescopePromptBorder = { link = 'TelescopeCustomBorder' },
     TelescopePromptCounter = { link = 'TelescopeCustomBorder' },
+
     -- nvim-cmp
     CmpItemAbbrMatchFuzzy = { link = 'GruvboxBlueUnderline' },
     CmpItemMenu = { link = 'GruvboxGray' },

@@ -39,7 +39,7 @@ prompt_git() {
     echo " %F{241}($branch)"
 }
 
-PROMPT=$'%F{blue}%~$(prompt_git)%f\n%(?.%F{green}uwuntu > %f.%F{red}uwuntu > %f)'
+PROMPT=$'%F{blue}%~$(prompt_git)%f\n%(?.%F{green}> %f.%F{red}> %f)'
 
 # generic fzf options
 # use with fzf --color=$FZF_COLORS
