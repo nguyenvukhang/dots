@@ -55,4 +55,9 @@ M.autocmd = function(opts, ev)
   vim.api.nvim_create_autocmd(ev, opts)
 end
 
+---@param cs string comment string e.g. '// %s'
+M.comment_string = function(cs)
+  vim.api.nvim_buf_set_option(0, 'commentstring', cs)
+end
+
 return M

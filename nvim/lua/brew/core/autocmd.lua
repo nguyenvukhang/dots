@@ -13,7 +13,6 @@ local cfg = {
     vim.opt.tabstop, vim.opt.shiftwidth = 4, 4
   end,
   latex = function()
-    vim.opt.formatoptions = 'jcroql'
     vim.opt.textwidth = 70
     local ls = require('luasnip')
     local s, t = ls.snippet, ls.text_node
@@ -39,11 +38,8 @@ local cfg = {
     vim.opt.textwidth = 70
     dollarDollar()
   end,
-  cpp = function() vim.api.nvim_buf_set_option(0, 'commentstring', '// %s') end,
-  swift = function()
-    vim.opt.formatoptions = 'jcroql'
-    vim.api.nvim_buf_set_option(0, 'commentstring', '// %s')
-  end,
+  cpp = function() c.comment_string('// %s') end,
+  swift = function() c.comment_string('// %s') end,
 }
 
 autocmd { pattern = '*.tex', callback = cfg.latex }
