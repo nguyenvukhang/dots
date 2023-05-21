@@ -39,7 +39,7 @@ prompt_git() {
     echo " %F{241}($branch)"
 }
 
-PROMPT=$'%F{blue}%~$(prompt_git)%f\n%(?.%F{green}> %f.%F{red}> %f)'
+PROMPT=$'%F{blue}%~$(prompt_git)%f\n%(?.%F{green}uwuntu > %f.%F{red}uwuntu > %f)'
 
 # generic fzf options
 # use with fzf --color=$FZF_COLORS
@@ -322,7 +322,9 @@ alias b="cd -"  # back
 }
 
 UNI_LAUNCH=$UNI/.session # use this file's first line as initial directory
-[ ! -f $UNI_LAUNCH ] && echo "$UNI" >$UNI_LAUNCH
+if [ ! -f $UNI_LAUNCH ] && [ -d $UNI ]; then
+	echo "$UNI" >$UNI_LAUNCH
+fi
 2u() {
   local INDEX=0 TARGET LINE
   # use first arg as target index, if it's a number from 1-9 inclusive
@@ -331,7 +333,7 @@ UNI_LAUNCH=$UNI/.session # use this file's first line as initial directory
     [[ $LINE =~ ^#.* ]] && continue                           # ignore lines starting with '#'
     [[ $TARGET -eq $INDEX ]] && cd ${LINE/\~/$HOME} && return # jump if match
     let INDEX++
-  done < <(cat $UNI_LAUNCH)
+  done < <(cat $UNI_LAUNCH 2>/dev/null || echo "")
 }
 [ $PWD = $HOME ] && 2u
 
