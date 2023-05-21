@@ -1,5 +1,8 @@
 START_TMUX=true
 
+# load homebrew
+[ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # Use tmux session $BASE as a shell wrapper.
 # Only quitting $BASE will exit the terminal emulator.
 tmux_loop() {
