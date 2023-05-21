@@ -13,7 +13,7 @@ local function prime_bootstrap(lazypath)
       lazypath,
     }
     print('done installing lazy.nvim')
-  end)
+  end, {})
 end
 
 -- load plugins using lazy.nvim
