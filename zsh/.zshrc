@@ -1,4 +1,4 @@
-START_TMUX=false
+START_TMUX=true
 
 # Use tmux session $BASE as a shell wrapper.
 # Only quitting $BASE will exit the terminal emulator.
