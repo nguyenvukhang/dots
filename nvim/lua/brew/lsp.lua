@@ -26,7 +26,7 @@ M.swift = function() lsp.sourcekit.setup(base()) end
 
 M.rust = function()
   lsp.rust_analyzer.setup(
-    base { root_dir = lsp.util.root_pattern('Cargo.toml') }
+    base { root_dir = lsp.util.root_pattern('Cargo.toml', 'rust-project.json') }
   )
 end
 
