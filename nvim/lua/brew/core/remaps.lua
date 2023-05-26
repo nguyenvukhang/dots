@@ -1,5 +1,5 @@
 local c = require('brew.core')
-local nnoremap, vnoremap = c.nnoremap, c.vnoremap
+local nnoremap, vnoremap, inoremap = c.nnoremap, c.vnoremap, c.inoremap
 
 -- no-ops
 nnoremap('<space>', '<nop>')
@@ -10,6 +10,9 @@ nnoremap('<left>', '<nop>')
 nnoremap('<right>', '<nop>')
 nnoremap('<up>', '<nop>')
 nnoremap('<down>', '<nop>')
+
+-- remap Shift + Tab to actually give a tab char
+inoremap('<S-Tab>', '<C-V><Tab>')
 
 -- the only right way to setup H and L
 nnoremap('H', '^')

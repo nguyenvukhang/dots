@@ -153,6 +153,7 @@ gcl() {
 }
 # git clone --bare
 gcb() {
+  # fetch = +refs/heads/*:refs/remotes/origin/*
   cyclone $GIT clone --bare $@
 }
 
@@ -326,7 +327,7 @@ alias b="cd -"  # back
 
 UNI_LAUNCH=$UNI/.session # use this file's first line as initial directory
 if [ ! -f $UNI_LAUNCH ] && [ -d $UNI ]; then
-	echo "$UNI" >$UNI_LAUNCH
+  echo "$UNI" >$UNI_LAUNCH
 fi
 2u() {
   local INDEX=0 TARGET LINE
