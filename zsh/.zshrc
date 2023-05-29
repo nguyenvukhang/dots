@@ -105,6 +105,7 @@ alias gcf="$GIT config --edit"
 alias gitm="$EDITOR .gitmodules"
 
 # git checkout, without speedbumps. just get there already.
+# (source + tests at ./tests/gco-test.zsh)
 gco() {
   local OUTPUT="$($GIT checkout $@ 2>&1)" # original output
   local greyed="\033[0;37m$OUTPUT\033[0m" T_DIR BRANCH
