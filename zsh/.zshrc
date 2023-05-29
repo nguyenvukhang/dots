@@ -169,20 +169,25 @@ log_message() {
 }
 
 # git logs
-log_line_count=15
 gl() {
-  log_graph -n ${1-$log_line_count}
+  let i=$LINES-10
+  [ $i -lt 10 ] && let i=10
+  log_graph -n ${1-$i}
 }
 gla() {
-  log_graph -n ${1-$log_line_count} --all
+  let i=$LINES-10
+  [ $i -lt 10 ] && let i=10
+  log_graph -n ${1-$i} --all
 }
 gll() {
   log_graph --all
 }
 mongl() {
-  for i in {1..120}; do
+  let i=$LINES-10
+  [ $i -lt 10 ] && let i=10
+  for j in {1..120}; do
     clear
-    gla ${1:-$log_line_count}
+    gla ${1:-$i}
     sleep 2
   done
 }
