@@ -51,8 +51,10 @@ log() {
 }
 
 build() {
-  mkdir $TMP_DIR/init $TMP_DIR/repo
-  cd $TMP_DIR/init
+  # $TMP_DIR/base is not used in any test.
+  # It just serves as a dummy git history to clone from
+  mkdir $TMP_DIR/base $TMP_DIR/repo
+  cd $TMP_DIR/base
   git init &>$N
   git branch -m main &>$N
   commit_file README.md &>$N
@@ -66,24 +68,23 @@ build() {
   git checkout -b B3 &>$N && git reset --hard $C3 &>$N
   git checkout main &>$N
 
-  cd $TMP_DIR
-  mv $TMP_DIR/init/.git $TMP_DIR/repo
-  cd $TMP_DIR/repo/.git
-  git config --bool core.bare true
+  mv $TMP_DIR/base/.git $TMP_DIR/repo
+  git -C $TMP_DIR/repo/.git config --bool core.bare true
+  rm -rf $TMP_DIR/base
   cd $TMP_DIR/repo
 
   git worktree add B1 &>$N
   git worktree add B2 &>$N
   git worktree add D3 &>$N && cd D3 && git checkout B3 &>$N && git branch -D D3 &>$N
-  cd $TMP_DIR
-  exa --tree
-# .
-# ├── init
-# │  ├── last
-# │  ├── one
-# │  ├── README.md
-# │  ├── three
-# │  └── two
+}
+
+TMP_DIR=$(mktemp -d)
+cleanup() {
+  rm -rf $TMP_DIR
+}
+trap cleanup EXIT
+
+build
 # └── repo
 #    ├── B1
 #    │  ├── one
@@ -98,44 +99,35 @@ build() {
 #       ├── three
 #       └── two
 
-}
+# Save environment variables to later assert that they have not changed
+TEST__TARGET_DIR=$TARGET_DIR
+TEST__BRANCH=$BRANCH
+TEST__OUTPUT=$OUTPUT
 
-TMP_DIR=$(mktemp -d)
-cleanup() {
-  rm -rf $TMP_DIR
-}
-trap cleanup EXIT
-
-build
-
-# Do nothing if not in a git repository, even if in the lift-lobby
-# equivalent that is the git workspace.
-line 1
+# Jump from the lift-lobby (git workspace area, but not in any git workspace)
 cd $TMP_DIR/repo && gco B1 &>$N
 assert_eq_path $PWD $TMP_DIR/repo/B1
 
-# Go to B2
-line 2
+# Jump using REF
 cd $TMP_DIR/repo/B1 && gco B2 &>$N
 assert_eq_path $PWD $TMP_DIR/repo/B2
 
-# Go to D3
-line 3
+# Jump using REF to a different directory
 cd $TMP_DIR/repo/B1 && gco B3 &>$N
 assert_eq_path $PWD $TMP_DIR/repo/D3
 
-# Go to D3
-line 4
+# Jump using DIRECTORY (D3 is checked out on branch B3)
 cd $TMP_DIR/repo/B1 && gco D3 &>$N
 assert_eq_path $PWD $TMP_DIR/repo/D3
 
-assert_eq "$TARGET_DIR" ''
-assert_eq "$BRANCH" ''
-assert_eq "$OUTPUT" ''
+# Assert that variables have been cleared
+assert_eq "$TARGET_DIR" "$TEST__TARGET_DIR"
+assert_eq "$BRANCH" "$TEST__BRANCH"
+assert_eq "$OUTPUT" "$TEST__OUTPUT"
+
+# Assert that jump command does not leak
 if command -v jump; then
   echo "Should not have jump command from outside"
 fi
-# x=$(jump 2>&1)
-# echo "$x"
 
 echo "[gco-test.zsh] All tests passed!"

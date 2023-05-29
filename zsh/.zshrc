@@ -108,9 +108,9 @@ alias gitm="$EDITOR .gitmodules"
 # (source + tests at ./tests/gco-test.zsh)
 gco() {
   local OUTPUT="$($GIT checkout $@ 2>&1)" # original output
-  local greyed="\033[0;37m$OUTPUT\033[0m" T_DIR BRANCH
+  local greyed="\033[0;37m$OUTPUT\033[0m" TARGET_DIR BRANCH
   jump() {
-    echo "\033[0;37m>> \033[0;32m${1}\033[0;37m ${2}\033[0m" && unset -f jump
+    echo "\033[0;30m -> \033[0;32m${1}\033[0;37m ${2}\033[0m" && unset -f jump
   }
   [[ $OUTPUT =~ '^(fatal: not a git repository|Already on).*$' ]] && echo $greyed && return
   [[ $OUTPUT =~ "^fatal: .* is already checked out at '(.*)'$" ]] && jump $1 && cd ${match[1]} && return
@@ -118,15 +118,16 @@ gco() {
   while IFS= read -r line; do
     if [[ $line =~ '^worktree (.*)$' ]]; then
       dir=${match[1]}
-      [[ ${line##*/} == $1 ]] && T_DIR=$dir
+      [[ ${line##*/} == $1 ]] && TARGET_DIR=$dir
     elif [[ $line =~ '^branch refs/heads/(.*)$' ]]; then
       [[ ${match[1]} == $1 && -d $dir ]] && jump $1 && cd $dir && return
-      [[ -z $BRANCH && $T_DIR ]] && BRANCH=${match[1]}
+      [[ -z $BRANCH && $TARGET_DIR ]] && BRANCH=${match[1]}
     fi
   done < <(git worktree list --porcelain)
-  [ $T_DIR ] && jump "$BRANCH" "(dir: $1)" && cd $T_DIR && return # jump with dir
+  [ $TARGET_DIR ] && jump "$BRANCH" "(dir: $1)" && cd $TARGET_DIR && return # jump with dir
   [ $OUTPUT ] && echo $greyed || return 0
 }
+
 
 # git worktree navigation, by directory name
 gw() {
