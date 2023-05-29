@@ -97,7 +97,11 @@ alias grh="$GIT reset --hard"
 alias grpo="$GIT remote prune origin"
 
 gp() {
-  $GIT ls-files $@ | xargs $EDITOR
+  # macOS-only
+  $GIT ls-files $@ | tr \\n \\0 | xargs -0 $EDITOR
+  
+  # gnu xargs only
+  # $GIT ls-files $@ | xargs -d '\n' $EDITOR
 }
 
 # still essential
