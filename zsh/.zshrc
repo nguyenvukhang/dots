@@ -1,4 +1,4 @@
-START_TMUX=true
+START_TMUX=false
 
 # load homebrew
 [ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -50,7 +50,7 @@ prompt_git() {
     echo " %F{241}($branch)"
 }
 
-PROMPT_ARROW='>'
+PROMPT_ARROW='uwuntu >'
 PROMPT=$'%F{blue}%~$(prompt_git)%f\n%(?.%F{green}${PROMPT_ARROW} %f.%F{red}${PROMPT_ARROW} %f)'
 
 # generic fzf options
