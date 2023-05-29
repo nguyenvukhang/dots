@@ -17,7 +17,7 @@ export EDITOR=nvim # somehow this export is needed for tmux select to work
 [[ $START_TMUX == true ]] && tmux_loop
 
 # cargo (rust)
-[ -f ~/.cargo/env ] && source ~/.cargo/env
+[ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
 
 has() {
   command -v $1 >/dev/null
@@ -48,7 +48,7 @@ PROMPT=$'%F{blue}%~$(prompt_git)%f\n%(?.%F{green}> %f.%F{red}> %f)'
 # generic fzf options
 # use with fzf --color=$FZF_COLORS
 FZF_COLORS='pointer:green,header:white'
-export FZF_OPTS=(--height=7 +m --no-mouse --reverse
+FZF_OPTS=(--height=7 +m --no-mouse --reverse
   --no-info --prompt="  " --color=$FZF_COLORS)
 
 # use neovim as manpager
@@ -96,6 +96,11 @@ alias gr="$GIT reset"
 alias grh="$GIT reset --hard"
 alias grpo="$GIT remote prune origin"
 
+# still essential
+alias gcf="git config --edit"
+alias gitm="$EDITOR .gitmodules"
+
+# git preview (quickly open files by number)
 gp() {
   # macOS-only
   $GIT ls-files $@ | tr \\n \\0 | xargs -0 $EDITOR
@@ -103,10 +108,6 @@ gp() {
   # gnu xargs only
   # $GIT ls-files $@ | xargs -d '\n' $EDITOR
 }
-
-# still essential
-alias gcf="$GIT config --edit"
-alias gitm="$EDITOR .gitmodules"
 
 # git checkout, without speedbumps. just get there already.
 # (source + tests at ./tests/gco-test.zsh)
@@ -157,10 +158,8 @@ gcl() {
   elif [[ $repo =~ '^(.*)/(.*)$' ]]; then
     url=git@github.com:${match[1]}/${match[2]}.git
   fi
-  echo "OTHER: $other_args"
-  echo "REPO: $repo"
   [ -z $url ] && echo "Unable to parse requested repo." && return 1
-  $GIT clone $other_args $url
+  git clone $other_args $url
 }
 
 # git clone --bare
@@ -174,14 +173,14 @@ gcb() {
 # git logs
 gl() {
   local i=$(($LINES - 10 > 10 ? $LINES - 10 : 10))
-  $GIT log --graph --pretty=k -n ${1-$i}
+  git log --graph --pretty=k -n ${1-$i}
 }
 gla() {
   local i=$(($LINES - 10 > 10 ? $LINES - 10 : 10))
-  $GIT log --graph --pretty=k -n ${1-$i} --all
+  git log --graph --pretty=k -n ${1-$i} --all
 }
 gll() {
-  $GIT log --graph --pretty=k --all
+  git log --graph --pretty=k --all
 }
 mongl() {
   local i=$(($LINES - 10 > 10 ? $LINES - 10 : 10))
@@ -192,30 +191,30 @@ mongl() {
 
 # git search log
 gsl() {
-  $GIT log --all --pretty=s --color=always |
+  git log --all --pretty=s --color=always |
     fzf $FZF_OPTS --height=${1-7} --ansi -m --bind 'enter:select-all+accept'
 }
 
 # git search log (with filenames) and open in editor
 gslf() {
-  $GIT log --all --pretty=s --compact-summary | $EDITOR -
+  git log --all --pretty=s --compact-summary | $EDITOR -
 }
 
 # git commit
 gcm() {
   if [ $1 ]; then
-    $GIT commit -m $1
+    git commit -m $1
   else
-    $GIT commit
+    git commit
   fi
 }
 
 # git commit --amend
 gca() {
   if [ $1 ]; then
-    $GIT commit --amend -m $1
+    git commit --amend -m $1
   else
-    $GIT commit --amend
+    git commit --amend
   fi
 }
 
@@ -226,7 +225,7 @@ yeet() {
     tmux split-window -dv -l 5 "sh -c '$CMD'"
   else
     echo "Regular push..."
-    $GIT push $@
+    git push $@
   fi
 }
 
@@ -261,7 +260,7 @@ p() {
     local data=$(pass $target) YELLOW="\e[1;33m" NORMAL="\e[1;0m"
     # print the second line to stdout
     [[ "$data" = *$'\n'* ]] && echo ${YELLOW}${data#*$'\n'}${NORMAL}
-    read -ks "_?Press any key to continue..."
+    read -ks "_?Press any key to continue..." && echo
     # copy the password to clipboard
     pass show --clip $target &>/dev/null
     echo 'Copied password to clipboard. Will clear after 45 seconds.'
@@ -291,7 +290,6 @@ alias 2A="cd /Applications"
 alias 2c="cd $HOME/.config"
 alias 2ca="cd $HOME/.cache"
 alias 2d="cd $DOTS"
-alias 2e="cd $HOME/expo-apps"
 alias 2f="cd $HOME/files"
 alias 2h="cd $HOMEBREW_PREFIX"
 alias 2j="cd $HOME/Downloads"
@@ -299,25 +297,19 @@ alias 2l="cd $HOME/.local"
 alias 2lb="cd $HOME/.local/bin"
 alias 2ls="cd $HOME/.local/src"
 alias 2m="cd $UNI"
-alias 2m.="cd /Applications/MultiMC.app/Data"
 alias 2mc="cd '$HOME/Library/Application Support/ManyMC/instances/1.18.1/.minecraft'"
 alias 2n="cd $REPOS/notes"
 alias 2o="cd $HOME/repos"
 alias 2or="cd $HOME/other-repos"
 alias 2p="cd $DOTS/personal"
-alias 2pl="cd $HOME/.config/nvim/plugged"
-alias 2pw="cd $DOTS/personal/.password-store"
-alias 2q.="cd $HOME/.local/src/qmk_firmware"
-alias 2q="cd $DOTS/qmk"
 alias 2v="cd $DOTS/nvim"
-alias 2vl="cd $DOTS/nvim/lua/brew"
 alias 2z="cd $DOTS/zsh"
 
 alias o="cd .." # out
 alias b="cd -"  # back
 
 2r() {
-  cd $($GIT rev-parse --show-toplevel)
+  cd $(git rev-parse --show-toplevel)
 }
 
 UNI_LAUNCH=$UNI/.session # use this file's first line as initial directory
@@ -370,10 +362,17 @@ pd() {
   pdfgrep --with-filename --page-number $@ -- **/*.pdf
 }
 
-alias ct="printf '\033[2J\033[3J\033[1;1H'"                       # clear terminal
-alias mon="while; do; clear; exa --tree --level=1; sleep 1; done" # monitor tree
-alias monls="while true; do clear; ls; sleep 1; done"             # monitor dir
-alias zr="exec $SHELL -l"                                         # reloads shell
+# run a command in a loop
+mon() {
+  while; do
+    clear
+    echo "-> $PWD" && $@
+    sleep 1
+  done
+}
+
+alias ct="printf '\033[2J\033[3J\033[1;1H'" # clear terminal
+alias zr="exec $SHELL -l"                   # reloads shell
 alias ka="killall"
 alias py=python3
 alias si="$EDITOR .stow-local-ignore"
