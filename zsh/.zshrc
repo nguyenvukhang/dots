@@ -222,21 +222,12 @@ gca() {
 }
 
 yeet() {
-  if has notif; then
-    notify() {
-      notif -identifier com.apple.terminal -title "$1" -subtitle "$2"
-    }
-    f() {
-      $GIT push $@ >/dev/null 2>&1 &&
-        notify 'git push' '✅ push successful' ||
-        notify 'git push' '🔥 push failed'
-      unset -f f
-    }
-    (f $@ &)
-    echo "async pushed."
+  if [ $TMUX ]; then
+    echo "Using tmux to push..."
+    local CMD='echo "pushing..."; git push; sleep 2'
+    tmux split-window -dv -l 5 "sh -c '$CMD'"
   else
-    # no notif binary found
-    echo "pushing sychronously..."
+    echo "Regular push..."
     $GIT push $@
   fi
 }
