@@ -31,3 +31,6 @@
 	statusHints = false
 [core]
 	whitespace = cr-at-eol
+[pretty]
+	k = %C(yellow)%h%C(auto)%d %Creset%s %C(black)(%ar)
+	s = %C(yellow)%h %Creset%s

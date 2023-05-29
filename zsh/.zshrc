@@ -99,7 +99,7 @@ alias grpo="$GIT remote prune origin"
 gp() {
   # macOS-only
   $GIT ls-files $@ | tr \\n \\0 | xargs -0 $EDITOR
-  
+
   # gnu xargs only
   # $GIT ls-files $@ | xargs -d '\n' $EDITOR
 }
@@ -132,7 +132,6 @@ gco() {
   [ $OUTPUT ] && echo $greyed || return 0
 }
 
-
 # git worktree navigation, by directory name
 gw() {
   while IFS= read -r line; do
@@ -145,68 +144,61 @@ gw() {
   done < <(git worktree list --porcelain)
 }
 
-# custom git clone
-cyclone() {
-  local repo="${@: -1}" # the last argument
-  local cmd=(${@:1:-1}) # everything but the last
-  ([[ $repo =~ '^https://.*/.*/' ]] && $cmd $repo) ||
-    ([[ $repo =~ '^git@.*:.*/' ]] && $cmd $repo) ||
-    ([[ $repo =~ '^(.*)/(.*)$' ]] && $cmd git@github.com:${match[1]}/${match[2]}.git)
-}
-
 # git clone
+#
+# USAGE:
+# gcl git@github.com:neovim/neovim.git
+# gcl https://github.com/neovim/neovim.git
+# gcl neovim/neovim
 gcl() {
-  cyclone $GIT clone $@
+  local repo="${@: -1}" other_args=(${@:1:-1}) url
+  if [[ $repo =~ '^(https://.*/.*|git@.*:.*)/' ]]; then
+    url=$repo
+  elif [[ $repo =~ '^(.*)/(.*)$' ]]; then
+    url=git@github.com:${match[1]}/${match[2]}.git
+  fi
+  echo "OTHER: $other_args"
+  echo "REPO: $repo"
+  [ -z $url ] && echo "Unable to parse requested repo." && return 1
+  $GIT clone $other_args $url
 }
+
 # git clone --bare
+#
+# USAGE:
+# see gcl() USAGE
 gcb() {
-  # fetch = +refs/heads/*:refs/remotes/origin/*
-  cyclone $GIT clone --bare $@
-}
-
-# git log + graph template
-log_graph() {
-  $GIT log --graph --pretty='%C(yellow)%h%C(auto)%d %Creset%s %C(black)(%ar)' $@
-}
-
-# git log + message template
-log_message() {
-  $GIT log --all --pretty=format:"%C(yellow)%h %Creset%s" $@
+  gcl --bare $1
 }
 
 # git logs
 gl() {
-  let i=$LINES-10
-  [ $i -lt 10 ] && let i=10
-  log_graph -n ${1-$i}
+  local i=$(($LINES - 10 > 10 ? $LINES - 10 : 10))
+  $GIT log --graph --pretty=k -n ${1-$i}
 }
 gla() {
-  let i=$LINES-10
-  [ $i -lt 10 ] && let i=10
-  log_graph -n ${1-$i} --all
+  local i=$(($LINES - 10 > 10 ? $LINES - 10 : 10))
+  $GIT log --graph --pretty=k -n ${1-$i} --all
 }
 gll() {
-  log_graph --all
+  $GIT log --graph --pretty=k --all
 }
 mongl() {
-  let i=$LINES-10
-  [ $i -lt 10 ] && let i=10
+  local i=$(($LINES - 10 > 10 ? $LINES - 10 : 10))
   for j in {1..120}; do
-    clear
-    gla ${1:-$i}
-    sleep 2
+    clear && gla ${1-$i} && sleep 2
   done
 }
 
 # git search log
 gsl() {
-  log_message --color=always |
-    fzf $FZF_OPTS --height=${1-7} --ansi --multi --bind 'enter:select-all+accept'
+  $GIT log --all --pretty=s --color=always |
+    fzf $FZF_OPTS --height=${1-7} --ansi -m --bind 'enter:select-all+accept'
 }
 
 # git search log (with filenames) and open in editor
 gslf() {
-  log_message --compact-summary | $EDITOR -
+  $GIT log --all --pretty=s --compact-summary | $EDITOR -
 }
 
 # git commit
