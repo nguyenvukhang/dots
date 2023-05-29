@@ -3,14 +3,13 @@ START_TMUX=true
 # load homebrew
 [ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Use tmux session $BASE as a shell wrapper.
-# Only quitting $BASE will exit the terminal emulator.
+# Use tmux session as a shell wrapper.
+# Only quitting the base session will exit the terminal emulator.
 tmux_loop() {
-  ([ $TMUX ] || ! command -v tmux) && return || local BASE=tmux
+  ([ $TMUX ] || ! command -v tmux) && return
   while; do
-    local EC=$(tmux new-session -As $BASE -n editor)
-    [[ $EC == "[detached (from session $BASE)]" ]] && exit
-    tmux has-session -t $BASE && continue || exit
+    [[ $(tmux new -As z -n editor) == '[detached (from session z)]' ]] && exit
+    tmux has -t z && continue || exit
   done
 }
 export EDITOR=nvim # somehow this export is needed for tmux select to work
@@ -43,7 +42,8 @@ prompt_git() {
     echo " %F{241}($branch)"
 }
 
-PROMPT=$'%F{blue}%~$(prompt_git)%f\n%(?.%F{green}> %f.%F{red}> %f)'
+PROMPT_ARROW='>'
+PROMPT=$'%F{blue}%~$(prompt_git)%f\n%(?.%F{green}${PROMPT_ARROW} %f.%F{red}${PROMPT_ARROW} %f)'
 
 # generic fzf options
 # use with fzf --color=$FZF_COLORS
