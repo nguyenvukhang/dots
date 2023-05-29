@@ -27,6 +27,7 @@ has() {
 export UNI=$HOME/uni
 export SHELL_SESSIONS_DISABLE=1 # remove ~/.zsh_sessions
 export LANG=en_US.UTF-8         # for manpagers
+export GITNU_DEBUG=1
 
 unsetopt BEEP    # prevents beeps in general
 setopt IGNOREEOF # prevents <C-d> from quitting the shell
@@ -305,7 +306,7 @@ alias 2lb="cd $HOME/.local/bin"
 alias 2ls="cd $HOME/.local/src"
 alias 2m="cd $UNI"
 alias 2m.="cd /Applications/MultiMC.app/Data"
-alias 2mc="cd $HOME/.local/minecraft/server"
+alias 2mc="cd '$HOME/Library/Application Support/ManyMC/instances/1.18.1/.minecraft'"
 alias 2n="cd $REPOS/notes"
 alias 2o="cd $HOME/repos"
 alias 2or="cd $HOME/other-repos"
