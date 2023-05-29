@@ -40,7 +40,9 @@ gco() {
   [ $OUTPUT ] && echo $greyed || return 0
 }
 
-commit() {
+# $1: file name
+# writes some data to the file $1 and commits it
+commit_file() {
   echo "data($1)" >$1 && git add $1 && git commit -m "added: $1"
 }
 
@@ -53,11 +55,11 @@ build() {
   cd $TMP_DIR/init
   git init &>$N
   git branch -m main &>$N
-  commit README.md &>$N
-  commit one &>$N && C1=$(git rev-parse HEAD)
-  commit two &>$N && C2=$(git rev-parse HEAD)
-  commit three &>$N && C3=$(git rev-parse HEAD)
-  commit last &>$N
+  commit_file README.md &>$N
+  commit_file one &>$N && C1=$(git rev-parse HEAD)
+  commit_file two &>$N && C2=$(git rev-parse HEAD)
+  commit_file three &>$N && C3=$(git rev-parse HEAD)
+  commit_file last &>$N
 
   git checkout -b B1 &>$N && git reset --hard $C1 &>$N
   git checkout -b B2 &>$N && git reset --hard $C2 &>$N
@@ -73,6 +75,29 @@ build() {
   git worktree add B1 &>$N
   git worktree add B2 &>$N
   git worktree add D3 &>$N && cd D3 && git checkout B3 &>$N && git branch -D D3 &>$N
+  cd $TMP_DIR
+  exa --tree
+# .
+# ├── init
+# │  ├── last
+# │  ├── one
+# │  ├── README.md
+# │  ├── three
+# │  └── two
+# └── repo
+#    ├── B1
+#    │  ├── one
+#    │  └── README.md
+#    ├── B2
+#    │  ├── one
+#    │  ├── README.md
+#    │  └── two
+#    └── D3
+#       ├── one
+#       ├── README.md
+#       ├── three
+#       └── two
+
 }
 
 TMP_DIR=$(mktemp -d)
