@@ -143,7 +143,7 @@ local setup_groups = function()
     Exception = { link = 'GruvboxRed' },
     Operator = { fg = colors.orange, italic = false },
     Keyword = { link = 'GruvboxRed' },
-    Identifier = { link = 'GruvboxBlue' },
+    Identifier = { link = 'Normal' },
     Function = { link = 'GruvboxGreenBold' },
     PreProc = { link = 'GruvboxAqua' },
     Include = { link = 'GruvboxAqua' },
