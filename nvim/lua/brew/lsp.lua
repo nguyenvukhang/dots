@@ -21,7 +21,18 @@ end
 M.clangd = function() lsp.clangd.setup(base()) end
 M.typescript = function() lsp.tsserver.setup(base()) end
 M.astro = function() lsp.astro.setup(base()) end
-M.python = function() lsp.pyright.setup(base()) end
+M.python = function()
+  lsp.pyright.setup(base {
+    settings = {
+      python = {
+        analysis = {
+          typeCheckingMode = 'off',
+          useLibraryCodeForTypes = true,
+        },
+      },
+    },
+  })
+end
 M.swift = function()
   local ios_sdk =
     "'/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator16.4.sdk'"
