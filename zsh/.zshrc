@@ -6,14 +6,22 @@ START_TMUX=true
 # Use tmux session as a shell wrapper.
 # Only quitting the base session will exit the terminal emulator.
 tmux_loop() {
-  ([ $TMUX ] || ! command -v tmux) && return
+  ([[ $START_TMUX != true ]] || [ $TMUX ] || ! command -v tmux 2>/dev/null) && return
   while; do
     [[ $(tmux new -As z -n editor) == '[detached (from session z)]' ]] && exit
     tmux has -t z && continue || exit
   done
 }
 export EDITOR=nvim # somehow this export is needed for tmux select to work
-[[ $START_TMUX == true ]] && tmux_loop
+tmux_loop
+
+# ////////////////////////////////////////////////////////////////////
+
+# Starting directory (also the marked directory)
+START_DIR=$HOME/repos/paper/tool
+
+[ $PWD = $HOME ] && [ -d $START_DIR ] && cd $START_DIR
+alias 2m="cd $START_DIR"
 
 # cargo (rust)
 [ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
@@ -57,7 +65,6 @@ FZF_OPTS=(--height=7 +m --no-mouse --reverse
 # for my own scripts and neovim configs
 export DOTS=$HOME/dots
 export REPOS=$HOME/repos
-export MODTREE_ENV_SOURCE=$DOTS/personal/.secrets/modtree
 BUN_INSTALL=$HOME/.bun
 
 PATH=$HOME/.local/bin:$PATH
@@ -276,7 +283,7 @@ ed() {
   g) t="$DOTS/fs/src/git/config" ;;
   c) t="$HOME/Library/Application Support/rs.canvas-sync/config.yml" ;;
   k) t="$DOTS/fs/src/kitty/kitty.conf" ;;
-  s) t="$DOTS/fs/src/skhd/skhdrc" ;;
+  s) t="$DOTS/personal/.ssh/config" ;;
   t) t="$DOTS/tmux/tmux.conf" ;;
   u) t="$UNI_LAUNCH" ;;
   v) t="$DOTS/nvim/init.lua" ;;
@@ -296,37 +303,21 @@ alias 2j="cd $HOME/Downloads"
 alias 2l="cd $HOME/.local"
 alias 2lb="cd $HOME/.local/bin"
 alias 2ls="cd $HOME/.local/src"
-alias 2m="cd $UNI"
 alias 2mc="cd '$HOME/Library/Application Support/ManyMC/instances/1.18.1/.minecraft'"
 alias 2n="cd $REPOS/notes"
 alias 2o="cd $HOME/repos"
 alias 2or="cd $HOME/other-repos"
 alias 2p="cd $DOTS/personal"
+alias 2u="cd $UNI"
 alias 2v="cd $DOTS/nvim"
 alias 2z="cd $DOTS/zsh"
 
 alias o="cd .." # out
 alias b="cd -"  # back
 
-2r() {
+2r() { # go to git root
   cd $(git rev-parse --show-toplevel)
 }
-
-UNI_LAUNCH=$UNI/.session # use this file's first line as initial directory
-if [ ! -f $UNI_LAUNCH ] && [ -d $UNI ]; then
-  echo "$UNI" >$UNI_LAUNCH
-fi
-2u() {
-  local INDEX=0 TARGET LINE
-  # use first arg as target index, if it's a number from 1-9 inclusive
-  [[ $1 =~ ^[0-9]$ ]] && TARGET=$1 || TARGET=0
-  while read -r LINE; do
-    [[ $LINE =~ ^#.* ]] && continue                           # ignore lines starting with '#'
-    [[ $TARGET -eq $INDEX ]] && cd ${LINE/\~/$HOME} && return # jump if match
-    let INDEX++
-  done < <(cat $UNI_LAUNCH 2>/dev/null || echo "")
-}
-[ $PWD = $HOME ] && 2u
 
 if has exa; then
   EXA_OPTS=(--group-directories-first --sort=Filename --ignore-glob='.DS_Store')
