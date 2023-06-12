@@ -645,48 +645,6 @@ if &background == 'dark'
       hi xmlTag guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
       hi xmlTagName guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
     endif
-    if s:ft_bold == 1
-      hi clojureRegexpCharClass guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi docbkKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi htmlBold guifg=fg guibg=#282828 guisp=NONE gui=NONE
-      hi htmlBoldItalic guifg=fg guibg=#282828 guisp=NONE
-      hi htmlBoldUnderline guifg=fg guibg=#282828 guisp=NONE gui=underline
-      hi htmlBoldUnderlineItalic guifg=fg guibg=#282828 guisp=NONE gui=underline
-      hi htmlSpecialTagName guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi htmlTagName guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi jsExportDefault guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi jsFutureKeys guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi markdownH1 guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi markdownH2 guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi markdownH3 guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi markdownH4 guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi pythonDottedName guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi vimCommentTitle guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
-    elseif s:ft_bold == 3
-      hi clojureRegexpCharClass guifg=#bdae93 guibg=NONE guisp=NONE gui=bold
-      hi docbkKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=bold
-      hi htmlBold guifg=fg guibg=#282828 guisp=NONE gui=bold
-      hi htmlBoldItalic guifg=fg guibg=#282828 guisp=NONE gui=bold
-      hi htmlBoldUnderline guifg=fg guibg=#282828 guisp=NONE gui=bold,underline
-      hi htmlBoldUnderlineItalic guifg=fg guibg=#282828 guisp=NONE gui=bold,underline
-      hi htmlSpecialTagName guifg=#8ec07c guibg=NONE guisp=NONE gui=bold
-      hi htmlTagName guifg=#8ec07c guibg=NONE guisp=NONE gui=bold
-      hi jsExportDefault guifg=#fe8019 guibg=NONE guisp=NONE gui=bold
-      hi jsFutureKeys guifg=#fe8019 guibg=NONE guisp=NONE gui=bold
-      hi markdownH1 guifg=#b8bb26 guibg=NONE guisp=NONE gui=bold
-      hi markdownH2 guifg=#b8bb26 guibg=NONE guisp=NONE gui=bold
-      hi markdownH3 guifg=#fabd2f guibg=NONE guisp=NONE gui=bold
-      hi markdownH4 guifg=#fabd2f guibg=NONE guisp=NONE gui=bold
-      hi pythonDottedName guifg=#b8bb26 guibg=NONE guisp=NONE gui=bold
-      hi vimCommentTitle guifg=#a89984 guibg=NONE guisp=NONE gui=bold
-    endif
-    if s:indent_guides == 1
-      hi IndentGuidesEven guifg=#282828 guibg=#3c3836 guisp=NONE gui=NONE
-      hi IndentGuidesOdd guifg=#282828 guibg=#504945 guisp=NONE gui=NONE
-    elseif s:indent_guides == 3
-      hi IndentGuidesEven guifg=#282828 guibg=#3c3836 guisp=NONE gui=reverse
-      hi IndentGuidesOdd guifg=#282828 guibg=#504945 guisp=NONE gui=reverse
-    endif
     if s:italic == 0
       hi Comment gui=NONE
       hi Folded gui=NONE
@@ -767,15 +725,6 @@ if &background == 'dark'
       hi SignifySignAdd guifg=#b8bb26 guibg=#3c3836 guisp=NONE gui=NONE
       hi SignifySignChange guifg=#8ec07c guibg=#3c3836 guisp=NONE gui=NONE
       hi SignifySignDelete guifg=#fb4934 guibg=#3c3836 guisp=NONE gui=NONE
-      hi StartifyBracket guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi StartifyFile guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi StartifyFooter guifg=#504945 guibg=NONE guisp=NONE gui=NONE
-      hi StartifyHeader guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi StartifyNumber guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi StartifyPath guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-      hi StartifySection guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi StartifySlash guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-      hi StartifySpecial guifg=#504945 guibg=NONE guisp=NONE gui=NONE
       hi SyntasticError guifg=NONE guibg=NONE guisp=#fb4934 gui=undercurl
       hi SyntasticErrorSign guifg=#fb4934 guibg=#3c3836 guisp=NONE gui=NONE
       hi SyntasticWarning guifg=NONE guibg=NONE guisp=#fabd2f gui=undercurl
@@ -794,24 +743,6 @@ if &background == 'dark'
       hi netrwList guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
       hi netrwSymLink guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
       hi netrwVersion guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-    endif
-    if s:plugin_bold == 1
-      hi CtrlPMode1 guifg=#83a598 guibg=#504945 guisp=NONE gui=NONE
-      hi CtrlPMode2 guifg=#282828 guibg=#83a598 guisp=NONE gui=NONE
-      hi CtrlPStats guifg=#a89984 guibg=#504945 guisp=NONE gui=NONE
-    elseif s:plugin_bold == 3
-      hi CtrlPMode1 guifg=#83a598 guibg=#504945 guisp=NONE gui=bold
-      hi CtrlPMode2 guifg=#282828 guibg=#83a598 guisp=NONE gui=bold
-      hi CtrlPStats guifg=#a89984 guibg=#504945 guisp=NONE gui=bold
-    endif
-    if s:plugin_transp == 1
-      hi GitGutterAdd guifg=#b8bb26 guibg=#3c3836 guisp=NONE gui=NONE
-      hi GitGutterChange guifg=#8ec07c guibg=#3c3836 guisp=NONE gui=NONE
-      hi GitGutterDelete guifg=#fb4934 guibg=#3c3836 guisp=NONE gui=NONE
-    elseif s:plugin_transp == 3
-      hi GitGutterAdd guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi GitGutterChange guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi GitGutterDelete guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
     endif
   endif
 endif
