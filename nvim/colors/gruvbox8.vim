@@ -11,16 +11,16 @@ hi clear
 let g:colors_name = 'gruvbox8'
 
 if &background == 'dark'
-  let g:terminal_ansi_colors = ['#282828', '#cc241d', '#98971a', '#d79921', '#458588', '#b16286', '#689d6a', '#a89984', '#928374', '#fb4934', '#b8bb26', '#fabd2f', '#83a598', '#d3869b', '#8ec07c', '#ebdbb2']
+  let g:terminal_ansi_colors = ['#282828', '#fb4934', '#b8bb26', '#fabd2f', '#83a598', '#d3869b', '#689d6a', '#a89984', '#928374', '#fb4934', '#b8bb26', '#fabd2f', '#83a598', '#d3869b', '#8ec07c', '#ebdbb2']
 
   if has('nvim')
     let g:terminal_color_0  = '#282828'
-    let g:terminal_color_1  = '#cc241d'
-    let g:terminal_color_2  = '#98971a'
-    let g:terminal_color_3  = '#d79921'
-    let g:terminal_color_4  = '#458588'
-    let g:terminal_color_5  = '#b16286'
-    let g:terminal_color_6  = '#689d6a'
+    let g:terminal_color_1  = '#fb4934'
+    let g:terminal_color_2  = '#b8bb26'
+    let g:terminal_color_3  = '#fabd2f'
+    let g:terminal_color_4  = '#83a598'
+    let g:terminal_color_5  = '#d3869b'
+    let g:terminal_color_6  = '#8ec07c'
     let g:terminal_color_7  = '#a89984'
     let g:terminal_color_8  = '#928374'
     let g:terminal_color_9  = '#fb4934'
@@ -32,36 +32,6 @@ if &background == 'dark'
     let g:terminal_color_15 = '#ebdbb2'
   endif
   if get(g:, 'gruvbox_plugin_hi_groups', 0)
-    " IndentLine
-    if !exists('g:indentLine_color_term')
-      let g:indentLine_color_term = 239
-    endif
-    if !exists('g:indentLine_color_gui')
-      let g:indentLine_color_gui = '#504945'
-    endif
-
-    " Rainbow Parentheses
-    if !exists('g:rbpt_colorpairs')
-      let g:rbpt_colorpairs = [['blue', '#458588'], ['magenta', '#b16286'],
-        \ ['red', '#cc241d'], ['166', '#d65d0e']]
-    endif
-
-    let g:rainbow_guifgs = [ '#d65d0e', '#cc241d', '#b16286', '#458588' ]
-    let g:rainbow_ctermfgs = [ '166', 'red', 'magenta', 'blue' ]
-
-    if !exists('g:rainbow_conf')
-       let g:rainbow_conf = {}
-    endif
-    if !has_key(g:rainbow_conf, 'guifgs')
-       let g:rainbow_conf['guifgs'] = g:rainbow_guifgs
-    endif
-    if !has_key(g:rainbow_conf, 'ctermfgs')
-       let g:rainbow_conf['ctermfgs'] = g:rainbow_ctermfgs
-    endif
-
-    let g:niji_dark_colours = g:rbpt_colorpairs
-    let g:niji_light_colours = g:rbpt_colorpairs
-
     " Vimshell
     let g:vimshell_escape_colors = [
       \ '#7c6f64', '#fb4934', '#b8bb26', '#fabd2f',
@@ -70,19 +40,6 @@ if &background == 'dark'
       \ '#83a598', '#d3869b', '#8ec07c', '#fbf1c7'
       \ ]
   endif
-
-  let s:transp_bg = get(g:, 'gruvbox_transp_bg', 0)
-  let s:supports_italic = (&t_ZH != '' && &t_ZH != '[7m') || has('gui_running') || has('nvim')
-  let s:italic = get(g:, 'gruvbox_italics', 1) && s:supports_italic
-  let s:italicize_strings = get(g:, 'gruvbox_italicize_strings', 1) && s:supports_italic
-  let s:bold = get(g:, 'gruvbox_bold', 1)
-  let s:bold_italic = s:italic + 2 * s:bold
-  let s:plugin = get(g:, 'gruvbox_plugin_hi_groups', 0)
-  let s:plugin_bold = s:plugin + 2 * s:bold
-  let s:plugin_transp = s:plugin + 2 * s:transp_bg
-  let s:indent_guides = get(g:, 'indent_guides_auto_colors', 0) + 2 * get(g:, 'gruvbox_invert_indent_guides', 0)
-  let s:ft = get(g:, 'gruvbox_filetype_hi_groups', 0)
-  let s:ft_bold = s:ft + 2 * s:bold
 
   " custom
 
@@ -272,478 +229,430 @@ if &background == 'dark'
   hi WildMenu guifg=#83a598 guibg=#504945 guisp=NONE gui=bold
 
   if has('gui_running')
-    if s:bold == 0
-      hi Directory gui=NONE
-      hi Error gui=reverse
-      hi ErrorMsg gui=NONE
-      hi Function gui=NONE
-      hi MatchParen gui=underline
-      hi ModeMsg gui=NONE
-      hi MoreMsg gui=NONE
-      hi PmenuSel gui=NONE
-      hi Question gui=NONE
-      hi Title gui=NONE
-      hi ToolbarButton gui=NONE
-      hi WarningMsg gui=NONE
-      hi WildMenu gui=NONE
-    endif
-    if s:bold_italic == 0
-      hi Todo gui=NONE
-    elseif s:bold_italic == 1
-      hi Todo
-    elseif s:bold_italic == 2
-      hi Todo gui=bold
-    endif
-    if s:ft == 1
-      hi cOperator guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
-      hi cStructure guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi clojureAnonArg guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi clojureCharacter guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi clojureCond guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi clojureDefine guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi clojureDeref guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi clojureException guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi clojureFunc guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi clojureKeyword guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi clojureMacro guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi clojureMeta guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi clojureParen guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi clojureQuote guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi clojureRegexp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi clojureRegexpEscape guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi! link clojureRegexpMod clojureRegexpCharClass
-      hi! link clojureRegexpQuantifier clojureRegexpCharClass
-      hi clojureRepeat guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi clojureSpecial guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi clojureStringEscape guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi clojureUnquote guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi clojureVariable guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi coffeeBracket guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi coffeeCurly guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi coffeeExtendedOp guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi coffeeParen guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi coffeeSpecialOp guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi cssAnimationProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi cssBackgroundProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi cssBorderOutlineProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi cssBoxProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi cssBraces guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi cssClassName guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi cssColor guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi cssColorProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi cssDimensionProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi cssFlexibleBoxProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi cssFontDescriptorProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi cssFontProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi cssFunctionName guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi cssGeneratedContentProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi cssIdentifier guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi cssImportant guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi cssListProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi cssMarginProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi cssPaddingProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi cssPositioningProp guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi cssPrintProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi cssRenderProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi cssSelectorOp guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi cssSelectorOp2 guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi cssTableProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi cssTextProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi cssTransformProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi cssTransitionProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi cssUIProp guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi cssVendor guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi diffAdded guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi diffChanged guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi diffFile guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi diffLine guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi diffNewFile guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi diffRemoved guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi dtdFunction guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-      hi dtdParamEntityDPunct guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-      hi dtdParamEntityPunct guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-      hi dtdTagName guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
-      hi! link elixirDocString Comment
-      hi elixirInterpolationDelimiter guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi elixirModuleDeclaration guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi elixirStringDelimiter guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi goBuiltins guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi goConstants guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
-      hi goDeclType guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi goDeclaration guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi goDirective guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi haskellAssocType guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi haskellBacktick guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi haskellBlockKeywords guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi haskellBottom guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi haskellChar guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi haskellConditional guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi haskellDeclKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi haskellDefault guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi haskellDelimiter guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
-      hi haskellDeriving guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi haskellIdentifier guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi haskellImportKeywords guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi haskellLet guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi haskellNumber guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
-      hi haskellOperators guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi haskellPragma guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
-      hi haskellSeparator guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi haskellStatement guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi haskellString guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi haskellType guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi haskellWhere guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi htmlArg guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi htmlEndTag guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi htmlItalic guifg=fg guibg=#282828 guisp=NONE
-      hi htmlLink guifg=#a89984 guibg=NONE guisp=NONE gui=underline
-      hi htmlScriptTag guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
-      hi htmlSpecialChar guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi htmlTag guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi htmlTagName guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi htmlUnderline guifg=fg guibg=#282828 guisp=NONE gui=underline
-      hi htmlUnderlineItalic guifg=fg guibg=#282828 guisp=NONE gui=underline
-      hi javaAnnotation guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi! link javaCommentTitle vimCommentTitle
-      hi javaDocTags guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi javaOperator guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi javaParen guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi javaParen1 guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi javaParen2 guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi javaParen3 guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi javaParen4 guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi javaParen5 guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi javaScriptBraces guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javaScriptFunction guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi javaScriptIdentifier guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi javaScriptMember guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi javaScriptNull guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
-      hi javaScriptNumber guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
-      hi javaScriptParens guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi javaVarArg guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptArrayMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptArrayStaticMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptArrowFunc guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi javascriptAsyncFunc guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi javascriptAsyncFuncKeyword guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptAwaitFuncKeyword guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptBOMLocationMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptBOMNavigatorProp guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptBOMWindowMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptBOMWindowProp guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptBrackets guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptCacheMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptClassExtends guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi javascriptClassKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi javascriptClassName guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi javascriptClassStatic guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptClassSuper guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptClassSuperName guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi javascriptDOMDocMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptDOMDocProp guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptDOMElemAttrs guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptDOMEventMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptDOMNodeMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptDOMStorageMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptDateMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptDefault guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi javascriptDocNamedParamType guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptDocNotation guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptDocParamName guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptDocParamType guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptDocTags guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptEndColons guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptExceptions guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptExport guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi javascriptForOperator guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptFuncArg guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptFuncKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi javascriptGlobal guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi javascriptGlobalMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptHeadersMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptIdentifier guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptImport guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi javascriptLabel guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptLogicSymbols guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptMathStaticMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptMessage guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptNodeGlobal guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptObjectLabel guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptOperator guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptPropertyName guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptStringMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptTemplateSB guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi javascriptTemplateSubstitution guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptURLUtilsProp guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptVariable guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi javascriptYield guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi jsBracket guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi jsClassBlock guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi jsClassDefinition guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi jsClassKeyword guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi jsClassProperty guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi jsDestructuringBlock guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi jsExport guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi jsExtendsKeyword guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi jsFrom guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi jsFuncBlock guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi jsFuncBraces guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi jsFuncParens guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
-      hi jsFunction guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi jsFunctionKey guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi jsGlobalNodeObjects guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi jsGlobalObjects guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi jsImport guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi jsModuleKeyword guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi jsNull guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
-      hi jsObjectColon guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi jsObjectProp guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi jsObjectShorthandProp guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi jsObjectValue guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi jsOperator guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi jsParen guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi jsParenIfElse guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi jsParens guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi jsSpreadExpression guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi jsSpreadOperator guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi jsStorageClass guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi jsTemplateBraces guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi jsThis guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
-      hi jsUndefined guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
-      hi jsVariableDef guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi jsonBraces guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi jsonKeyword guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi jsonQuote guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi jsonString guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi jsxAttrib guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi jsxAttributeBraces guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi jsxCloseString guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi jsxCloseTag guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi jsxComponentName guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi jsxDot guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi jsxElseOperator guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi jsxEndString guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi jsxEndTag guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi jsxEqual guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi jsxEscapeJsAttributes guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi jsxEscapeJsContent guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi jsxIfOperator guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi jsxNamespace guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi jsxPunct guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi jsxRegion guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi jsxString guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi jsxTagName guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi luaFunction guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi luaIn guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi luaTable guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi markdownBlockquote guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-      hi markdownCode guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi markdownCodeBlock guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi markdownCodeDelimiter guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi markdownH5 guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi markdownH6 guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi markdownHeadingDelimiter guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi markdownHeadingRule guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-      hi! link markdownIdDeclaration markdownLinkText
-      hi markdownItalic guifg=#bdae93 guibg=NONE guisp=NONE
-      hi markdownLinkDelimiter guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi markdownLinkText guifg=#928374 guibg=NONE guisp=NONE gui=underline
-      hi markdownLinkTextDelimiter guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi markdownListMarker guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-      hi markdownOrderedListMarker guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-      hi markdownRule guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-      hi markdownUrl guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
-      hi markdownUrlDelimiter guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi markdownUrlTitleDelimiter guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi moonExtendedOp guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi moonFunction guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi moonObject guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi moonSpecialOp guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi objcDirective guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi objcTypeModifier guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi purescriptAsKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi purescriptBacktick guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi purescriptConditional guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi purescriptConstructor guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi purescriptDelimiter guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
-      hi purescriptFunction guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi purescriptHidingKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi purescriptImportKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi purescriptModuleKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi purescriptModuleName guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi purescriptOperator guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi purescriptStructure guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi purescriptType guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi purescriptTypeVar guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi purescriptWhere guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi pythonBoolean guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
-      hi pythonBuiltin guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi pythonBuiltinFunc guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi pythonBuiltinObj guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi pythonCoding guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi pythonConditional guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi pythonDecorator guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi pythonDot guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi pythonException guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi pythonExceptions guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
-      hi pythonFunction guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi pythonImport guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi pythonInclude guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi pythonOperator guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi pythonRepeat guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi pythonRun guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi rubyInterpolationDelimiter guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi rubyStringDelimiter guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi scalaCapitalWord guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi scalaCaseFollowing guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi scalaInstanceDeclaration guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi scalaInterpolation guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi scalaKeyword guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi scalaKeywordModifier guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi scalaNameDefinition guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi scalaOperator guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi scalaSpecial guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi scalaTypeDeclaration guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi scalaTypeExtension guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi scalaTypeTypePostDeclaration guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi typeScriptAjaxMethods guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi typeScriptBraces guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi typeScriptDOMObjects guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi! link typeScriptDocParam Comment
-      hi! link typeScriptDocSeeTag Comment
-      hi! link typeScriptDocTags vimCommentTitle
-      hi typeScriptEndColons guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi typeScriptFuncKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi typeScriptGlobalObjects guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi typeScriptHtmlElemProperties guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi typeScriptIdentifier guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi typeScriptInterpolationDelimiter guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi typeScriptLabel guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi typeScriptLogicSymbols guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi typeScriptNull guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
-      hi typeScriptOpSymbols guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi typeScriptParens guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi typeScriptReserved guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi vimBracket guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi vimContinue guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi vimFuncSID guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi vimMapModKey guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi vimNotation guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi vimSep guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi vimSetSep guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi xmlAttrib guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi xmlAttribPunct guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-      hi xmlCdataCdata guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
-      hi xmlCdataStart guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-      hi xmlDocTypeDecl guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-      hi xmlDocTypeKeyword guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
-      hi xmlEndTag guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi xmlEntity guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi xmlEntityPunct guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi xmlEqual guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi xmlProcessingDelim guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-      hi xmlTag guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi xmlTagName guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-    endif
-    if s:italic == 0
-      hi Comment gui=NONE
-      hi Folded gui=NONE
-      hi SpellBad gui=undercurl
-      hi SpellCap gui=undercurl
-      hi SpellLocal gui=undercurl
-      hi SpellRare gui=undercurl
-    endif
-    if s:italicize_strings == 0
-      hi Special gui=NONE
-      hi String gui=NONE
-    endif
-    if s:plugin == 1
-      hi ALEError guifg=NONE guibg=NONE guisp=#fb4934 gui=undercurl
-      hi ALEErrorSign guifg=#fb4934 guibg=#3c3836 guisp=NONE gui=NONE
-      hi ALEInfo guifg=NONE guibg=NONE guisp=#83a598 gui=undercurl
-      hi ALEInfoSign guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
-      hi ALEWarning guifg=NONE guibg=NONE guisp=#fb4934 gui=undercurl
-      hi ALEWarningSign guifg=#fabd2f guibg=#3c3836 guisp=NONE gui=NONE
-      hi BufTabLineActive guifg=#a89984 guibg=#504945 guisp=NONE gui=NONE
-      hi BufTabLineCurrent guifg=#282828 guibg=#a89984 guisp=NONE gui=NONE
-      hi BufTabLineFill guifg=#282828 guibg=#282828 guisp=NONE gui=NONE
-      hi BufTabLineHidden guifg=#7c6f64 guibg=#3c3836 guisp=NONE gui=NONE
-      hi CocErrorFloat guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi CocErrorSign guifg=#fb4934 guibg=#3c3836 guisp=NONE gui=NONE
-      hi CocHintFloat guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi CocHintSign guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
-      hi CocInfoFloat guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi CocInfoSign guifg=#fabd2f guibg=#3c3836 guisp=NONE gui=NONE
-      hi CocWarningFloat guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi CocWarningSign guifg=#fe8019 guibg=#3c3836 guisp=NONE gui=NONE
-      hi CtrlPLinePre guifg=#504945 guibg=NONE guisp=NONE gui=NONE
-      hi CtrlPMatch guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi CtrlPNoEntries guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi CtrlPPrtBase guifg=#504945 guibg=NONE guisp=NONE gui=NONE
-      hi CtrlPPrtCursor guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi DirvishArg guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi DirvishPathTail guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi! link EasyMotionShade Comment
-      hi! link EasyMotionTarget Search
-      hi GitGutterChangeDelete guifg=#8ec07c guibg=#3c3836 guisp=NONE gui=NONE
-      hi LangaugeClientInfo guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi LanguageClientCodeLens guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi LanguageClientError guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi LanguageClientErrorSign guifg=#fb4934 guibg=#282828 guisp=NONE gui=NONE
-      hi LanguageClientInfoSign guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
-      hi LanguageClientWarning guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi LanguageClientWarningSign guifg=#fabd2f guibg=#3c3836 guisp=NONE gui=NONE
-      hi LspDiagnosticsDefaultError guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi LspDiagnosticsDefaultHint guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi LspDiagnosticsDefaultInformation guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi LspDiagnosticsDefaultWarning guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi LspDiagnosticsSignError guifg=#fb4934 guibg=#3c3836 guisp=NONE gui=NONE
-      hi LspDiagnosticsSignHint guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
-      hi LspDiagnosticsSignInformation guifg=#fabd2f guibg=#3c3836 guisp=NONE gui=NONE
-      hi LspDiagnosticsSignWarning guifg=#fe8019 guibg=#3c3836 guisp=NONE gui=NONE
-      hi LspDiagnosticsUnderlineError guifg=NONE guibg=NONE guisp=NONE gui=NONE
-      hi LspDiagnosticsUnderlineHint guifg=NONE guibg=NONE guisp=NONE gui=NONE
-      hi LspDiagnosticsUnderlineInformation guifg=NONE guibg=NONE guisp=NONE gui=NONE
-      hi LspDiagnosticsUnderlineWarning guifg=NONE guibg=NONE guisp=NONE gui=NONE
-      hi NERDTreeCWD guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi NERDTreeClosable guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi NERDTreeDir guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi NERDTreeDirSlash guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi NERDTreeExecFile guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi NERDTreeFile guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi NERDTreeHelp guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi NERDTreeOpenable guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-      hi NERDTreeToggleOff guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi NERDTreeToggleOn guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi NERDTreeUp guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-      hi ShowMarksHLl guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
-      hi ShowMarksHLm guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
-      hi ShowMarksHLo guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
-      hi ShowMarksHLu guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
-      hi SignatureMarkText guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
-      hi SignatureMarkerText guifg=#d3869b guibg=#3c3836 guisp=NONE gui=NONE
-      hi SignifySignAdd guifg=#b8bb26 guibg=#3c3836 guisp=NONE gui=NONE
-      hi SignifySignChange guifg=#8ec07c guibg=#3c3836 guisp=NONE gui=NONE
-      hi SignifySignDelete guifg=#fb4934 guibg=#3c3836 guisp=NONE gui=NONE
-      hi SyntasticError guifg=NONE guibg=NONE guisp=#fb4934 gui=undercurl
-      hi SyntasticErrorSign guifg=#fb4934 guibg=#3c3836 guisp=NONE gui=NONE
-      hi SyntasticWarning guifg=NONE guibg=NONE guisp=#fabd2f gui=undercurl
-      hi SyntasticWarningSign guifg=#fabd2f guibg=#3c3836 guisp=NONE gui=NONE
-      hi gitcommitDiscardedFile guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-      hi gitcommitSelectedFile guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-      hi multiple_cursors_cursor guifg=NONE guibg=NONE guisp=NONE gui=reverse
-      hi multiple_cursors_visual guifg=NONE guibg=#504945 guisp=NONE gui=NONE
-      hi netrwClassify guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi netrwCmdSep guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-      hi netrwComment guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-      hi netrwDir guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi netrwExe guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-      hi netrwHelpCmd guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-      hi netrwLink guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-      hi netrwList guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi netrwSymLink guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-      hi netrwVersion guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
-    endif
+    hi Directory gui=NONE
+    hi Error gui=reverse
+    hi ErrorMsg gui=NONE
+    hi Function gui=NONE
+    hi MatchParen gui=underline
+    hi ModeMsg gui=NONE
+    hi MoreMsg gui=NONE
+    hi PmenuSel gui=NONE
+    hi Question gui=NONE
+    hi Title gui=NONE
+    hi ToolbarButton gui=NONE
+    hi WarningMsg gui=NONE
+    hi WildMenu gui=NONE
+    hi Todo gui=NONE
+    hi cOperator guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
+    hi cStructure guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi clojureAnonArg guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi clojureCharacter guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi clojureCond guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi clojureDefine guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi clojureDeref guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi clojureException guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi clojureFunc guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi clojureKeyword guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi clojureMacro guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi clojureMeta guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi clojureParen guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi clojureQuote guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi clojureRegexp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi clojureRegexpEscape guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi! link clojureRegexpMod clojureRegexpCharClass
+    hi! link clojureRegexpQuantifier clojureRegexpCharClass
+    hi clojureRepeat guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi clojureSpecial guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi clojureStringEscape guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi clojureUnquote guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi clojureVariable guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi coffeeBracket guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi coffeeCurly guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi coffeeExtendedOp guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi coffeeParen guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi coffeeSpecialOp guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi cssAnimationProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi cssBackgroundProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi cssBorderOutlineProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi cssBoxProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi cssBraces guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi cssClassName guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
+    hi cssColor guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi cssColorProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi cssDimensionProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi cssFlexibleBoxProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi cssFontDescriptorProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi cssFontProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi cssFunctionName guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi cssGeneratedContentProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi cssIdentifier guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi cssImportant guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
+    hi cssListProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi cssMarginProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi cssPaddingProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi cssPositioningProp guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi cssPrintProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi cssRenderProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi cssSelectorOp guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi cssSelectorOp2 guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi cssTableProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi cssTextProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi cssTransformProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi cssTransitionProp guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi cssUIProp guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi cssVendor guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi diffAdded guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
+    hi diffChanged guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi diffFile guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi diffLine guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi diffNewFile guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi diffRemoved guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi dtdFunction guifg=#928374 guibg=NONE guisp=NONE gui=NONE
+    hi dtdParamEntityDPunct guifg=#928374 guibg=NONE guisp=NONE gui=NONE
+    hi dtdParamEntityPunct guifg=#928374 guibg=NONE guisp=NONE gui=NONE
+    hi dtdTagName guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
+    hi! link elixirDocString Comment
+    hi elixirInterpolationDelimiter guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi elixirModuleDeclaration guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi elixirStringDelimiter guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
+    hi goBuiltins guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi goConstants guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
+    hi goDeclType guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi goDeclaration guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi goDirective guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi haskellAssocType guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi haskellBacktick guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi haskellBlockKeywords guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi haskellBottom guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi haskellChar guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
+    hi haskellConditional guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi haskellDeclKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi haskellDefault guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi haskellDelimiter guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
+    hi haskellDeriving guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi haskellIdentifier guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi haskellImportKeywords guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi haskellLet guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi haskellNumber guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
+    hi haskellOperators guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi haskellPragma guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
+    hi haskellSeparator guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi haskellStatement guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi haskellString guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
+    hi haskellType guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi haskellWhere guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi htmlArg guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi htmlEndTag guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi htmlItalic guifg=fg guibg=#282828 guisp=NONE
+    hi htmlLink guifg=#a89984 guibg=NONE guisp=NONE gui=underline
+    hi htmlScriptTag guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
+    hi htmlSpecialChar guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi htmlTag guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi htmlTagName guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi htmlUnderline guifg=fg guibg=#282828 guisp=NONE gui=underline
+    hi htmlUnderlineItalic guifg=fg guibg=#282828 guisp=NONE gui=underline
+    hi javaAnnotation guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi! link javaCommentTitle vimCommentTitle
+    hi javaDocTags guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi javaOperator guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi javaParen guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi javaParen1 guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi javaParen2 guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi javaParen3 guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi javaParen4 guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi javaParen5 guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi javaScriptBraces guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javaScriptFunction guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi javaScriptIdentifier guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi javaScriptMember guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi javaScriptNull guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
+    hi javaScriptNumber guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
+    hi javaScriptParens guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi javaVarArg guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptArrayMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptArrayStaticMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptArrowFunc guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi javascriptAsyncFunc guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi javascriptAsyncFuncKeyword guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptAwaitFuncKeyword guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptBOMLocationMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptBOMNavigatorProp guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptBOMWindowMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptBOMWindowProp guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptBrackets guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptCacheMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptClassExtends guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi javascriptClassKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi javascriptClassName guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi javascriptClassStatic guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptClassSuper guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptClassSuperName guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi javascriptDOMDocMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptDOMDocProp guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptDOMElemAttrs guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptDOMEventMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptDOMNodeMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptDOMStorageMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptDateMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptDefault guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi javascriptDocNamedParamType guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptDocNotation guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptDocParamName guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptDocParamType guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptDocTags guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptEndColons guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptExceptions guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptExport guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi javascriptForOperator guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptFuncArg guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptFuncKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi javascriptGlobal guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi javascriptGlobalMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptHeadersMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptIdentifier guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptImport guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi javascriptLabel guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptLogicSymbols guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptMathStaticMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptMessage guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptNodeGlobal guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptObjectLabel guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptOperator guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptPropertyName guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptStringMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptTemplateSB guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi javascriptTemplateSubstitution guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptURLUtilsProp guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptVariable guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi javascriptYield guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi jsBracket guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi jsClassBlock guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi jsClassDefinition guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi jsClassKeyword guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi jsClassProperty guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
+    hi jsDestructuringBlock guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi jsExport guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi jsExtendsKeyword guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi jsFrom guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi jsFuncBlock guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi jsFuncBraces guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
+    hi jsFuncParens guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
+    hi jsFunction guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
+    hi jsFunctionKey guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
+    hi jsGlobalNodeObjects guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi jsGlobalObjects guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi jsImport guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi jsModuleKeyword guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi jsNull guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
+    hi jsObjectColon guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi jsObjectProp guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi jsObjectShorthandProp guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi jsObjectValue guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi jsOperator guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi jsParen guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi jsParenIfElse guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi jsParens guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi jsSpreadExpression guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi jsSpreadOperator guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
+    hi jsStorageClass guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi jsTemplateBraces guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi jsThis guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
+    hi jsUndefined guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
+    hi jsVariableDef guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi jsonBraces guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi jsonKeyword guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
+    hi jsonQuote guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
+    hi jsonString guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi jsxAttrib guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi jsxAttributeBraces guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi jsxCloseString guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi jsxCloseTag guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi jsxComponentName guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi jsxDot guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi jsxElseOperator guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi jsxEndString guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi jsxEndTag guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi jsxEqual guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi jsxEscapeJsAttributes guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi jsxEscapeJsContent guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi jsxIfOperator guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi jsxNamespace guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi jsxPunct guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi jsxRegion guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi jsxString guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
+    hi jsxTagName guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi luaFunction guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi luaIn guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi luaTable guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi markdownBlockquote guifg=#928374 guibg=NONE guisp=NONE gui=NONE
+    hi markdownCode guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi markdownCodeBlock guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi markdownCodeDelimiter guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi markdownH5 guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi markdownH6 guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi markdownHeadingDelimiter guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi markdownHeadingRule guifg=#928374 guibg=NONE guisp=NONE gui=NONE
+    hi! link markdownIdDeclaration markdownLinkText
+    hi markdownItalic guifg=#bdae93 guibg=NONE guisp=NONE
+    hi markdownLinkDelimiter guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi markdownLinkText guifg=#928374 guibg=NONE guisp=NONE gui=underline
+    hi markdownLinkTextDelimiter guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi markdownListMarker guifg=#928374 guibg=NONE guisp=NONE gui=NONE
+    hi markdownOrderedListMarker guifg=#928374 guibg=NONE guisp=NONE gui=NONE
+    hi markdownRule guifg=#928374 guibg=NONE guisp=NONE gui=NONE
+    hi markdownUrl guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
+    hi markdownUrlDelimiter guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi markdownUrlTitleDelimiter guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
+    hi moonExtendedOp guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi moonFunction guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi moonObject guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi moonSpecialOp guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi objcDirective guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi objcTypeModifier guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi purescriptAsKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi purescriptBacktick guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi purescriptConditional guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi purescriptConstructor guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi purescriptDelimiter guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
+    hi purescriptFunction guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi purescriptHidingKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi purescriptImportKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi purescriptModuleKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi purescriptModuleName guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi purescriptOperator guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi purescriptStructure guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi purescriptType guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi purescriptTypeVar guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi purescriptWhere guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi pythonBoolean guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
+    hi pythonBuiltin guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi pythonBuiltinFunc guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi pythonBuiltinObj guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi pythonCoding guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi pythonConditional guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi pythonDecorator guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi pythonDot guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi pythonException guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi pythonExceptions guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
+    hi pythonFunction guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi pythonImport guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi pythonInclude guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi pythonOperator guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi pythonRepeat guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi pythonRun guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi rubyInterpolationDelimiter guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi rubyStringDelimiter guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
+    hi scalaCapitalWord guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi scalaCaseFollowing guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi scalaInstanceDeclaration guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi scalaInterpolation guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi scalaKeyword guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi scalaKeywordModifier guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi scalaNameDefinition guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi scalaOperator guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi scalaSpecial guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi scalaTypeDeclaration guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi scalaTypeExtension guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi scalaTypeTypePostDeclaration guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi typeScriptAjaxMethods guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi typeScriptBraces guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi typeScriptDOMObjects guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi! link typeScriptDocParam Comment
+    hi! link typeScriptDocSeeTag Comment
+    hi! link typeScriptDocTags vimCommentTitle
+    hi typeScriptEndColons guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi typeScriptFuncKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi typeScriptGlobalObjects guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi typeScriptHtmlElemProperties guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi typeScriptIdentifier guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi typeScriptInterpolationDelimiter guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi typeScriptLabel guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi typeScriptLogicSymbols guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi typeScriptNull guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
+    hi typeScriptOpSymbols guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi typeScriptParens guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi typeScriptReserved guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi vimBracket guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi vimContinue guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi vimFuncSID guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi vimMapModKey guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi vimNotation guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi vimSep guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi vimSetSep guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi xmlAttrib guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi xmlAttribPunct guifg=#928374 guibg=NONE guisp=NONE gui=NONE
+    hi xmlCdataCdata guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
+    hi xmlCdataStart guifg=#928374 guibg=NONE guisp=NONE gui=NONE
+    hi xmlDocTypeDecl guifg=#928374 guibg=NONE guisp=NONE gui=NONE
+    hi xmlDocTypeKeyword guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
+    hi xmlEndTag guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi xmlEntity guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi xmlEntityPunct guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi xmlEqual guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi xmlProcessingDelim guifg=#928374 guibg=NONE guisp=NONE gui=NONE
+    hi xmlTag guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi xmlTagName guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi Comment gui=NONE
+    hi Folded gui=NONE
+    hi SpellBad gui=undercurl
+    hi SpellCap gui=undercurl
+    hi SpellLocal gui=undercurl
+    hi SpellRare gui=undercurl
+    hi Special gui=NONE
+    hi String gui=NONE
+    hi BufTabLineActive guifg=#a89984 guibg=#504945 guisp=NONE gui=NONE
+    hi BufTabLineCurrent guifg=#282828 guibg=#a89984 guisp=NONE gui=NONE
+    hi BufTabLineFill guifg=#282828 guibg=#282828 guisp=NONE gui=NONE
+    hi BufTabLineHidden guifg=#7c6f64 guibg=#3c3836 guisp=NONE gui=NONE
+    hi DirvishArg guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi DirvishPathTail guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi GitGutterChangeDelete guifg=#8ec07c guibg=#3c3836 guisp=NONE gui=NONE
+    hi LangaugeClientInfo guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi LanguageClientCodeLens guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi LanguageClientError guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi LanguageClientErrorSign guifg=#fb4934 guibg=#282828 guisp=NONE gui=NONE
+    hi LanguageClientInfoSign guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
+    hi LanguageClientWarning guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi LanguageClientWarningSign guifg=#fabd2f guibg=#3c3836 guisp=NONE gui=NONE
+    hi LspDiagnosticsDefaultError guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi LspDiagnosticsDefaultHint guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi LspDiagnosticsDefaultInformation guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi LspDiagnosticsDefaultWarning guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
+    hi LspDiagnosticsSignError guifg=#fb4934 guibg=#3c3836 guisp=NONE gui=NONE
+    hi LspDiagnosticsSignHint guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
+    hi LspDiagnosticsSignInformation guifg=#fabd2f guibg=#3c3836 guisp=NONE gui=NONE
+    hi LspDiagnosticsSignWarning guifg=#fe8019 guibg=#3c3836 guisp=NONE gui=NONE
+    hi LspDiagnosticsUnderlineError guifg=NONE guibg=NONE guisp=NONE gui=NONE
+    hi LspDiagnosticsUnderlineHint guifg=NONE guibg=NONE guisp=NONE gui=NONE
+    hi LspDiagnosticsUnderlineInformation guifg=NONE guibg=NONE guisp=NONE gui=NONE
+    hi LspDiagnosticsUnderlineWarning guifg=NONE guibg=NONE guisp=NONE gui=NONE
+    hi ShowMarksHLl guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
+    hi ShowMarksHLm guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
+    hi ShowMarksHLo guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
+    hi ShowMarksHLu guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
+    hi SignatureMarkText guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
+    hi SignatureMarkerText guifg=#d3869b guibg=#3c3836 guisp=NONE gui=NONE
+    hi SignifySignAdd guifg=#b8bb26 guibg=#3c3836 guisp=NONE gui=NONE
+    hi SignifySignChange guifg=#8ec07c guibg=#3c3836 guisp=NONE gui=NONE
+    hi SignifySignDelete guifg=#fb4934 guibg=#3c3836 guisp=NONE gui=NONE
+    hi SyntasticError guifg=NONE guibg=NONE guisp=#fb4934 gui=undercurl
+    hi SyntasticErrorSign guifg=#fb4934 guibg=#3c3836 guisp=NONE gui=NONE
+    hi SyntasticWarning guifg=NONE guibg=NONE guisp=#fabd2f gui=undercurl
+    hi SyntasticWarningSign guifg=#fabd2f guibg=#3c3836 guisp=NONE gui=NONE
+    hi gitcommitDiscardedFile guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+    hi gitcommitSelectedFile guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
+    hi multiple_cursors_cursor guifg=NONE guibg=NONE guisp=NONE gui=reverse
+    hi multiple_cursors_visual guifg=NONE guibg=#504945 guisp=NONE gui=NONE
+    hi netrwClassify guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi netrwCmdSep guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
+    hi netrwComment guifg=#928374 guibg=NONE guisp=NONE gui=NONE
+    hi netrwDir guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi netrwExe guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
+    hi netrwHelpCmd guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
+    hi netrwLink guifg=#928374 guibg=NONE guisp=NONE gui=NONE
+    hi netrwList guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi netrwSymLink guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+    hi netrwVersion guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
   endif
 endif
 
