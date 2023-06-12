@@ -159,7 +159,7 @@ if &background == 'dark'
   hi Repeat guifg=#ea6962 guibg=NONE guisp=NONE gui=NONE
   hi ReplaceMode guifg=#89b48c guibg=#282828 guisp=NONE gui=reverse
   hi Search guifg=#d8a657 guibg=#282828 guisp=NONE gui=reverse
-  hi SignColumn guifg=#ebdbb2 guibg=#3c3836 guisp=NONE gui=NONE
+  hi SignColumn guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi Special guifg=#e78a4e guibg=NONE guisp=NONE gui=italic
   hi SpecialChar guifg=#ea6962 guibg=NONE guisp=NONE gui=NONE
   hi SpecialComment guifg=#ea6962 guibg=NONE guisp=NONE gui=NONE
