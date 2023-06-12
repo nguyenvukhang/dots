@@ -1,6 +1,9 @@
 const { readFileSync, writeFileSync } = require("fs");
 
-const data = readFileSync("gruvbox-morhetz.vim", "utf8").split("\n");
+const INPUT = "gruvbox8.vim";
+const OUTPUT = "gruvbox8-mat.vim";
+
+const data = readFileSync(INPUT, "utf8").split("\n");
 
 const from = {
   red: "#fb4934",
@@ -43,4 +46,4 @@ const converted = data.map((v) => {
   return line;
 });
 
-writeFileSync("gruvbox-morhetz-material.vim", converted.join("\n"));
+writeFileSync(OUTPUT, converted.join("\n"));
