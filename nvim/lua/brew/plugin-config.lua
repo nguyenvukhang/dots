@@ -110,7 +110,7 @@ config['nvim-treesitter'] = function()
       additional_vim_regex_highlighting = false,
     },
     -- stylua: ignore
-    ensure_installed = { 'javascript', 'typescript', 'c', 'lua', 'rust',
+    ensure_installed = { 'javascript', 'typescript', 'c', 'lua', 'rust', 'tsx', 'css',
       'astro', 'java', 'latex', 'markdown', 'markdown_inline', 'python', 'swift' },
   }
 end

@@ -40,6 +40,7 @@ local cfg = {
   end,
   cpp = function() c.comment_string('// %s') end,
   swift = function() c.comment_string('// %s') end,
+  astro = function() c.comment_string('// %s') end,
 }
 
 autocmd { pattern = '*.tex', callback = cfg.latex }
@@ -47,6 +48,7 @@ autocmd { pattern = { '*.swift' }, callback = cfg.swift }
 autocmd { pattern = { '*.mdx', '*.md' }, callback = cfg.markdown }
 autocmd { pattern = { '*.java' }, callback = cfg.java }
 autocmd { pattern = { '*.cpp', '*.h', '*.c', '*.cc' }, callback = cfg.cpp }
+autocmd { pattern = { '*.astro' }, callback = cfg.astro }
 
 autocmd({
   pattern = { '*.tex' },
