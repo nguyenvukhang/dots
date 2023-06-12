@@ -84,6 +84,21 @@ if &background == 'dark'
   let s:ft = get(g:, 'gruvbox_filetype_hi_groups', 0)
   let s:ft_bold = s:ft + 2 * s:bold
 
+    " custom
+  hi! link TelescopeNormal Normal
+  hi! link TelescopeSelection Pmenu
+  hi! link TelescopeSelectionCaret Error
+  hi! link TelescopeMultiSelection Pmenu
+  hi! link TelescopeBorder Comment
+  hi! link TelescopeMatching Special
+  hi! link TelescopePromptPrefix Identifier
+  hi! link TelescopePrompt TelescopeNormal
+  hi! link TelescopeCustomBorder Comment
+  hi! link TelescopeResultsBorder TelescopeCustomBorder
+  hi! link TelescopePreviewBorder TelescopeCustomBorder
+  hi! link TelescopePromptBorder TelescopeCustomBorder
+  hi! link TelescopePromptCounter TelescopeCustomBorder
+
   hi! link CurSearch Search
   hi! link CursorColumn CursorLine
   hi! link CursorLineFold FoldColumn
