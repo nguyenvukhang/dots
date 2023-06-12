@@ -84,7 +84,8 @@ if &background == 'dark'
   let s:ft = get(g:, 'gruvbox_filetype_hi_groups', 0)
   let s:ft_bold = s:ft + 2 * s:bold
 
-    " custom
+  " custom
+
   hi! link TelescopeNormal Normal
   hi! link TelescopeSelection Pmenu
   hi! link TelescopeSelectionCaret Error
@@ -98,6 +99,33 @@ if &background == 'dark'
   hi! link TelescopePreviewBorder TelescopeCustomBorder
   hi! link TelescopePromptBorder TelescopeCustomBorder
   hi! link TelescopePromptCounter TelescopeCustomBorder
+
+  " LSP Diagnostic
+  hi! link DiagnosticError GruvboxRed
+  hi! link DiagnosticSignError GruvboxRed
+  hi! link DiagnosticUnderlineError GruvboxRedUnderline
+  hi! link DiagnosticVirtualTextError GruvboxRed
+  hi! link DiagnosticFloatingError GruvboxRed
+
+  hi! link DiagnosticWarn GruvboxYellow
+  hi! link DiagnosticSignWarn GruvboxYellow
+  hi! link DiagnosticUnderlineWarn GruvboxYellowUnderline
+  hi! link DiagnosticVirtualTextWarn GruvboxYellow
+  hi! link DiagnosticFloatingWarn GruvboxYellow
+
+  hi! link DiagnosticInfo GruvboxBlue
+  hi! link DiagnosticSignInfo GruvboxBlue
+  hi! link DiagnosticUnderlineInfo GruvboxBlueUnderline
+  hi! link DiagnosticVirtualTextInfo GruvboxBlue
+  hi! link DiagnosticFloatingInfo GruvboxBlue
+
+  hi! link DiagnosticHint GruvboxOrange
+  hi! link DiagnosticSignHint GruvboxOrange
+  hi! link DiagnosticUnderlineHint GruvboxOrangeUnderline
+  hi! link DiagnosticVirtualTextHint GruvboxOrange
+  hi! link DiagnosticFloatingHint GruvboxOrange
+  
+  " standard links
 
   hi! link CurSearch Search
   hi! link CursorColumn CursorLine
@@ -119,6 +147,38 @@ if &background == 'dark'
   hi! link lCursor Cursor
   hi! link vCursor Cursor
 
+  " gruvbox additions
+
+  hi GruvboxFg0 guifg=#fbf1c7 guibg=NONE
+  hi GruvboxFg1 guifg=#ebdbb2 guibg=NONE
+  hi GruvboxFg2 guifg=#d5c4a1 guibg=NONE
+  hi GruvboxFg3 guifg=#bdae93 guibg=NONE
+  hi GruvboxFg4 guifg=#a89984 guibg=NONE
+  hi GruvboxGray guifg=#928374 guibg=NONE
+  hi GruvboxBg0 guifg=#282828 guibg=NONE
+  hi GruvboxBg1 guifg=#3c3836 guibg=NONE
+  hi GruvboxBg2 guifg=#504945 guibg=NONE
+  hi GruvboxBg3 guifg=#665c54 guibg=NONE
+  hi GruvboxBg4 guifg=#7c6f64 guibg=NONE
+
+  hi GruvboxRed guifg=#ea6962 guibg=NONE
+  hi GruvboxGreen guifg=#a9b665 guibg=NONE
+  hi GruvboxYellow guifg=#d8a657 guibg=NONE
+  hi GruvboxBlue guifg=#7daea3 guibg=NONE
+  hi GruvboxPurple guifg=#d3869b guibg=NONE
+  hi GruvboxAqua guifg=#89b48c guibg=NONE
+  hi GruvboxOrange guifg=#e78a4e guibg=NONE
+
+  hi GruvboxRedUnderline guifg=#ea6962 guisp=#ea6962 guibg=NONE
+  hi GruvboxGreenUnderline guifg=#a9b665 guisp=#a9b665 guibg=NONE
+  hi GruvboxYellowUnderline guifg=#d8a657 guisp=#d8a657 guibg=NONE
+  hi GruvboxBlueUnderline guifg=#7daea3 guisp=#7daea3 guibg=NONE
+  hi GruvboxPurpleUnderline guifg=#d3869b guisp=#d3869b guibg=NONE
+  hi GruvboxAquaUnderline guifg=#89b48c guisp=#89b48c guibg=NONE
+  hi GruvboxOrangeUnderline guifg=#e78a4e guisp=#e78a4e guibg=NONE
+
+  " standard colors
+  
   hi Normal guifg=#ebdbb2 guibg=#282828 guisp=NONE gui=NONE
   hi Boolean guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
   hi Character guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
