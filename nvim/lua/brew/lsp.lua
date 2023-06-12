@@ -50,9 +50,18 @@ M.swift = function()
 end
 
 M.rust = function()
-  lsp.rust_analyzer.setup(
-    base { root_dir = lsp.util.root_pattern('Cargo.toml', 'rust-project.json') }
-  )
+  lsp.rust_analyzer.setup(base {
+    root_dir = lsp.util.root_pattern('Cargo.toml', 'rust-project.json'),
+    settings = {
+      ['rust-analyzer'] = {
+        imports = {
+          granularity = {
+            group = 'item',
+          },
+        },
+      },
+    },
+  })
 end
 
 M.go = function()
