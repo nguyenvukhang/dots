@@ -4,6 +4,9 @@ local lsp, M = require('lspconfig'), {}
 local base = function(opts)
   opts = opts or {}
   opts.on_attach = function(_, bufnr)
+    for _, group in ipairs(vim.fn.getcompletion('@lsp', 'highlight')) do
+      vim.api.nvim_set_hl(0, group, {})
+    end
     local x = { buffer = bufnr, noremap = true }
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, x)
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, x)
