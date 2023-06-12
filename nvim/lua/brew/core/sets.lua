@@ -36,3 +36,5 @@ vim.opt.formatoptions = 'jcroql' -- see :h fo-table too
 -- honorary set
 -- set leader to <space>
 vim.g.mapleader = ' '
+
+vim.cmd("colo gruvbox-morhetz-material")

@@ -4,7 +4,6 @@ require('brew.core').load_plugins {
   'nguyenvukhang/nvim-toggler',
   'terrortylor/nvim-comment',
   'hrsh7th/nvim-cmp',
-  'nvim-treesitter/nvim-treesitter',
   'windwp/nvim-autopairs',
   'neovim/nvim-lspconfig',
   'iamcco/markdown-preview.nvim',
@@ -20,7 +19,8 @@ require('brew.core').load_plugins {
   'L3MON4D3/LuaSnip',
   'vimplug/nvim-colorizer.lua',
   'sbdchd/neoformat',
-  'nvim-treesitter/playground',
+  -- 'nvim-treesitter/nvim-treesitter',
+  -- 'nvim-treesitter/playground',
 }
 
 -- independent of plugins, server-friendly
@@ -28,5 +28,4 @@ require('brew.core.sets')
 require('brew.core.remaps')
 require('brew.core.commands')
 require('brew.statusline').start()
-require('gruvbox').load()
 require('brew.core.autocmd')
