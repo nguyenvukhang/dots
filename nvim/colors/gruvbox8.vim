@@ -124,7 +124,7 @@ if &background == 'dark'
   hi Character guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
   hi ColorColumn guifg=NONE guibg=#3c3836 guisp=NONE gui=NONE
   hi CommandMode guifg=#d3869b guibg=#282828 guisp=NONE gui=reverse
-  hi Comment guifg=#928374 guibg=NONE guisp=NONE gui=italic
+  hi Comment guifg=#928374 guibg=NONE guisp=NONE
   hi Conceal guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
   hi Conditional guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
   hi Constant guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
@@ -146,7 +146,7 @@ if &background == 'dark'
   hi Exception guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
   hi Float guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
   hi FoldColumn guifg=#928374 guibg=#3c3836 guisp=NONE gui=NONE
-  hi Folded guifg=#928374 guibg=#3c3836 guisp=NONE gui=italic
+  hi Folded guifg=#928374 guibg=#3c3836 guisp=NONE
   hi Function guifg=#b8bb26 guibg=NONE guisp=NONE gui=bold
   hi Identifier guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
   hi Ignore guifg=fg guibg=NONE guisp=NONE gui=NONE
@@ -175,19 +175,19 @@ if &background == 'dark'
   hi ReplaceMode guifg=#8ec07c guibg=#282828 guisp=NONE gui=reverse
   hi Search guifg=#fabd2f guibg=#282828 guisp=NONE gui=reverse
   hi SignColumn guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-  hi Special guifg=#fe8019 guibg=NONE guisp=NONE gui=italic
+  hi Special guifg=#fe8019 guibg=NONE guisp=NONE
   hi SpecialChar guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
   hi SpecialComment guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
   hi SpecialKey guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-  hi SpellBad guifg=#fb4934 guibg=NONE guisp=#fb4934 gui=italic,undercurl
-  hi SpellCap guifg=#83a598 guibg=NONE guisp=#83a598 gui=italic,undercurl
-  hi SpellLocal guifg=#8ec07c guibg=NONE guisp=#8ec07c gui=italic,undercurl
-  hi SpellRare guifg=#d3869b guibg=NONE guisp=#d3869b gui=italic,undercurl
+  hi SpellBad guifg=#fb4934 guibg=NONE guisp=#fb4934 gui=undercurl
+  hi SpellCap guifg=#83a598 guibg=NONE guisp=#83a598 gui=undercurl
+  hi SpellLocal guifg=#8ec07c guibg=NONE guisp=#8ec07c gui=undercurl
+  hi SpellRare guifg=#d3869b guibg=NONE guisp=#d3869b gui=undercurl
   hi Statement guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
   hi StatusLine guifg=#504945 guibg=#ebdbb2 guisp=NONE gui=reverse
   hi StatusLineNC guifg=#3c3836 guibg=#a89984 guisp=NONE gui=reverse
   hi StorageClass guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
-  hi String guifg=#b8bb26 guibg=NONE guisp=NONE gui=italic
+  hi String guifg=#b8bb26 guibg=NONE guisp=NONE
   hi Structure guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
   hi TabLine guifg=#7c6f64 guibg=#3c3836 guisp=NONE gui=NONE
   hi TabLineFill guifg=#7c6f64 guibg=#3c3836 guisp=NONE gui=NONE
@@ -195,7 +195,7 @@ if &background == 'dark'
   hi TermCursorNC guifg=#3c3836 guibg=#ebdbb2 guisp=NONE gui=NONE
   hi Terminal guifg=#ebdbb2 guibg=#282828 guisp=NONE gui=NONE
   hi Title guifg=#b8bb26 guibg=NONE guisp=NONE gui=bold
-  hi Todo guifg=fg guibg=#282828 guisp=NONE gui=bold,italic
+  hi Todo guifg=fg guibg=#282828 guisp=NONE gui=bold
   hi ToolbarButton guifg=#fbf1c7 guibg=#665c54 guisp=NONE gui=bold
   hi ToolbarLine guifg=NONE guibg=#665c54 guisp=NONE gui=NONE
   hi Type guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
@@ -227,7 +227,7 @@ if &background == 'dark'
     if s:bold_italic == 0
       hi Todo gui=NONE
     elseif s:bold_italic == 1
-      hi Todo gui=italic
+      hi Todo
     elseif s:bold_italic == 2
       hi Todo gui=bold
     endif
@@ -332,14 +332,14 @@ if &background == 'dark'
       hi haskellWhere guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
       hi htmlArg guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
       hi htmlEndTag guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi htmlItalic guifg=fg guibg=#282828 guisp=NONE gui=italic
+      hi htmlItalic guifg=fg guibg=#282828 guisp=NONE
       hi htmlLink guifg=#a89984 guibg=NONE guisp=NONE gui=underline
       hi htmlScriptTag guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
       hi htmlSpecialChar guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
       hi htmlTag guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
       hi htmlTagN guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
       hi htmlUnderline guifg=fg guibg=#282828 guisp=NONE gui=underline
-      hi htmlUnderlineItalic guifg=fg guibg=#282828 guisp=NONE gui=italic,underline
+      hi htmlUnderlineItalic guifg=fg guibg=#282828 guisp=NONE gui=underline
       hi javaAnnotation guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
       hi! link javaCommentTitle vimCommentTitle
       hi javaDocTags guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
@@ -482,7 +482,7 @@ if &background == 'dark'
       hi markdownHeadingDelimiter guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
       hi markdownHeadingRule guifg=#928374 guibg=NONE guisp=NONE gui=NONE
       hi! link markdownIdDeclaration markdownLinkText
-      hi markdownItalic guifg=#bdae93 guibg=NONE guisp=NONE gui=italic
+      hi markdownItalic guifg=#bdae93 guibg=NONE guisp=NONE
       hi markdownLinkDelimiter guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
       hi markdownLinkText guifg=#928374 guibg=NONE guisp=NONE gui=underline
       hi markdownLinkTextDelimiter guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
@@ -586,9 +586,9 @@ if &background == 'dark'
       hi clojureRegexpCharClass guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
       hi docbkKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
       hi htmlBold guifg=fg guibg=#282828 guisp=NONE gui=NONE
-      hi htmlBoldItalic guifg=fg guibg=#282828 guisp=NONE gui=italic
+      hi htmlBoldItalic guifg=fg guibg=#282828 guisp=NONE
       hi htmlBoldUnderline guifg=fg guibg=#282828 guisp=NONE gui=underline
-      hi htmlBoldUnderlineItalic guifg=fg guibg=#282828 guisp=NONE gui=italic,underline
+      hi htmlBoldUnderlineItalic guifg=fg guibg=#282828 guisp=NONE gui=underline
       hi htmlSpecialTagName guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
       hi htmlTagName guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
       hi jsExportDefault guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
@@ -603,9 +603,9 @@ if &background == 'dark'
       hi clojureRegexpCharClass guifg=#bdae93 guibg=NONE guisp=NONE gui=bold
       hi docbkKeyword guifg=#8ec07c guibg=NONE guisp=NONE gui=bold
       hi htmlBold guifg=fg guibg=#282828 guisp=NONE gui=bold
-      hi htmlBoldItalic guifg=fg guibg=#282828 guisp=NONE gui=bold,italic
+      hi htmlBoldItalic guifg=fg guibg=#282828 guisp=NONE gui=bold
       hi htmlBoldUnderline guifg=fg guibg=#282828 guisp=NONE gui=bold,underline
-      hi htmlBoldUnderlineItalic guifg=fg guibg=#282828 guisp=NONE gui=bold,italic,underline
+      hi htmlBoldUnderlineItalic guifg=fg guibg=#282828 guisp=NONE gui=bold,underline
       hi htmlSpecialTagName guifg=#8ec07c guibg=NONE guisp=NONE gui=bold
       hi htmlTagName guifg=#8ec07c guibg=NONE guisp=NONE gui=bold
       hi jsExportDefault guifg=#fe8019 guibg=NONE guisp=NONE gui=bold
@@ -758,7 +758,7 @@ if &background == 'dark'
     hi Character ctermfg=175 ctermbg=NONE cterm=NONE
     hi ColorColumn ctermfg=NONE ctermbg=237 cterm=NONE
     hi CommandMode ctermfg=175 ctermbg=235 cterm=reverse
-    hi Comment ctermfg=102 ctermbg=NONE cterm=italic
+    hi Comment ctermfg=102 ctermbg=NONE cterm=NONE
     hi Conceal ctermfg=109 ctermbg=NONE cterm=NONE
     hi Conditional ctermfg=203 ctermbg=NONE cterm=NONE
     hi Constant ctermfg=175 ctermbg=NONE cterm=NONE
@@ -780,7 +780,7 @@ if &background == 'dark'
     hi Exception ctermfg=203 ctermbg=NONE cterm=NONE
     hi Float ctermfg=175 ctermbg=NONE cterm=NONE
     hi FoldColumn ctermfg=102 ctermbg=237 cterm=NONE
-    hi Folded ctermfg=102 ctermbg=237 cterm=italic
+    hi Folded ctermfg=102 ctermbg=237 cterm=NONE
     hi Function ctermfg=142 ctermbg=NONE cterm=bold
     hi Identifier ctermfg=109 ctermbg=NONE cterm=NONE
     hi Ignore ctermfg=fg ctermbg=NONE cterm=NONE
@@ -809,19 +809,19 @@ if &background == 'dark'
     hi ReplaceMode ctermfg=107 ctermbg=235 cterm=reverse
     hi Search ctermfg=214 ctermbg=235 cterm=reverse
     hi SignColumn ctermfg=187 ctermbg=237 cterm=NONE
-    hi Special ctermfg=208 ctermbg=NONE cterm=italic
+    hi Special ctermfg=208 ctermbg=NONE cterm=NONE
     hi SpecialChar ctermfg=203 ctermbg=NONE cterm=NONE
     hi SpecialComment ctermfg=203 ctermbg=NONE cterm=NONE
     hi SpecialKey ctermfg=102 ctermbg=NONE cterm=NONE
-    hi SpellBad ctermfg=203 ctermbg=NONE cterm=italic,underline
-    hi SpellCap ctermfg=109 ctermbg=NONE cterm=italic,underline
-    hi SpellLocal ctermfg=107 ctermbg=NONE cterm=italic,underline
-    hi SpellRare ctermfg=175 ctermbg=NONE cterm=italic,underline
+    hi SpellBad ctermfg=203 ctermbg=NONE cterm=underline
+    hi SpellCap ctermfg=109 ctermbg=NONE cterm=underline
+    hi SpellLocal ctermfg=107 ctermbg=NONE cterm=underline
+    hi SpellRare ctermfg=175 ctermbg=NONE cterm=underline
     hi Statement ctermfg=203 ctermbg=NONE cterm=NONE
     hi StatusLine ctermfg=239 ctermbg=187 cterm=reverse
     hi StatusLineNC ctermfg=237 ctermbg=137 cterm=reverse
     hi StorageClass ctermfg=208 ctermbg=NONE cterm=NONE
-    hi String ctermfg=142 ctermbg=NONE cterm=italic
+    hi String ctermfg=142 ctermbg=NONE cterm=NONE
     hi Structure ctermfg=107 ctermbg=NONE cterm=NONE
     hi TabLine ctermfg=243 ctermbg=237 cterm=NONE
     hi TabLineFill ctermfg=243 ctermbg=237 cterm=NONE
@@ -829,7 +829,7 @@ if &background == 'dark'
     hi TermCursorNC ctermfg=237 ctermbg=187 cterm=NONE
     hi Terminal ctermfg=187 ctermbg=235 cterm=NONE
     hi Title ctermfg=142 ctermbg=NONE cterm=bold
-    hi Todo ctermfg=fg ctermbg=235 cterm=bold,italic
+    hi Todo ctermfg=fg ctermbg=235 cterm=bold
     hi ToolbarButton ctermfg=230 ctermbg=59 cterm=bold
     hi ToolbarLine ctermfg=NONE ctermbg=59 cterm=NONE
     hi Type ctermfg=214 ctermbg=NONE cterm=NONE
@@ -859,7 +859,7 @@ if &background == 'dark'
     if s:bold_italic == 0
       hi Todo cterm=NONE
     elseif s:bold_italic == 1
-      hi Todo cterm=italic
+      hi Todo cterm=NONE
     elseif s:bold_italic == 2
       hi Todo cterm=bold
     endif
@@ -964,14 +964,14 @@ if &background == 'dark'
       hi haskellWhere ctermfg=107 ctermbg=NONE cterm=NONE
       hi htmlArg ctermfg=107 ctermbg=NONE cterm=NONE
       hi htmlEndTag ctermfg=109 ctermbg=NONE cterm=NONE
-      hi htmlItalic ctermfg=fg ctermbg=235 cterm=italic
+      hi htmlItalic ctermfg=fg ctermbg=235 cterm=NONE
       hi htmlLink ctermfg=137 ctermbg=NONE cterm=underline
       hi htmlScriptTag ctermfg=175 ctermbg=NONE cterm=NONE
       hi htmlSpecialChar ctermfg=208 ctermbg=NONE cterm=NONE
       hi htmlTag ctermfg=109 ctermbg=NONE cterm=NONE
       hi htmlTagN ctermfg=187 ctermbg=NONE cterm=NONE
       hi htmlUnderline ctermfg=fg ctermbg=235 cterm=underline
-      hi htmlUnderlineItalic ctermfg=fg ctermbg=235 cterm=italic,underline
+      hi htmlUnderlineItalic ctermfg=fg ctermbg=235 cterm=underline
       hi javaAnnotation ctermfg=109 ctermbg=NONE cterm=NONE
       hi! link javaCommentTitle vimCommentTitle
       hi javaDocTags ctermfg=107 ctermbg=NONE cterm=NONE
@@ -1114,7 +1114,7 @@ if &background == 'dark'
       hi markdownHeadingDelimiter ctermfg=208 ctermbg=NONE cterm=NONE
       hi markdownHeadingRule ctermfg=102 ctermbg=NONE cterm=NONE
       hi! link markdownIdDeclaration markdownLinkText
-      hi markdownItalic ctermfg=144 ctermbg=NONE cterm=italic
+      hi markdownItalic ctermfg=144 ctermbg=NONE cterm=NONE
       hi markdownLinkDelimiter ctermfg=144 ctermbg=NONE cterm=NONE
       hi markdownLinkText ctermfg=102 ctermbg=NONE cterm=underline
       hi markdownLinkTextDelimiter ctermfg=144 ctermbg=NONE cterm=NONE
@@ -1218,9 +1218,9 @@ if &background == 'dark'
       hi clojureRegexpCharClass ctermfg=144 ctermbg=NONE cterm=NONE
       hi docbkKeyword ctermfg=107 ctermbg=NONE cterm=NONE
       hi htmlBold ctermfg=fg ctermbg=235 cterm=NONE
-      hi htmlBoldItalic ctermfg=fg ctermbg=235 cterm=italic
+      hi htmlBoldItalic ctermfg=fg ctermbg=235 cterm=NONE
       hi htmlBoldUnderline ctermfg=fg ctermbg=235 cterm=underline
-      hi htmlBoldUnderlineItalic ctermfg=fg ctermbg=235 cterm=italic,underline
+      hi htmlBoldUnderlineItalic ctermfg=fg ctermbg=235 cterm=underline
       hi htmlSpecialTagName ctermfg=107 ctermbg=NONE cterm=NONE
       hi htmlTagName ctermfg=107 ctermbg=NONE cterm=NONE
       hi jsExportDefault ctermfg=208 ctermbg=NONE cterm=NONE
@@ -1235,9 +1235,9 @@ if &background == 'dark'
       hi clojureRegexpCharClass ctermfg=144 ctermbg=NONE cterm=bold
       hi docbkKeyword ctermfg=107 ctermbg=NONE cterm=bold
       hi htmlBold ctermfg=fg ctermbg=235 cterm=bold
-      hi htmlBoldItalic ctermfg=fg ctermbg=235 cterm=bold,italic
+      hi htmlBoldItalic ctermfg=fg ctermbg=235 cterm=bold
       hi htmlBoldUnderline ctermfg=fg ctermbg=235 cterm=bold,underline
-      hi htmlBoldUnderlineItalic ctermfg=fg ctermbg=235 cterm=bold,italic,underline
+      hi htmlBoldUnderlineItalic ctermfg=fg ctermbg=235 cterm=bold,underline
       hi htmlSpecialTagName ctermfg=107 ctermbg=NONE cterm=bold
       hi htmlTagName ctermfg=107 ctermbg=NONE cterm=bold
       hi jsExportDefault ctermfg=208 ctermbg=NONE cterm=bold
@@ -1410,7 +1410,7 @@ if &background == 'dark'
     hi Character ctermfg=Magenta ctermbg=NONE cterm=NONE
     hi ColorColumn ctermfg=Black ctermbg=DarkGray cterm=NONE
     hi CommandMode ctermfg=Magenta ctermbg=Black cterm=reverse
-    hi Comment ctermfg=DarkGray ctermbg=NONE cterm=italic
+    hi Comment ctermfg=DarkGray ctermbg=NONE cterm=NONE
     hi Conceal ctermfg=Blue ctermbg=NONE cterm=NONE
     hi Conditional ctermfg=Red ctermbg=NONE cterm=NONE
     hi Constant ctermfg=Magenta ctermbg=NONE cterm=NONE
@@ -1432,7 +1432,7 @@ if &background == 'dark'
     hi Exception ctermfg=Red ctermbg=NONE cterm=NONE
     hi Float ctermfg=Magenta ctermbg=NONE cterm=NONE
     hi FoldColumn ctermfg=DarkGray ctermbg=NONE cterm=NONE
-    hi Folded ctermfg=DarkGray ctermbg=NONE cterm=italic
+    hi Folded ctermfg=DarkGray ctermbg=NONE cterm=NONE
     hi Function ctermfg=Green ctermbg=NONE cterm=bold
     hi Identifier ctermfg=Blue ctermbg=NONE cterm=NONE
     hi Ignore ctermfg=fg ctermbg=NONE cterm=NONE
@@ -1461,19 +1461,19 @@ if &background == 'dark'
     hi ReplaceMode ctermfg=Cyan ctermbg=Black cterm=reverse
     hi Search ctermfg=Yellow ctermbg=Black cterm=reverse
     hi SignColumn ctermfg=DarkGray ctermbg=NONE cterm=NONE
-    hi Special ctermfg=Magenta ctermbg=NONE cterm=italic
+    hi Special ctermfg=Magenta ctermbg=NONE cterm=NONE
     hi SpecialChar ctermfg=Red ctermbg=NONE cterm=NONE
     hi SpecialComment ctermfg=Red ctermbg=NONE cterm=NONE
     hi SpecialKey ctermfg=DarkGray ctermbg=NONE cterm=NONE
-    hi SpellBad ctermfg=Red ctermbg=NONE cterm=italic,underline
-    hi SpellCap ctermfg=Blue ctermbg=NONE cterm=italic,underline
-    hi SpellLocal ctermfg=Cyan ctermbg=NONE cterm=italic,underline
-    hi SpellRare ctermfg=Magenta ctermbg=NONE cterm=italic,underline
+    hi SpellBad ctermfg=Red ctermbg=NONE cterm=underline
+    hi SpellCap ctermfg=Blue ctermbg=NONE cterm=underline
+    hi SpellLocal ctermfg=Cyan ctermbg=NONE cterm=underline
+    hi SpellRare ctermfg=Magenta ctermbg=NONE cterm=underline
     hi Statement ctermfg=Red ctermbg=NONE cterm=NONE
     hi StatusLine ctermfg=DarkGray ctermbg=White cterm=reverse
     hi StatusLineNC ctermfg=DarkGray ctermbg=Black cterm=reverse
     hi StorageClass ctermfg=Magenta ctermbg=NONE cterm=NONE
-    hi String ctermfg=Green ctermbg=NONE cterm=italic
+    hi String ctermfg=Green ctermbg=NONE cterm=NONE
     hi Structure ctermfg=Cyan ctermbg=NONE cterm=NONE
     hi TabLine ctermfg=Black ctermbg=DarkGray cterm=NONE
     hi TabLineFill ctermfg=Black ctermbg=DarkGray cterm=NONE
@@ -1481,7 +1481,7 @@ if &background == 'dark'
     hi TermCursorNC ctermfg=DarkGray ctermbg=White cterm=NONE
     hi Terminal ctermfg=White ctermbg=Black cterm=NONE
     hi Title ctermfg=Green ctermbg=NONE cterm=bold
-    hi Todo ctermfg=fg ctermbg=Black cterm=bold,italic
+    hi Todo ctermfg=fg ctermbg=Black cterm=bold
     hi ToolbarButton ctermfg=White ctermbg=DarkGray cterm=bold
     hi ToolbarLine ctermfg=NONE ctermbg=DarkGray cterm=NONE
     hi Type ctermfg=Yellow ctermbg=NONE cterm=NONE
@@ -1509,7 +1509,7 @@ if &background == 'dark'
     if s:bold_italic == 0
       hi Todo cterm=NONE
     elseif s:bold_italic == 1
-      hi Todo cterm=italic
+      hi Todo cterm=NONE
     elseif s:bold_italic == 2
       hi Todo cterm=bold
     endif
@@ -1549,7 +1549,7 @@ if &background == 'dark'
     hi Character ctermfg=Magenta ctermbg=NONE cterm=NONE
     hi ColorColumn ctermfg=Black ctermbg=Gray cterm=NONE
     hi CommandMode ctermfg=Magenta ctermbg=Black cterm=reverse
-    hi Comment ctermfg=Gray ctermbg=NONE cterm=italic
+    hi Comment ctermfg=Gray ctermbg=NONE cterm=NONE
     hi Conceal ctermfg=Blue ctermbg=NONE cterm=NONE
     hi Conditional ctermfg=Red ctermbg=NONE cterm=NONE
     hi Constant ctermfg=Magenta ctermbg=NONE cterm=NONE
@@ -1571,7 +1571,7 @@ if &background == 'dark'
     hi Exception ctermfg=Red ctermbg=NONE cterm=NONE
     hi Float ctermfg=Magenta ctermbg=NONE cterm=NONE
     hi FoldColumn ctermfg=Gray ctermbg=NONE cterm=NONE
-    hi Folded ctermfg=Gray ctermbg=NONE cterm=italic
+    hi Folded ctermfg=Gray ctermbg=NONE cterm=NONE
     hi Function ctermfg=Green ctermbg=NONE cterm=bold
     hi Identifier ctermfg=Blue ctermbg=NONE cterm=NONE
     hi Ignore ctermfg=fg ctermbg=NONE cterm=NONE
@@ -1600,19 +1600,19 @@ if &background == 'dark'
     hi ReplaceMode ctermfg=Cyan ctermbg=Black cterm=reverse
     hi Search ctermfg=Yellow ctermbg=Black cterm=reverse
     hi SignColumn ctermfg=Gray ctermbg=NONE cterm=NONE
-    hi Special ctermfg=Magenta ctermbg=NONE cterm=italic
+    hi Special ctermfg=Magenta ctermbg=NONE cterm=NONE
     hi SpecialChar ctermfg=Red ctermbg=NONE cterm=NONE
     hi SpecialComment ctermfg=Red ctermbg=NONE cterm=NONE
     hi SpecialKey ctermfg=Gray ctermbg=NONE cterm=NONE
-    hi SpellBad ctermfg=Red ctermbg=NONE cterm=italic,underline
-    hi SpellCap ctermfg=Blue ctermbg=NONE cterm=italic,underline
-    hi SpellLocal ctermfg=Cyan ctermbg=NONE cterm=italic,underline
-    hi SpellRare ctermfg=Magenta ctermbg=NONE cterm=italic,underline
+    hi SpellBad ctermfg=Red ctermbg=NONE cterm=underline
+    hi SpellCap ctermfg=Blue ctermbg=NONE cterm=underline
+    hi SpellLocal ctermfg=Cyan ctermbg=NONE cterm=underline
+    hi SpellRare ctermfg=Magenta ctermbg=NONE cterm=underline
     hi Statement ctermfg=Red ctermbg=NONE cterm=NONE
     hi StatusLine ctermfg=Gray ctermbg=Black cterm=bold,reverse
     hi StatusLineNC ctermfg=Gray ctermbg=Black cterm=reverse
     hi StorageClass ctermfg=Magenta ctermbg=NONE cterm=NONE
-    hi String ctermfg=Green ctermbg=NONE cterm=italic
+    hi String ctermfg=Green ctermbg=NONE cterm=NONE
     hi Structure ctermfg=Cyan ctermbg=NONE cterm=NONE
     hi TabLine ctermfg=Black ctermbg=Gray cterm=NONE
     hi TabLineFill ctermfg=Black ctermbg=Gray cterm=NONE
@@ -1620,7 +1620,7 @@ if &background == 'dark'
     hi TermCursorNC ctermfg=DarkGray ctermbg=White cterm=NONE
     hi Terminal ctermfg=White ctermbg=Black cterm=NONE
     hi Title ctermfg=Green ctermbg=NONE cterm=bold
-    hi Todo ctermfg=fg ctermbg=Black cterm=bold,italic
+    hi Todo ctermfg=fg ctermbg=Black cterm=bold
     hi ToolbarButton ctermfg=Black ctermbg=Gray cterm=bold
     hi ToolbarLine ctermfg=NONE ctermbg=Gray cterm=NONE
     hi Type ctermfg=Yellow ctermbg=NONE cterm=NONE
@@ -1648,7 +1648,7 @@ if &background == 'dark'
     if s:bold_italic == 0
       hi Todo cterm=NONE
     elseif s:bold_italic == 1
-      hi Todo cterm=italic
+      hi Todo cterm=NONE
     elseif s:bold_italic == 2
       hi Todo cterm=bold
     endif
@@ -1685,15 +1685,15 @@ if &background == 'dark'
     hi Character term=NONE
     hi ColorColumn term=reverse
     hi CommandMode term=reverse
-    hi Comment term=italic
+    hi Comment term=NONE
     hi Conceal term=NONE
     hi Conditional term=NONE
-    hi Constant term=bold,italic
+    hi Constant term=bold
     hi Cursor term=NONE
     hi CursorColumn term=reverse
     hi CursorIM term=NONE
     hi CursorLine term=underline
-    hi CursorLineNr term=bold,italic,reverse,underline
+    hi CursorLineNr term=bold,reverse,underline
     hi Debug term=NONE
     hi Define term=NONE
     hi Delimiter term=NONE
@@ -1704,15 +1704,15 @@ if &background == 'dark'
     hi Directory term=NONE
     hi EndOfBuffer term=NONE
     hi Error term=reverse
-    hi ErrorMsg term=bold,italic,reverse
+    hi ErrorMsg term=bold,reverse
     hi Exception term=NONE
     hi Float term=NONE
     hi FoldColumn term=reverse
-    hi Folded term=italic,reverse,underline
+    hi Folded term=reverse,underline
     hi Function term=bold
-    hi Identifier term=italic
+    hi Identifier term=NONE
     hi Ignore term=NONE
-    hi IncSearch term=bold,italic,reverse
+    hi IncSearch term=bold,reverse
     hi Include term=NONE
     hi InsertMode term=reverse
     hi Keyword term=NONE
@@ -1731,27 +1731,27 @@ if &background == 'dark'
     hi PmenuSel term=NONE
     hi PmenuThumb term=NONE
     hi PreCondit term=NONE
-    hi PreProc term=italic
+    hi PreProc term=NONE
     hi Question term=standout
     hi Repeat term=NONE
     hi ReplaceMode term=reverse
-    hi Search term=italic,underline
+    hi Search term=underline
     hi SignColumn term=reverse
-    hi Special term=bold,italic
+    hi Special term=bold
     hi SpecialChar term=NONE
     hi SpecialComment term=NONE
     hi SpecialKey term=bold
-    hi SpellBad term=italic,underline
-    hi SpellCap term=italic,underline
-    hi SpellLocal term=italic,underline
-    hi SpellRare term=italic,underline
+    hi SpellBad term=underline
+    hi SpellCap term=underline
+    hi SpellLocal term=underline
+    hi SpellRare term=underline
     hi Statement term=bold
     hi StatusLine term=bold,reverse
     hi StatusLineNC term=reverse
     hi StorageClass term=NONE
-    hi String term=italic
+    hi String term=NONE
     hi Structure term=NONE
-    hi TabLine term=italic,reverse,underline
+    hi TabLine term=reverse,underline
     hi TabLineFill term=reverse,underline
     hi TabLineSel term=bold
     hi TermCursorNC term=NONE
@@ -1783,7 +1783,7 @@ if &background == 'dark'
     if s:bold_italic == 0
       hi Todo term=NONE
     elseif s:bold_italic == 1
-      hi Todo term=italic
+      hi Todo term=NONE
     elseif s:bold_italic == 2
       hi Todo term=bold
     endif
@@ -1906,7 +1906,7 @@ if &background == 'light'
   hi Character guifg=#8f3f71 guibg=NONE guisp=NONE gui=NONE
   hi ColorColumn guifg=NONE guibg=#ebdbb2 guisp=NONE gui=NONE
   hi CommandMode guifg=#8f3f71 guibg=#fbf1c7 guisp=NONE gui=reverse
-  hi Comment guifg=#928374 guibg=NONE guisp=NONE gui=italic
+  hi Comment guifg=#928374 guibg=NONE guisp=NONE
   hi Conceal guifg=#076678 guibg=NONE guisp=NONE gui=NONE
   hi Conditional guifg=#9d0006 guibg=NONE guisp=NONE gui=NONE
   hi Constant guifg=#8f3f71 guibg=NONE guisp=NONE gui=NONE
@@ -1928,7 +1928,7 @@ if &background == 'light'
   hi Exception guifg=#9d0006 guibg=NONE guisp=NONE gui=NONE
   hi Float guifg=#8f3f71 guibg=NONE guisp=NONE gui=NONE
   hi FoldColumn guifg=#928374 guibg=#ebdbb2 guisp=NONE gui=NONE
-  hi Folded guifg=#928374 guibg=#ebdbb2 guisp=NONE gui=italic
+  hi Folded guifg=#928374 guibg=#ebdbb2 guisp=NONE
   hi Function guifg=#79740e guibg=NONE guisp=NONE gui=bold
   hi Identifier guifg=#076678 guibg=NONE guisp=NONE gui=NONE
   hi Ignore guifg=fg guibg=NONE guisp=NONE gui=NONE
@@ -1957,19 +1957,19 @@ if &background == 'light'
   hi ReplaceMode guifg=#427b58 guibg=#fbf1c7 guisp=NONE gui=reverse
   hi Search guifg=#b57614 guibg=#fbf1c7 guisp=NONE gui=reverse
   hi SignColumn guifg=#3c3836 guibg=#ebdbb2 guisp=NONE gui=NONE
-  hi Special guifg=#af3a03 guibg=NONE guisp=NONE gui=italic
+  hi Special guifg=#af3a03 guibg=NONE guisp=NONE
   hi SpecialChar guifg=#9d0006 guibg=NONE guisp=NONE gui=NONE
   hi SpecialComment guifg=#9d0006 guibg=NONE guisp=NONE gui=NONE
   hi SpecialKey guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-  hi SpellBad guifg=#9d0006 guibg=NONE guisp=#9d0006 gui=italic,undercurl
-  hi SpellCap guifg=#076678 guibg=NONE guisp=#076678 gui=italic,undercurl
-  hi SpellLocal guifg=#427b58 guibg=NONE guisp=#427b58 gui=italic,undercurl
-  hi SpellRare guifg=#8f3f71 guibg=NONE guisp=#8f3f71 gui=italic,undercurl
+  hi SpellBad guifg=#9d0006 guibg=NONE guisp=#9d0006 gui=undercurl
+  hi SpellCap guifg=#076678 guibg=NONE guisp=#076678 gui=undercurl
+  hi SpellLocal guifg=#427b58 guibg=NONE guisp=#427b58 gui=undercurl
+  hi SpellRare guifg=#8f3f71 guibg=NONE guisp=#8f3f71 gui=undercurl
   hi Statement guifg=#9d0006 guibg=NONE guisp=NONE gui=NONE
   hi StatusLine guifg=#d5c4a1 guibg=#3c3836 guisp=NONE gui=reverse
   hi StatusLineNC guifg=#ebdbb2 guibg=#7c6f64 guisp=NONE gui=reverse
   hi StorageClass guifg=#af3a03 guibg=NONE guisp=NONE gui=NONE
-  hi String guifg=#79740e guibg=NONE guisp=NONE gui=italic
+  hi String guifg=#79740e guibg=NONE guisp=NONE
   hi Structure guifg=#427b58 guibg=NONE guisp=NONE gui=NONE
   hi TabLine guifg=#a89984 guibg=#ebdbb2 guisp=NONE gui=NONE
   hi TabLineFill guifg=#a89984 guibg=#ebdbb2 guisp=NONE gui=NONE
@@ -1977,7 +1977,7 @@ if &background == 'light'
   hi TermCursorNC guifg=#ebdbb2 guibg=#3c3836 guisp=NONE gui=NONE
   hi Terminal guifg=#3c3836 guibg=#fbf1c7 guisp=NONE gui=NONE
   hi Title guifg=#79740e guibg=NONE guisp=NONE gui=bold
-  hi Todo guifg=fg guibg=#fbf1c7 guisp=NONE gui=bold,italic
+  hi Todo guifg=fg guibg=#fbf1c7 guisp=NONE gui=bold
   hi ToolbarButton guifg=#282828 guibg=#bdae93 guisp=NONE gui=bold
   hi ToolbarLine guifg=NONE guibg=#bdae93 guisp=NONE gui=NONE
   hi Type guifg=#b57614 guibg=NONE guisp=NONE gui=NONE
@@ -2009,7 +2009,7 @@ if &background == 'light'
     if s:bold_italic == 0
       hi Todo gui=NONE
     elseif s:bold_italic == 1
-      hi Todo gui=italic
+      hi Todo
     elseif s:bold_italic == 2
       hi Todo gui=bold
     endif
@@ -2114,14 +2114,14 @@ if &background == 'light'
       hi haskellWhere guifg=#427b58 guibg=NONE guisp=NONE gui=NONE
       hi htmlArg guifg=#427b58 guibg=NONE guisp=NONE gui=NONE
       hi htmlEndTag guifg=#076678 guibg=NONE guisp=NONE gui=NONE
-      hi htmlItalic guifg=fg guibg=#fbf1c7 guisp=NONE gui=italic
+      hi htmlItalic guifg=fg guibg=#fbf1c7 guisp=NONE
       hi htmlLink guifg=#7c6f64 guibg=NONE guisp=NONE gui=underline
       hi htmlScriptTag guifg=#8f3f71 guibg=NONE guisp=NONE gui=NONE
       hi htmlSpecialChar guifg=#af3a03 guibg=NONE guisp=NONE gui=NONE
       hi htmlTag guifg=#076678 guibg=NONE guisp=NONE gui=NONE
       hi htmlTagN guifg=#3c3836 guibg=NONE guisp=NONE gui=NONE
       hi htmlUnderline guifg=fg guibg=#fbf1c7 guisp=NONE gui=underline
-      hi htmlUnderlineItalic guifg=fg guibg=#fbf1c7 guisp=NONE gui=italic,underline
+      hi htmlUnderlineItalic guifg=fg guibg=#fbf1c7 guisp=NONE gui=underline
       hi javaAnnotation guifg=#076678 guibg=NONE guisp=NONE gui=NONE
       hi! link javaCommentTitle vimCommentTitle
       hi javaDocTags guifg=#427b58 guibg=NONE guisp=NONE gui=NONE
@@ -2264,7 +2264,7 @@ if &background == 'light'
       hi markdownHeadingDelimiter guifg=#af3a03 guibg=NONE guisp=NONE gui=NONE
       hi markdownHeadingRule guifg=#928374 guibg=NONE guisp=NONE gui=NONE
       hi! link markdownIdDeclaration markdownLinkText
-      hi markdownItalic guifg=#665c54 guibg=NONE guisp=NONE gui=italic
+      hi markdownItalic guifg=#665c54 guibg=NONE guisp=NONE
       hi markdownLinkDelimiter guifg=#665c54 guibg=NONE guisp=NONE gui=NONE
       hi markdownLinkText guifg=#928374 guibg=NONE guisp=NONE gui=underline
       hi markdownLinkTextDelimiter guifg=#665c54 guibg=NONE guisp=NONE gui=NONE
@@ -2368,9 +2368,9 @@ if &background == 'light'
       hi clojureRegexpCharClass guifg=#665c54 guibg=NONE guisp=NONE gui=NONE
       hi docbkKeyword guifg=#427b58 guibg=NONE guisp=NONE gui=NONE
       hi htmlBold guifg=fg guibg=#fbf1c7 guisp=NONE gui=NONE
-      hi htmlBoldItalic guifg=fg guibg=#fbf1c7 guisp=NONE gui=italic
+      hi htmlBoldItalic guifg=fg guibg=#fbf1c7 guisp=NONE
       hi htmlBoldUnderline guifg=fg guibg=#fbf1c7 guisp=NONE gui=underline
-      hi htmlBoldUnderlineItalic guifg=fg guibg=#fbf1c7 guisp=NONE gui=italic,underline
+      hi htmlBoldUnderlineItalic guifg=fg guibg=#fbf1c7 guisp=NONE gui=underline
       hi htmlSpecialTagName guifg=#427b58 guibg=NONE guisp=NONE gui=NONE
       hi htmlTagName guifg=#427b58 guibg=NONE guisp=NONE gui=NONE
       hi jsExportDefault guifg=#af3a03 guibg=NONE guisp=NONE gui=NONE
@@ -2385,9 +2385,9 @@ if &background == 'light'
       hi clojureRegexpCharClass guifg=#665c54 guibg=NONE guisp=NONE gui=bold
       hi docbkKeyword guifg=#427b58 guibg=NONE guisp=NONE gui=bold
       hi htmlBold guifg=fg guibg=#fbf1c7 guisp=NONE gui=bold
-      hi htmlBoldItalic guifg=fg guibg=#fbf1c7 guisp=NONE gui=bold,italic
+      hi htmlBoldItalic guifg=fg guibg=#fbf1c7 guisp=NONE gui=bold
       hi htmlBoldUnderline guifg=fg guibg=#fbf1c7 guisp=NONE gui=bold,underline
-      hi htmlBoldUnderlineItalic guifg=fg guibg=#fbf1c7 guisp=NONE gui=bold,italic,underline
+      hi htmlBoldUnderlineItalic guifg=fg guibg=#fbf1c7 guisp=NONE gui=bold,underline
       hi htmlSpecialTagName guifg=#427b58 guibg=NONE guisp=NONE gui=bold
       hi htmlTagName guifg=#427b58 guibg=NONE guisp=NONE gui=bold
       hi jsExportDefault guifg=#af3a03 guibg=NONE guisp=NONE gui=bold
@@ -2540,7 +2540,7 @@ if &background == 'light'
     hi Character ctermfg=126 ctermbg=NONE cterm=NONE
     hi ColorColumn ctermfg=NONE ctermbg=187 cterm=NONE
     hi CommandMode ctermfg=126 ctermbg=230 cterm=reverse
-    hi Comment ctermfg=102 ctermbg=NONE cterm=italic
+    hi Comment ctermfg=102 ctermbg=NONE cterm=NONE
     hi Conceal ctermfg=23 ctermbg=NONE cterm=NONE
     hi Conditional ctermfg=124 ctermbg=NONE cterm=NONE
     hi Constant ctermfg=126 ctermbg=NONE cterm=NONE
@@ -2562,7 +2562,7 @@ if &background == 'light'
     hi Exception ctermfg=124 ctermbg=NONE cterm=NONE
     hi Float ctermfg=126 ctermbg=NONE cterm=NONE
     hi FoldColumn ctermfg=102 ctermbg=187 cterm=NONE
-    hi Folded ctermfg=102 ctermbg=187 cterm=italic
+    hi Folded ctermfg=102 ctermbg=187 cterm=NONE
     hi Function ctermfg=100 ctermbg=NONE cterm=bold
     hi Identifier ctermfg=23 ctermbg=NONE cterm=NONE
     hi Ignore ctermfg=fg ctermbg=NONE cterm=NONE
@@ -2591,19 +2591,19 @@ if &background == 'light'
     hi ReplaceMode ctermfg=29 ctermbg=230 cterm=reverse
     hi Search ctermfg=172 ctermbg=230 cterm=reverse
     hi SignColumn ctermfg=237 ctermbg=187 cterm=NONE
-    hi Special ctermfg=124 ctermbg=NONE cterm=italic
+    hi Special ctermfg=124 ctermbg=NONE cterm=NONE
     hi SpecialChar ctermfg=124 ctermbg=NONE cterm=NONE
     hi SpecialComment ctermfg=124 ctermbg=NONE cterm=NONE
     hi SpecialKey ctermfg=102 ctermbg=NONE cterm=NONE
-    hi SpellBad ctermfg=124 ctermbg=NONE cterm=italic,underline
-    hi SpellCap ctermfg=23 ctermbg=NONE cterm=italic,underline
-    hi SpellLocal ctermfg=29 ctermbg=NONE cterm=italic,underline
-    hi SpellRare ctermfg=126 ctermbg=NONE cterm=italic,underline
+    hi SpellBad ctermfg=124 ctermbg=NONE cterm=underline
+    hi SpellCap ctermfg=23 ctermbg=NONE cterm=underline
+    hi SpellLocal ctermfg=29 ctermbg=NONE cterm=underline
+    hi SpellRare ctermfg=126 ctermbg=NONE cterm=underline
     hi Statement ctermfg=124 ctermbg=NONE cterm=NONE
     hi StatusLine ctermfg=187 ctermbg=237 cterm=reverse
     hi StatusLineNC ctermfg=187 ctermbg=243 cterm=reverse
     hi StorageClass ctermfg=124 ctermbg=NONE cterm=NONE
-    hi String ctermfg=100 ctermbg=NONE cterm=italic
+    hi String ctermfg=100 ctermbg=NONE cterm=NONE
     hi Structure ctermfg=29 ctermbg=NONE cterm=NONE
     hi TabLine ctermfg=137 ctermbg=187 cterm=NONE
     hi TabLineFill ctermfg=137 ctermbg=187 cterm=NONE
@@ -2611,7 +2611,7 @@ if &background == 'light'
     hi TermCursorNC ctermfg=187 ctermbg=237 cterm=NONE
     hi Terminal ctermfg=237 ctermbg=230 cterm=NONE
     hi Title ctermfg=100 ctermbg=NONE cterm=bold
-    hi Todo ctermfg=fg ctermbg=230 cterm=bold,italic
+    hi Todo ctermfg=fg ctermbg=230 cterm=bold
     hi ToolbarButton ctermfg=235 ctermbg=144 cterm=bold
     hi ToolbarLine ctermfg=NONE ctermbg=144 cterm=NONE
     hi Type ctermfg=172 ctermbg=NONE cterm=NONE
@@ -2641,7 +2641,7 @@ if &background == 'light'
     if s:bold_italic == 0
       hi Todo cterm=NONE
     elseif s:bold_italic == 1
-      hi Todo cterm=italic
+      hi Todo cterm=NONE
     elseif s:bold_italic == 2
       hi Todo cterm=bold
     endif
@@ -2746,14 +2746,14 @@ if &background == 'light'
       hi haskellWhere ctermfg=29 ctermbg=NONE cterm=NONE
       hi htmlArg ctermfg=29 ctermbg=NONE cterm=NONE
       hi htmlEndTag ctermfg=23 ctermbg=NONE cterm=NONE
-      hi htmlItalic ctermfg=fg ctermbg=230 cterm=italic
+      hi htmlItalic ctermfg=fg ctermbg=230 cterm=NONE
       hi htmlLink ctermfg=243 ctermbg=NONE cterm=underline
       hi htmlScriptTag ctermfg=126 ctermbg=NONE cterm=NONE
       hi htmlSpecialChar ctermfg=124 ctermbg=NONE cterm=NONE
       hi htmlTag ctermfg=23 ctermbg=NONE cterm=NONE
       hi htmlTagN ctermfg=237 ctermbg=NONE cterm=NONE
       hi htmlUnderline ctermfg=fg ctermbg=230 cterm=underline
-      hi htmlUnderlineItalic ctermfg=fg ctermbg=230 cterm=italic,underline
+      hi htmlUnderlineItalic ctermfg=fg ctermbg=230 cterm=underline
       hi javaAnnotation ctermfg=23 ctermbg=NONE cterm=NONE
       hi! link javaCommentTitle vimCommentTitle
       hi javaDocTags ctermfg=29 ctermbg=NONE cterm=NONE
@@ -2896,7 +2896,7 @@ if &background == 'light'
       hi markdownHeadingDelimiter ctermfg=124 ctermbg=NONE cterm=NONE
       hi markdownHeadingRule ctermfg=102 ctermbg=NONE cterm=NONE
       hi! link markdownIdDeclaration markdownLinkText
-      hi markdownItalic ctermfg=59 ctermbg=NONE cterm=italic
+      hi markdownItalic ctermfg=59 ctermbg=NONE cterm=NONE
       hi markdownLinkDelimiter ctermfg=59 ctermbg=NONE cterm=NONE
       hi markdownLinkText ctermfg=102 ctermbg=NONE cterm=underline
       hi markdownLinkTextDelimiter ctermfg=59 ctermbg=NONE cterm=NONE
@@ -3000,9 +3000,9 @@ if &background == 'light'
       hi clojureRegexpCharClass ctermfg=59 ctermbg=NONE cterm=NONE
       hi docbkKeyword ctermfg=29 ctermbg=NONE cterm=NONE
       hi htmlBold ctermfg=fg ctermbg=230 cterm=NONE
-      hi htmlBoldItalic ctermfg=fg ctermbg=230 cterm=italic
+      hi htmlBoldItalic ctermfg=fg ctermbg=230 cterm=NONE
       hi htmlBoldUnderline ctermfg=fg ctermbg=230 cterm=underline
-      hi htmlBoldUnderlineItalic ctermfg=fg ctermbg=230 cterm=italic,underline
+      hi htmlBoldUnderlineItalic ctermfg=fg ctermbg=230 cterm=underline
       hi htmlSpecialTagName ctermfg=29 ctermbg=NONE cterm=NONE
       hi htmlTagName ctermfg=29 ctermbg=NONE cterm=NONE
       hi jsExportDefault ctermfg=124 ctermbg=NONE cterm=NONE
@@ -3017,9 +3017,9 @@ if &background == 'light'
       hi clojureRegexpCharClass ctermfg=59 ctermbg=NONE cterm=bold
       hi docbkKeyword ctermfg=29 ctermbg=NONE cterm=bold
       hi htmlBold ctermfg=fg ctermbg=230 cterm=bold
-      hi htmlBoldItalic ctermfg=fg ctermbg=230 cterm=bold,italic
+      hi htmlBoldItalic ctermfg=fg ctermbg=230 cterm=bold
       hi htmlBoldUnderline ctermfg=fg ctermbg=230 cterm=bold,underline
-      hi htmlBoldUnderlineItalic ctermfg=fg ctermbg=230 cterm=bold,italic,underline
+      hi htmlBoldUnderlineItalic ctermfg=fg ctermbg=230 cterm=bold,underline
       hi htmlSpecialTagName ctermfg=29 ctermbg=NONE cterm=bold
       hi htmlTagName ctermfg=29 ctermbg=NONE cterm=bold
       hi jsExportDefault ctermfg=124 ctermbg=NONE cterm=bold
@@ -3192,7 +3192,7 @@ if &background == 'light'
     hi Character ctermfg=Magenta ctermbg=NONE cterm=NONE
     hi ColorColumn ctermfg=White ctermbg=Grey cterm=NONE
     hi CommandMode ctermfg=Magenta ctermbg=White cterm=reverse
-    hi Comment ctermfg=DarkGray ctermbg=NONE cterm=italic
+    hi Comment ctermfg=DarkGray ctermbg=NONE cterm=NONE
     hi Conceal ctermfg=Blue ctermbg=NONE cterm=NONE
     hi Conditional ctermfg=Red ctermbg=NONE cterm=NONE
     hi Constant ctermfg=Magenta ctermbg=NONE cterm=NONE
@@ -3214,7 +3214,7 @@ if &background == 'light'
     hi Exception ctermfg=Red ctermbg=NONE cterm=NONE
     hi Float ctermfg=Magenta ctermbg=NONE cterm=NONE
     hi FoldColumn ctermfg=Grey ctermbg=NONE cterm=NONE
-    hi Folded ctermfg=Grey ctermbg=NONE cterm=italic
+    hi Folded ctermfg=Grey ctermbg=NONE cterm=NONE
     hi Function ctermfg=Green ctermbg=NONE cterm=bold
     hi Identifier ctermfg=Blue ctermbg=NONE cterm=NONE
     hi Ignore ctermfg=fg ctermbg=NONE cterm=NONE
@@ -3243,19 +3243,19 @@ if &background == 'light'
     hi ReplaceMode ctermfg=Cyan ctermbg=White cterm=reverse
     hi Search ctermfg=Yellow ctermbg=White cterm=reverse
     hi SignColumn ctermfg=Grey ctermbg=NONE cterm=NONE
-    hi Special ctermfg=Magenta ctermbg=NONE cterm=italic
+    hi Special ctermfg=Magenta ctermbg=NONE cterm=NONE
     hi SpecialChar ctermfg=Red ctermbg=NONE cterm=NONE
     hi SpecialComment ctermfg=Red ctermbg=NONE cterm=NONE
     hi SpecialKey ctermfg=Grey ctermbg=NONE cterm=NONE
-    hi SpellBad ctermfg=Red ctermbg=NONE cterm=italic,underline
-    hi SpellCap ctermfg=Blue ctermbg=NONE cterm=italic,underline
-    hi SpellLocal ctermfg=Cyan ctermbg=NONE cterm=italic,underline
-    hi SpellRare ctermfg=Magenta ctermbg=NONE cterm=italic,underline
+    hi SpellBad ctermfg=Red ctermbg=NONE cterm=underline
+    hi SpellCap ctermfg=Blue ctermbg=NONE cterm=underline
+    hi SpellLocal ctermfg=Cyan ctermbg=NONE cterm=underline
+    hi SpellRare ctermfg=Magenta ctermbg=NONE cterm=underline
     hi Statement ctermfg=Red ctermbg=NONE cterm=NONE
     hi StatusLine ctermfg=Grey ctermbg=Black cterm=reverse
     hi StatusLineNC ctermfg=Grey ctermbg=White cterm=reverse
     hi StorageClass ctermfg=Magenta ctermbg=NONE cterm=NONE
-    hi String ctermfg=Green ctermbg=NONE cterm=italic
+    hi String ctermfg=Green ctermbg=NONE cterm=NONE
     hi Structure ctermfg=Cyan ctermbg=NONE cterm=NONE
     hi TabLine ctermfg=White ctermbg=Grey cterm=NONE
     hi TabLineFill ctermfg=White ctermbg=Grey cterm=NONE
@@ -3263,7 +3263,7 @@ if &background == 'light'
     hi TermCursorNC ctermfg=Grey ctermbg=Black cterm=NONE
     hi Terminal ctermfg=Black ctermbg=White cterm=NONE
     hi Title ctermfg=Green ctermbg=NONE cterm=bold
-    hi Todo ctermfg=fg ctermbg=White cterm=bold,italic
+    hi Todo ctermfg=fg ctermbg=White cterm=bold
     hi ToolbarButton ctermfg=Black ctermbg=Grey cterm=bold
     hi ToolbarLine ctermfg=NONE ctermbg=Grey cterm=NONE
     hi Type ctermfg=Yellow ctermbg=NONE cterm=NONE
@@ -3291,7 +3291,7 @@ if &background == 'light'
     if s:bold_italic == 0
       hi Todo cterm=NONE
     elseif s:bold_italic == 1
-      hi Todo cterm=italic
+      hi Todo cterm=NONE
     elseif s:bold_italic == 2
       hi Todo cterm=bold
     endif
@@ -3331,7 +3331,7 @@ if &background == 'light'
     hi Character ctermfg=Magenta ctermbg=NONE cterm=NONE
     hi ColorColumn ctermfg=White ctermbg=Black cterm=NONE
     hi CommandMode ctermfg=Magenta ctermbg=White cterm=reverse
-    hi Comment ctermfg=Black ctermbg=NONE cterm=italic
+    hi Comment ctermfg=Black ctermbg=NONE cterm=NONE
     hi Conceal ctermfg=Blue ctermbg=NONE cterm=NONE
     hi Conditional ctermfg=Red ctermbg=NONE cterm=NONE
     hi Constant ctermfg=Magenta ctermbg=NONE cterm=NONE
@@ -3353,7 +3353,7 @@ if &background == 'light'
     hi Exception ctermfg=Red ctermbg=NONE cterm=NONE
     hi Float ctermfg=Magenta ctermbg=NONE cterm=NONE
     hi FoldColumn ctermfg=Black ctermbg=NONE cterm=NONE
-    hi Folded ctermfg=Black ctermbg=NONE cterm=italic
+    hi Folded ctermfg=Black ctermbg=NONE cterm=NONE
     hi Function ctermfg=Green ctermbg=NONE cterm=bold
     hi Identifier ctermfg=Blue ctermbg=NONE cterm=NONE
     hi Ignore ctermfg=fg ctermbg=NONE cterm=NONE
@@ -3382,19 +3382,19 @@ if &background == 'light'
     hi ReplaceMode ctermfg=Cyan ctermbg=White cterm=reverse
     hi Search ctermfg=Yellow ctermbg=White cterm=reverse
     hi SignColumn ctermfg=Black ctermbg=NONE cterm=NONE
-    hi Special ctermfg=Magenta ctermbg=NONE cterm=italic
+    hi Special ctermfg=Magenta ctermbg=NONE cterm=NONE
     hi SpecialChar ctermfg=Red ctermbg=NONE cterm=NONE
     hi SpecialComment ctermfg=Red ctermbg=NONE cterm=NONE
     hi SpecialKey ctermfg=Black ctermbg=NONE cterm=NONE
-    hi SpellBad ctermfg=Red ctermbg=NONE cterm=italic,underline
-    hi SpellCap ctermfg=Blue ctermbg=NONE cterm=italic,underline
-    hi SpellLocal ctermfg=Cyan ctermbg=NONE cterm=italic,underline
-    hi SpellRare ctermfg=Magenta ctermbg=NONE cterm=italic,underline
+    hi SpellBad ctermfg=Red ctermbg=NONE cterm=underline
+    hi SpellCap ctermfg=Blue ctermbg=NONE cterm=underline
+    hi SpellLocal ctermfg=Cyan ctermbg=NONE cterm=underline
+    hi SpellRare ctermfg=Magenta ctermbg=NONE cterm=underline
     hi Statement ctermfg=Red ctermbg=NONE cterm=NONE
     hi StatusLine ctermfg=Black ctermbg=White cterm=bold,reverse
     hi StatusLineNC ctermfg=Black ctermbg=White cterm=reverse
     hi StorageClass ctermfg=Magenta ctermbg=NONE cterm=NONE
-    hi String ctermfg=Green ctermbg=NONE cterm=italic
+    hi String ctermfg=Green ctermbg=NONE cterm=NONE
     hi Structure ctermfg=Cyan ctermbg=NONE cterm=NONE
     hi TabLine ctermfg=White ctermbg=Black cterm=NONE
     hi TabLineFill ctermfg=White ctermbg=Black cterm=NONE
@@ -3402,7 +3402,7 @@ if &background == 'light'
     hi TermCursorNC ctermfg=Grey ctermbg=Black cterm=NONE
     hi Terminal ctermfg=Black ctermbg=White cterm=NONE
     hi Title ctermfg=Green ctermbg=NONE cterm=bold
-    hi Todo ctermfg=fg ctermbg=White cterm=bold,italic
+    hi Todo ctermfg=fg ctermbg=White cterm=bold
     hi ToolbarButton ctermfg=White ctermbg=Black cterm=bold
     hi ToolbarLine ctermfg=NONE ctermbg=Black cterm=NONE
     hi Type ctermfg=Yellow ctermbg=NONE cterm=NONE
@@ -3430,7 +3430,7 @@ if &background == 'light'
     if s:bold_italic == 0
       hi Todo cterm=NONE
     elseif s:bold_italic == 1
-      hi Todo cterm=italic
+      hi Todo cterm=NONE
     elseif s:bold_italic == 2
       hi Todo cterm=bold
     endif
@@ -3467,15 +3467,15 @@ if &background == 'light'
     hi Character term=NONE
     hi ColorColumn term=reverse
     hi CommandMode term=reverse
-    hi Comment term=italic
+    hi Comment term=NONE
     hi Conceal term=NONE
     hi Conditional term=NONE
-    hi Constant term=bold,italic
+    hi Constant term=bold
     hi Cursor term=NONE
     hi CursorColumn term=reverse
     hi CursorIM term=NONE
     hi CursorLine term=underline
-    hi CursorLineNr term=bold,italic,reverse,underline
+    hi CursorLineNr term=bold,reverse,underline
     hi Debug term=NONE
     hi Define term=NONE
     hi Delimiter term=NONE
@@ -3486,15 +3486,15 @@ if &background == 'light'
     hi Directory term=NONE
     hi EndOfBuffer term=NONE
     hi Error term=reverse
-    hi ErrorMsg term=bold,italic,reverse
+    hi ErrorMsg term=bold,reverse
     hi Exception term=NONE
     hi Float term=NONE
     hi FoldColumn term=reverse
-    hi Folded term=italic,reverse,underline
+    hi Folded term=reverse,underline
     hi Function term=bold
-    hi Identifier term=italic
+    hi Identifier term=NONE
     hi Ignore term=NONE
-    hi IncSearch term=bold,italic,reverse
+    hi IncSearch term=bold,reverse
     hi Include term=NONE
     hi InsertMode term=reverse
     hi Keyword term=NONE
@@ -3513,27 +3513,27 @@ if &background == 'light'
     hi PmenuSel term=NONE
     hi PmenuThumb term=NONE
     hi PreCondit term=NONE
-    hi PreProc term=italic
+    hi PreProc term=NONE
     hi Question term=standout
     hi Repeat term=NONE
     hi ReplaceMode term=reverse
-    hi Search term=italic,underline
+    hi Search term=underline
     hi SignColumn term=reverse
-    hi Special term=bold,italic
+    hi Special term=bold
     hi SpecialChar term=NONE
     hi SpecialComment term=NONE
     hi SpecialKey term=bold
-    hi SpellBad term=italic,underline
-    hi SpellCap term=italic,underline
-    hi SpellLocal term=italic,underline
-    hi SpellRare term=italic,underline
+    hi SpellBad term=underline
+    hi SpellCap term=underline
+    hi SpellLocal term=underline
+    hi SpellRare term=underline
     hi Statement term=bold
     hi StatusLine term=bold,reverse
     hi StatusLineNC term=reverse
     hi StorageClass term=NONE
-    hi String term=italic
+    hi String term=NONE
     hi Structure term=NONE
-    hi TabLine term=italic,reverse,underline
+    hi TabLine term=reverse,underline
     hi TabLineFill term=reverse,underline
     hi TabLineSel term=bold
     hi TermCursorNC term=NONE
@@ -3565,7 +3565,7 @@ if &background == 'light'
     if s:bold_italic == 0
       hi Todo term=NONE
     elseif s:bold_italic == 1
-      hi Todo term=italic
+      hi Todo term=NONE
     elseif s:bold_italic == 2
       hi Todo term=bold
     endif
