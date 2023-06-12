@@ -29,3 +29,5 @@ require('brew.core.remaps')
 require('brew.core.commands')
 require('brew.statusline').start()
 require('brew.core.autocmd')
+
+vim.cmd("colo gruvbox8-mat")
