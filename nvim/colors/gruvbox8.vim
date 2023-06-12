@@ -124,7 +124,9 @@ if &background == 'dark'
   hi! link DiagnosticUnderlineHint GruvboxOrangeUnderline
   hi! link DiagnosticVirtualTextHint GruvboxOrange
   hi! link DiagnosticFloatingHint GruvboxOrange
-  
+
+  hi! link DiagnosticUnnecessary GruvboxFg1Underline
+
   " standard links
 
   hi! link CurSearch Search
@@ -169,17 +171,18 @@ if &background == 'dark'
   hi GruvboxAqua guifg=#89b48c guibg=NONE
   hi GruvboxOrange guifg=#e78a4e guibg=NONE
 
-  hi GruvboxRedUnderline guifg=#ea6962 guisp=#ea6962 guibg=NONE
-  hi GruvboxGreenUnderline guifg=#a9b665 guisp=#a9b665 guibg=NONE
-  hi GruvboxYellowUnderline guifg=#d8a657 guisp=#d8a657 guibg=NONE
-  hi GruvboxBlueUnderline guifg=#7daea3 guisp=#7daea3 guibg=NONE
-  hi GruvboxPurpleUnderline guifg=#d3869b guisp=#d3869b guibg=NONE
-  hi GruvboxAquaUnderline guifg=#89b48c guisp=#89b48c guibg=NONE
-  hi GruvboxOrangeUnderline guifg=#e78a4e guisp=#e78a4e guibg=NONE
+  hi GruvboxFg1Underline guifg=#ebdbb2 guisp=#ebdbb2 guibg=NONE gui=underline
+  hi GruvboxRedUnderline guifg=#ea6962 guisp=#ea6962 guibg=NONE gui=underline
+  hi GruvboxGreenUnderline guifg=#a9b665 guisp=#a9b665 guibg=NONE gui=underline
+  hi GruvboxYellowUnderline guifg=#d8a657 guisp=#d8a657 guibg=NONE gui=underline
+  hi GruvboxBlueUnderline guifg=#7daea3 guisp=#7daea3 guibg=NONE gui=underline
+  hi GruvboxPurpleUnderline guifg=#d3869b guisp=#d3869b guibg=NONE gui=underline
+  hi GruvboxAquaUnderline guifg=#89b48c guisp=#89b48c guibg=NONE gui=underline
+  hi GruvboxOrangeUnderline guifg=#e78a4e guisp=#e78a4e guibg=NONE gui=underline
 
   " standard colors
   
-  hi Normal guifg=#ebdbb2 guibg=#282828 guisp=NONE gui=NONE
+  hi Normal guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi Boolean guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
   hi Character guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
   hi ColorColumn guifg=NONE guibg=#3c3836 guisp=NONE gui=NONE
@@ -397,7 +400,7 @@ if &background == 'dark'
       hi htmlScriptTag guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
       hi htmlSpecialChar guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
       hi htmlTag guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-      hi htmlTagN guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+      hi htmlTagName guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
       hi htmlUnderline guifg=fg guibg=#282828 guisp=NONE gui=underline
       hi htmlUnderlineItalic guifg=fg guibg=#282828 guisp=NONE gui=underline
       hi javaAnnotation guifg=#83a598 guibg=NONE guisp=NONE gui=NONE

@@ -23,6 +23,7 @@ end)
 -- cmd('Packs', function() print(vim.inspect(package.loaded)) end)
 
 -- get highlight group under cursor
+-- NOTE: use `:Inspect` instead. built-ins!
 cmd('UnderMe', function()
   if not vim.fn.exists('*synstack') then return end
   local hl = vim.fn.synstack(vim.fn.line('.'), vim.fn.col('.'))
