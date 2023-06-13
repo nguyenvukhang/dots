@@ -47,15 +47,18 @@ if &background == 'dark'
   hi! link TelescopeSelection Pmenu
   hi! link TelescopeSelectionCaret Error
   hi! link TelescopeMultiSelection Pmenu
-  hi! link TelescopeBorder Comment
+  hi! link TelescopeBorder GruvboxFg1
   hi! link TelescopeMatching Special
   hi! link TelescopePromptPrefix Identifier
   hi! link TelescopePrompt TelescopeNormal
-  hi! link TelescopeCustomBorder Comment
+  hi! link TelescopeCustomBorder GruvboxBg4
   hi! link TelescopeResultsBorder TelescopeCustomBorder
   hi! link TelescopePreviewBorder TelescopeCustomBorder
   hi! link TelescopePromptBorder TelescopeCustomBorder
   hi! link TelescopePromptCounter TelescopeCustomBorder
+
+  hi! link HarpoonWindow Normal
+  hi! link HarpoonBorder GruvboxBg4
 
   " LSP Diagnostic
   hi! link DiagnosticError GruvboxRed
