@@ -19,6 +19,7 @@ require('brew.core').load_plugins {
   'L3MON4D3/LuaSnip',
   'vimplug/nvim-colorizer.lua',
   'sbdchd/neoformat',
+  'sheerun/vim-polyglot',
   -- 'nvim-treesitter/nvim-treesitter',
   -- 'nvim-treesitter/playground',
 }
@@ -30,4 +31,4 @@ require('brew.core.commands')
 require('brew.statusline').start()
 require('brew.core.autocmd')
 
-vim.cmd("colo gruvbox8-mat")
+vim.cmd('colo gruvbox8-mat')
