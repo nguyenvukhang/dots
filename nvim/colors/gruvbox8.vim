@@ -205,7 +205,7 @@ if &background == 'dark'
   hi SpellRare guifg=#d3869b guibg=NONE guisp=#d3869b gui=undercurl
   hi Statement guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
   hi StatusLine guifg=#504945 guibg=#ebdbb2 guisp=NONE gui=reverse
-  hi StatusLineNC guifg=#3c3836 guibg=#a89984 guisp=NONE gui=reverse
+  hi StatusLineNC guifg=#504945 guibg=#a89984 guisp=NONE gui=reverse
   hi StorageClass guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
   hi String guifg=#b8bb26 guibg=NONE guisp=NONE
   hi Structure guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
@@ -348,6 +348,7 @@ if &background == 'dark'
     hi htmlScriptTag guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
     hi htmlSpecialChar guifg=#fe8019 guibg=NONE guisp=NONE gui=NONE
     hi htmlTag guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
+    hi htmlTagN guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
     hi htmlTagName guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
     hi htmlUnderline guifg=fg guibg=#282828 guisp=NONE gui=underline
     hi htmlUnderlineItalic guifg=fg guibg=#282828 guisp=NONE gui=underline
