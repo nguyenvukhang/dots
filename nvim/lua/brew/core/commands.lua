@@ -3,6 +3,14 @@
 local sub = function(f, r) vim.cmd('silent! %s/' .. f .. '/' .. r .. '/g') end
 local cmd = function(name, fn) vim.api.nvim_create_user_command(name, fn, {}) end
 
+local feedkeys = function(key, mode)
+  vim.api.nvim_feedkeys(
+    vim.api.nvim_replace_termcodes(key, true, true, true),
+    mode,
+    true
+  )
+end
+
 -- normalize all non-standard glyphs
 cmd('StanGlyphs', function()
   sub('“', '"')
@@ -36,5 +44,11 @@ end)
 -- create new line (at current cursor position) and insert date
 cmd('Date', function()
   local date = vim.fn.strftime('%-d %b')
-  vim.api.nvim_put({ date }, 'l', false, false)
+  feedkeys('O' .. date .. '<esc>', 'n')
+end)
+
+-- create new line (at current cursor position) and insert date
+cmd('Time', function()
+  local time = vim.fn.strftime('%H:%M:%S')
+  feedkeys('O' .. time .. '<esc>', 'n')
 end)

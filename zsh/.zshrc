@@ -32,6 +32,7 @@ has() {
 
 # exports
 export UNI=$HOME/uni
+export NOTES_FILE=$HOME/repos/notes/log.yml
 export SHELL_SESSIONS_DISABLE=1 # remove ~/.zsh_sessions
 export LANG=en_US.UTF-8         # for manpagers
 export GITNU_DEBUG=1
@@ -368,6 +369,7 @@ alias ka="killall"
 alias py=python3
 alias si="$EDITOR .stow-local-ignore"
 alias vim=nvim
+alias n="$EDITOR $NOTES_FILE"
 
 # searches
 alias fd="fd --hidden"
