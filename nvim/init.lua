@@ -19,6 +19,7 @@ require('brew.core').load_plugins {
   'L3MON4D3/LuaSnip',
   'vimplug/nvim-colorizer.lua',
   'sbdchd/neoformat',
+  'wuelnerdotexe/vim-astro',
   -- 'sheerun/vim-polyglot', -- (breaks astro)
   -- 'nvim-treesitter/nvim-treesitter',
   -- 'nvim-treesitter/playground',
