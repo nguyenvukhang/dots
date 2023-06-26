@@ -208,6 +208,7 @@ if &background == 'dark'
   hi SpellRare guifg=#d3869b guibg=NONE guisp=#d3869b gui=undercurl
   hi Statement guifg=#ea6962 guibg=NONE guisp=NONE gui=NONE
   hi StatusLine guifg=#504945 guibg=#ebdbb2 guisp=NONE gui=reverse
+  hi StatusLineBranch guifg=#504945 guibg=#a89984 guisp=NONE gui=reverse
   hi StatusLineNC guifg=#504945 guibg=#a89984 guisp=NONE gui=reverse
   hi StorageClass guifg=#e78a4e guibg=NONE guisp=NONE gui=NONE
   hi String guifg=#a9b665 guibg=NONE guisp=NONE
