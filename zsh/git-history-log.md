@@ -4,16 +4,24 @@ Editing dates
 #!/bin/sh
 # vim:ft=bash
 
-TIME='10:28:01'
+COMMIT=88c36a3
+TIME='12:14:14'
 DATE='26 Jun 2023'
 TMZN='+0800'
-MESSAGE='submit deferral for reservist'
-
-COMMIT=acc77e1
+# MESSAGE=''
+DATE="$TIME $DATE $TMZN"
 
 CURRENT=$(git rev-parse HEAD)
 
-git reset --hard $COMMIT >/dev/null
-git commit --allow-empty --amend --no-edit --date="$TIME $DATE $TMZN" -m "$MESSAGE" >/dev/null
-git cherry-pick --allow-empty $COMMIT..$CURRENT >/dev/null
+git reset --hard $COMMIT
+
+if [[ -z $MESSAGE ]]; then
+  GIT_COMMITTER_DATE="$DATE" \
+    git commit --allow-empty --amend --no-edit --date="$DATE"
+else
+  GIT_COMMITTER_DATE="$DATE" \
+    git commit --allow-empty --amend --no-edit --date="$DATE" -m "$MESSAGE"
+fi
+
+git cherry-pick --allow-empty $COMMIT..$CURRENT
 ```
