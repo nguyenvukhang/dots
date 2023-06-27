@@ -56,6 +56,7 @@ if &background == 'dark'
   hi! link TelescopePreviewBorder TelescopeCustomBorder
   hi! link TelescopePromptBorder TelescopeCustomBorder
   hi! link TelescopePromptCounter TelescopeCustomBorder
+  hi! link rustCommentLineDoc Comment
 
   hi! link HarpoonWindow Normal
   hi! link HarpoonBorder GruvboxBg4

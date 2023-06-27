@@ -21,7 +21,7 @@ QUIET=true
 gco() {
   local OUTPUT="$($GIT checkout $@ 2>&1)" # original output
   local greyed="\033[0;37m$OUTPUT\033[0m" TARGET_DIR BRANCH
-  jump() {
+  jump() { # print a message describing the jump made
     echo "\033[0;30m -> \033[0;32m${1}\033[0;37m ${2}\033[0m" && unset -f jump
   }
   [[ $OUTPUT =~ '^(fatal: not a git repository|Already on).*$' ]] && echo $greyed && return
