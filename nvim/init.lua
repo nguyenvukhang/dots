@@ -1,6 +1,7 @@
 require('brew.core').load_plugins {
   'ThePrimeagen/harpoon',
   'nvim-telescope/telescope.nvim',
+  'nvim-telescope/telescope-fzy-native.nvim',
   'nguyenvukhang/nvim-toggler',
   'terrortylor/nvim-comment',
   'hrsh7th/nvim-cmp',

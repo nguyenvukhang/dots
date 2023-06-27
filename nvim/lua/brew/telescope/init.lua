@@ -48,4 +48,8 @@ require('telescope').setup {
       },
     },
   },
+  extensions = {
+    fzy_native = {}
+  }
 }
+require('telescope').load_extension('fzy_native')
