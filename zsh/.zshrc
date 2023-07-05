@@ -55,7 +55,7 @@ PROMPT=$'%F{blue}%~$(prompt_git)%f\n%(?.%F{green}${PROMPT_ARROW} %f.%F{red}${PRO
 
 # generic fzf options
 # use with fzf --color=$FZF_COLORS
-FZF_COLORS='pointer:green,header:white'
+FZF_COLORS='pointer:green,header:green'
 FZF_OPTS=(--height=7 +m --no-mouse --reverse
   --no-info --prompt="  " --color=$FZF_COLORS)
 
@@ -94,7 +94,6 @@ alias gcnn="$GIT clean -fxd"
 alias gd="$GIT diff"
 alias gds="$GIT diff --staged"
 alias gf="$GIT fetch"
-alias giti="$EDITOR .gitignore"
 alias gm="$GIT merge"           # squash diff into one commit
 alias gmn="$GIT merge --no-ff"  # squash diff into one commit
 alias gms="$GIT merge --squash" # squash diff into one commit
@@ -102,9 +101,8 @@ alias gpdo="$GIT push -d origin"
 alias gr="$GIT reset"
 alias grh="$GIT reset --hard"
 alias grpo="$GIT remote prune origin"
-
-# still essential
-alias gcf="git config --edit"
+alias gt="$GIT tag"
+alias giti="$EDITOR .gitignore"
 alias gitm="$EDITOR .gitmodules"
 
 # git preview (quickly open files by number)
@@ -178,21 +176,26 @@ gcb() {
 }
 
 # git logs
+_gl() {
+  local i=$(($LINES / 2 > 10 ? $LINES / 2 : 10))
+  while IFS= read -r line; do
+    printf "$line\e[0m\n" && let i--
+    [[ $i -eq 0 ]] && break
+  done < <(git -c 'color.ui=always' log --pretty=k --graph $@)
+  return 0
+}
 gl() {
-  local i=$(($LINES - 10 > 10 ? $LINES - 10 : 10))
-  git log --graph --pretty=k -n ${1-$i}
+  _gl -n ${1-$LINES}
 }
 gla() {
-  local i=$(($LINES - 10 > 10 ? $LINES - 10 : 10))
-  git log --graph --pretty=k -n ${1-$i} --all
+  _gl --all -n ${1-$LINES}
 }
 gll() {
   git log --graph --pretty=k --all
 }
 mongl() {
-  local i=$(($LINES - 10 > 10 ? $LINES - 10 : 10))
   for j in {1..120}; do
-    clear && gla ${1-$i} && sleep 2
+    clear && gla ${1-$LINES} && sleep 1
   done
 }
 
@@ -334,18 +337,14 @@ fi
 # g for jump (requires fd and fzf)
 g() {
   [[ ! $(command ls -Ap) = *"/"* ]] && return # end if no child dir
-  local FD=(-H -I -c never -d 4 -t d --strip-cwd-prefix -E '.git'
-    -E 'node_modules')
-  local FZF=(--height=7 +m --no-mouse --reverse --no-info --prompt="  "
-    --color=$FZF_COLORS
-    --header=${PWD/$HOME/'~'}
-    --expect "esc,left,enter,right")
+  local FD=(-HI -d ${1-4} -t d -E '.git' -E 'node_modules' --strip-cwd-prefix)
+  local FZF=(--height=7 +m --no-mouse --reverse --no-info --color=$FZF_COLORS
+    --prompt='  ' --header=${PWD/$HOME/'~'} --expect 'esc,left,enter,right')
   [[ $(fd $FD | fzf $FZF) =~ '^(.*)'$'\n''(.*)$' ]]
   case ${match[1]} in
-  'left') cd .. && g ;;
-  'enter') [ -d ${match[2]} ] && cd ${match[2]} ;;
-  'right') [ -d ${match[2]} ] && cd ${match[2]} && g ;;
-  *) return ;; # 'esc' covered here
+  left) cd .. && g ;;
+  enter) [ ${match[2]} ] && cd ${match[2]} ;;
+  right) [ ${match[2]} ] && cd ${match[2]} && g ;;
   esac
 }
 
@@ -378,6 +377,7 @@ alias rg="rg --hidden"
 alias yb="yarn build"
 alias yl="yarn lint"
 alias yd="yarn dev"
+alias mk="make"
 
 # binds
 bindkey "^[[3~" delete-char
@@ -391,10 +391,6 @@ t() {
     make $@
   elif [ -f Cargo.toml ]; then
     cargo test $@
-  elif [ -f test ]; then
-    bash test $@
-  elif [ -f wrap.sh ]; then
-    bash wrap.sh $@
   elif [ -f package.json ]; then
     yarn dev
   fi
@@ -419,7 +415,7 @@ checkhealth() {
 }
 
 # file opener
-v() {
+view() {
   local x=$(fd -t f -e pdf | fzf ${FZF_OPTS})
   [ $x ] && open "$x"
 }
