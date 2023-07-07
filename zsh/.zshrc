@@ -70,6 +70,7 @@ FZF_OPTS=(--height=7 +m --no-mouse --reverse
 # for my own scripts and neovim configs
 export DOTS=$HOME/dots
 export REPOS=$HOME/repos
+export IOT_ENV=$DOTS/personal/.secrets/iot.env
 BUN_INSTALL=$HOME/.bun
 
 PATH=$HOME/.local/bin:$PATH
