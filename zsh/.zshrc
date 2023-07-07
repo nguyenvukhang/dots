@@ -33,9 +33,13 @@ has() {
 # exports
 export UNI=$HOME/uni
 export SHELL_SESSIONS_DISABLE=1 # remove ~/.zsh_sessions
-export LANG=en_US.UTF-8         # for manpagers
-export LC_CTYPE=en_US.UTF-8
+
+# locale standardize
+export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
+
 export GITNU_DEBUG=1
 
 unsetopt BEEP    # prevents beeps in general
@@ -392,7 +396,7 @@ t() {
   elif [ -f Makefile ]; then
     make $@
   elif [ -f Cargo.toml ]; then
-    cargo test $@
+    cargo run $@
   elif [ -f package.json ]; then
     yarn dev
   fi
