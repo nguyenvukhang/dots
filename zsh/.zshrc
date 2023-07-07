@@ -337,7 +337,7 @@ if has exa; then
   alias ll="exa -al $EXA_OPTS"
 else
   alias ls="ls -A --color=auto"
-  alias ll="ls -Al --color=auto"
+  alias ll="ls -lAg --color=auto"
 fi
 
 # g for jump (requires fd and fzf)
