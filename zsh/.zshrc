@@ -1,5 +1,5 @@
 START_TMUX=false
-PROMPT_ARROW='pi >'
+PROMPT_ARROW='[ pi ] >'
 
 # load homebrew
 [ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -79,6 +79,7 @@ PATH=$HOME/Qt/Tools/QtInstallerFramework/4.5/bin:$PATH
 PATH=$HOME/.yarn/bin:$PATH
 PATH=$HOMEBREW_PREFIX/opt/node@16/bin:$PATH # node@16 via brew
 export PATH
+export N_PREFIX="$HOME/.local/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 
 has git-nu && GIT=git-nu || GIT=git
 
@@ -424,5 +425,3 @@ view() {
   local x=$(fd -t f -e pdf | fzf ${FZF_OPTS})
   [ $x ] && open "$x"
 }
-
-export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
