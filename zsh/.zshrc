@@ -1,4 +1,5 @@
-START_TMUX=true
+START_TMUX=false
+PROMPT_ARROW='pi >'
 
 # load homebrew
 [ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -55,8 +56,6 @@ prompt_git() {
     echo " %F{241}(%F{246}${match[1]}%F{241}/$branch)" ||
     echo " %F{241}($branch)"
 }
-
-PROMPT_ARROW='>'
 PROMPT=$'%F{blue}%~$(prompt_git)%f\n%(?.%F{green}${PROMPT_ARROW} %f.%F{red}${PROMPT_ARROW} %f)'
 
 # generic fzf options
@@ -425,3 +424,5 @@ view() {
   local x=$(fd -t f -e pdf | fzf ${FZF_OPTS})
   [ $x ] && open "$x"
 }
+
+export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
