@@ -17,7 +17,7 @@ help() {
 
 [ $OP ] && echo "\033[1;32mrunning command: [${OP}]...\033[1;0m" || help
 
-if [[ $OP == "personal" ]]; then
+if [ $OP = 'personal' ]; then
   git submodule update --init
   git submodule foreach git checkout main
   exit
