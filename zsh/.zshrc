@@ -34,6 +34,8 @@ has() {
 export UNI=$HOME/uni
 export SHELL_SESSIONS_DISABLE=1 # remove ~/.zsh_sessions
 export LANG=en_US.UTF-8         # for manpagers
+export LC_CTYPE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 export GITNU_DEBUG=1
 
 unsetopt BEEP    # prevents beeps in general
