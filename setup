@@ -25,4 +25,4 @@ if ! command -v stow >/dev/null; then
   echo 'stow not found ._.' && exit 1
 fi
 
-stow --restow -t ~ -d . .config
+stow --restow -t ~ @
