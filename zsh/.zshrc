@@ -1,4 +1,9 @@
-START_TMUX=true
+START_TMUX=false
+PROMPT_ARROW=${PROMPT_ARROW-[uwu] >}
+
+[ -z $FD_BIN ] && FD_BIN=fd
+alias fd="$FD_BIN --hidden"
+alias rg="rg --hidden"
 
 # load homebrew
 [ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -56,7 +61,6 @@ prompt_git() {
     echo " %F{241}($branch)"
 }
 
-PROMPT_ARROW='>'
 PROMPT=$'%F{blue}%~$(prompt_git)%f\n%(?.%F{green}${PROMPT_ARROW} %f.%F{red}${PROMPT_ARROW} %f)'
 
 # generic fzf options
@@ -267,7 +271,7 @@ p() {
   local res=()
   while IFS= read -r i; do
     [[ $i =~ '^(.*)\.gpg$' ]] && res+=("${match[1]}")
-  done < <(fd -e gpg --strip-cwd-prefix --base-directory $HOME/.password-store)
+  done < <(fd -e gpg --base-directory $HOME/.password-store)
   local target=$(printf '%s\n' "${res[@]}" | fzf $FZF_OPTS)
   # guard
   [ -z $target ] && echo "nothing selected." && return
@@ -343,7 +347,7 @@ fi
 # g for jump (requires fd and fzf)
 g() {
   [[ ! $(command ls -Ap) = *"/"* ]] && return # end if no child dir
-  local FD=(-HI -d ${1-4} -t d -E '.git' -E 'node_modules' --strip-cwd-prefix)
+  local FD=(-HI -d ${1-4} -t d -E '.git' -E 'node_modules')
   local FZF=(--height=7 +m --no-mouse --reverse --no-info --color=$FZF_COLORS
     --prompt='  ' --header=${PWD/$HOME/'~'} --expect 'esc,left,enter,right')
   [[ $(fd $FD | fzf $FZF) =~ '^(.*)'$'\n''(.*)$' ]]
