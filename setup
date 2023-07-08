@@ -11,16 +11,14 @@ submodules() {
 
 OS="$(uname)" ARCH="$(arch)"
 
-bootstrap_brew() {
-  # bootstrap homebrew on a mac
-  if [ $OS = 'Darwin' ] && ! command -v brew >/dev/null; then
-    # arm64 and non-arm archs on mac have different homebrew paths
-    [ $ARCH = 'arm64' ] && PREFIX='/opt/homebrew' || PREFIX='/usr/local'
-    [ ! -f $PREFIX/bin/brew ] && echo 'brew not found ._.' && exit 1
-    # clutch a brew link
-    eval "$($PREFIX/bin/brew shellenv)"
-  fi
-}
+# bootstrap homebrew on a mac
+if [ $OS = 'Darwin' ] && ! command -v brew >/dev/null; then
+  # arm64 and non-arm archs on mac have different homebrew paths
+  [ $ARCH = 'arm64' ] && PREFIX='/opt/homebrew' || PREFIX='/usr/local'
+  [ ! -f $PREFIX/bin/brew ] && echo 'brew not found ._.' && exit 1
+  # clutch a brew link
+  eval "$($PREFIX/bin/brew shellenv)"
+fi
 
 # check that stow is installed
 if ! command -v stow >/dev/null; then
