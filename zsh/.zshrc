@@ -1,4 +1,4 @@
-START_TMUX=false
+START_TMUX=true
 PROMPT_ARROW=${PROMPT_ARROW-[uwu] >}
 
 [ -z $FD_BIN ] && FD_BIN=fd
