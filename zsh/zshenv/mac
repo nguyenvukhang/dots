@@ -1,3 +1,3 @@
-ZDOTDIR=$HOME/dots/zsh
+ZDOTDIR=$HOME/.config/zsh
 DEVICE_ID=khang.mac
 PROMPT_ARROW='>'
