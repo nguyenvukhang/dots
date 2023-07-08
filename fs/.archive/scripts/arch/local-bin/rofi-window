@@ -1,3 +1,0 @@
-#! /bin/zsh
-
-rofi -show window
