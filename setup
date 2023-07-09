@@ -24,3 +24,5 @@ fi
 if ! command -v stow >/dev/null; then
   echo 'stow not found ._.' && exit 1
 fi
+
+stow -R -d .profiles/mac -t ~ home
