@@ -104,15 +104,17 @@ unload_profile() {
   done <$1
 }
 
-rm -rf squiggle/.config
-rm -rf squiggle/etc
-
-exa -a --tree squiggle
-echo "---"
 load_profile mac.profile
-echo "---"
-exa -a --tree squiggle
-echo "---"
-# unload_profile mac.profile
-echo "---"
-exa -a --tree squiggle
+
+# rm -rf squiggle/.config
+# rm -rf squiggle/etc
+#
+# exa -a --tree squiggle
+# echo "---"
+# load_profile mac.profile
+# echo "---"
+# exa -a --tree squiggle
+# echo "---"
+# # unload_profile mac.profile
+# echo "---"
+# exa -a --tree squiggle
