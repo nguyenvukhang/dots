@@ -57,9 +57,13 @@ parse() {
 # link <target> <source>
 link() {
   parse $@
-  mkdir -p $TARGET
+  mkdir -p ${TARGET%/*}
   printf "${TARGET}$s_ <- ${DIR}/$g_${PACK}$n_\n"
-  stow -R --target $TARGET --dir $DIR $PACK
+  if [ ! -d $TARGET ]; then
+    ln -s $PWD/$DIR/$PACK $TARGET
+  else
+    stow -R --target $TARGET --dir $DIR $PACK
+  fi 
 }
 
 # link⁻¹
@@ -70,7 +74,11 @@ link() {
 unlink() {
   parse $@
   printf "${1}$r_ <- $n_${DIR}/${PACK}\n"
-  stow -D --target $TARGET --dir $DIR $PACK
+  if [ -d Library ] && [ -h Library ]; then
+    rm $TARGET
+  else 
+    stow -D --target $TARGET --dir $DIR $PACK
+  fi
 }
 
 # [ *.profile files ]
@@ -96,6 +104,11 @@ unload_profile() {
   done <$1
 }
 
+rm -rf squiggle/.config
+rm -rf squiggle/etc
+
+exa -a --tree squiggle
+echo "---"
 load_profile mac.profile
 echo "---"
 exa -a --tree squiggle
