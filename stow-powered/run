@@ -1,5 +1,15 @@
 #!/bin/sh
 # vim:syntax=bash
+#
+# This model of dotfiles requires the files to be organized in at
+# least one directory.
+#
+# Linking a single "./zshenv" file to "/etc/zshenv" is not supported,
+# while linking a "./foo/" directory to "/etc" is supported. ("zshenv"
+# located inside of "./foo")
+#
+# The end result is the same (a "zshenv" is linked to "/etc/zshenv"),
+# only with this model, stow can help to do path-shortening.
 
 n_='\033[0m'  # Normal
 r_='\033[31m' # Red
@@ -21,12 +31,30 @@ checkhealth() {
   fi
 }
 
+# Counter-intuitively, this uses $1 as target and $2 for source. This
+# is a purely personal choice, since I find it more important to know
+# where the files are linked to in the system, since that's the point
+# of variance.
+#
+# I have many systems, but only one set of dotfiles.
+#
+# ```
+# parse ~/.config/nvim/colors .config/nvim/colors
+# > TARGET='/home/calista/.config/nvim/colors'
+# > DIR='.config/nvim'
+# > PACK='colors'
+# ```
+#
+# parse <target> <source>
 parse() {
   TARGET=${1/#\~/$HOME} DIR=${2%/*} PACK=${2##*/}
   [ $DIR = $PACK ] && DIR=.
 }
 
-# a stow-powered version of "ln -s".
+# a stow-powered version of "ln -s", but with source and target
+# switched.
+#
+# link <target> <source>
 link() {
   parse $@
   mkdir -p $TARGET
@@ -34,6 +62,11 @@ link() {
   stow -R --target $TARGET --dir $DIR $PACK
 }
 
+# link⁻¹
+# 
+# Uses stow to undo changes created by link. Smarter than just rm -rf.
+#
+# unlink <target> <source>
 unlink() {
   parse $@
   printf "${1}$r_ <- $n_${DIR}/${PACK}\n"
