@@ -1,5 +1,8 @@
-const { relative, resolve, join } = require("path");
-const { lstatSync } = require("fs");
+const { relative, resolve, join, dirname } = require("path");
+const { lstatSync, mkdirSync, rmSync } = require("fs");
+const { spawnSync } = require("child_process");
+
+const PROJECT_ROOT = resolve(__dirname, "..");
 
 /**
  * @typedef {import("fs").PathLike} Path
@@ -7,7 +10,7 @@ const { lstatSync } = require("fs");
 
 /**
  * Asserts that a directory exists at path
- * @param {Path} path
+ * @param {Path} dirPath
  */
 function assertDir(dirPath) {
   if (!lstatSync(dirPath).isDirectory()) {
@@ -15,15 +18,21 @@ function assertDir(dirPath) {
   }
 }
 
-const PROJECT_ROOT = resolve(__dirname, "..");
+/**
+ * @param {Path} src
+ * @param {Path} dst
+ */
+function symlink(src, dst) {
+  spawnSync("ln", ["-sf", src, dst]);
+}
 
 class Profile {
   /** @param {string} name */
   constructor(name) {
     this.homeDir = join(__dirname, name, "home");
     this.rootDir = join(__dirname, name, "root");
-    assertDir(this.homeDir)
-    assertDir(this.rootDir)
+    assertDir(this.homeDir);
+    assertDir(this.rootDir);
   }
 
   /**
@@ -34,11 +43,13 @@ class Profile {
     src = join(PROJECT_ROOT, src);
     dst = join(this.homeDir, dst);
 
-    assertDir(src)
-    // don't assertDir on destination because it doesn't need to exist
+    assertDir(src);
+    mkdirSync(dirname(dst), { recursive: true });
+    rmSync(dst, { force: true });
 
-    console.log({ src, dst });
-    console.log(relative(dst, src));
+    const rel = relative(dirname(dst), src);
+    symlink(rel, dst);
+    console.log({ src, dst, rel });
   }
 }
 
