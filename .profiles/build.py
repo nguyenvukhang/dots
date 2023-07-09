@@ -24,6 +24,7 @@ class Link:
     def __str__(self):
         src = tild(self.src)
         dst = tild(self.dst)
+        src, dst = self.src, self.dst
         return "{%s -> %s}" % (src, dst)
 
     def __repr__(self):
@@ -41,8 +42,8 @@ class Link:
 
 class Profile:
     def __init__(self, name):  # type: (str) -> None
-        self.home_dir = join(SCRIPT_DIR, name, "home")
-        self.root_dir = join(SCRIPT_DIR, name, "root")
+        self.home_dir = join(SCRIPT_DIR, name, "home")  # type: str
+        self.root_dir = join(SCRIPT_DIR, name, "root")  # type: str
         self.links = list([])  # type: list[Link]
 
     def __str__(self):
@@ -50,18 +51,17 @@ class Profile:
         root = tild(self.root_dir)
         return "{\n\thome: '%s',\n\troot: '%s'\n}" % (home, root)
 
-    def add(self, base, src, dst):  # type: (str, str, str) -> None
-        if dst.startswith("/"):
-            dst = dst[1:]
-        dst = join(base, dst)
+    def add(self, dst, src):  # type: (str, str) -> None
+        full_dst = path.expanduser(dst)
+        if not path.isabs(full_dst):
+            msg = 'Invalid path: "%s"\n' % (dst)
+            msg += "Paths should start with '~' or '/'"
+            raise Exception(msg)
+        base_dir = self.home_dir if HOME in full_dst else self.root_dir
+        rel_dst = dst.split("/", 1)[1]
+        dst = join(base_dir, rel_dst)
         src = join(PROJECT_ROOT, src)
         self.links.append(Link(src, dst))
-
-    def home(self, dst, src):
-        self.add(self.home_dir, src, dst)
-
-    def root(self, dst, src):
-        self.add(self.root_dir, src, dst)
 
 
 def sh(*args):
@@ -72,12 +72,12 @@ def sh(*args):
 # print(Link(".config/git", "@/git"))
 
 mac = Profile("mac")
-mac.home(".config/git", "@/git")
-mac.home(".config/zsh", "zsh")
-mac.home(".config/tmux", "tmux")
-mac.home(".config/nvim", "nvim")
-mac.home(".config/alacritty", "@/alacritty")
-mac.root("/etc/zshenv", "zsh/zshenv/mac")
+mac.add("~/.config/git", "@/git")
+mac.add("~/.config/zsh", "zsh")
+mac.add("~/.config/tmux", "tmux")
+mac.add("~/.config/nvim", "nvim")
+mac.add("~/.config/alacritty", "@/alacritty")
+mac.add("/etc/zshenv", "zsh/zshenv/mac")
 
 print(mac.links)
 
