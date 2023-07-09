@@ -7,6 +7,13 @@ def join(*args):
     return path.normpath(path.join(*args))
 
 
+def pcall(fn):
+    try:
+        fn()
+    except:
+        pass
+
+
 SCRIPT_DIR = path.dirname(__file__)
 PROJECT_ROOT = join(SCRIPT_DIR, "..")
 HOME = path.expanduser("~")
@@ -33,10 +40,8 @@ class Link:
     def execute(self):
         rel = path.relpath(self.src, path.dirname(self.dst))
 
-        try:
-            os.remove(self.dst)
-        except:
-            pass
+        pcall(lambda: os.remove(self.dst))
+        pcall(lambda: os.makedirs(path.dirname(self.dst), exist_ok=True))
         os.symlink(rel, self.dst)
 
 
