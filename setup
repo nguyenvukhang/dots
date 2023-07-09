@@ -25,16 +25,23 @@ if ! command -v stow >/dev/null; then
   echo 'stow not found ._.' && exit 1
 fi
 
+
+send() {
+  SRC="$1"
+  DST="$2"
+  if [ ! -d $DST ]; then
+    mkdir -p $DST
+  fi
+  stow --restow -d $SRC -t $DST
+}
+
+
 # stow --restow -t ~ @
-stow --restow -t ~/.config/tmux -d @/tmux
-stow --restow -t ~/.config/zsh -d @/zsh
-stow --restow -t ~/.config/nvim -d @/nvim
-stow --restow -t ~/.config/alacritty -d @/alacritty
-stow --restow -t ~/.config/git -d @/git
-# stow --restow -t ~/.config -d @ zsh
-# stow --restow -t ~/.config -d @ nvim
-# stow --restow -t ~/.config -d @ alacritty
-# stow --restow -t ~/.config -d @ git
+send @/tmux ~/.config/tmux
+send @/zsh ~/.config/zsh
+send @/nvim ~/.config/nvim
+send @/alacritty ~/.config/alacritty
+send @/git ~/.config/git
 
 # <Here>
 # .
