@@ -26,18 +26,26 @@ if ! command -v stow >/dev/null; then
 fi
 
 # stow --restow -t ~ @
-stow --restow -t ~/.config -d @ tmux
-stow --restow -t ~/.config -d @ zsh
-stow --restow -t ~/.config -d @ nvim
-stow --restow -t ~/.config -d @ alacritty
-stow --restow -t ~/.config -d @ git
+stow --restow -t ~/.config/tmux -d @/tmux
+stow --restow -t ~/.config/zsh -d @/zsh
+stow --restow -t ~/.config/nvim -d @/nvim
+stow --restow -t ~/.config/alacritty -d @/alacritty
+stow --restow -t ~/.config/git -d @/git
+# stow --restow -t ~/.config -d @ zsh
+# stow --restow -t ~/.config -d @ nvim
+# stow --restow -t ~/.config -d @ alacritty
+# stow --restow -t ~/.config -d @ git
 
-# alacritty
-# git
-# kitty
-# ncspot
-# qmk
-# skhd
-# vim
-# xbar
-# yabai
+# <Here>
+# .
+# └── @
+#    ├── zsh
+#    ├── git
+#    └── nvim
+
+# <Deployment>
+# ~
+# └── .config
+#    ├── zsh
+#    ├── git
+#    └── nvim
