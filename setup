@@ -24,35 +24,3 @@ fi
 if ! command -v stow >/dev/null; then
   echo 'stow not found ._.' && exit 1
 fi
-
-
-send() {
-  SRC="$1"
-  DST="$2"
-  if [ ! -d $DST ]; then
-    mkdir -p $DST
-  fi
-  stow --restow -t $DST -- $SRC
-}
-
-
-# stow --restow -t ~ @
-send @/tmux ~/.config/tmux
-send @/zsh ~/.config/zsh
-send @/nvim ~/.config/nvim
-send @/alacritty ~/.config/alacritty
-send @/git ~/.config/git
-
-# <Here>
-# .
-# └── @
-#    ├── zsh
-#    ├── git
-#    └── nvim
-
-# <Deployment>
-# ~
-# └── .config
-#    ├── zsh
-#    ├── git
-#    └── nvim
