@@ -1,0 +1,60 @@
+#!/bin/sh
+# vim:syntax=bash
+
+n_='\033[0m'  # Normal
+r_='\033[31m' # Red
+g_='\033[32m' # Green
+s_='\033[30m' # Gray (Soft)
+
+checkhealth() {
+  # bootstrap homebrew on a mac
+  if [ $OS = 'Darwin' ] && ! command -v brew >/dev/null; then
+    # arm64 and non-arm archs on mac have different homebrew paths
+    [ $ARCH = 'arm64' ] && PREFIX='/opt/homebrew' || PREFIX='/usr/local'
+    [ ! -f $PREFIX/bin/brew ] && echo 'brew not found ._.' && exit 1
+    eval "$($PREFIX/bin/brew shellenv)"
+  fi
+
+  # check that stow is installed
+  if ! command -v stow >/dev/null; then
+    echo 'stow not found ._.' && exit 1
+  fi
+}
+
+# a stow-powered version of "ln -s".
+link() {
+  DIR=${2%/*} PACK=${2##*/}
+  [ $DIR = $PACK ] && DIR=.
+  mkdir -p $1
+  printf "${1}$s_ <- ${DIR}/$g_${PACK}$n_\n"
+  stow -R --target $1 --dir $DIR $PACK
+}
+
+unlink() {
+  DIR=${2%/*} PACK=${2##*/}
+  [ $DIR = $PACK ] && DIR=.
+  printf "${1}$r_ <- $n_${DIR}/${PACK}\n"
+  stow -D --target $1 --dir $DIR $PACK
+}
+
+load_profile() {
+  while IFS= read -r line || [ -n "$line" ]; do
+    TARGET=${line%%:*} SOURCE=${line##*:}
+    link $TARGET $SOURCE
+  done <$1
+}
+
+unload_profile() {
+  while IFS= read -r line || [ -n "$line" ]; do
+    TARGET=${line%%:*} SOURCE=${line##*:}
+    unlink $TARGET $SOURCE
+  done <$1
+}
+
+load_profile mac.profile
+echo "---"
+exa -a --tree squiggle
+echo "---"
+unload_profile mac.profile
+echo "---"
+exa -a --tree squiggle
