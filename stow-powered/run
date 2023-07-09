@@ -21,21 +21,33 @@ checkhealth() {
   fi
 }
 
+parse() {
+  TARGET=${1/#\~/$HOME} DIR=${2%/*} PACK=${2##*/}
+  [ $DIR = $PACK ] && DIR=.
+}
+
 # a stow-powered version of "ln -s".
 link() {
-  DIR=${2%/*} PACK=${2##*/}
-  [ $DIR = $PACK ] && DIR=.
-  mkdir -p $1
-  printf "${1}$s_ <- ${DIR}/$g_${PACK}$n_\n"
-  stow -R --target $1 --dir $DIR $PACK
+  parse $@
+  mkdir -p $TARGET
+  printf "${TARGET}$s_ <- ${DIR}/$g_${PACK}$n_\n"
+  stow -R --target $TARGET --dir $DIR $PACK
 }
 
 unlink() {
-  DIR=${2%/*} PACK=${2##*/}
-  [ $DIR = $PACK ] && DIR=.
+  parse $@
   printf "${1}$r_ <- $n_${DIR}/${PACK}\n"
-  stow -D --target $1 --dir $DIR $PACK
+  stow -D --target $TARGET --dir $DIR $PACK
 }
+
+# [ *.profile files ]
+# Each line contains <target>:<source>
+# <source> is relative to the current directory.
+# For example:
+# ```
+# /etc/zshenv:zshenv
+# ~/.config/nvim:.config/nvim
+# ```
 
 load_profile() {
   while IFS= read -r line || [ -n "$line" ]; do
@@ -55,6 +67,6 @@ load_profile mac.profile
 echo "---"
 exa -a --tree squiggle
 echo "---"
-unload_profile mac.profile
+# unload_profile mac.profile
 echo "---"
 exa -a --tree squiggle
