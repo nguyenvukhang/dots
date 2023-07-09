@@ -1,3 +1,3 @@
-etc:squiggle/etc
-.config/nvim:squiggle/.config/nvim
-.config/nvim:~/.config/dank
+squiggle/etc:etc
+squiggle/.config/nvim:.config/nvim
+~/.config/dank:.config/nvim
