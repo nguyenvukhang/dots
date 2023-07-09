@@ -4,26 +4,30 @@ const { spawnSync } = require("child_process");
 
 const PROJECT_ROOT = resolve(__dirname, "..");
 
+class Link {
+  constructor(src, dst) {
+    this.src = src;
+    this.dst = dst;
+  }
+
+  execute() {
+    rmSync(this.dst, { force: true });
+    mkdirSync(dirname(this.dst), { recursive: true });
+    const rel = relative(dirname(this.dst), this.src);
+    spawnSync("ln", ["-sf", rel, this.dst]);
+  }
+}
+
 /**
  * @typedef {import("fs").PathLike} Path
  */
 
 /**
  * Asserts that a directory exists at path
- * @param {Path} dirPath
+ * @param {Path} path
  */
-function assertDir(dirPath) {
-  if (!lstatSync(dirPath).isDirectory()) {
-    throw new Error(`Directory not found: ${result}`);
-  }
-}
-
-/**
- * @param {Path} src
- * @param {Path} dst
- */
-function symlink(src, dst) {
-  spawnSync("ln", ["-sf", src, dst]);
+function assertExists(path) {
+  lstatSync(path);
 }
 
 class Profile {
@@ -31,27 +35,42 @@ class Profile {
   constructor(name) {
     this.homeDir = join(__dirname, name, "home");
     this.rootDir = join(__dirname, name, "root");
-    assertDir(this.homeDir);
-    assertDir(this.rootDir);
+    this.links = [];
+    assertExists(this.homeDir);
+    assertExists(this.rootDir);
+  }
+
+  home(dst, src) {
+    this.add(this.homeDir, dst, src);
+  }
+
+  root(dst, src) {
+    this.add(this.rootDir, dst, src);
   }
 
   /**
    * @param {string} src
    * @param {string} dst
    */
-  home(dst, src) {
+  add(baseDir, dst, src) {
     src = join(PROJECT_ROOT, src);
-    dst = join(this.homeDir, dst);
+    assertExists(src);
+    dst = join(baseDir, dst);
+    this.links.push(new Link(src, dst));
+  }
 
-    assertDir(src);
-    mkdirSync(dirname(dst), { recursive: true });
-    rmSync(dst, { force: true });
-
-    const rel = relative(dirname(dst), src);
-    symlink(rel, dst);
-    console.log({ src, dst, rel });
+  linkAll() {
+    this.links.forEach((v) => v.execute());
   }
 }
 
 const mac = new Profile("mac");
 mac.home(".config/git", "@/git");
+mac.home(".config/zsh", "zsh");
+mac.home(".config/tmux", "tmux");
+mac.home(".config/nvim", "nvim");
+mac.home(".config/alacritty", "@/alacritty");
+mac.root("/etc/zshenv", "zsh/zshenv/mac");
+
+mac.linkAll();
+console.log(mac.links);
