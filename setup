@@ -32,7 +32,7 @@ send() {
   if [ ! -d $DST ]; then
     mkdir -p $DST
   fi
-  stow --restow -d $SRC -t $DST
+  stow --restow -t $DST -- $SRC
 }
 
 
