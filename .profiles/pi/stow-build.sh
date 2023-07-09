@@ -5,4 +5,4 @@ ln -sf ../../../../tmux ./home/.config/tmux
 ln -sf ../../../../zsh ./home/.config/zsh
 ln -sf ../../../../@/alacritty ./home/.config/alacritty
 ln -sf ../../../../@/git ./home/.config/git
-ln -sf ../../../../zsh/zshenv/pi ./root/etc//zsh/zshenv
+ln -sf ../../../../zsh/zshenv/pi ./root/etc/zsh/zshenv
