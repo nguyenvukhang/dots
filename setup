@@ -25,4 +25,19 @@ if ! command -v stow >/dev/null; then
   echo 'stow not found ._.' && exit 1
 fi
 
-stow --restow -t ~ @
+# stow --restow -t ~ @
+stow --restow -t ~/.config -d @ tmux
+stow --restow -t ~/.config -d @ zsh
+stow --restow -t ~/.config -d @ nvim
+stow --restow -t ~/.config -d @ alacritty
+stow --restow -t ~/.config -d @ git
+
+# alacritty
+# git
+# kitty
+# ncspot
+# qmk
+# skhd
+# vim
+# xbar
+# yabai
