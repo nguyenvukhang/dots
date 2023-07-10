@@ -1,3 +1,4 @@
+START_TMUX=true
 ZDOTDIR=$HOME/.config/zsh
 DEVICE_ID=khang.mac
 PROMPT_ARROW='>'
