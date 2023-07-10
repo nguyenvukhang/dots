@@ -1,3 +1,4 @@
 ZDOTDIR=$HOME/.config/zsh
+ZSHENV_PATH=/etc/zsh/zshenv
 DEVICE_ID=khang.pi
 FD_BIN=fdfind

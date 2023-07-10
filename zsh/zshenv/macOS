@@ -1,4 +1,5 @@
 START_TMUX=true
+ZSHENV_PATH=/etc/zshenv
 ZDOTDIR=$HOME/.config/zsh
 DEVICE_ID=khang.mac
 PROMPT_ARROW='>'

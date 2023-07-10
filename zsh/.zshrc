@@ -294,14 +294,15 @@ ed() {
   case $1 in
   a) t="$DOTS/fs/src/alacritty/alacritty.yml" ;;
   g) t="$DOTS/fs/src/git/config" ;;
-  c) t="$HOME/Library/Application Support/rs.canvas-sync/config.yml" ;;
-  k) t="$DOTS/fs/src/kitty/kitty.conf" ;;
   s) t="$DOTS/personal/.ssh/config" ;;
   t) t="$DOTS/tmux/tmux.conf" ;;
   u) t="$UNI_LAUNCH" ;;
   v) t="$DOTS/nvim/init.lua" ;;
-  w) t="$HOME/.config/wezterm/wezterm.lua" ;;
   z) t="$DOTS/zsh/.zshrc" ;;
+  ze) t="$ZSHENV_PATH" ;;
+  # c) t="$HOME/Library/Application Support/rs.canvas-sync/config.yml" ;;
+  # k) t="$DOTS/fs/src/kitty/kitty.conf" ;;
+  # w) t="$HOME/.config/wezterm/wezterm.lua" ;;
   esac
   [ $t ] && $EDITOR $t || echo "nothing happened."
 }
