@@ -104,24 +104,19 @@ unload_profile() {
   done <$1
 }
 
-help() {
-  echo "khang's dotfiles setup
+HELP_TEXT="
+khang's dotfiles setup
 
-sh setup COMMAND PROFILE
+setup COMMAND PROFILE
 
-COMMAND
-  i, install    
-  u, uninstall
+COMMAND: (i, install) or (u, uninstall)
 
-PROFILE
-  A plain text file where each line is of the form
-  <destination>:<source>
-
-  example line:
-  ~/.config/nvim:nvim
+PROFILE: A plain text file where each line is
+         <destination>:<source>
 "
 
-  echo "Error: $1"
+help() {
+  printf "$HELP_TEXT\nError: $1\n"
   exit 1
 }
 
@@ -130,12 +125,14 @@ validate_args() {
   i | install | u | uninstall) ;;
   *) help "Invalid command" ;;
   esac
-  [ -z $2 ] && echo "Please specify a profile file to load" && exit 1
-  [ -f $2 ] || echo "Profile not found" && exit 1
+  [ -z $2 ] && help "Please specify a profile file to load"
+  [ -f $2 ] || help "Profile not found"
   return 0
 }
 
-validate_args() case $1 in
+validate_args $@
+
+case $1 in
 i | install) load_profile $2 ;;
 u | uninstall) unload_profile $2 ;;
 *) help "Invalid command" ;;
