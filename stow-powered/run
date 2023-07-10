@@ -60,6 +60,9 @@ link() {
   mkdir -p ${TARGET%/*}
   printf "${TARGET}$s_ <- ${DIR}/$g_${PACK}$n_\n"
   if [ ! -d $TARGET ]; then
+    if [ -h $TARGET ]; then
+      rm -f $TARGET
+    fi
     ln -s $PWD/$DIR/$PACK $TARGET
   else
     stow --target $TARGET --dir $DIR $PACK
