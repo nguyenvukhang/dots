@@ -61,7 +61,7 @@ parse() {
 # link <target> <source>
 link() {
   parse $@
-  mkdir -p ${TARGET%/*}
+  mkdir -p ${TARGET%/*} 2>/dev/null
   printf "${TARGET}$s_ <- ${DIR}/$g_${PACK}$n_\n"
   if [ ! -d $TARGET ]; then
     if [ -h $TARGET ]; then
