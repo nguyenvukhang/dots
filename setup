@@ -47,7 +47,11 @@ checkhealth() {
 #
 # parse <target> <source>
 parse() {
-  TARGET=${1/#\~/$HOME} DIR=${2%/*} PACK=${2##*/}
+  case $1 in
+  ~*) TARGET=${HOME}${1#*~} ;;
+  *) TARGET=$1 ;;
+  esac
+  DIR=${2%/*} PACK=${2##*/}
   [ $DIR = $PACK ] && DIR=.
 }
 
