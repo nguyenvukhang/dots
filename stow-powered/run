@@ -104,7 +104,8 @@ unload_profile() {
   done <$1
 }
 
-HELP_TEXT="khang's dotfiles setup
+help() {
+  echo "khang's dotfiles setup
 
 sh setup COMMAND PROFILE
 
@@ -117,16 +118,25 @@ PROFILE
   <destination>:<source>
 
   example line:
-  ~/.config/nvim:nvim"
+  ~/.config/nvim:nvim
+"
 
-case $1 in
-i | install) echo "GOT HERE" ;;
-u | uninstall) echo "GOT HERE" ;;
-*)
-  echo "$HELP_TEXT"
+  echo "Error: $1"
   exit 1
-  ;;
-esac
+}
 
-# unload_profile mac.profile
-# load_profile mac.profile
+validate_args() {
+  case $1 in
+  i | install | u | uninstall) ;;
+  *) help "Invalid command" ;;
+  esac
+  [ -z $2 ] && echo "Please specify a profile file to load" && exit 1
+  [ -f $2 ] || echo "Profile not found" && exit 1
+  return 0
+}
+
+validate_args() case $1 in
+i | install) load_profile $2 ;;
+u | uninstall) unload_profile $2 ;;
+*) help "Invalid command" ;;
+esac
