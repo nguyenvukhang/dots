@@ -63,11 +63,11 @@ link() {
     ln -s $PWD/$DIR/$PACK $TARGET
   else
     stow --target $TARGET --dir $DIR $PACK
-  fi 
+  fi
 }
 
 # link⁻¹
-# 
+#
 # Uses stow to undo changes created by link. Smarter than just rm -rf.
 #
 # unlink <target> <source>
@@ -104,18 +104,29 @@ unload_profile() {
   done <$1
 }
 
-unload_profile mac.profile
-load_profile mac.profile
+HELP_TEXT="khang's dotfiles setup
 
-# rm -rf squiggle/.config
-# rm -rf squiggle/etc
-#
-# exa -a --tree squiggle
-# echo "---"
+sh setup COMMAND PROFILE
+
+COMMAND
+  i, install    
+  u, uninstall
+
+PROFILE
+  A plain text file where each line is of the form
+  <destination>:<source>
+
+  example line:
+  ~/.config/nvim:nvim"
+
+case $1 in
+i | install) echo "GOT HERE" ;;
+u | uninstall) echo "GOT HERE" ;;
+*)
+  echo "$HELP_TEXT"
+  exit 1
+  ;;
+esac
+
+# unload_profile mac.profile
 # load_profile mac.profile
-# echo "---"
-# exa -a --tree squiggle
-# echo "---"
-# # unload_profile mac.profile
-# echo "---"
-# exa -a --tree squiggle
