@@ -1,7 +1,17 @@
-START_TMUX=true
-ZSHENV_PATH=/etc/zshenv
+# core paths
+DOTS=$HOME/dots
 ZDOTDIR=$HOME/.config/zsh
-DEVICE_ID=khang.mac
+ZSHENV_PATH=/etc/zshenv
+
+# derivative paths
+PASSWORD_STORE_DIR=$DOTS/personal
+N_PREFIX="$HOME/.local/n"
+[[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
+
+# configs
 PROMPT_ARROW='>'
 
+# sources
 [ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# vim:ft=zsh

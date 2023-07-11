@@ -52,13 +52,7 @@ FZF_OPTS=(--height=7 +m --no-mouse --reverse
 # use neovim as manpager
 [ "$EDITOR" = "nvim" ] && export MANPAGER="nvim +Man!"
 
-# for my own scripts and neovim configs
-export DOTS=$HOME/dots
-export REPOS=$HOME/repos
-BUN_INSTALL=$HOME/.bun
-
 PATH=$HOME/.local/bin:$PATH
-PATH=$BUN_INSTALL/bin:$PATH
 PATH=$HOME/Qt/6.4.2/macos/bin:$PATH
 PATH=$HOME/Qt/Tools/QtInstallerFramework/4.5/bin:$PATH
 PATH=$HOME/.yarn/bin:$PATH
@@ -250,13 +244,12 @@ p() {
   [ -z $target ] && echo "nothing selected." && return
   case $1 in
   '')
-    local data=$(pass $target) YELLOW="\e[1;33m" NORMAL="\e[1;0m"
+    local data=$(pass $target) YELLOW='\e[33m' NORMAL='\e[0m'
     # print the second line to stdout
     [[ "$data" = *$'\n'* ]] && echo ${YELLOW}${data#*$'\n'}${NORMAL}
     read -ks "_?Press any key to continue..." && echo
-    # copy the password to clipboard
     pass show --clip $target &>/dev/null
-    echo 'Copied password to clipboard. Will clear after 45 seconds.'
+    echo 'Copied password to clipboard.'
     ;;
   '--edit' | '-e') pass edit $target ;;
   esac
@@ -386,7 +379,6 @@ jclear() {
 
 # newer aliases
 alias clangf="cp $DOTS/zsh/.clang-format ."
-alias gitd="$REPOS/gitnu/target/debug/git-nu" # gitnu dev
 
 # file opener
 view() {

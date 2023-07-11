@@ -1,4 +1,5 @@
 #!/bin/sh
+#
 # vim:syntax=bash
 #
 # This model of dotfiles requires the files to be organized in at
@@ -29,6 +30,10 @@ checkhealth() {
   if ! command -v stow >/dev/null; then
     echo 'stow not found ._.' && exit 1
   fi
+}
+
+assert_is_file() {
+  [ ! -f $1 ] && echo "Profile not found: \"$1\"" && exit 1
 }
 
 # Counter-intuitively, this uses $1 as target and $2 for source. This
@@ -104,11 +109,37 @@ load_profile() {
   done <$1
 }
 
+load_many_profiles() {
+  if [ "$1" == 'all' ]; then
+    for profile in .profiles/*; do
+      load_profile $profile
+    done
+    return
+  fi
+  for profile in $@; do
+    assert_is_file $profile
+    load_profile $profile
+  done
+}
+
 unload_profile() {
   while IFS= read -r line || [ -n "$line" ]; do
     TARGET=${line%%:*} SOURCE=${line##*:}
     unlink $TARGET $SOURCE
   done <$1
+}
+
+unload_many_profiles() {
+  if [ "$1" == 'all' ]; then
+    for profile in .profiles/*; do
+      unload_profile $profile
+    done
+    return
+  fi
+  for profile in $@; do
+    assert_is_file $profile
+    unload_profile $profile
+  done
 }
 
 HELP_TEXT="
@@ -127,20 +158,25 @@ help() {
   exit 1
 }
 
-validate_args() {
-  case $1 in
-  i | install | u | uninstall) ;;
-  *) help "Invalid command" ;;
-  esac
-  [ -z $2 ] && help "Please specify a profile file to load"
-  [ -f $2 ] || help "Profile not found"
-  return 0
-}
-
-validate_args $@
+case $1 in
+i | install) COMMAND=install ;;
+u | uninstall) COMMAND=uninstall ;;
+r | reinstall) COMMAND=reinstall ;;
+*) help "Invalid command" ;;
+esac
+shift
 
 case $1 in
-i | install) load_profile $2 ;;
-u | uninstall) unload_profile $2 ;;
+mac) set -- .profiles/base .profiles/macOS ;;
+pi) set -- .profiles/base .profiles/pi ;;
+esac
+
+case $COMMAND in
+install) load_many_profiles $@ ;;
+uninstall) unload_many_profiles $@ ;;
+reinstall)
+  unload_many_profiles $@
+  load_many_profiles $@
+  ;;
 *) help "Invalid command" ;;
 esac

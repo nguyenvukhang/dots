@@ -1,3 +1,4 @@
 ~/.config/nvim:nvim
 ~/.config/zsh:zsh
 ~/.config/git:@/git
+~/.local/bin:personal/.local/bin
