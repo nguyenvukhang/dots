@@ -229,13 +229,6 @@ yeet() {
   fi
 }
 
-# to remove a submodule completely:
-# 0. mv a/submodule a/submodule_tmp
-# 1. git submodule deinit -f -- a/submodule
-# 2. rm -rf .git/modules/a/submodule
-# 3. git rm -f a/submodule
-# Note: a/submodule (no trailing slash)
-
 # alt way (derived):
 # 1. rm -rf a/submodule
 # 2. git submodule deinit -f -- a/submodule
@@ -280,9 +273,6 @@ ed() {
   v) t="$DOTS/nvim/init.lua" ;;
   z) t="$DOTS/zsh/.zshrc" ;;
   ze) t="$ZSHENV_PATH" ;;
-  # c) t="$HOME/Library/Application Support/rs.canvas-sync/config.yml" ;;
-  # k) t="$DOTS/fs/src/kitty/kitty.conf" ;;
-  # w) t="$HOME/.config/wezterm/wezterm.lua" ;;
   esac
   [ $t ] && $EDITOR $t || echo "nothing happened."
 }
