@@ -1,5 +1,5 @@
-START_TMUX=${START_TMUX-false}
 PROMPT_ARROW=${PROMPT_ARROW-[uwu] >}
+[ $TMUX ] || alias tm='tmux'
 
 [ -z $FD_BIN ] && FD_BIN=fd
 alias fd="$FD_BIN --hidden"

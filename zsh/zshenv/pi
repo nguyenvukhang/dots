@@ -4,15 +4,14 @@ ZDOTDIR=$HOME/.config/zsh
 ZSHENV_PATH=/etc/zsh/zshenv
 
 # derivative paths
-PASSWORD_STORE_DIR=$DOTS/personal
-N_PREFIX="$HOME/.local/n"
+export PASSWORD_STORE_DIR=$DOTS/personal
+export N_PREFIX="$HOME/.local/n"
 [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
-IOT_ENV=$DOTS/personal/.secrets/iot.env
+export IOT_ENV=$DOTS/personal/.secrets/iot.env
 PATH+=":$DOTS/personal/.local/bin.linux-arm"
 
 # configs
 FD_BIN=fdfind
 PROMPT_ARROW='[pi] >'
-PASSWORD_STORE_DIR=$DOTS/personal
 
 # vim:ft=zsh
