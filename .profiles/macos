@@ -1,3 +1,4 @@
 ~/.config/alacritty:@/alacritty
+~/.config/kitty:@/kitty
 ~/.config/tmux:tmux
 /etc/zshenv:zsh/zshenv/macOS

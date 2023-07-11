@@ -258,8 +258,9 @@ p() {
 ed() {
   local t
   case $1 in
-  a) t="$DOTS/fs/src/alacritty/alacritty.yml" ;;
-  g) t="$DOTS/fs/src/git/config" ;;
+  a) t="$DOTS/@/alacritty/alacritty.yml" ;;
+  g) t="$DOTS/@/git/config" ;;
+  k) t="$DOTS/@/kitty/kitty.conf" ;;
   s) t="$DOTS/personal/.ssh/config" ;;
   t) t="$DOTS/tmux/tmux.conf" ;;
   u) t="$UNI_LAUNCH" ;;
