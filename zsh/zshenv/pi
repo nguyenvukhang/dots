@@ -1,7 +1,17 @@
+# core paths
+DOTS=$HOME/dots
 ZDOTDIR=$HOME/.config/zsh
 ZSHENV_PATH=/etc/zsh/zshenv
-DEVICE_ID=khang.pi
+IOT_ENV=$HOME/dots/personal/.secrets/iot.env
+
+# derivative paths
+PASSWORD_STORE_DIR=$DOTS/personal
+N_PREFIX="$HOME/.local/n"
+[[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
+
+# configs
 FD_BIN=fdfind
 PROMPT_ARROW='[pi] >'
-IOT_ENV=$HOME/dots/personal/.secrets/iot.env
-export N_PREFIX="$HOME/.local/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
+PASSWORD_STORE_DIR=$DOTS/personal
+
+# vim:ft=zsh
