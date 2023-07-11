@@ -11,14 +11,16 @@ alias rg="rg --hidden"
 # Use tmux session as a shell wrapper.
 # Only quitting the base session will exit the terminal emulator.
 tmux_loop() {
-  ([[ $START_TMUX != true ]] || [ $TMUX ] || ! command -v tmux 2>/dev/null) && return
+  ([ $TMUX ] || ! command -v tmux 2>/dev/null) && return
   while; do
     [[ $(tmux new -As z -n editor) == '[detached (from session z)]' ]] && exit
     tmux has -t z && continue || exit
   done
 }
 export EDITOR=nvim # somehow this export is needed for tmux select to work
-tmux_loop
+if [[ $START_TMUX == true ]]; then
+  tmux_loop
+fi
 
 # ////////////////////////////////////////////////////////////////////
 
@@ -318,6 +320,7 @@ alias 2k="cd $HOME/repos/log"
 alias 2l="cd $HOME/.local"
 alias 2lb="cd $HOME/.local/bin"
 alias 2ls="cd $HOME/.local/src"
+alias 2m="cd $HOME/astar"
 alias 2mc="cd '$HOME/Library/Application Support/PrismLauncher/instances'"
 alias 2n="cd $REPOS/notes"
 alias 2o="cd $HOME/repos"
@@ -427,6 +430,6 @@ checkhealth() {
 
 # file opener
 view() {
-  local x=$(fd -t f -e pdf | fzf ${FZF_OPTS})
+  local x=$(fd -tf -tl | fzf ${FZF_OPTS})
   [ $x ] && open "$x"
 }

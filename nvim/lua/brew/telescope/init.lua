@@ -16,7 +16,6 @@ nnoremap('<leader>su', search.files.university)
 -- local builtin = require('telescope.builtin')
 -- nnoremap('<leader>sh', builtin.help_tags)
 -- nnoremap('<leader>sm', builtin.man_pages)
--- nnoremap('<leader>gs', builtin.git_status)
 
 require('telescope').setup {
   defaults = {
