@@ -5,30 +5,7 @@ PROMPT_ARROW=${PROMPT_ARROW-[uwu] >}
 alias fd="$FD_BIN --hidden"
 alias rg="rg --hidden"
 
-# load homebrew
-[ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
-
-# Use tmux session as a shell wrapper.
-# Only quitting the base session will exit the terminal emulator.
-tmux_loop() {
-  ([ $TMUX ] || ! command -v tmux 2>/dev/null) && return
-  while; do
-    [[ $(tmux new -As z -n editor) == '[detached (from session z)]' ]] && exit
-    tmux has -t z && continue || exit
-  done
-}
-export EDITOR=nvim # somehow this export is needed for tmux select to work
-if [[ $START_TMUX == true ]]; then
-  tmux_loop
-fi
-
 # ////////////////////////////////////////////////////////////////////
-
-# Starting directory (also the marked directory)
-START_DIR=$HOME/repos/paper/tool
-
-[ $PWD = $HOME ] && [ -d $START_DIR ] && cd $START_DIR
-alias 2m="cd $START_DIR"
 
 # cargo (rust)
 [ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
@@ -47,6 +24,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
+export EDITOR=nvim
 export GITNU_DEBUG=1
 
 unsetopt BEEP    # prevents beeps in general
@@ -72,7 +50,7 @@ FZF_OPTS=(--height=7 +m --no-mouse --reverse
   --no-info --prompt="  " --color=$FZF_COLORS)
 
 # use neovim as manpager
-[ $EDITOR = "nvim" ] && export MANPAGER="nvim +Man!"
+[ "$EDITOR" = "nvim" ] && export MANPAGER="nvim +Man!"
 
 # for my own scripts and neovim configs
 export DOTS=$HOME/dots
@@ -338,11 +316,11 @@ alias b="cd -"  # back
 }
 
 if has exa; then
-  EXA_OPTS=(--group-directories-first --sort=Filename --ignore-glob='.DS_Store')
+  EXA_OPTS=(--group-directories-first -s Name -I '.DS_Store')
   alias ls="exa -a $EXA_OPTS"
-  alias lss="exa -a --tree --level=2 $EXA_OPTS"
-  alias lsss="exa -a --tree --level=3 $EXA_OPTS"
-  alias ll="exa -al $EXA_OPTS"
+  alias lss="exa -a --tree -L 2 $EXA_OPTS"
+  alias lsss="exa -a --tree -L 3 $EXA_OPTS"
+  alias ll="exa -lag $EXA_OPTS"
 else
   alias ls="ls -A --color=auto"
   alias ll="ls -lAg --color=auto"
@@ -419,14 +397,6 @@ jclear() {
 # newer aliases
 alias clangf="cp $DOTS/zsh/.clang-format ."
 alias gitd="$REPOS/gitnu/target/debug/git-nu" # gitnu dev
-
-# checks to see if required apps are installed
-checkhealth() {
-  local REQUIRE=(fzf nvim fd rg tmux)
-  for app in ${REQUIRE[@]}; do
-    has $app || echo "zshrc needs: $app"
-  done
-}
 
 # file opener
 view() {
