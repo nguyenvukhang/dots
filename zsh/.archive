@@ -1,0 +1,15 @@
+#!/bin/zsh
+
+# Use tmux session as a shell wrapper.
+# Only quitting the base session will exit the terminal emulator.
+tmux_loop() {
+  ([ $TMUX ] || ! command -v tmux 2>/dev/null) && return
+  while; do
+    [[ $(tmux new -As z -n editor) == '[detached (from session z)]' ]] && exit
+    tmux has -t z && continue || exit
+  done
+}
+export EDITOR=nvim # somehow this export is needed for tmux select to work
+if [[ $START_TMUX == true ]]; then
+  tmux_loop
+fi
