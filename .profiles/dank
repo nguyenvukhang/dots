@@ -1,4 +1,3 @@
 ~/.config/alacritty:@/alacritty
 ~/.config/tmux:tmux
 /etc/zshenv:zsh/zshenv/macOS
-~/.local/bin:personal/.local/bin.macos-arm
