@@ -1,50 +1,62 @@
 # https://github.com/alacritty/alacritty/blob/master/alacritty.yml
-env:
-  TERM: xterm-256color
+env: { TERM: xterm-256color }
+bell: { duration: 0 }
+live_config_reload: true
+scrolling: { history: 0 }
 
 window:
-  decorations: buttonless
-  opacity: 1
-  padding:
-    x: 8
-    y: 4
+  # full, none, buttonless, transparent
+  decorations: full
+  opacity: 0.98
+  decorations_theme_variant: Dark
+  padding: { x: 8, y: 4 }
   dynamic_padding: true
 
-scrolling:
-  history: 0
-
 font:
-  normal:
-    family: JetBrains Mono
-    style: Light
-  bold:
-    style: Light
-  italic:
-    style: Light
-  bold_italic:
-    style: Light
+  normal: { family: JetBrains Mono, style: Light }
+  bold: { style: Light }
+  italic: { style: Light }
+  bold_italic: { style: Light }
   size: 14
 
 # XCode defaults
 # font:
-#   normal:
-#     family: SF Mono
-#     style: Regular
-#   bold:
-#     style: Regular
-#   italic:
-#     style: Regular
-#   bold_italic:
-#     style: Regular
+#   normal: { family: SF Mono, style: Regular }
+#   bold: { style: Regular }
+#   italic: { style: Regular }
+#   bold_italic: { style: Regular }
 #   size: 12.5
-#   offset:
-#     x: 0
-#     y: 4
+#   offset: { x: 0, y: 4 }
+
+cursor:
+  style: { shape: Block, blinking: Always }
+  blink_interval: 750
+  unfocused_hollow: true
+
+colors: # (gruvbox material)
+  cursor:
+    cursor: "#d5c4a1"
+    text: "#282828"
+  normal:
+    black: "#7c6f64"
+    blue: "#7daea3"
+    cyan: "#89b482"
+    green: "#a9b665"
+    magenta: "#d3869b"
+    red: "#ea6962"
+    white: "#ebdbb2"
+    yellow: "#d8a657"
+  primary:
+    background: "#282828"
+    foreground: "#ebdbb2"
+  selection:
+    background: "#ebdbb2"
+    text: "#504945"
 
 key_bindings:
   - { key: A, mods: Command, chars: "\x1ba" }
   - { key: B, mods: Command, chars: "\x1bb" }
-  - { key: C, mods: Command, chars: "\x1bc" }
+  - { key: C, mods: Command, action: Copy }
   - { key: D, mods: Command, chars: "\x1bd" }
   - { key: E, mods: Command, chars: "\x1be" }
   - { key: F, mods: Command, chars: "\x1bf" }
@@ -97,35 +109,3 @@ key_bindings:
   - { key: X, mods: Shift|Command, chars: "\x1bX" }
   - { key: Y, mods: Shift|Command, chars: "\x1bY" }
   - { key: Z, mods: Shift|Command, chars: "\x1bZ" }
-
-bell:
-  duration: 0
-
-cursor:
-  style:
-    shape: Block
-    blinking: Always
-  blink_interval: 750
-  unfocused_hollow: true
-
-live_config_reload: false
-
-colors: # (gruvbox material)
-  cursor:
-    cursor: "#d5c4a1"
-    text: "#282828"
-  normal:
-    black: "#7c6f64"
-    blue: "#7daea3"
-    cyan: "#89b482"
-    green: "#a9b665"
-    magenta: "#d3869b"
-    red: "#ea6962"
-    white: "#ebdbb2"
-    yellow: "#d8a657"
-  primary:
-    background: "#282828"
-    foreground: "#ebdbb2"
-  selection:
-    background: "#ebdbb2"
-    text: "#504945"
