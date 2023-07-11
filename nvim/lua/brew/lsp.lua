@@ -73,7 +73,7 @@ end
 
 -- lua
 M.lua = function()
-  require('neodev').setup {}
+  pcall(function() require('neodev').setup {} end, 'neodev')
   local luapath = vim.split(package.path, ';', {})
   table.insert(luapath, 'lua/?.lua')
   table.insert(luapath, 'lua/?/init.lua')
