@@ -110,7 +110,7 @@ load_profile() {
 }
 
 load_many_profiles() {
-  if [ "$1" == 'all' ]; then
+  if [ "$1" = 'all' ]; then
     for profile in .profiles/*; do
       load_profile $profile
     done
@@ -130,7 +130,7 @@ unload_profile() {
 }
 
 unload_many_profiles() {
-  if [ "$1" == 'all' ]; then
+  if [ "$1" = 'all' ]; then
     for profile in .profiles/*; do
       unload_profile $profile
     done
