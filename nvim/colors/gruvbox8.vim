@@ -226,7 +226,7 @@ if &background == 'dark'
   hi Type guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
   hi Typedef guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
   hi Underlined guifg=#83a598 guibg=NONE guisp=#83a598 gui=underline
-  hi VertSplit guifg=#665c54 guibg=#282828 guisp=NONE gui=NONE
+  hi VertSplit guifg=#504945 guibg=NONE guisp=NONE gui=NONE
   hi Visual guifg=NONE guibg=#665c54 guisp=NONE gui=NONE
   hi VisualMode guifg=#fe8019 guibg=#282828 guisp=NONE gui=reverse
   hi WarningMsg guifg=#fb4934 guibg=NONE guisp=NONE gui=bold
