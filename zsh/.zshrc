@@ -44,9 +44,7 @@ PROMPT=$'%F{blue}%~$(prompt_git)%f\n%(?.%F{green}${PROMPT_ARROW} %f.%F{red}${PRO
 
 # generic fzf options
 # use with fzf --color=$FZF_COLORS
-FZF_COLORS='pointer:green,header:green'
-FZF_OPTS=(--height=7 +m --no-mouse --reverse
-  --no-info --prompt="  " --color=$FZF_COLORS)
+FZF_OPTS=(--height=7 +m --no-mouse --reverse --no-info --prompt="  ")
 
 # use neovim as manpager
 [ "$EDITOR" = "nvim" ] && export MANPAGER="nvim +Man!"
@@ -312,10 +310,10 @@ fi
 # g for jump (requires fd and fzf)
 g() {
   [[ ! $(command ls -Ap) = *"/"* ]] && return # end if no child dir
-  local FD=(-HI -d ${1-4} -t d -E '.git' -E 'node_modules')
-  local FZF=(--height=7 +m --no-mouse --reverse --no-info --color=$FZF_COLORS
+  local FD_ARGS=(-HI -d ${1-4} -t d -E '.git' -E 'node_modules')
+  local FZF=(--height=7 +m --no-mouse --reverse --no-info
     --prompt='  ' --header=${PWD/$HOME/'~'} --expect 'esc,left,enter,right')
-  [[ $(fd $FD | fzf $FZF) =~ '^(.*)'$'\n''(.*)$' ]]
+  [[ $($FD_BIN $FD_ARGS | fzf $FZF) =~ '^(.*)'$'\n''(.*)$' ]]
   case ${match[1]} in
   left) cd .. && g ;;
   enter) [ ${match[2]} ] && cd ${match[2]} ;;
