@@ -50,9 +50,10 @@ FZF_OPTS=(--height=7 +m --no-mouse --reverse --no-info --prompt="  ")
 [ "$EDITOR" = "nvim" ] && export MANPAGER="nvim +Man!"
 
 PATH=$HOME/.local/bin:$PATH
-PATH=$HOME/Qt/6.4.2/macos/bin:$PATH
-PATH=$HOME/Qt/Tools/QtInstallerFramework/4.5/bin:$PATH
+# PATH=$HOME/Qt/6.4.2/macos/bin:$PATH
+# PATH=$HOME/Qt/Tools/QtInstallerFramework/4.5/bin:$PATH
 PATH=$HOME/.yarn/bin:$PATH
+PATH=$HOMEBREW_PREFIX/anaconda3/bin/:$PATH
 PATH=$HOMEBREW_PREFIX/opt/node@16/bin:$PATH # node@16 via brew
 export PATH
 
