@@ -2,7 +2,7 @@
 env: { TERM: xterm-256color }
 bell: { duration: 0 }
 live_config_reload: true
-scrolling: { history: 0 }
+scrolling: { history: 10000 }
 
 window:
   # full, none, buttonless, transparent
