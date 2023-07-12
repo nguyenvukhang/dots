@@ -231,28 +231,6 @@ yeet() {
 # [https://stackoverflow.com/questions/43762338/how-to-remove-file-from-git-history]
 # git filter-branch --index-filter "git rm -rf --cached --ignore-unmatch path_to_file" HEAD
 
-p() {
-  # get a target gpg file
-  local res=()
-  while IFS= read -r i; do
-    [[ $i =~ '^(.*)\.gpg$' ]] && res+=("${match[1]}")
-  done < <($FD_BIN -e gpg --base-directory $HOME/.password-store)
-  local target=$(printf '%s\n' "${res[@]}" | fzf)
-  # guard
-  [ -z $target ] && echo "nothing selected." && return
-  case $1 in
-  '')
-    local data=$(pass $target) YELLOW='\e[33m' NORMAL='\e[0m'
-    # print the second line to stdout
-    [[ "$data" = *$'\n'* ]] && echo ${YELLOW}${data#*$'\n'}${NORMAL}
-    read -ks "_?Press any key to continue..." && echo
-    pass show --clip $target &>/dev/null
-    echo 'Copied password to clipboard.'
-    ;;
-  '--edit' | '-e') pass edit $target ;;
-  esac
-}
-
 ed() {
   local t
   case $1 in

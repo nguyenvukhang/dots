@@ -1,12 +1,12 @@
 # https://github.com/alacritty/alacritty/blob/master/alacritty.yml
 env: { TERM: xterm-256color }
 bell: { duration: 0 }
-live_config_reload: true
+live_config_reload: false
 scrolling: { history: 10000 }
 
 window:
   # full, none, buttonless, transparent
-  decorations: full
+  decorations: buttonless
   opacity: 0.98
   decorations_theme_variant: Dark
   padding: { x: 8, y: 4 }
