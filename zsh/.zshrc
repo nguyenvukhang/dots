@@ -417,7 +417,12 @@ tm() {
       tmux new -s $1 -d && tmux_switch_attach -t $1
     fi
   else
-    local SELECT=$(tmux ls | fzf $FZF_OPTS)
-    [ $SELECT ] && tmux_switch_attach -t ${SELECT%%:*}
+    local CHOICES=$(tmux ls 2>/dev/null)
+    if [ -z $CHOICES ]; then
+      tmux new-session
+    else
+      local SELECT=$(echo $CHOICES | fzf $FZF_OPTS)
+      [ $SELECT ] && tmux_switch_attach -t ${SELECT%%:*}
+    fi
   fi
 }
