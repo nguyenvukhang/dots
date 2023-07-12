@@ -1,5 +1,4 @@
 PROMPT_ARROW=${PROMPT_ARROW-[uwu] >}
-[ $TMUX ] || alias tm='tmux'
 
 [ -z $FD_BIN ] && FD_BIN=fd
 alias fd="$FD_BIN --hidden"
@@ -385,4 +384,41 @@ alias clangf="cp $DOTS/zsh/.clang-format ."
 view() {
   local x=$(fd -tf -tl | fzf ${FZF_OPTS})
   [ $x ] && open "$x"
+}
+
+tmux_switch_attach() {
+  if [ $TMUX ]; then
+    tmux switch $@
+  else
+    tmux attach $@
+  fi
+}
+
+tm() {
+  case $1 in
+  ls)
+    shift
+    tmux ls $@
+    return
+    ;;
+  -d)
+    if [ $2 ]; then
+      tmux kill-session -t $2
+    else
+      local SELECT=$(tmux ls | fzf $FZF_OPTS)
+      [ $SELECT ] && tmux kill-session $SELECT
+    fi
+    return
+    ;;
+  esac
+  if [ $1 ]; then
+    if tmux has -t $1 2>/dev/null; then
+      tmux_switch_attach -t $1
+    else
+      tmux new -s $1 -d && tmux_switch_attach -t $1
+    fi
+  else
+    local SELECT=$(tmux ls | fzf $FZF_OPTS)
+    [ $SELECT ] && tmux_switch_attach -t ${SELECT%%:*}
+  fi
 }

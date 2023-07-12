@@ -34,3 +34,8 @@
 [pretty]
 	k = %C(yellow)%h%C(auto)%d %Creset%s %C(black)(%ar)
 	s = %C(yellow)%h %Creset%s
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
