@@ -13,3 +13,6 @@ export EDITOR=nvim # somehow this export is needed for tmux select to work
 if [[ $START_TMUX == true ]]; then
   tmux_loop
 fi
+
+# PATH=$HOME/Qt/6.4.2/macos/bin:$PATH
+# PATH=$HOME/Qt/Tools/QtInstallerFramework/4.5/bin:$PATH

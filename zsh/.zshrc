@@ -32,26 +32,22 @@ setopt GLOBDOTS  # include hidden dir tab complete
 setopt PROMPT_SUBST
 
 prompt_git() {
-  local branch=$(git branch --show-current 2>/dev/null)
-  local remote=$(git config --get remote.origin.url 2>/dev/null)
-  [ -z $branch ] && return
-  [[ $remote =~ '^.*\/(.*)\.git$' ]] &&
-    echo " %F{241}(%F{246}${match[1]}%F{241}/$branch)" ||
-    echo " %F{241}($branch)"
+  local B=$(git branch --show-current 2>/dev/null)
+  [ -z $B ] && return
+  local R=${$(git config --get remote.origin.url 2>/dev/null)#*/}
+  [[ $R =~ '^(.*)\.git$' ]] &&
+    echo "%F{241}(%F{246}${match[1]}%F{241}/$B)" ||
+    echo "%F{241}($B)"
 }
 
-PROMPT=$'%F{blue}%~$(prompt_git)%f\n%(?.%F{green}${PROMPT_ARROW} %f.%F{red}${PROMPT_ARROW} %f)'
+PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}${PROMPT_ARROW} %f.%F{red}${PROMPT_ARROW} %f)'
 
-# generic fzf options
-# use with fzf --color=$FZF_COLORS
-FZF_OPTS=(--height=7 +m --no-mouse --reverse --no-info --prompt="  ")
+export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='  '"
 
 # use neovim as manpager
 [ "$EDITOR" = "nvim" ] && export MANPAGER="nvim +Man!"
 
 PATH=$HOME/.local/bin:$PATH
-# PATH=$HOME/Qt/6.4.2/macos/bin:$PATH
-# PATH=$HOME/Qt/Tools/QtInstallerFramework/4.5/bin:$PATH
 PATH=$HOME/.yarn/bin:$PATH
 PATH=$HOMEBREW_PREFIX/anaconda3/bin/:$PATH
 PATH=$HOMEBREW_PREFIX/opt/node@16/bin:$PATH # node@16 via brew
@@ -59,15 +55,9 @@ export PATH
 
 has git-nu && GIT=git-nu || GIT=git
 
-# to use with worktrees
-# [remote "origin"]
-# url = git@github.com:nguyenvukhang/uni.git
-# fetch = +refs/heads/*:refs/remotes/origin/*
-
-# highly used
-alias gs="$GIT status" # git status
+alias gs="$GIT status"
 alias ga="$GIT add"
-alias gaa="$GIT add --all"
+alias gaa="$GIT add -A"
 alias gb="$GIT branch"
 alias gc="$GIT commit"
 alias gcan="$GIT commit --amend --no-edit"
@@ -76,9 +66,9 @@ alias gcnn="$GIT clean -fxd"
 alias gd="$GIT diff"
 alias gds="$GIT diff --staged"
 alias gf="$GIT fetch"
-alias gm="$GIT merge"           # squash diff into one commit
-alias gmn="$GIT merge --no-ff"  # squash diff into one commit
-alias gms="$GIT merge --squash" # squash diff into one commit
+alias gm="$GIT merge"
+alias gmn="$GIT merge --no-ff"
+alias gms="$GIT merge --squash"
 alias gpdo="$GIT push -d origin"
 alias gr="$GIT reset"
 alias grh="$GIT reset --hard"
@@ -184,7 +174,7 @@ mongl() {
 # git search log
 gsl() {
   git log --all --pretty=s --color=always |
-    fzf $FZF_OPTS --height=${1-7} --ansi -m --bind 'enter:select-all+accept'
+    fzf --height=${1-7} --ansi -m --bind 'enter:select-all+accept'
 }
 
 # git search log (with filenames) and open in editor
@@ -236,8 +226,8 @@ p() {
   local res=()
   while IFS= read -r i; do
     [[ $i =~ '^(.*)\.gpg$' ]] && res+=("${match[1]}")
-  done < <(fd -e gpg --base-directory $HOME/.password-store)
-  local target=$(printf '%s\n' "${res[@]}" | fzf $FZF_OPTS)
+  done < <($FD_BIN -e gpg --base-directory $HOME/.password-store)
+  local target=$(printf '%s\n' "${res[@]}" | fzf)
   # guard
   [ -z $target ] && echo "nothing selected." && return
   case $1 in
@@ -343,10 +333,6 @@ alias py=python3
 alias si="$EDITOR .stow-local-ignore"
 alias vim=nvim
 
-# searches
-alias fd="fd --hidden"
-alias rg="rg --hidden"
-
 # yarn
 alias yb="yarn build"
 alias yl="yarn lint"
@@ -381,7 +367,7 @@ alias clangf="cp $DOTS/zsh/.clang-format ."
 
 # file opener
 view() {
-  local x=$(fd -tf -tl | fzf ${FZF_OPTS})
+  local x=$($FD_BIN -tf -tl | fzf)
   [ $x ] && open "$x"
 }
 
@@ -393,36 +379,33 @@ tmux_switch_attach() {
   fi
 }
 
+asdf() {
+  set -- "dank"
+  echo "$@"
+}
+
 tm() {
+  [ $TMUX ] && local a=s || local a=a
   case $1 in
-  ls)
+  ls) tmux $@ ;;
+  -d) tmux detach ;;
+  -k)
     shift
-    tmux ls $@
-    return
+    [ $1 ] || set -- $(tmux ls | fzf -0 $FZF_OPTS)
+    [ $1 ] && tmux kill-session -t $1
     ;;
-  -d)
-    if [ $2 ]; then
-      tmux kill-session -t $2
+  '')
+    local S=$(tmux ls 2>/dev/null)
+    if [ -z $S ]; then
+      tmux new -s 0
     else
-      local SELECT=$(tmux ls | fzf $FZF_OPTS)
-      [ $SELECT ] && tmux kill-session $SELECT
+      S=$(printf $S | fzf $FZF_OPTS)
+      [ $S ] && tmux $a -t ${S%%:*}
     fi
-    return
+    ;;
+  *)
+    [ tmux has -t $1 ] 2>/dev/null || tmux new -ds $1
+    tmux $a -t $1
     ;;
   esac
-  if [ $1 ]; then
-    if tmux has -t $1 2>/dev/null; then
-      tmux_switch_attach -t $1
-    else
-      tmux new -s $1 -d && tmux_switch_attach -t $1
-    fi
-  else
-    local CHOICES=$(tmux ls 2>/dev/null)
-    if [ -z $CHOICES ]; then
-      tmux new-session
-    else
-      local SELECT=$(echo $CHOICES | fzf $FZF_OPTS)
-      [ $SELECT ] && tmux_switch_attach -t ${SELECT%%:*}
-    fi
-  fi
 }
