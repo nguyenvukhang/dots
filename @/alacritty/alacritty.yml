@@ -6,7 +6,7 @@ scrolling: { history: 10000 }
 
 window:
   # full, none, buttonless, transparent
-  decorations: buttonless
+  decorations: full
   opacity: 0.98
   decorations_theme_variant: Dark
   padding: { x: 8, y: 4 }
