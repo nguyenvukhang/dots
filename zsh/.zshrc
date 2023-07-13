@@ -86,28 +86,38 @@ gp() {
   # $GIT ls-files $@ | xargs -d '\n' $EDITOR
 }
 
-# git checkout, without speedbumps. just get there already.
-# (source + tests at ./tests/gco-test.zsh)
+# if it's already checked out somewhere, go there, else:
+# if there's a worktree whose directory matches the query, go there
 gco() {
-  local OUTPUT="$($GIT checkout $@ 2>&1)" # original output
-  local greyed="\033[0;37m$OUTPUT\033[0m" TARGET_DIR BRANCH
-  jump() {
-    echo "\033[0;30m -> \033[0;32m${1}\033[0;37m ${2}\033[0m" && unset -f jump
-  }
-  [[ $OUTPUT =~ '^(fatal: not a git repository|Already on).*$' ]] && echo $greyed && return
-  [[ $OUTPUT =~ "^fatal: .* is already checked out at '(.*)'$" ]] && jump $1 && cd ${match[1]} && return
-  [[ $OUTPUT =~ 'Aborting' ]] && echo $greyed && return
+  # do nothing if it exits ok on default command
+  X=$($GIT checkout $@ 2>&1) && return
+
+  # do nothing if it's not in a git repository
+  [[ $X == 'fatal: not a git repository'* ]] && echo "$X" && return
+
+  # first match: absolute path to existing worktree
+  if [[ $X =~ ^fatal:.*is\ already\ checked\ out\ at\ \'(.*)\'$ ]]; then
+    printf "\e[30m* \e[32m${1}\e[30m (Already checked out)\e[0m\n"
+    cd ${match[1]}
+    return
+  fi
+
+  local TARGET_DIR= TARGET_BRANCH= LINE_DIR= LINE_BRANCH=
+
+  # Iterate over worktree directories. Only look for directory matches
+  # here. If there were branch matches they would have been caught
+  # earlier already.
   while IFS= read -r line; do
-    if [[ $line =~ '^worktree (.*)$' ]]; then
-      dir=${match[1]}
-      [[ ${line##*/} == $1 ]] && TARGET_DIR=$dir
-    elif [[ $line =~ '^branch refs/heads/(.*)$' ]]; then
-      [[ ${match[1]} == $1 && -d $dir ]] && jump $1 && cd $dir && return
-      [[ -z $BRANCH && $TARGET_DIR ]] && BRANCH=${match[1]}
+    if [[ $line =~ ^worktree\ (.*)$ ]]; then
+      if [[ "${line##*/}" == $1 ]]; then
+        printf "\e[30m* \e[32m${1}\e[30m (worktree --list)\e[0m\n"
+        cd ${match[1]} && return
+      fi
     fi
   done < <(git worktree list --porcelain)
-  [ $TARGET_DIR ] && jump "$BRANCH" "(dir: $1)" && cd $TARGET_DIR && return # jump with dir
-  [ $OUTPUT ] && echo $greyed || return 0
+
+  # nowhere to jump
+  echo $X
 }
 
 # git worktree navigation, by directory name
