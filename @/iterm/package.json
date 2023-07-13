@@ -1,0 +1,10 @@
+{
+  "name": "iterm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "color": "^4.2.3",
+    "fast-xml-parser": "^4.2.5"
+  }
+}
