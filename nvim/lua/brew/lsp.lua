@@ -21,7 +21,7 @@ local base = function(opts)
   return opts
 end
 
-M.clangd = function() lsp.clangd.setup(base()) end
+M.clangd = function() lsp.clangd.setup(base { filetypes = { 'c', 'cpp' } }) end
 M.typescript = function() lsp.tsserver.setup(base()) end
 M.astro = function() lsp.astro.setup(base()) end
 M.python = function()
@@ -40,6 +40,7 @@ M.swift = function()
   local ios_sdk =
     "'/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator16.4.sdk'"
   lsp.sourcekit.setup(base {
+    filetypes = { 'objc', 'swift' },
     cmd = {
       'sourcekit-lsp',
       '-Xswiftc',
