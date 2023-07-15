@@ -26,21 +26,23 @@ export LC_CTYPE=en_US.UTF-8
 export EDITOR=nvim
 export GITNU_DEBUG=1
 
-unsetopt BEEP    # prevents beeps in general
-setopt IGNOREEOF # prevents <C-d> from quitting the shell
-setopt GLOBDOTS  # include hidden dir tab complete
-setopt PROMPT_SUBST
+unsetopt BEEP       # prevents beeps in general
+setopt IGNOREEOF    # prevents <C-d> from quitting the shell
+setopt GLOBDOTS     # include hidden dir tab complete
+setopt PROMPT_SUBST # enable scriptig in the prompt
 
 prompt_git() {
   local B=$(git branch --show-current 2>/dev/null)
   [ -z $B ] && return
-  local R=${$(git config --get remote.origin.url 2>/dev/null)#*/}
+  local R=$(git config --get remote.origin.url 2>/dev/null)
+  R=${R#*/}
   [[ $R =~ '^(.*)\.git$' ]] &&
     echo "%F{241}(%F{246}${match[1]}%F{241}/$B)" ||
     echo "%F{241}($B)"
 }
 
 PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}${PROMPT_ARROW} %f.%F{red}${PROMPT_ARROW} %f)'
+PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}%M > %f.%F{red}%M > %f)'
 
 export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='  '"
 
@@ -54,6 +56,7 @@ PATH=$HOMEBREW_PREFIX/opt/node@16/bin:$PATH # node@16 via brew
 export PATH
 
 has git-nu && GIT=git-nu || GIT=git
+alias cc='conda activate ml'
 
 alias gs="$GIT status"
 alias ga="$GIT add"
@@ -258,7 +261,7 @@ alias 2k="cd $HOME/repos/log"
 alias 2l="cd $HOME/.local"
 alias 2lb="cd $HOME/.local/bin"
 alias 2ls="cd $HOME/.local/src"
-alias 2m="cd $HOME/astar"
+alias 2m="cd $HOME/astar/dev"
 alias 2mc="cd '$HOME/Library/Application Support/PrismLauncher/instances'"
 alias 2n="cd $REPOS/notes"
 alias 2o="cd $HOME/repos"
@@ -373,7 +376,7 @@ asdf() {
 }
 
 tm() {
-  [ $TMUX ] && local a=s || local a=a
+  [ $TMUX ] && local a=switch || local a=a
   case $1 in
   ls) tmux $@ ;;
   -d) tmux detach ;;
@@ -397,3 +400,18 @@ tm() {
     ;;
   esac
 }
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/khang/.local/miniconda3/bin/conda' 'shell.zsh' 'hook' 2>/dev/null)"
+if [ $? -eq 0 ]; then
+  eval "$__conda_setup"
+else
+  if [ -f "/Users/khang/.local/miniconda3/etc/profile.d/conda.sh" ]; then
+    . "/Users/khang/.local/miniconda3/etc/profile.d/conda.sh"
+  else
+    export PATH="/Users/khang/.local/miniconda3/bin:$PATH"
+  fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
