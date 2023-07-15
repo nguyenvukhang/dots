@@ -329,6 +329,7 @@ alias yb="yarn build"
 alias yl="yarn lint"
 alias yd="yarn dev"
 alias mk="make"
+alias qmk_setup="qmk setup -H ./qmk_firmware nguyenvukhang/qmk_firmware"
 
 # binds
 bindkey "^[[3~" delete-char
@@ -360,19 +361,6 @@ alias clangf="cp $DOTS/zsh/.clang-format ."
 view() {
   local x=$($FD_BIN -tf -tl | fzf)
   [ $x ] && open "$x"
-}
-
-tmux_switch_attach() {
-  if [ $TMUX ]; then
-    tmux switch $@
-  else
-    tmux attach $@
-  fi
-}
-
-asdf() {
-  set -- "dank"
-  echo "$@"
 }
 
 tm() {
