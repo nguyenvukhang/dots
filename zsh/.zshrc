@@ -93,7 +93,7 @@ gp() {
 # if there's a worktree whose directory matches the query, go there
 gco() {
   # do nothing if it exits ok on default command
-  X=$($GIT checkout $@ 2>&1) && return
+  X=$($GIT checkout $@ 2>&1) && echo "$X" && return
 
   # do nothing if it's not in a git repository
   [[ $X == 'fatal: not a git repository'* ]] && echo "$X" && return
