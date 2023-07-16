@@ -330,6 +330,9 @@ alias yl="yarn lint"
 alias yd="yarn dev"
 alias mk="make"
 alias qmk_setup="qmk setup -H ./qmk_firmware nguyenvukhang/qmk_firmware"
+alias clangf="cp $DOTS/zsh/.clang-format ."
+alias jup="jupyter lab --app-dir $HOMEBREW_PREFIX/share/jupyter/lab"
+
 
 # binds
 bindkey "^[[3~" delete-char
@@ -353,9 +356,6 @@ jclear() {
   rm -rf $HOME/.cache/nvim/jdtls
   mkdir -p $HOME/.cache/nvim/jdtls
 }
-
-# newer aliases
-alias clangf="cp $DOTS/zsh/.clang-format ."
 
 # file opener
 view() {
