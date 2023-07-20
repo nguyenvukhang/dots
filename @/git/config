@@ -39,6 +39,3 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[http]
-	lowSpeedLimit = 10
-	lowSpeedTime = 15
