@@ -56,7 +56,6 @@ PATH=$HOMEBREW_PREFIX/opt/node@16/bin:$PATH # node@16 via brew
 export PATH
 
 has git-nu && GIT=git-nu || GIT=git
-alias cc='conda activate ml'
 
 alias gs="$GIT status"
 alias ga="$GIT add"
@@ -240,7 +239,7 @@ ed() {
   a) t="$DOTS/@/alacritty/alacritty.yml" ;;
   g) t="$DOTS/@/git/config" ;;
   k) t="$DOTS/@/kitty/kitty.conf" ;;
-  s) t="$DOTS/personal/.ssh/config" ;;
+  s) t="$HOME/.ssh/config" ;;
   t) t="$DOTS/tmux/tmux.conf" ;;
   u) t="$UNI_LAUNCH" ;;
   v) t="$DOTS/nvim/init.lua" ;;
@@ -261,7 +260,7 @@ alias 2k="cd $HOME/repos/log"
 alias 2l="cd $HOME/.local"
 alias 2lb="cd $HOME/.local/bin"
 alias 2ls="cd $HOME/.local/src"
-alias 2m="cd $HOME/falcon-llm"
+alias 2m="cd $HOME/falcon-llm/dev"
 alias 2mc="cd '$HOME/Library/Application Support/PrismLauncher/instances'"
 alias 2n="cd $REPOS/notes"
 alias 2o="cd $HOME/repos"
@@ -333,7 +332,6 @@ alias qmk_setup="qmk setup -H ./qmk_firmware nguyenvukhang/qmk_firmware"
 alias clangf="cp $DOTS/zsh/.clang-format ."
 alias jup="jupyter lab --app-dir $HOMEBREW_PREFIX/share/jupyter/lab"
 
-
 # binds
 bindkey "^[[3~" delete-char
 bindkey '^[[Z' reverse-menu-complete
@@ -403,3 +401,10 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+ca() {
+  case $1 in
+  ml | ft) conda activate $1 ;;
+  *) echo 'Nothing happened.' ;;
+  esac
+}
