@@ -132,6 +132,9 @@ config['nvim-lspconfig'] = function()
   -- lsp.go()
 end
 
+-- https://github.com/sbdchd/neoformat
+config['neoformat'] = function() vim.g.neoformat_enabled_python = { 'black' } end
+
 -- https://github.com/rose-pine/neovim (rip name convention tbh)
 -- config['rose-pine'] = function()
 --   require('rose-pine').setup { variant = 'moon', disable_background = true }
