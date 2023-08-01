@@ -24,6 +24,7 @@ export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
 export EDITOR=nvim
+export REPOS=$HOME/repos
 export GITNU_DEBUG=1
 
 unsetopt BEEP       # prevents beeps in general
@@ -323,6 +324,15 @@ alias py=python3
 alias si="$EDITOR .stow-local-ignore"
 alias vim=nvim
 
+# vim() {
+#   if [ $1 ]; then
+#     $EDITOR $@
+#   else
+#     local SELECT=$($FD_BIN -t f | fzf)
+#     [ $SELECT ] && $EDITOR $SELECT
+#   fi
+# }
+
 # yarn
 alias yb="yarn build"
 alias yl="yarn lint"
@@ -339,7 +349,9 @@ bindkey '^[[Z' reverse-menu-complete
 # uni
 t() {
   if [ -f run ]; then
-    bash run $@
+    ./run $@
+  elif [ -f run.py ]; then
+    python run.py $@
   elif [ -f Makefile ]; then
     make $@
   elif [ -f Cargo.toml ]; then
@@ -404,7 +416,11 @@ unset __conda_setup
 
 ca() {
   case $1 in
-  ml | ft) conda activate $1 ;;
-  *) echo 'Nothing happened.' ;;
+  -d) conda deactivate ;;
+  ml) conda activate $1 ;;
+  *)
+    echo 'Defaulting to: [ml]'
+    ca ml
+    ;;
   esac
 }

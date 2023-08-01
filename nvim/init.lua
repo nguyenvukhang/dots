@@ -8,7 +8,6 @@ require('brew.core').load_plugins {
   'windwp/nvim-autopairs',
   'neovim/nvim-lspconfig',
   'iamcco/markdown-preview.nvim',
-  'folke/neodev.nvim',
   'nvim-lua/plenary.nvim',
   'mfussenegger/nvim-jdtls',
   'tpope/vim-surround',
