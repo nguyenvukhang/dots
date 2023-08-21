@@ -44,6 +44,7 @@ prompt_git() {
 
 PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}${PROMPT_ARROW} %f.%F{red}${PROMPT_ARROW} %f)'
 PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}%M > %f.%F{red}%M > %f)'
+PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}> %f.%F{red}> %f)'
 
 export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='  '"
 
@@ -393,7 +394,7 @@ tm() {
     fi
     ;;
   *)
-    [ tmux has -t $1 ] 2>/dev/null || tmux new -ds $1
+    tmux has -t $1 2>/dev/null || tmux new -ds $1
     tmux $a -t $1
     ;;
   esac
