@@ -1,5 +1,5 @@
 # core paths
-DOTS=$HOME/dots
+export DOTS=$HOME/dots
 ZDOTDIR=$HOME/.config/zsh
 ZSHENV_PATH=/etc/zshenv
 

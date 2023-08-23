@@ -53,19 +53,20 @@ autocmd { pattern = { '*.astro' }, callback = cfg.astro }
 autocmd({
   pattern = { '*.tex' },
   callback = function()
-    local full_path = vim.fn.expand('%:p')
-    local output = vim.fn.systemlist('latext ' .. full_path)
-    local ok = #output == 1 and output[1] == '[successful build!]'
-    vim.cmd('redraw!')
-    if ok then
-      print('[pdflatex] successful build!')
-    else
-      print('[pdflatex] build failed.')
-      for i = 1, #output do
-        output[i] = { text = output[i] }
-      end
-      vim.fn.setqflist(output)
-    end
+    vim.fn.systemlist('make')
+    -- local full_path = vim.fn.expand('%:p')
+    -- local output = vim.fn.systemlist('latext ' .. full_path)
+    -- local ok = #output == 1 and output[1] == '[successful build!]'
+    -- vim.cmd('redraw!')
+    -- if ok then
+    --   print('[pdflatex] successful build!')
+    -- else
+    --   print('[pdflatex] build failed.')
+    --   for i = 1, #output do
+    --     output[i] = { text = output[i] }
+    --   end
+    --   vim.fn.setqflist(output)
+    -- end
   end,
 }, { 'BufWritePost' })
 
