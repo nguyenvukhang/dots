@@ -22,6 +22,7 @@ local base = function(opts)
 end
 
 M.clangd = function() lsp.clangd.setup(base { filetypes = { 'c', 'cpp' } }) end
+M.ocamllsp = function() lsp.ocamllsp.setup(base()) end
 M.typescript = function() lsp.tsserver.setup(base()) end
 M.astro = function() lsp.astro.setup(base()) end
 M.python = function()
@@ -29,7 +30,10 @@ M.python = function()
     root_dir = lsp.util.root_pattern('pyproject.toml'),
     settings = {
       python = {
-        analysis = { typeCheckingMode = 'off', useLibraryCodeForTypes = true },
+        analysis = {
+          typeCheckingMode = 'off',
+          useLibraryCodeForTypes = true,
+        },
       },
     },
   })
