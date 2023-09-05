@@ -9,6 +9,9 @@ alias rg="rg --hidden"
 # cargo (rust)
 [ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
 
+# opam (OCaml)
+[[ ! -r $HOME/.opam/opam-init/init.zsh ]] || source $HOME/.opam/opam-init/init.zsh >/dev/null 2>/dev/null
+
 has() {
   command -v $1 >/dev/null
 }
