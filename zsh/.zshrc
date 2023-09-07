@@ -1,4 +1,5 @@
 PROMPT_ARROW=${PROMPT_ARROW-[uwu] >}
+START_TMUX=true
 
 [ -z $FD_BIN ] && FD_BIN=fd
 alias fd="$FD_BIN --hidden"
@@ -29,6 +30,17 @@ export LC_CTYPE=en_US.UTF-8
 export EDITOR=nvim
 export REPOS=$HOME/repos
 export GITNU_DEBUG=1
+
+# Use tmux session as a shell wrapper.
+# Only quitting the base session will exit the terminal emulator.
+tmux_loop() {
+  ([[ $START_TMUX != true ]] || [ $TMUX ] || ! command -v tmux 2>/dev/null) && return
+  while; do
+    [[ $(tmux new -As z -n editor) == '[detached (from session z)]' ]] && exit
+    tmux has -t z && continue || exit
+  done
+}
+tmux_loop
 
 unsetopt BEEP       # prevents beeps in general
 setopt IGNOREEOF    # prevents <C-d> from quitting the shell
