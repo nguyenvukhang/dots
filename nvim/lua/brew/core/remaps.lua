@@ -42,6 +42,9 @@ nnoremap('<leader>8', ':set colorcolumn=81<cr>')
 nnoremap('<leader>y', '"+y')
 vnoremap('<leader>y', '"+y')
 
+-- Yank the entire buffer to clipboard
+nnoremap('<leader>Y', 'gg"+yG<c-o>')
+
 -- preserve yank buffer on Visual Mode paste
 vnoremap('<leader>p', '"_dP')
 

@@ -440,3 +440,16 @@ ca() {
     ;;
   esac
 }
+
+# killing Goodnotes
+
+kgn() {
+  PS=$(ps x | grep Goodnotes | grep -v grep)
+  PS=${PS%% *}
+  if [ $PS ]; then
+    echo "Killing $PS"
+    kill $PS
+  else
+    echo "No matching process found"
+  fi
+}
