@@ -43,6 +43,7 @@ if &background == 'dark'
 
   " custom
 
+  hi! link markdownError Normal
   hi! link TelescopeNormal Normal
   hi! link TelescopeSelection Pmenu
   hi! link TelescopeSelectionCaret Error
