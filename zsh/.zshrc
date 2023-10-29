@@ -446,6 +446,7 @@ ca() {
 
 kgn() {
   PS=$(ps x | grep Goodnotes | grep -v grep)
+  PS="${PS#"${PS%%[![:space:]]*}"}"
   PS=${PS%% *}
   if [ $PS ]; then
     echo "Killing $PS"
