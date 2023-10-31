@@ -180,7 +180,8 @@ gcb() {
 _gl() {
   local i=$(($LINES / 2 > 10 ? $LINES / 2 : 10))
   while IFS= read -r line; do
-    printf "$line\e[0m\n" && let i--
+    echo -n $line
+    printf "\e[0m\n" && let i--
     [[ $i -eq 0 ]] && break
   done < <(git -c 'color.ui=always' log --pretty=k --graph $@)
   return 0
