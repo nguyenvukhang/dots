@@ -42,6 +42,12 @@ if &background == 'dark'
   endif
 
   " custom
+ 
+  " latex
+  hi! link texDocZone Normal
+  hi! link texSectionZone Normal
+  hi! link texSubSectionZone Normal
+  hi! link texOnlyMath Normal
 
   hi! link markdownError Normal
   hi! link htmlError Normal

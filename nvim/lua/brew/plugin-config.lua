@@ -86,10 +86,10 @@ end
 -- https://github.com/windwp/nvim-autopairs
 config['nvim-autopairs'] = function()
   local np, Rule = require('nvim-autopairs'), require('nvim-autopairs.rule')
-  np.setup()
+  np.setup { ignored_next_char = [=[[%w%%%'%[%"%.%`]]=] }
   np.add_rules {
     Rule('$', '$', { 'tex', 'markdown' }):with_move(
-      function(opts) return opts.next_char == opts.char end
+      function(o) return o.next_char == o.char end
     ),
   }
 end
