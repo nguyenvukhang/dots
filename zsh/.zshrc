@@ -332,8 +332,6 @@ alias ka="killall"
 alias py=python3
 alias si="$EDITOR .stow-local-ignore"
 alias vim=nvim
-
-# yarn
 alias mk="make"
 alias clangf="cp $DOTS/zsh/.clang-format ."
 alias jup="jupyter lab --app-dir $HOMEBREW_PREFIX/share/jupyter/lab"

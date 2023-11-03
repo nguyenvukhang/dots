@@ -2,6 +2,8 @@ local M, fn = {}, vim.fn
 
 M.load_plugins = require('brew.core.lazy').load_plugins
 
+M.debug = function(x) print(vim.inspect(x)) end
+
 -- checks if quickfix is open
 local function qf_is_open() return vim.fn.getqflist({ winid = 0 }).winid ~= 0 end
 
@@ -39,6 +41,11 @@ M.toggle_diagnostics = function()
 
   fn.setqflist(vim.diagnostic.toqflist(diagnostics))
   vim.cmd('bel copen') -- open quickfix window
+end
+
+-- lists files and sub-directories in a directory
+M.list_dir = function(dir)
+  return vim.loop.fs_readdir(vim.loop.fs_opendir(dir, nil, 2048))
 end
 
 -- returns true on successful execution (sh return code 0)
