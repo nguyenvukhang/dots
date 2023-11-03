@@ -17,17 +17,14 @@ has() {
   command -v $1 >/dev/null
 }
 
-# exports
-export UNI=$HOME/uni
-export SHELL_SESSIONS_DISABLE=1 # remove ~/.zsh_sessions
+# special directories
+export UNI=$HOME/uni REPOS=$HOME/repos
 
 # locale standardize
-export LANGUAGE=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LC_CTYPE=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8 LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
 
-export EDITOR=nvim REPOS=$HOME/repos
+export EDITOR=nvim
+export SHELL_SESSIONS_DISABLE=1 # remove ~/.zsh_sessions
 
 # Use tmux session as a shell wrapper.
 # Only quitting the base session will exit the terminal emulator.
@@ -55,8 +52,8 @@ prompt_git() {
     echo "%F{241}($B)"
 }
 
-PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}${PROMPT_ARROW} %f.%F{red}${PROMPT_ARROW} %f)'
-PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}%M > %f.%F{red}%M > %f)'
+# PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}${PROMPT_ARROW} %f.%F{red}${PROMPT_ARROW} %f)'
+# PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}%M > %f.%F{red}%M > %f)'
 PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}> %f.%F{red}> %f)'
 
 export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='  '"
@@ -66,8 +63,6 @@ export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='
 
 PATH=$HOME/.local/bin:$PATH
 PATH=$HOME/.yarn/bin:$PATH
-PATH=$HOMEBREW_PREFIX/anaconda3/bin/:$PATH
-PATH=$HOMEBREW_PREFIX/opt/node@16/bin:$PATH # node@16 via brew
 export PATH
 
 has git-nu && GIT=git-nu || GIT=git
