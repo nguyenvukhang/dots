@@ -1,4 +1,3 @@
-PROMPT_ARROW=${PROMPT_ARROW-[uwu] >}
 START_TMUX=true
 
 [ -z $FD_BIN ] && FD_BIN=fd
@@ -62,7 +61,6 @@ export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='
 [ "$EDITOR" = "nvim" ] && export MANPAGER="nvim +Man!"
 
 PATH=$HOME/.local/bin:$PATH
-PATH=$HOME/.yarn/bin:$PATH
 export PATH
 
 has git-nu && GIT=git-nu || GIT=git
@@ -296,8 +294,8 @@ if has exa; then
   alias lsss="exa -a --tree -L 3 $EXA_OPTS"
   alias ll="exa -lag $EXA_OPTS"
 else
-  alias ls="ls -A --color=auto"
-  alias ll="ls -lAg --color=auto"
+  alias ls='ls -A --color=auto'
+  alias ll='ls -lAg --color=auto'
 fi
 
 # g for jump (requires fd and fzf)
@@ -335,21 +333,8 @@ alias py=python3
 alias si="$EDITOR .stow-local-ignore"
 alias vim=nvim
 
-# vim() {
-#   if [ $1 ]; then
-#     $EDITOR $@
-#   else
-#     local SELECT=$($FD_BIN -t f | fzf)
-#     [ $SELECT ] && $EDITOR $SELECT
-#   fi
-# }
-
 # yarn
-alias yb="yarn build"
-alias yl="yarn lint"
-alias yd="yarn dev"
 alias mk="make"
-alias qmk_setup="qmk setup -H ./qmk_firmware nguyenvukhang/qmk_firmware"
 alias clangf="cp $DOTS/zsh/.clang-format ."
 alias jup="jupyter lab --app-dir $HOMEBREW_PREFIX/share/jupyter/lab"
 
@@ -357,7 +342,7 @@ alias jup="jupyter lab --app-dir $HOMEBREW_PREFIX/share/jupyter/lab"
 bindkey "^[[3~" delete-char
 bindkey '^[[Z' reverse-menu-complete
 
-# uni
+# t: run the obvious thing
 t() {
   if [ -f run ]; then
     ./run $@
@@ -437,14 +422,13 @@ ca() {
 }
 
 # killing Goodnotes
-
 kgn() {
-  PS=$(ps x | grep Goodnotes | grep -v grep)
-  PS="${PS#"${PS%%[![:space:]]*}"}"
-  PS=${PS%% *}
-  if [ $PS ]; then
-    echo "Killing $PS"
-    kill $PS
+  PID=$(ps x | grep Goodnotes | grep -v grep)
+  PID="${PID#"${PID%%[![:space:]]*}"}" # remove spaces from the front
+  PID=${PID%% *}                       # get contents before the first space
+  if [ $PID ]; then
+    echo "Killing $PID"
+    kill $PID
   else
     echo "No matching process found"
   fi
