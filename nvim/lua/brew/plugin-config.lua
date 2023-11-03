@@ -45,6 +45,20 @@ config['nvim-toggler'] = function()
   vim.keymap.set({ 'n', 'v' }, '<leader>i', nt.toggle, { silent = true })
 end
 
+-- https://github.com/L3MON4D3/LuaSnip
+--[[
+config['LuaSnip'] = function()
+  local ls = require('luasnip')
+  print('GOT HERE')
+  local s = ls.snippet
+  local t = ls.text_node
+  ls.add_snippets('markdown', {
+    s('pp', { t('hello') }),
+  })
+  vim.keymap.set({ 'i' }, '<Tab>', ls.expand_or_jump, { silent = true })
+end
+--]]
+
 -- https://github.com/hrsh7th/nvim-cmp
 config['nvim-cmp'] = function()
   local cmp, ct, ls = require('cmp'), require('cmp.types'), require('luasnip')
