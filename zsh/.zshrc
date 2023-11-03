@@ -27,9 +27,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
-export EDITOR=nvim
-export REPOS=$HOME/repos
-export GITNU_DEBUG=1
+export EDITOR=nvim REPOS=$HOME/repos
 
 # Use tmux session as a shell wrapper.
 # Only quitting the base session will exit the terminal emulator.
