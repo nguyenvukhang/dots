@@ -111,6 +111,15 @@ end
 -- https://github.com/iamcco/markdown-preview.nvim
 build['markdown-preview.nvim'] = function() vim.fn['mkdp#util#install']() end
 config['markdown-preview.nvim'] = function()
+  vim.g.mkdp_preview_options = {
+    ['katex'] = {
+      ['macros'] = {
+        ['\\R'] = '\\mathbb{R}',
+        ['\\C'] = '\\mathbb{C}',
+        ['\\norm'] = '\\left\\lVert{#1}\\right\\rVert',
+      },
+    },
+  }
   vim.cmd('cnoreabbrev MP MarkdownPreview')
   vim.cmd('cnoreabbrev MS MarkdownPreviewStop')
 end
