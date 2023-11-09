@@ -1,4 +1,4 @@
-START_TMUX=true
+START_TMUX=false
 
 [ -z $FD_BIN ] && FD_BIN=fd
 alias fd="$FD_BIN --hidden"
@@ -45,7 +45,7 @@ prompt_git() {
   local B=$(git branch --show-current 2>/dev/null)
   [ -z $B ] && return
   local R=$(git config --get remote.origin.url 2>/dev/null)
-  R=${R#*/}
+  R=${R##*/}
   [[ $R =~ '^(.*)\.git$' ]] &&
     echo "%F{241}(%F{246}${match[1]}%F{241}/$B)" ||
     echo "%F{241}($B)"
@@ -129,18 +129,6 @@ gco() {
 
   # nowhere to jump
   echo $X
-}
-
-# git worktree navigation, by directory name
-gw() {
-  while IFS= read -r line; do
-    # if line begins with 'worktree', use it to set dir and base
-    if [[ $line =~ '^worktree (.*)$' ]]; then
-      dir=${match[1]}
-      base=${line##*/}
-      [[ $base == $1 ]] && cd $dir
-    fi
-  done < <(git worktree list --porcelain)
 }
 
 # git clone
