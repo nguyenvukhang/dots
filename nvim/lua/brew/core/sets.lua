@@ -1,5 +1,6 @@
 -- it is important that this file can run even with no plugins installed
 
+vim.opt.autoread = false -- don't automatically load changes
 vim.opt.scrolloff = 15 -- scrolls before cursor reaches edge
 vim.opt.sidescrolloff = 10 -- scrolls before cursor reaches side
 vim.opt.tabstop = 2 -- # of spaces a <Tab> counts for
