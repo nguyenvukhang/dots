@@ -6,6 +6,8 @@
 	<true/>
 	<key>AlwaysAcceptFirstMouse</key>
 	<true/>
+	<key>AnimateGraphStatusBarComponents</key>
+	<false/>
 	<key>Command</key>
 	<string>/usr/local/bin/zsh</string>
 	<key>CopySelection</key>
@@ -388,6 +390,8 @@
 	<key>EnableDivisionView</key>
 	<false/>
 	<key>EnterCopyModeAutomatically</key>
+	<false/>
+	<key>FocusOnRightOrMiddleClick</key>
 	<false/>
 	<key>GlobalKeyMap</key>
 	<dict>
@@ -1673,11 +1677,11 @@
 				<real>0.90588235294117647</real>
 			</dict>
 			<key>Mouse Reporting</key>
-			<true/>
+			<false/>
 			<key>Mouse Reporting allow clicks and drags</key>
-			<true/>
+			<false/>
 			<key>Mouse Reporting allow mouse wheel</key>
-			<true/>
+			<false/>
 			<key>Name</key>
 			<string>main</string>
 			<key>Non Ascii Font</key>
