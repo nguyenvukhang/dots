@@ -11,13 +11,14 @@ if wezterm.config_builder then
 end
 
 config.use_ime = false
+config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 
 config.colors = {
-	foreground = "silver",
-	background = "black",
+	foreground = "#ebdbb2",
+	background = "#282828",
 
 	cursor_bg = "#bdae93",
-	cursor_fg = "black",
+	cursor_fg = "#282828",
 	cursor_border = "#bdae93",
 	selection_fg = "black",
 	selection_bg = "#ebdbb2",
