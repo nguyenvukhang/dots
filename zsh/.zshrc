@@ -61,6 +61,8 @@ export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='
 # use neovim as manpager
 [ "$EDITOR" = "nvim" ] && export MANPAGER="nvim +Man!"
 
+PATH=$HOMEBREW_PREFIX/opt/python/libexec/bin:$PATH
+PATH=/usr/local/opt/python/libexec/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
 export PATH
 
@@ -160,13 +162,12 @@ gcb() {
 _gl() {
   local i=$(($LINES / 2 > 10 ? $LINES / 2 : 10))
   while IFS= read -r line; do
-    # line=${line/origin\//*}
-    # line=${line/ ago)/)}
-    # line=${line/ weeks)/w)}
-    # line=${line/ days)/d)}
-    # line=${line/ hours)/h)}
-    # line=${line/ minutes)/m)}
-    # line=${line/ seconds)/s)}
+    line=${line/origin\//*}
+    line=${line/ weeks ago/w}
+    line=${line/ days ago/d}
+    line=${line/ hours ago/h}
+    line=${line/ minutes ago/m}
+    line=${line/ seconds ago/s}
     echo -n $line
     printf "\e[0m\n" && let i--
     [[ $i -eq 0 ]] && break
@@ -266,7 +267,7 @@ alias 2k="cd $HOME/repos/log"
 alias 2l="cd $HOME/.local"
 alias 2lb="cd $HOME/.local/bin"
 alias 2ls="cd $HOME/.local/src"
-alias 2m="cd $REPOS/math"
+alias 2m="cd $REPOS/math/tex"
 alias 2mc="cd '$HOME/Library/Application Support/PrismLauncher/instances'"
 alias 2n="cd $REPOS/notes"
 alias 2o="cd $HOME/repos"
