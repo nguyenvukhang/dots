@@ -164,10 +164,15 @@ _gl() {
   while IFS= read -r line; do
     line=${line/origin\//*}
     line=${line/ weeks ago/w}
+    line=${line/ week ago/w}
     line=${line/ days ago/d}
+    line=${line/ day ago/d}
     line=${line/ hours ago/h}
+    line=${line/ hour ago/h}
     line=${line/ minutes ago/m}
+    line=${line/ minute ago/m}
     line=${line/ seconds ago/s}
+    line=${line/ second ago/s}
     echo -n $line
     printf "\e[0m\n" && let i--
     [[ $i -eq 0 ]] && break
