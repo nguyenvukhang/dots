@@ -27,6 +27,13 @@ cmd('StripColors', function()
   print('Stripped ANSI color codes!')
 end)
 
+-- normalize all non-standard glyphs
+cmd('MarkdownToLatex', function()
+  vim.cmd('silent! s/\\*\\*\\([A-Za-z \\.:-]*\\)\\*\\*/\\\\textbf{\\1}/g')
+  vim.cmd('silent! s/_\\([A-Za-z \\.:-]*\\)_/\\\\textit{\\1}/g')
+  print('Markdown -> Latex!')
+end)
+
 -- list loaded packages
 -- cmd('Packs', function() print(vim.inspect(package.loaded)) end)
 
