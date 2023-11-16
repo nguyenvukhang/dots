@@ -2,7 +2,7 @@
 # pyright: reportMissingImports=false
 # pylint: disable=E0401,C0116,C0103,W0603,R0913
 
-import datetime, json
+import datetime, json, os
 
 from kitty.fast_data_types import get_options
 from kitty.tab_bar import as_rgb, draw_title
@@ -15,10 +15,11 @@ BDAE_FG = as_rgb(color_as_int(OPTS.color2))
 NOW = datetime.datetime.now()
 
 
-def birthday():
-    from os import environ, path
+def birthday(filepath="/Users/khang/dots/personal/birthdays/db.json"):
+    if not os.path.isfile(filepath):
+        return None
 
-    with open(path.join(environ["DOTS"], "personal/birthdays/db.json"), "r") as f:
+    with open(filepath, "r") as f:
         p = json.load(f).get(NOW.strftime("%d-%b"), None)
         return "↑" if not p else f"{', '.join(p)} lvl up ↑"
 
@@ -52,7 +53,9 @@ def _draw_right_status(sc, is_last):
     if not is_last:
         return sc.cursor.x
 
+    b = birthday()
     cells = [
+        (BDAE_FG, 0, b if b else "x"),
         (DATE_FG, 0, NOW.strftime("  %d %b ")),
         (CLOCK_FG, 0, NOW.strftime(" %H:%M  ")),
     ]
