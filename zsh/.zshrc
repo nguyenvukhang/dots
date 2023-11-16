@@ -262,13 +262,11 @@ ed() {
 
 alias 2A="cd /Applications"
 alias 2c="cd $HOME/.config"
-alias 2ca="cd $HOME/.cache"
 alias 2d="cd $DOTS"
 alias 2f="cd $HOME/files"
 alias 2h="cd $HOMEBREW_PREFIX"
 alias 2i="cd '$HOME/Library/Mobile Documents/com~apple~CloudDocs'"
 alias 2j="cd $HOME/Downloads"
-alias 2k="cd $HOME/repos/log"
 alias 2l="cd $HOME/.local"
 alias 2lb="cd $HOME/.local/bin"
 alias 2ls="cd $HOME/.local/src"
