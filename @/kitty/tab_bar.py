@@ -1,9 +1,6 @@
-"""draw kitty tab"""
 # pyright: reportMissingImports=false
-# pylint: disable=E0401,C0116,C0103,W0603,R0913
 
 import datetime, json, os
-
 from kitty.fast_data_types import get_options
 from kitty.tab_bar import as_rgb, draw_title
 from kitty.utils import color_as_int
@@ -12,16 +9,18 @@ OPTS = get_options()
 CLOCK_FG = as_rgb(color_as_int(OPTS.color3))
 DATE_FG = as_rgb(color_as_int(OPTS.color5))
 BDAE_FG = as_rgb(color_as_int(OPTS.color2))
-NOW = datetime.datetime.now()
+NOW = lambda: datetime.datetime.now()
+
+BIRTHDAY_FILE = "/Users/khang/dots/personal/birthdays/db.json"
+BIRTHDAYS = {}
+if os.path.isfile(BIRTHDAY_FILE):
+    with open(BIRTHDAY_FILE, "r") as f:
+        BIRTHDAYS = json.load(f)
 
 
-def birthday(filepath="/Users/khang/dots/personal/birthdays/db.json"):
-    if not os.path.isfile(filepath):
-        return None
-
-    with open(filepath, "r") as f:
-        p = json.load(f).get(NOW.strftime("%d-%b"), None)
-        return "↑" if not p else f"{', '.join(p)} lvl up ↑"
+def birthday():
+    p = BIRTHDAYS.get(NOW().strftime("%d-%b"), None)
+    return "↑" if not p else f"{', '.join(p)} lvl up ↑"
 
 
 def _draw_left_status(dd, sc, tab, before, mtl, index, is_last):
@@ -53,29 +52,23 @@ def _draw_right_status(sc, is_last):
     if not is_last:
         return sc.cursor.x
 
-    b = birthday()
+    now, b = NOW(), birthday()
     cells = [
         (BDAE_FG, 0, b if b else "x"),
-        (DATE_FG, 0, NOW.strftime("  %d %b ")),
-        (CLOCK_FG, 0, NOW.strftime(" %H:%M  ")),
+        (DATE_FG, 0, now.strftime("  %d %b ")),
+        (CLOCK_FG, 0, now.strftime(" %H:%M  ")),
     ]
 
-    right_status_length = 0
-    for _, _, cell in cells:
-        right_status_length += len(cell)
-
-    draw_spaces = sc.columns - sc.cursor.x - right_status_length
-    if draw_spaces > 0:
-        sc.draw(" " * draw_spaces)
+    rlen = sum([len(c) for _, _, c in cells])
+    s = sc.columns - sc.cursor.x - rlen
+    if s > 0:
+        sc.draw(" " * s)
 
     for fg, bg, cell in cells:
-        sc.cursor.fg = fg
-        sc.cursor.bg = bg
+        sc.cursor.fg, sc.cursor.bg = fg, bg
         sc.draw(cell)
-    sc.cursor.fg = 0
-    sc.cursor.bg = 0
-
-    sc.cursor.x = max(sc.cursor.x, sc.columns - right_status_length)
+    sc.cursor.fg, sc.cursor.bg = 0, 0
+    sc.cursor.x = max(sc.cursor.x, sc.columns - rlen)
     return sc.cursor.x
 
 
