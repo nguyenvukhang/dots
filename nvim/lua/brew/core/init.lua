@@ -67,4 +67,13 @@ M.comment_string = function(cs)
   vim.api.nvim_buf_set_option(0, 'commentstring', cs)
 end
 
+-- Mimics the default / search
+---@param query string search query
+M.search = function(query)
+  query = '\\<' .. query .. '\\>'
+  vim.notify_once('/' .. query)
+  vim.fn.setreg('/', query)
+  return vim.fn.search(query, 's')
+end
+
 return M
