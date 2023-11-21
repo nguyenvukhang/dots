@@ -26,6 +26,20 @@ nnoremap('gF', ':vs <cfile><cr>')
 -- open file under cursor with `open` (macOS)
 nnoremap('go', ':silent! !open <cfile><cr>')
 
+vim.keymap.set('n', '*', function()
+  local line, r = vim.fn.getline('.'), vim.fn.col('.')
+  local want = function(x) return x == 46 or (48 <= x and x <= 57) end
+  if not want(line:byte(r)) then return c.search(vim.fn.expand('<cword>')) end
+  local l, n = r, line:len()
+  while l > 1 and want(line:byte(l - 1)) do
+    l = l - 1
+  end
+  while r < n and want(line:byte(r + 1)) do
+    r = r + 1
+  end
+  return c.search(line:sub(l, r):gsub('%.', '\\.'))
+end, { noremap = true })
+
 -- slowly increase this until I can use the default
 nnoremap('<C-d>', '13j')
 nnoremap('<C-u>', '13k')

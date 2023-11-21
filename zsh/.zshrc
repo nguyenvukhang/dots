@@ -229,7 +229,6 @@ yeet() {
     local CMD="echo 'pushing...'; git push $@; sleep 2"
     tmux split-window -dv -l 5 "sh -c '$CMD'"
   else
-    echo "Regular push..."
     git push $@
   fi
 }
