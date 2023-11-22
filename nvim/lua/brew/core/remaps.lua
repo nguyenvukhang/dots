@@ -37,7 +37,12 @@ vim.keymap.set('n', '*', function()
   while r < n and want(line:byte(r + 1)) do
     r = r + 1
   end
-  return c.search(line:sub(l, r):gsub('%.', '\\.'))
+  local query = line:sub(l, r)
+  if query:match('[0-9]+%.[0-9]+%.[0-9]+') then
+    return c.search(query:gsub('%.', '\\.'))
+  else
+    return c.search(vim.fn.expand('<cword>'))
+  end
 end, { noremap = true })
 
 -- slowly increase this until I can use the default
