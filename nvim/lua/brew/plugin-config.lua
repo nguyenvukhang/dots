@@ -41,6 +41,7 @@ config['nvim-toggler'] = function()
     ['good'] = 'bad',
     ['ON'] = 'OFF',
     ['Yes'] = 'No',
+    ['and'] = 'or',
   }
   nt.setup { inverses = inverses, remove_default_keybinds = true }
   vim.keymap.set({ 'n', 'v' }, '<leader>i', nt.toggle, { silent = true })

@@ -37,12 +37,3 @@ require('brew.statusline').start()
 require('brew.core.autocmd')
 
 vim.cmd('colo gruvbox8-mat')
-
-local x = '1.1'
--- x = '1.'
--- local m = vim.regex("[0-9]+.[0-9]+.[0-9]+"):match_str(x)
-local s, e = vim.regex('^[0-9]%.$'):match_str(x)
-
--- print(vim.inspect { s, e })
-s = x:match("[0-9]+%.[0-9]+%.[0-9]+")
-print(vim.inspect(s))

@@ -162,7 +162,7 @@ gcb() {
 _gl() {
   local i=$(($LINES / 2 > 10 ? $LINES / 2 : 10))
   while IFS= read -r line; do
-    line=${line/origin\//*}
+    line=${line//origin\//*}
     line=${line/ weeks ago/w}
     line=${line/ week ago/w}
     line=${line/ days ago/d}
@@ -429,5 +429,17 @@ kgn() {
     kill $PID
   else
     echo "No matching process found"
+  fi
+}
+
+# Mark and Jump directories
+ZSH_HARPOON=$HOME/.local/.harpoon
+m() {
+  echo ${PWD/$HOME/'~'} >>$ZSH_HARPOON && $EDITOR $ZSH_HARPOON
+}
+j() {
+  RESULT=$(cat $ZSH_HARPOON | fzf --header='Harpoon!')
+  if [ $RESULT ]; then
+    cd ${RESULT/'~'/$HOME}
   fi
 }
