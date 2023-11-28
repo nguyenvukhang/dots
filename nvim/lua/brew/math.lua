@@ -4,11 +4,40 @@ local conf = require('telescope.config').values
 local Path = require('plenary.path')
 local utils = require('telescope.utils')
 
-local lookup_keys = {
-  display = 1,
-  ordinal = 1,
-  value = 1,
+local topic = {
+  ['algorithm-design.tex'] = '[ALGD]',
+  ['calculus.tex'] = '[CALC]',
+  ['complex-analysis.tex'] = '[CXAS]',
+  ['nonlinear-optimization-constrained.tex'] = '[NLOC]',
+  ['nonlinear-optimization-unconstrained.tex'] = '[NLOU]',
+  ['ordinary-differential-equations.tex'] = '[ODE]',
+  ['plenary.tex'] = '[PLEN]',
 }
+
+---@param buf string
+---@param start integer
+local get_in_between = function(buf, start)
+  local stk, s = 0, nil
+  for i = start, #buf do
+    local c = buf:byte(i)
+    if c == 123 then
+      stk, s = stk + 1, s and s or i
+    elseif c == 125 then
+      if stk == 1 then return buf:sub(s + 1, i - 1), i + 1 end
+    end
+  end
+end
+
+-- \\Theorem{2.2.7}{Convex optimization}\\label{f546fc9}
+---@param text string
+local unpack_text = function(text)
+  local entity = text:sub(2, text:find('{') - 1)
+  local num, i = get_in_between(text, 0)
+  local name, _ = get_in_between(text, i)
+  entity = entity .. ' ' .. num
+  if name and #name > 0 then entity = entity .. ' (' .. name .. ')' end
+  return entity
+end
 
 local handle_entry_index = function(opts, t, k)
   local override = ((opts or {}).entry_index or {})[k]
@@ -72,7 +101,7 @@ local function gen_from_vimgrep_for_math_notes(opts)
         if save then rawset(t, k, val) end
         return val
       end
-      return rawget(t, rawget(lookup_keys, k))
+      return rawget(t, rawget({ display = 1, ordinal = 1, value = 1 }, k))
     end,
   }
   return function(line) return setmetatable({ line }, mt_vimgrep_entry) end
