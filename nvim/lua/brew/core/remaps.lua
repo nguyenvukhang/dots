@@ -1,28 +1,9 @@
 local c = require('brew.core')
+local theorem_search = require('brew.math').theorem_search
 local nnoremap, vnoremap, inoremap = c.nnoremap, c.vnoremap, c.inoremap
-local pickers = require('telescope.pickers')
-local finders = require('telescope.finders')
-local conf = require('telescope.config').values
-local make_entry = require('telescope.make_entry')
 
 -- completely custom search only for nguyenvukhang/math
-nnoremap('<leader>pm', function()
-  local opts = {
-    entry_maker = make_entry.gen_from_vimgrep {
-      disable_coordinates = true,
-      only_sort_text = true,
-    },
-  }
-  local find_command = { './tex_modules/pytex', 'search-index' }
-  pickers
-    .new(opts, {
-      prompt_title = 'Theorems',
-      finder = finders.new_oneshot_job(find_command, opts),
-      previewer = conf.grep_previewer(opts),
-      sorter = conf.generic_sorter(opts),
-    })
-    :find()
-end)
+nnoremap('<leader>pm', theorem_search)
 
 -- no-ops
 nnoremap('<space>', '<nop>')
