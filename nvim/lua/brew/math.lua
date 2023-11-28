@@ -22,19 +22,12 @@ end
 local parse = function(t)
   local _, _, filename, lnum, col, text =
     string.find(t.value, [[(..-):(%d+):(%d+):(.*)]])
-
   local ok
   ok, lnum = pcall(tonumber, lnum)
   if not ok then lnum = nil end
-
   ok, col = pcall(tonumber, col)
   if not ok then col = nil end
-
-  t.filename = filename
-  t.lnum = lnum
-  t.col = col
-  t.text = text
-
+  t.filename, t.lnum, t.col, t.text = filename, lnum, col, text
   return { filename, lnum, col, text }
 end
 
@@ -53,11 +46,8 @@ local function gen_from_vimgrep_for_math_notes(opts)
     end,
 
     filename = function(t) return parse(t)[1], true end,
-
     lnum = function(t) return parse(t)[2], true end,
-
-    col = function(t) return parse(t)[3], true end,
-
+    col = function(_) return 0, true end,
     text = function(t) return parse(t)[4], true end,
   }
 
