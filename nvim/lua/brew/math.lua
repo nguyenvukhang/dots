@@ -2,6 +2,9 @@ local pickers = require('telescope.pickers')
 local finders = require('telescope.finders')
 local conf = require('telescope.config').values
 local Path = require('plenary.path')
+local actions_state = require('telescope.actions.state')
+local actions = require('telescope.actions')
+
 local MATH_DIR = vim.env.REPOS .. '/math'
 
 local topic = {
@@ -91,6 +94,7 @@ end
 
 -- completely custom search only for nguyenvukhang/math
 local theorem_search = function()
+  vim.cmd('norm! m`')
   local opts = {
     entry_maker = gen_from_vimgrep_for_math_notes(),
     cwd = MATH_DIR,
@@ -110,6 +114,16 @@ local theorem_search = function()
       finder = finders.new_oneshot_job(find_command, opts),
       previewer = conf.grep_previewer(opts),
       sorter = conf.generic_sorter(opts),
+      -- sends the SHA to the unnamed register. comment out this key to revert
+      -- to the default behavior of navigating to the header.
+      attach_mappings = function(_, map)
+        map('i', '<CR>', function(bufnr)
+          local entry = actions_state.get_selected_entry()[1]
+          vim.fn.setreg('', get_in_between(entry, #entry - 9))
+          actions.close(bufnr)
+        end)
+        return true
+      end,
     })
     :find()
 end

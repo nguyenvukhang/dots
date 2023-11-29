@@ -161,7 +161,10 @@ config['nvim-lspconfig'] = function()
 end
 
 -- https://github.com/sbdchd/neoformat
-config['neoformat'] = function() vim.g.neoformat_enabled_python = { 'black' } end
+config['neoformat'] = function()
+  vim.g.latexindent_opt = '-l -m'
+  vim.g.neoformat_enabled_python = { 'black' }
+end
 
 -- https://github.com/rose-pine/neovim (rip name convention tbh)
 -- config['rose-pine'] = function()

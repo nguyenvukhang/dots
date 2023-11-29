@@ -13,11 +13,12 @@ local cfg = {
     o.tabstop, o.shiftwidth = 4, 4
   end,
   latex = function()
-    o.textwidth, bo.filetype = 70, 'tex'
+    o.textwidth, bo.filetype = 80, 'tex'
     o.formatoptions = o.formatoptions + 't'
     c.nnoremap("<leader>be", "i\\begin{equation*}<CR><CR>\\end{equation*}<esc>k")
     c.nnoremap("<leader>ba", "i\\begin{align*}<CR><CR>\\end{align*}<esc>k")
     c.nnoremap("<leader>bm", "i\\begin{array}<CR><CR>\\end{array}<esc>k")
+    c.nnoremap("<leader>bc", "i\\begin{cases}<CR><CR>\\end{cases}<esc>k")
     dollarDollar()
   end,
   markdown = function()
