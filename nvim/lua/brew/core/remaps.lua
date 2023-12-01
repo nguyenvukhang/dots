@@ -3,7 +3,8 @@ local theorem_search = require('brew.math').theorem_search
 local nnoremap, vnoremap, inoremap = c.nnoremap, c.vnoremap, c.inoremap
 
 -- completely custom search only for nguyenvukhang/math
-nnoremap('<leader>pm', theorem_search)
+nnoremap('<leader>pm', function() theorem_search(true) end)
+nnoremap('<leader>pt', function() theorem_search(false) end)
 
 -- no-ops
 nnoremap('<space>', '<nop>')
