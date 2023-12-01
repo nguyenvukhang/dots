@@ -331,8 +331,9 @@ alias zr="exec $SHELL -l"                   # reloads shell
 alias ka="killall"
 alias py=python3
 alias si="$EDITOR .stow-local-ignore"
-alias vim=nvim
 alias mk="make"
+alias vim="$EDITOR"
+alias vi="$EDITOR"
 alias clangf="cp $DOTS/zsh/.clang-format ."
 alias jup="jupyter lab --app-dir $HOMEBREW_PREFIX/share/jupyter/lab"
 
@@ -343,7 +344,9 @@ bindkey '^[[Z' reverse-menu-complete
 # t: run the obvious thing
 t() {
   if [ -f run ]; then
-    ./run $@
+    bash run $@
+  elif [ -f build.sh ]; then
+    bash build.sh $@
   elif [ -f run.py ]; then
     python3 run.py $@
   elif [ -f Makefile ]; then
@@ -434,7 +437,7 @@ kgn() {
 
 # Mark and Jump directories
 ZSH_HARPOON=$HOME/.local/.harpoon
-m() {
+mm() {
   echo ${PWD/$HOME/'~'} >>$ZSH_HARPOON && $EDITOR $ZSH_HARPOON
 }
 j() {

@@ -92,8 +92,18 @@ local function gen_from_vimgrep_for_math_notes()
   return function(line) return setmetatable({ line }, mt_vimgrep_entry) end
 end
 
+local sha_to_register = function(_, map)
+  map('i', '<CR>', function(bufnr)
+    local entry = actions_state.get_selected_entry()[1]
+    vim.fn.setreg('', get_in_between(entry, #entry - 9))
+    actions.close(bufnr)
+  end)
+  return true
+end
+
 -- completely custom search only for nguyenvukhang/math
-local theorem_search = function()
+---@param nav boolean whether or not to jump to just copy the SHA
+local theorem_search = function(nav)
   vim.cmd('norm! m`')
   local opts = {
     entry_maker = gen_from_vimgrep_for_math_notes(),
@@ -108,6 +118,8 @@ local theorem_search = function()
     '-g',
     '*.tex',
   }
+  local attach_mappings = nil
+  if not nav then attach_mappings = sha_to_register end
   pickers
     .new(opts, {
       prompt_title = 'Theorems',
@@ -116,14 +128,7 @@ local theorem_search = function()
       sorter = conf.generic_sorter(opts),
       -- sends the SHA to the unnamed register. comment out this key to revert
       -- to the default behavior of navigating to the header.
-      attach_mappings = function(_, map)
-        map('i', '<CR>', function(bufnr)
-          local entry = actions_state.get_selected_entry()[1]
-          vim.fn.setreg('', get_in_between(entry, #entry - 9))
-          actions.close(bufnr)
-        end)
-        return true
-      end,
+      attach_mappings = attach_mappings,
     })
     :find()
 end
