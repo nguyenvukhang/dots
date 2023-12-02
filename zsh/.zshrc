@@ -347,10 +347,10 @@ t() {
     bash run $@
   elif [ -f build.sh ]; then
     bash build.sh $@
-  elif [ -f run.py ]; then
-    python3 run.py $@
   elif [ -f Makefile ]; then
     make $@
+  elif [ -f run.py ]; then
+    python3 run.py $@
   elif [ -f Cargo.toml ]; then
     cargo run $@
   elif [ -f package.json ]; then
