@@ -15,10 +15,10 @@ local cfg = {
   latex = function()
     o.textwidth, bo.filetype = 80, 'tex'
     o.formatoptions = o.formatoptions + 't'
-    c.nnoremap("<leader>be", "i\\begin{equation*}<CR><CR>\\end{equation*}<esc>k")
-    c.nnoremap("<leader>ba", "i\\begin{align*}<CR><CR>\\end{align*}<esc>k")
-    c.nnoremap("<leader>br", "i\\begin{array}<CR><CR>\\end{array}<esc>k")
-    c.nnoremap("<leader>bc", "i\\begin{cases}<CR><CR>\\end{cases}<esc>k")
+    c.nnoremap("<leader>be", "cc\\begin{equation*}<CR><CR>\\end{equation*}<esc>k")
+    c.nnoremap("<leader>ba", "cc\\begin{align*}<CR><CR>\\end{align*}<esc>k")
+    c.nnoremap("<leader>br", "cc\\begin{array}<CR><CR>\\end{array}<esc>k")
+    c.nnoremap("<leader>bc", "cc\\begin{cases}<CR><CR>\\end{cases}<esc>k")
     dollarDollar()
   end,
   markdown = function()

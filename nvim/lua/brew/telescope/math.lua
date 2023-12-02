@@ -28,6 +28,7 @@ local get_in_between = function(buf, start)
       stk, s = stk + 1, s and s or i
     elseif c == 125 then -- '}'
       if stk == 1 then return buf:sub(s + 1, i - 1), i + 1 end
+      stk = stk - 1
     end
   end
 end
