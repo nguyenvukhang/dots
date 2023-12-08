@@ -431,8 +431,7 @@ kgn() {
   PID="${PID#"${PID%%[![:space:]]*}"}" # remove spaces from the front
   PID=${PID%% *}                       # get contents before the first space
   if [ $PID ]; then
-    echo "Killing $PID"
-    kill $PID
+    echo "Killing $PID" && kill $PID
   else
     echo "No matching process found"
   fi
@@ -448,4 +447,13 @@ j() {
   if [ $RESULT ]; then
     cd ${RESULT/'~'/$HOME}
   fi
+}
+
+path() {
+  local P=${PATH#*:} F=${PATH%%:*}
+  while true; do
+    echo "* $F"
+    F=${P%%:*} P=${P#*:}
+    [[ $P == *":"* ]] || break
+  done
 }
