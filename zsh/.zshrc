@@ -64,8 +64,7 @@ export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='
 # use neovim as manpager
 [ "$EDITOR" = "nvim" ] && export MANPAGER="nvim +Man!"
 
-PATH=$HOMEBREW_PREFIX/opt/python/libexec/bin:$PATH
-PATH=/usr/local/opt/python/libexec/bin:$PATH
+PATH=/opt/homebrew/opt/jpeg/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
 export PATH
 
@@ -450,10 +449,13 @@ j() {
 }
 
 path() {
-  local P=${PATH#*:} F=${PATH%%:*}
+  local P=$PATH
   while true; do
-    echo "* $F"
-    F=${P%%:*} P=${P#*:}
+    echo "* ${P%%:*}"
+    P=${P#*:}
     [[ $P == *":"* ]] || break
   done
 }
+
+# arch -arm64 brew install pkg-config cairo pango libpng jpeg giflib librsvg
+# brew uninstall --ignore-dependencies pkg-config cairo pango libpng jpeg giflib librsvg
