@@ -3,16 +3,17 @@ export DOTS=$HOME/dots
 ZDOTDIR=$HOME/.config/zsh
 ZSHENV_PATH=/etc/zshenv
 
+# sources
+[ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # derivative paths
 export PASSWORD_STORE_DIR=$DOTS/personal
 export N_PREFIX="$HOME/.local/n"
-[[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
-PATH+=":$DOTS/personal/.local/bin.macos-arm"
+[[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH="$N_PREFIX/bin:$PATH"
+export PATH
+# PATH+=":$DOTS/personal/.local/bin.macos-arm"
 
 # configs
 PROMPT_ARROW='>'
-
-# sources
-[ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # vim:ft=zsh
