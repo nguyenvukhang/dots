@@ -19,6 +19,9 @@ has() {
 # special directories
 export UNI=$HOME/uni REPOS=$HOME/repos
 
+# bye __pycache__
+export PYTHONPYCACHEPREFIX=/tmp/pycache
+
 # locale standardize
 export LANGUAGE=en_US.UTF-8 LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
 
