@@ -39,3 +39,6 @@ defaults write -g NSAutomaticSpellingCorrectionEnabled -int 0
 
 # set the value of `hostname` output, for prompt in zsh/bash
 sudo scutil --set HostName 'mac'
+
+defaults write -app Skim SKToolTipWidth -float 720
+defaults write -app Skim SKToolTipHeight -float 405
