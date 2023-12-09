@@ -9,7 +9,9 @@ ZSHENV_PATH=/etc/zshenv
 # derivative paths
 export PASSWORD_STORE_DIR=$DOTS/personal
 export N_PREFIX="$HOME/.local/n"
-[[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH="$N_PREFIX/bin:$PATH"
+
+PATH=$N_PREFIX/bin:$PATH
+PATH=$HOME/Library/Python/3.9/bin:$PATH
 export PATH
 # PATH+=":$DOTS/personal/.local/bin.macos-arm"
 
