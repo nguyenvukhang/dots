@@ -16,6 +16,7 @@ BIRTHDAYS = {}
 if os.path.isfile(BIRTHDAY_FILE):
     with open(BIRTHDAY_FILE, "r") as f:
         BIRTHDAYS = json.load(f)
+FIXED_TAB_NAMES = ("editor", "server")
 
 
 def birthday():
@@ -24,6 +25,9 @@ def birthday():
 
 
 def _draw_left_status(dd, sc, tab, before, mtl, index, is_last):
+    if 1 <= index and index <= len(FIXED_TAB_NAMES):
+        tab = tab._replace(title=FIXED_TAB_NAMES[index - 1])
+
     if dd.leading_spaces:
         sc.draw(" " * dd.leading_spaces)
 
