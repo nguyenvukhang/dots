@@ -5,7 +5,7 @@ local M, builtin = { files = {}, string = {} }, require('telescope.builtin')
 local t = { file_ignore_patterns = {
   'node_modules', 'LICENSE', 'autoload/plug.vim', '.ccls-cache',
   'yarn.lock', 'error.log', '%.git/', '%.gpg', '%.DS_Store', '%.pdf',
-  '%.pdf', '%.png', '%.jpg', '%.gif', '%.sql',
+  '%.pdf', '%.png', '%.jpg', '%.gif', '%.sql', '%.ttf'
 }}
 
 -- git repo operations
