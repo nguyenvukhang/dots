@@ -618,9 +618,6 @@ if &background == 'dark'
     hi BufTabLineCurrent guifg=#282828 guibg=#a89984 guisp=NONE gui=NONE
     hi BufTabLineFill guifg=#282828 guibg=#282828 guisp=NONE gui=NONE
     hi BufTabLineHidden guifg=#7c6f64 guibg=#3c3836 guisp=NONE gui=NONE
-    hi DirvishArg guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-    hi DirvishPathTail guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-    hi GitGutterChangeDelete guifg=#8ec07c guibg=#3c3836 guisp=NONE gui=NONE
     hi LangaugeClientInfo guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
     hi LanguageClientCodeLens guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
     hi LanguageClientError guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
@@ -640,33 +637,12 @@ if &background == 'dark'
     hi LspDiagnosticsUnderlineHint guifg=NONE guibg=NONE guisp=NONE gui=NONE
     hi LspDiagnosticsUnderlineInformation guifg=NONE guibg=NONE guisp=NONE gui=NONE
     hi LspDiagnosticsUnderlineWarning guifg=NONE guibg=NONE guisp=NONE gui=NONE
-    hi ShowMarksHLl guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
-    hi ShowMarksHLm guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
-    hi ShowMarksHLo guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
-    hi ShowMarksHLu guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
     hi SignatureMarkText guifg=#83a598 guibg=#3c3836 guisp=NONE gui=NONE
     hi SignatureMarkerText guifg=#d3869b guibg=#3c3836 guisp=NONE gui=NONE
-    hi SignifySignAdd guifg=#b8bb26 guibg=#3c3836 guisp=NONE gui=NONE
-    hi SignifySignChange guifg=#8ec07c guibg=#3c3836 guisp=NONE gui=NONE
-    hi SignifySignDelete guifg=#fb4934 guibg=#3c3836 guisp=NONE gui=NONE
-    hi SyntasticError guifg=NONE guibg=NONE guisp=#fb4934 gui=undercurl
-    hi SyntasticErrorSign guifg=#fb4934 guibg=#3c3836 guisp=NONE gui=NONE
-    hi SyntasticWarning guifg=NONE guibg=NONE guisp=#fabd2f gui=undercurl
-    hi SyntasticWarningSign guifg=#fabd2f guibg=#3c3836 guisp=NONE gui=NONE
     hi gitcommitDiscardedFile guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
     hi gitcommitSelectedFile guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
     hi multiple_cursors_cursor guifg=NONE guibg=NONE guisp=NONE gui=reverse
     hi multiple_cursors_visual guifg=NONE guibg=#504945 guisp=NONE gui=NONE
-    hi netrwClassify guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-    hi netrwCmdSep guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-    hi netrwComment guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-    hi netrwDir guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-    hi netrwExe guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
-    hi netrwHelpCmd guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
-    hi netrwLink guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-    hi netrwList guifg=#83a598 guibg=NONE guisp=NONE gui=NONE
-    hi netrwSymLink guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-    hi netrwVersion guifg=#b8bb26 guibg=NONE guisp=NONE gui=NONE
   endif
 endif
 
