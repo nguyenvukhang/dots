@@ -25,7 +25,7 @@ require('brew.core').load_plugins {
 
   -- retired
   -- 'sheerun/vim-polyglot', -- (breaks astro)
-  -- 'nvim-treesitter/nvim-treesitter',
+  'nvim-treesitter/nvim-treesitter',
   -- 'nvim-treesitter/playground',
 }
 

@@ -5,22 +5,19 @@ local build = {}
 
 -- https://github.com/ThePrimeagen/harpoon
 config.harpoon = function()
-  local mark, ui = require('harpoon.mark'), require('harpoon.ui')
+  local h, b = require('harpoon'), '[harpoon] ⇁ '
+  h:setup()
   local jump = function(n)
-    return function()
-      ui.nav_file(n)
-      vim.notify('[harpoon] -> ' .. n .. '/4')
-    end
+    return function() vim.notify(b .. n .. '/4', h:list():select(n)) end
   end
-  nnoremap('<leader>m', ui.toggle_quick_menu)
+  nnoremap('<leader>m', function() h.ui:toggle_quick_menu(h:list()) end)
   nnoremap('<leader>1', jump(1), true)
   nnoremap('<leader>2', jump(2), true)
   nnoremap('<leader>3', jump(3), true)
   nnoremap('<leader>4', jump(4), true)
   nnoremap('mm', function()
-    mark.add_file()
-    ui.toggle_quick_menu()
-    vim.notify_once('[harpoon] added file')
+    vim.notify_once('[harpoon] added file', h:list():append())
+    h.ui:toggle_quick_menu(h:list())
   end, true)
 end
 
@@ -129,7 +126,7 @@ end
 -- https://github.com/nvim-treesitter/nvim-treesitter
 config['nvim-treesitter'] = function()
   -- list of languages that use treesitter for syntax highlighting
-  local enabled = { 'astro', 'latex', 'swift' }
+  local enabled = { 'latex' }
   require('nvim-treesitter.configs').setup {
     highlight = {
       enable = true,
