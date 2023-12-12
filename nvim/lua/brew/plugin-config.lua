@@ -127,16 +127,18 @@ end
 config['nvim-treesitter'] = function()
   -- list of languages that use treesitter for syntax highlighting
   local enabled = { 'latex' }
+  -- stylua: ignore
+  local _ = {
+    'javascript', 'typescript', 'c', 'lua', 'rust', 'tsx', 'css', 'astro',
+    'java', 'latex', 'markdown', 'markdown_inline', 'python', 'swift' }
+  local install = { 'latex' }
   require('nvim-treesitter.configs').setup {
     highlight = {
       enable = true,
-      -- restrict treesitter to just the `treesitter_list`
-      disable = function(lang, _) return not vim.tbl_contains(enabled, lang) end,
+      disable = function(l, _) return not vim.tbl_contains(enabled, l) end,
       additional_vim_regex_highlighting = false,
     },
-    -- stylua: ignore
-    ensure_installed = { 'javascript', 'typescript', 'c', 'lua', 'rust', 'tsx', 'css',
-      'astro', 'java', 'latex', 'markdown', 'markdown_inline', 'python', 'swift' },
+    ensure_installed = install,
   }
 end
 
