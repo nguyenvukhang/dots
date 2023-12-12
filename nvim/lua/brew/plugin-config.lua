@@ -166,7 +166,7 @@ end
 -- https://github.com/rose-pine/neovim (rip name convention tbh)
 config['neovim'] = function()
   -- print("GOT HERE")
-  require('rose-pine').setup { variant = 'moon', disable_background = true }
+  require('rose-pine').setup { variant = 'main', disable_background = true }
 end
 
 return function(list)

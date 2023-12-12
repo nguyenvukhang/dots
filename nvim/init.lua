@@ -1,5 +1,5 @@
 require('brew.core').load_plugins {
-  'rose-pine/neovim',
+  'sainnhe/gruvbox-material',
   'ThePrimeagen/harpoon',
   'nvim-telescope/telescope.nvim',
   'nvim-telescope/telescope-fzy-native.nvim',
@@ -27,7 +27,7 @@ require('brew.core').load_plugins {
   -- retired
   -- 'sheerun/vim-polyglot', -- (breaks astro)
   'nvim-treesitter/nvim-treesitter',
-  -- 'nvim-treesitter/playground',
+  'nvim-treesitter/playground',
 }
 
 -- independent of plugins, server-friendly
@@ -38,5 +38,6 @@ require('brew.statusline').start()
 require('brew.core.autocmd')
 
 -- require('gruvbox').load()
--- vim.cmd('colo gruvbox8-mat')
-vim.cmd('colo rose-pine')
+vim.cmd('colo gruvbox8-mat')
+-- vim.g.gruvbox_material_transparent_background = 1
+-- vim.cmd('colo gruvbox-material')
