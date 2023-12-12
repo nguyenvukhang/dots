@@ -3,8 +3,6 @@ const { readFileSync, writeFileSync } = require("fs");
 const INPUT = "gruvbox8.vim";
 const OUTPUT = "gruvbox8-mat.vim";
 
-const data = readFileSync(INPUT, "utf8").split("\n");
-
 const from = {
   red: "#fb4934",
   green: "#b8bb26",
@@ -38,12 +36,11 @@ const colors = [
   "gray",
 ];
 
-const converted = data.map((v) => {
-  let line = v;
-  colors.forEach((c) => {
-    line = line.replace(from[c], to[c]);
+const converted = readFileSync(INPUT, "utf8")
+  .split("\n")
+  .map((v) => {
+    colors.forEach((c) => (v = v.replace(from[c], to[c])));
+    return v;
   });
-  return line;
-});
 
 writeFileSync(OUTPUT, converted.join("\n"));
