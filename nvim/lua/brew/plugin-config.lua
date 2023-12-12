@@ -164,9 +164,10 @@ config['neoformat'] = function()
 end
 
 -- https://github.com/rose-pine/neovim (rip name convention tbh)
--- config['rose-pine'] = function()
---   require('rose-pine').setup { variant = 'moon', disable_background = true }
--- end
+config['neovim'] = function()
+  -- print("GOT HERE")
+  require('rose-pine').setup { variant = 'moon', disable_background = true }
+end
 
 return function(list)
   for i = 1, #list do
