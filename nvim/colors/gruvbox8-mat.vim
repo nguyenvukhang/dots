@@ -43,6 +43,25 @@ endif
 " custom
 
 " latex
+
+hi! link @text.strong Normal
+hi! link @text.emphasis Normal
+hi! link @text.reference Normal
+hi! link @text.uri Normal
+hi! link @text.math GruvboxOrange
+hi! link @function GruvboxRed
+hi! link @namespace GruvboxRed
+hi! link @text.title.1 Normal
+hi! link @text.title.2 Normal
+hi! link @text.title.3 Normal
+hi! link @text.title.4 Normal
+hi! link @text.title.5 Normal
+hi! link @text.title.6 Normal
+hi! link @text.environment.name Normal
+hi! link @text.environment GruvboxAqua
+hi! link @operator GruvboxOrange
+" hi! link @punctuation.bracket GruvboxGray
+
 hi! link texDocZone Normal
 hi! link texSectionZone Normal
 hi! link texSubSectionZone Normal
