@@ -60,6 +60,7 @@ hi! link @text.title.6 Normal
 hi! link @text.environment.name Normal
 hi! link @text.environment GruvboxAqua
 hi! link @operator GruvboxOrange
+hi! link @punctuation.special GruvboxGray
 " hi! link @punctuation.bracket GruvboxGray
 
 hi! link texDocZone Normal
