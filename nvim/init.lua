@@ -1,6 +1,5 @@
-require('brew.core').load_plugins {
+require('brew.lazy').load_plugins {
   'sainnhe/gruvbox-material',
-  'ThePrimeagen/harpoon',
   'nvim-telescope/telescope.nvim',
   'nvim-telescope/telescope-fzy-native.nvim',
   'nguyenvukhang/nvim-toggler',
@@ -24,18 +23,16 @@ require('brew.core').load_plugins {
   'hrsh7th/cmp-path',
   'hrsh7th/cmp-cmdline',
 
-  -- retired
-  -- 'sheerun/vim-polyglot', -- (breaks astro)
   'nvim-treesitter/nvim-treesitter',
   'nvim-treesitter/playground',
 }
 
 -- independent of plugins, server-friendly
-require('brew.core.sets')
-require('brew.core.remaps')
-require('brew.core.commands')
+require('brew.sets')
+require('brew.remaps')
+require('brew.commands')
 require('brew.statusline').start()
-require('brew.core.autocmd')
+require('brew.autocmd')
 
 -- require('gruvbox').load()
 vim.cmd('colo gruvbox8-mat')

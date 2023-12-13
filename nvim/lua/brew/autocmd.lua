@@ -1,4 +1,4 @@
-local c = require('brew.core')
+local c = require('brew')
 local o, bo = vim.opt, vim.bo
 
 local dollarDollar = function()

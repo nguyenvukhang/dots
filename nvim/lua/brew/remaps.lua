@@ -1,4 +1,4 @@
-local c = require('brew.core')
+local c = require('brew')
 local nnoremap, vnoremap, inoremap = c.nnoremap, c.vnoremap, c.inoremap
 
 -- no-ops

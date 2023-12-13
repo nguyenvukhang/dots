@@ -1,4 +1,4 @@
-local git_workspace_root = require('brew.core').git_workspace_root
+local git_workspace_root = require('brew').git_workspace_root
 local M, builtin = { files = {}, string = {} }, require('telescope.builtin')
 
 -- stylua: ignore

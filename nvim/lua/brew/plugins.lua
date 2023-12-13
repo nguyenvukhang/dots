@@ -1,28 +1,29 @@
-local core = require('brew.core')
+local core = require('brew')
 local nnoremap, vnoremap = core.nnoremap, core.vnoremap
 local config = {}
 local build = {}
 
--- https://github.com/ThePrimeagen/harpoon
-config.harpoon = function()
-  local h, b = require('harpoon'), '[harpoon] ⇁ '
-  h:setup()
+config['ThePrimeagen/harpoon'] = function()
+  local mark, ui = require('harpoon.mark'), require('harpoon.ui')
   local jump = function(n)
-    return function() vim.notify(b .. n .. '/4', h:list():select(n)) end
+    return function()
+      ui.nav_file(n)
+      vim.notify('[harpoon] -> ' .. n .. '/4')
+    end
   end
-  nnoremap('<leader>m', function() h.ui:toggle_quick_menu(h:list()) end)
+  nnoremap('<leader>m', ui.toggle_quick_menu)
   nnoremap('<leader>1', jump(1), true)
   nnoremap('<leader>2', jump(2), true)
   nnoremap('<leader>3', jump(3), true)
   nnoremap('<leader>4', jump(4), true)
   nnoremap('mm', function()
-    vim.notify_once('[harpoon] added file', h:list():append())
-    h.ui:toggle_quick_menu(h:list())
+    mark.add_file()
+    ui.toggle_quick_menu()
+    vim.notify_once('[harpoon] added file')
   end, true)
 end
 
--- https://github.com/nguyenvukhang/nvim-toggler
-config['nvim-toggler'] = function()
+config['nguyenvukhang/nvim-toggler'] = function()
   local nt = require('nvim-toggler')
   local inverses = {
     ['- [ ]'] = '- [x]',
@@ -44,9 +45,8 @@ config['nvim-toggler'] = function()
   vim.keymap.set({ 'n', 'v' }, '<leader>i', nt.toggle, { silent = true })
 end
 
--- https://github.com/L3MON4D3/LuaSnip
 --[[
-config['LuaSnip'] = function()
+config['L3MON4D3/LuaSnip'] = function()
   local ls = require('luasnip')
   print('GOT HERE')
   local s = ls.snippet
@@ -58,8 +58,7 @@ config['LuaSnip'] = function()
 end
 --]]
 
--- https://github.com/hrsh7th/nvim-cmp
-config['nvim-cmp'] = function()
+config['hrsh7th/nvim-cmp'] = function()
   local cmp, ct, ls = require('cmp'), require('cmp.types'), require('luasnip')
   cmp.setup {
     formatting = {
@@ -89,15 +88,13 @@ config['nvim-cmp'] = function()
   cmp.setup.cmdline('/', { sources = { { name = 'buffer' } } })
 end
 
--- https://github.com/terrortylor/nvim-comment
-config['nvim-comment'] = function()
+config['terrortylor/nvim-comment'] = function()
   require('nvim_comment').setup { create_mappings = false }
   nnoremap('<C-c>', ':CommentToggle<CR>', true)
   vnoremap('<C-c>', ':CommentToggle<CR>', true)
 end
 
--- https://github.com/windwp/nvim-autopairs
-config['nvim-autopairs'] = function()
+config['windwp/nvim-autopairs'] = function()
   local np, Rule = require('nvim-autopairs'), require('nvim-autopairs.rule')
   np.setup { ignored_next_char = [=[[%w%%%'%[%"%.%`]]=] }
   np.add_rules {
@@ -107,8 +104,7 @@ config['nvim-autopairs'] = function()
   }
 end
 
--- https://github.com/iamcco/markdown-preview.nvim
-build['markdown-preview.nvim'] = function() vim.fn['mkdp#util#install']() end
+build['iamcco/markdown-preview.nvim'] = function() vim.fn['mkdp#util#install']() end
 config['markdown-preview.nvim'] = function()
   vim.g.mkdp_preview_options = {
     ['katex'] = {
@@ -123,30 +119,26 @@ config['markdown-preview.nvim'] = function()
   vim.cmd('cnoreabbrev MS MarkdownPreviewStop')
 end
 
--- https://github.com/nvim-treesitter/nvim-treesitter
-config['nvim-treesitter'] = function()
+config['nvim-treesitter/nvim-treesitter'] = function()
   -- list of languages that use treesitter for syntax highlighting
   local enabled = { 'latex' }
   -- stylua: ignore
   local _ = {
     'javascript', 'typescript', 'c', 'lua', 'rust', 'tsx', 'css', 'astro',
     'java', 'latex', 'markdown', 'markdown_inline', 'python', 'swift' }
-  local install = { 'latex' }
   require('nvim-treesitter.configs').setup {
     highlight = {
       enable = true,
       disable = function(l, _) return not vim.tbl_contains(enabled, l) end,
       additional_vim_regex_highlighting = false,
     },
-    ensure_installed = install,
+    ensure_installed = enabled,
   }
 end
 
--- https://github.com/nvim-telescope/telescope.nvim
-config['telescope.nvim'] = function() require('brew.telescope') end
+config['nvim-telescope/telescope.nvim'] = function() require('brew.telescope') end
 
--- https://github.com/neovim/nvim-lspconfig
-config['nvim-lspconfig'] = function()
+config['neovim/nvim-lspconfig'] = function()
   local lsp = require('brew.lsp')
   lsp.rust()
   lsp.clangd()
@@ -159,22 +151,21 @@ config['nvim-lspconfig'] = function()
   -- lsp.go()
 end
 
--- https://github.com/sbdchd/neoformat
-config['neoformat'] = function()
+config['sbdchd/neoformat'] = function()
   vim.g.latexindent_opt = '-l -m'
   vim.g.neoformat_enabled_python = { 'black' }
 end
 
--- https://github.com/rose-pine/neovim (rip name convention tbh)
-config['neovim'] = function()
+config['rose-pin/neovim'] = function()
   -- print("GOT HERE")
   require('rose-pine').setup { variant = 'main', disable_background = true }
 end
 
-return function(list)
-  for i = 1, #list do
-    local key = list[i]:match('/(.*)')
-    list[i] = { list[i], config = config[key], build = build[key] }
+config['nvim-lua/plenary.nvim'] = config['ThePrimeagen/harpoon']
+
+return function(t)
+  for i = 1, #t do
+    t[i] = { t[i], config = config[t[i]], build = build[t[i]] }
   end
-  return list
+  return t
 end
