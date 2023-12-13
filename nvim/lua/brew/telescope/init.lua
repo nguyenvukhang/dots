@@ -1,6 +1,6 @@
 local actions = require('telescope.actions')
 local search = require('brew.telescope.search')
-local nnoremap = require('brew.core').nnoremap
+local nnoremap = require('brew').nnoremap
 local theorem_search = require('brew.telescope.math').theorem_search
 
 nnoremap('<c-p>', search.files.repo)
@@ -19,7 +19,6 @@ nnoremap('<leader>p0', require('telescope.builtin').builtin)
 -- completely custom search only for nguyenvukhang/math
 nnoremap('<leader>pm', function() theorem_search(true) end)
 nnoremap('<leader>pt', function() theorem_search(false) end)
-
 
 -- local builtin = require('telescope.builtin')
 -- nnoremap('<leader>sh', builtin.help_tags)
@@ -46,6 +45,9 @@ require('telescope').setup {
     color_devicons = false,
     selection_caret = '  ',
     mappings = { i = { ['<esc>'] = actions.close } },
+    preview = {
+      treesitter = false,
+    },
   },
   pickers = {
     git_files = { hidden = true },

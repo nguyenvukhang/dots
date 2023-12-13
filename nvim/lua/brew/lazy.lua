@@ -23,7 +23,7 @@ M.load_plugins = function(plugins)
   if not vim.loop.fs_stat(lp) then return prime_bootstrap(lp) end
   vim.opt.runtimepath:prepend(lp)
   vim.g.mapleader = ' '
-  require('lazy').setup(require('brew.plugin-config')(plugins))
+  require('lazy').setup(require("brew.plugins")(plugins))
 end
 
 return M

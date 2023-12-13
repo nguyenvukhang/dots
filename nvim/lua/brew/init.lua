@@ -1,7 +1,5 @@
 local M, fn = {}, vim.fn
 
-M.load_plugins = require('brew.core.lazy').load_plugins
-
 M.debug = function(x) print(vim.inspect(x)) end
 
 -- checks if quickfix is open
