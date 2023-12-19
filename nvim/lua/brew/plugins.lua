@@ -4,36 +4,6 @@ local config = {}
 local dir = {}
 local build = {}
 
-config['ThePrimeagen/harpoon'] = function()
-  local mark, ui = require('harpoon.mark'), require('harpoon.ui')
-  local jump = function(n)
-    return function()
-      ui.nav_file(n)
-      vim.notify('[harpoon] -> ' .. n .. '/4')
-    end
-  end
-  nnoremap('<leader>m', ui.toggle_quick_menu)
-  nnoremap('<leader>1', jump(1), true)
-  nnoremap('<leader>2', jump(2), true)
-  nnoremap('<leader>3', jump(3), true)
-  nnoremap('<leader>4', jump(4), true)
-  nnoremap('mm', function()
-    mark.add_file()
-    ui.toggle_quick_menu()
-    vim.notify_once('[harpoon] added file')
-  end, true)
-end
-
-config['windwp/nvim-autopairs'] = function()
-  local np, Rule = require('nvim-autopairs'), require('nvim-autopairs.rule')
-  np.setup { ignored_next_char = [=[[%w%%%'%[%"%.%`]]=] }
-  np.add_rules {
-    Rule('$', '$', { 'tex', 'markdown' }):with_move(
-      function(o) return o.next_char == o.char end
-    ),
-  }
-end
-
 config['nguyenvukhang/nvim-toggler'] = function()
   local nt = require('nvim-toggler')
   local inverses = {
@@ -164,7 +134,7 @@ config['rose-pin/neovim'] = function()
   require('rose-pine').setup { variant = 'main', disable_background = true }
 end
 
-config['nvim-lua/plenary.nvim'] = config['ThePrimeagen/harpoon']
+dir['hrsh7th/nvim-cmp'] = '/Users/khang/repos/nvim-cmp'
 
 return function(t)
   for i = 1, #t do
