@@ -1,9 +1,9 @@
-local core = require('brew')
-local nnoremap, vnoremap = core.nnoremap, core.vnoremap
+-- local core = require('brew')
+-- local nnoremap, vnoremap = core.nnoremap, core.vnoremap
 
 require('brew.lazy').setup {
   'nvim-telescope/telescope-fzy-native.nvim',
-  'terrortylor/nvim-comment',
+  'wuelnerdotexe/vim-astro',
   {
     'nvim-telescope/telescope.nvim',
     config = function() require('brew.telescope') end,
@@ -59,7 +59,23 @@ require('brew.lazy').setup {
       -- lsp.go()
     end,
   },
-  'iamcco/markdown-preview.nvim',
+  {
+    'iamcco/markdown-preview.nvim',
+    build = function() vim.fn['mkdp#util#install']() end,
+    config = function()
+      vim.g.mkdp_preview_options = {
+        ['katex'] = {
+          ['macros'] = {
+            ['\\R'] = '\\mathbb{R}',
+            ['\\C'] = '\\mathbb{C}',
+            ['\\norm'] = '\\left\\lVert{#1}\\right\\rVert',
+          },
+        },
+      }
+      vim.cmd('cnoreabbrev MP MarkdownPreview')
+      vim.cmd('cnoreabbrev MS MarkdownPreviewStop')
+    end,
+  },
   'nvim-lua/plenary.nvim',
   'mfussenegger/nvim-jdtls',
   'tpope/vim-surround',
@@ -71,10 +87,50 @@ require('brew.lazy').setup {
       vim.g.neoformat_enabled_python = { 'black' }
     end,
   },
-  'wuelnerdotexe/vim-astro',
-
-  -- completion
-  'hrsh7th/nvim-cmp',
+  {
+    'hrsh7th/nvim-cmp',
+    config = function()
+      local cmp, ct = require('cmp'), require('cmp.types')
+      cmp.setup {
+        formatting = {
+          expandable_indicator = false,
+          format = function(_, item)
+            item.menu = nil -- remove flair from completion item
+            return item
+          end,
+        },
+        mapping = {
+          ['<C-n>'] = cmp.mapping.select_next_item(),
+          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          ['<C-l>'] = cmp.mapping.confirm { select = true },
+        },
+        sources = cmp.config.sources({
+          {
+            name = 'nvim_lsp',
+            entry_filter = function(e) -- remove `Snippet` entries
+              return ct.lsp.CompletionItemKind[e:get_kind()] ~= 'Snippet'
+            end,
+          },
+        }, { { name = 'buffer' }, { name = 'path' } }),
+        preselect = cmp.PreselectMode.None,
+        snippet = {
+          expand = function(args) vim.fn['vsnip#anonymous'](args.body) end,
+        },
+      }
+      -- Use buffer source for `/` search
+      cmp.setup.cmdline('/', { sources = { { name = 'buffer' } } })
+    end,
+  },
+  {
+    'terrortylor/nvim-comment',
+    keys = {
+      { '<C-c>', ':CommentToggle<CR>' },
+      { '<C-c>', ':CommentToggle<CR>', mode = 'v' },
+    },
+    config = function()
+      require('nvim_comment').setup { create_mappings = false }
+    end,
+  },
   'hrsh7th/cmp-nvim-lsp',
   'hrsh7th/cmp-buffer',
   'hrsh7th/cmp-path',
@@ -90,8 +146,7 @@ require('brew.remaps')
 require('brew.commands')
 require('brew.statusline').start()
 require('brew.autocmd')
-
-require('harpoon').my_setup(core.nnoremap)
+require('harpoon').my_setup()
 
 -- require('gruvbox').load()
 vim.cmd('colo gruvbox8-mat')
