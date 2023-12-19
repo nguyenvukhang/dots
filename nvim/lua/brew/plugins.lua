@@ -23,19 +23,6 @@ end
 
 config['nvim-telescope/telescope.nvim'] = function() require('brew.telescope') end
 
-config['neovim/nvim-lspconfig'] = function()
-  local lsp = require('brew.lsp')
-  lsp.rust()
-  lsp.clangd()
-  lsp.ocamllsp()
-  lsp.lua()
-  lsp.typescript()
-  lsp.python()
-  lsp.swift()
-  -- lsp.astro()
-  -- lsp.go()
-end
-
 config['sbdchd/neoformat'] = function()
   vim.g.latexindent_opt = '-l -m'
   vim.g.neoformat_enabled_python = { 'black' }
