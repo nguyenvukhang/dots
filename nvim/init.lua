@@ -2,11 +2,21 @@
 -- local nnoremap, vnoremap = core.nnoremap, core.vnoremap
 
 require('brew.lazy').setup {
-  'nvim-telescope/telescope-fzy-native.nvim',
   'wuelnerdotexe/vim-astro',
+  'nvim-lua/plenary.nvim',
   {
     'nvim-telescope/telescope.nvim',
+    dependencies = {
+      'nvim-telescope/telescope-fzy-native.nvim',
+      'nvim-lua/plenary.nvim',
+    },
     config = function() require('brew.telescope') end,
+  },
+  {
+    'harpoon',
+    dev = true,
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function() require('harpoon').my_setup() end,
   },
   {
     'nguyenvukhang/nvim-toggler',
@@ -146,7 +156,7 @@ require('brew.remaps')
 require('brew.commands')
 require('brew.statusline').start()
 require('brew.autocmd')
-require('harpoon').my_setup()
+-- require('harpoon').my_setup()
 
 -- require('gruvbox').load()
 vim.cmd('colo gruvbox8-mat')
