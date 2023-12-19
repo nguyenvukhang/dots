@@ -59,7 +59,7 @@ end
 --]]
 
 config['hrsh7th/nvim-cmp'] = function()
-  local cmp, ct, ls = require('cmp'), require('cmp.types'), require('luasnip')
+  local cmp, ct = require('cmp'), require('cmp.types')
   cmp.setup {
     formatting = {
       expandable_indicator = false,
@@ -82,7 +82,9 @@ config['hrsh7th/nvim-cmp'] = function()
       },
     }, { { name = 'buffer' }, { name = 'path' } }),
     preselect = cmp.PreselectMode.None,
-    snippet = { expand = function(args) ls.lsp_expand(args.body) end },
+    snippet = {
+      expand = function(args) vim.fn['vsnip#anonymous'](args.body) end,
+    },
   }
   -- Use buffer source for `/` search
   cmp.setup.cmdline('/', { sources = { { name = 'buffer' } } })
