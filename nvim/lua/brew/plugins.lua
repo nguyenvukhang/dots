@@ -94,16 +94,6 @@ config['terrortylor/nvim-comment'] = function()
   vnoremap('<C-c>', ':CommentToggle<CR>', true)
 end
 
-config['windwp/nvim-autopairs'] = function()
-  local np, Rule = require('nvim-autopairs'), require('nvim-autopairs.rule')
-  np.setup { ignored_next_char = [=[[%w%%%'%[%"%.%`]]=] }
-  np.add_rules {
-    Rule('$', '$', { 'tex' }):with_move(
-      function(o) return o.next_char == o.char end
-    ),
-  }
-end
-
 build['iamcco/markdown-preview.nvim'] = function() vim.fn['mkdp#util#install']() end
 config['markdown-preview.nvim'] = function()
   vim.g.mkdp_preview_options = {
