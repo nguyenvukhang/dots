@@ -60,7 +60,6 @@ end
 
 config['hrsh7th/nvim-cmp'] = function()
   local cmp, ct, ls = require('cmp'), require('cmp.types'), require('luasnip')
-  local sopts = { behavior = cmp.SelectBehavior.Select }
   cmp.setup {
     formatting = {
       expandable_indicator = false,
@@ -70,8 +69,8 @@ config['hrsh7th/nvim-cmp'] = function()
       end,
     },
     mapping = {
-      ['<C-n>'] = cmp.mapping.select_next_item(sopts),
-      ['<C-p>'] = cmp.mapping.select_prev_item(sopts),
+      ['<C-n>'] = cmp.mapping.select_next_item(),
+      ['<C-p>'] = cmp.mapping.select_prev_item(),
       ['<C-l>'] = cmp.mapping.confirm { select = true },
     },
     sources = cmp.config.sources({
@@ -99,7 +98,7 @@ config['windwp/nvim-autopairs'] = function()
   local np, Rule = require('nvim-autopairs'), require('nvim-autopairs.rule')
   np.setup { ignored_next_char = [=[[%w%%%'%[%"%.%`]]=] }
   np.add_rules {
-    Rule('$', '$', { 'tex', 'markdown' }):with_move(
+    Rule('$', '$', { 'tex' }):with_move(
       function(o) return o.next_char == o.char end
     ),
   }
