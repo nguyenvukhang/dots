@@ -15,25 +15,6 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'VimLeave' }, {
   callback = function() require('harpoon.mark').store_offset() end,
   group = GROUP,
 })
---[[
-{
-    projects = {
-        ["/path/to/director"] = {
-            term = {
-                cmds = {
-                }
-                ... is there anything that could be options?
-            },
-            mark = {
-                marks = {
-                }
-                ... is there anything that could be options?
-            }
-        }
-    },
-    ... high level settings
-}
---]]
 HarpoonConfig = HarpoonConfig or {}
 
 -- tbl_deep_extend does not work the way you would think
@@ -166,5 +147,26 @@ function M.get_menu_config() return HarpoonConfig.menu or {} end
 
 -- Sets a default config with no values
 M.setup()
+
+M.my_setup = function()
+  local mark, ui = require('harpoon.mark'), require('harpoon.ui')
+  local jump = function(n)
+    return function()
+      ui.nav_file(n)
+      vim.notify('[harpoon] -> ' .. n .. '/4')
+    end
+  end
+  local nnoremap = function(L, R) vim.keymap.set('n', L, R, { noremap = true }) end
+  nnoremap('<leader>m', ui.toggle_quick_menu)
+  nnoremap('<leader>1', jump(1))
+  nnoremap('<leader>2', jump(2))
+  nnoremap('<leader>3', jump(3))
+  nnoremap('<leader>4', jump(4))
+  nnoremap('mm', function()
+    mark.add_file()
+    ui.toggle_quick_menu()
+    vim.notify_once('[harpoon] added file')
+  end)
+end
 
 return M
