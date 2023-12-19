@@ -16,7 +16,8 @@ BIRTHDAYS = {}
 if os.path.isfile(BIRTHDAY_FILE):
     with open(BIRTHDAY_FILE, "r") as f:
         BIRTHDAYS = json.load(f)
-FIXED_TAB_NAMES = ("editor", "server")
+# FIXED_TAB_NAMES = ("editor", "server")
+FIXED_TAB_NAMES = []
 
 
 def birthday():
