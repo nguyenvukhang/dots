@@ -33,6 +33,7 @@ vim.opt.wildignore = '*/node_modules/*'
 vim.opt.mouse = nil
 vim.opt.cinoptions:append('L0') -- so that typing `std::` in cpp doesn't de-dent it halfway
 vim.opt.formatoptions = 'jcroql' -- see :h fo-table too
+vim.opt.completeopt = 'menu,menuone,noselect'
 
 -- honorary set
 -- set leader to <space>
