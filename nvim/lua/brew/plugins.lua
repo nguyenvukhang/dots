@@ -60,6 +60,7 @@ end
 
 config['hrsh7th/nvim-cmp'] = function()
   local cmp, ct, ls = require('cmp'), require('cmp.types'), require('luasnip')
+  local sopts = { behavior = cmp.SelectBehavior.Select }
   cmp.setup {
     formatting = {
       expandable_indicator = false,
@@ -69,8 +70,8 @@ config['hrsh7th/nvim-cmp'] = function()
       end,
     },
     mapping = {
-      ['<C-n>'] = cmp.mapping.select_next_item(),
-      ['<C-p>'] = cmp.mapping.select_prev_item(),
+      ['<C-n>'] = cmp.mapping.select_next_item(sopts),
+      ['<C-p>'] = cmp.mapping.select_prev_item(sopts),
       ['<C-l>'] = cmp.mapping.confirm { select = true },
     },
     sources = cmp.config.sources({
