@@ -11,7 +11,6 @@ require('brew.lazy').load_plugins {
   'nvim-lua/plenary.nvim',
   'mfussenegger/nvim-jdtls',
   'tpope/vim-surround',
-  'L3MON4D3/LuaSnip',
   'vimplug/nvim-colorizer.lua',
   'sbdchd/neoformat',
   'wuelnerdotexe/vim-astro',
@@ -22,6 +21,7 @@ require('brew.lazy').load_plugins {
   'hrsh7th/cmp-buffer',
   'hrsh7th/cmp-path',
   'hrsh7th/cmp-cmdline',
+  'hrsh7th/vim-vsnip',
 
   'nvim-treesitter/nvim-treesitter',
   'nvim-treesitter/playground',
