@@ -1,5 +1,4 @@
 require('brew.lazy').load_plugins {
-  'sainnhe/gruvbox-material',
   'nvim-telescope/telescope.nvim',
   'nvim-telescope/telescope-fzy-native.nvim',
   'nguyenvukhang/nvim-toggler',

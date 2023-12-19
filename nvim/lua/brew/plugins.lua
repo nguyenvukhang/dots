@@ -1,6 +1,7 @@
 local core = require('brew')
 local nnoremap, vnoremap = core.nnoremap, core.vnoremap
 local config = {}
+local dir = {}
 local build = {}
 
 config['ThePrimeagen/harpoon'] = function()
@@ -157,7 +158,7 @@ config['nvim-lua/plenary.nvim'] = config['ThePrimeagen/harpoon']
 
 return function(t)
   for i = 1, #t do
-    t[i] = { t[i], config = config[t[i]], build = build[t[i]] }
+    t[i] = { t[i], config = config[t[i]], build = build[t[i]], dir = dir[t[i]] }
   end
   return t
 end
