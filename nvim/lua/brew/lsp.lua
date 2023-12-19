@@ -27,7 +27,7 @@ M.typescript = function() lsp.tsserver.setup(base()) end
 M.astro = function() lsp.astro.setup(base()) end
 M.python = function()
   lsp.pyright.setup(base {
-    root_dir = lsp.util.root_pattern('pyproject.toml'),
+    -- root_dir = lsp.util.root_pattern('pyproject.toml'),
     settings = {
       python = {
         analysis = {
