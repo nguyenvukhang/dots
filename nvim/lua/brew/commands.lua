@@ -46,6 +46,7 @@ cmd('UnderMe', function()
     hl[i] = vim.fn.synIDattr(hl[i], 'name')
   end
   print(vim.inspect(hl))
+  vim.cmd("TSHighlightCapturesUnderCursor")
 end)
 
 -- create new line (at current cursor position) and insert date

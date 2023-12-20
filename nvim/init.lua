@@ -1,9 +1,12 @@
--- local core = require('brew')
--- local nnoremap, vnoremap = core.nnoremap, core.vnoremap
-
 require('brew.lazy').setup {
   'wuelnerdotexe/vim-astro',
   'nvim-lua/plenary.nvim',
+  'hrsh7th/cmp-nvim-lsp',
+  'hrsh7th/cmp-buffer',
+  'hrsh7th/cmp-path',
+  'hrsh7th/cmp-cmdline',
+  'hrsh7th/vim-vsnip',
+  'nvim-treesitter/playground',
   {
     'nvim-telescope/telescope.nvim',
     dependencies = {
@@ -99,8 +102,10 @@ require('brew.lazy').setup {
   },
   {
     'hrsh7th/nvim-cmp',
+    -- while waiting for bugfix @ https://github.com/hrsh7th/nvim-cmp/issues/1780
+    dir = vim.env.HOME .. '/repos/nvim-cmp',
     config = function()
-      local cmp, ct = require('cmp'), require('cmp.types')
+      local cmp = require('cmp')
       cmp.setup {
         formatting = {
           expandable_indicator = false,
@@ -114,17 +119,13 @@ require('brew.lazy').setup {
           ['<C-p>'] = cmp.mapping.select_prev_item(),
           ['<C-l>'] = cmp.mapping.confirm { select = true },
         },
-        sources = cmp.config.sources({
-          {
-            name = 'nvim_lsp',
-            entry_filter = function(e) -- remove `Snippet` entries
-              return ct.lsp.CompletionItemKind[e:get_kind()] ~= 'Snippet'
-            end,
-          },
-        }, { { name = 'buffer' }, { name = 'path' } }),
+        sources = cmp.config.sources(
+          { { name = 'nvim_lsp' } },
+          { { name = 'buffer' }, { name = 'path' } }
+        ),
         preselect = cmp.PreselectMode.None,
         snippet = {
-          expand = function(args) vim.fn['vsnip#anonymous'](args.body) end,
+          expand = function(x) vim.fn['vsnip#anonymous'](x.body) end,
         },
       }
       -- Use buffer source for `/` search
@@ -141,24 +142,29 @@ require('brew.lazy').setup {
       require('nvim_comment').setup { create_mappings = false }
     end,
   },
-  'hrsh7th/cmp-nvim-lsp',
-  'hrsh7th/cmp-buffer',
-  'hrsh7th/cmp-path',
-  'hrsh7th/cmp-cmdline',
-  'hrsh7th/vim-vsnip',
-  'nvim-treesitter/nvim-treesitter',
-  'nvim-treesitter/playground',
+  {
+    'nvim-treesitter/nvim-treesitter',
+    config = function()
+      local languages = { 'latex' }
+      -- javascript, typescript, c, lua, rust, tsx, css, astro, java,
+      -- latex, markdown, markdown_inline, python, swift
+      require('nvim-treesitter.configs').setup {
+        highlight = {
+          enable = true,
+          disable = function(l) return not vim.tbl_contains(languages, l) end,
+          additional_vim_regex_highlighting = false,
+        },
+        ensure_installed = languages,
+      }
+    end,
+  },
 }
 
 -- independent of plugins, server-friendly
 require('brew.sets')
 require('brew.remaps')
 require('brew.commands')
-require('brew.statusline').start()
+require('brew.statusline')
 require('brew.autocmd')
--- require('harpoon').my_setup()
 
--- require('gruvbox').load()
-vim.cmd('colo gruvbox8-mat')
--- vim.g.gruvbox_material_transparent_background = 1
--- vim.cmd('colo gruvbox-material')
+vim.cmd('colo gruvbox8')
