@@ -106,6 +106,7 @@ require('brew.lazy').setup {
     dir = vim.env.HOME .. '/repos/nvim-cmp',
     config = function()
       local cmp = require('cmp')
+      local ct = require('cmp.types')
       cmp.setup {
         formatting = {
           expandable_indicator = false,
@@ -119,10 +120,14 @@ require('brew.lazy').setup {
           ['<C-p>'] = cmp.mapping.select_prev_item(),
           ['<C-l>'] = cmp.mapping.confirm { select = true },
         },
-        sources = cmp.config.sources(
-          { { name = 'nvim_lsp' } },
-          { { name = 'buffer' }, { name = 'path' } }
-        ),
+        sources = cmp.config.sources({
+          {
+            name = 'nvim_lsp',
+            entry_filter = function(e) -- remove `Snippet` entries
+              return ct.lsp.CompletionItemKind[e:get_kind()] ~= 'Snippet'
+            end,
+          },
+        }, { { name = 'buffer' }, { name = 'path' } }),
         preselect = cmp.PreselectMode.None,
         snippet = {
           expand = function(x) vim.fn['vsnip#anonymous'](x.body) end,
