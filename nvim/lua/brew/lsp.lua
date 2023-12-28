@@ -60,6 +60,7 @@ M.rust = function()
     root_dir = lsp.util.root_pattern('Cargo.toml', 'rust-project.json'),
     settings = {
       ['rust-analyzer'] = {
+        cargo = { features = 'all' },
         imports = {
           granularity = {
             group = 'item',

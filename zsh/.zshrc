@@ -65,6 +65,7 @@ export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='
 [ "$EDITOR" = "nvim" ] && export MANPAGER="nvim +Man!"
 
 PATH=/opt/homebrew/opt/jpeg/bin:$PATH
+PATH=/opt/homebrew/opt/ruby/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
 export PATH
 

@@ -115,7 +115,7 @@ local theorem_search = function(nav)
     '--max-depth',
     '1',
     '--vimgrep',
-    '^\\\\(Algorithm|Corollary|Definition|Example|Exercise|Lemma|Problem|Proposition|Remark|Result|Theorem)',
+    '^\\\\(Axiom|Principle|Algorithm|Corollary|Definition|Example|Exercise|Lemma|Problem|Proposition|Remark|Result|Theorem)',
     '-g',
     '*.tex',
   }
