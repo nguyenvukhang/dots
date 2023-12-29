@@ -10,6 +10,7 @@ local MATH_DIR = vim.env.REPOS .. '/math'
 local topic = {
   ['algorithm-design.tex'] = '[ALGD]',
   ['calculus.tex'] = '[CALC]',
+  ['real-analysis.tex'] = '[RELA]',
   ['complex-analysis.tex'] = '[CPXA]',
   ['nonlinear-optimization-constrained.tex'] = '[NLOC]',
   ['nonlinear-optimization-unconstrained.tex'] = '[NLOU]',
