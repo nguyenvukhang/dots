@@ -10,16 +10,8 @@ Harpoon_bufh = nil
 
 -- We save before we close because we use the state of the buffer as the list
 -- of items.
-local function close_menu(force_save)
-  force_save = force_save or false
-  local global_config = harpoon.get_global_settings()
-
-  if global_config.save_on_toggle or force_save then
-    require('harpoon.ui').on_menu_save()
-  end
-
+local function close_menu()
   vim.api.nvim_win_close(Harpoon_win_id, true)
-
   Harpoon_win_id = nil
   Harpoon_bufh = nil
 end
@@ -66,7 +58,6 @@ function M.toggle_quick_menu()
 
   local win_info = create_window()
   local contents = {}
-  local global_config = harpoon.get_global_settings()
 
   Harpoon_win_id = win_info.win_id
   Harpoon_bufh = win_info.bufnr

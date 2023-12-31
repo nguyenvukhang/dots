@@ -1,26 +1,11 @@
 local harpoon = require('harpoon')
 local utils = require('harpoon.utils')
 
--- I think that I may have to organize this better.  I am not the biggest fan
--- of procedural all the things
 local M = {}
-local callbacks = {}
-
--- I am trying to avoid over engineering the whole thing.  We will likely only
--- need one event emitted
-local function emit_changed()
-  local global_settings = harpoon.get_global_settings()
-  if global_settings.save_on_change then harpoon.save() end
-  if not callbacks['changed'] then return end
-  for _, cb in pairs(callbacks['changed']) do
-    cb()
-  end
-end
 
 local function get_first_empty_slot()
   for idx = 1, M.get_length() do
-    local filename = M.get_marked_file_name(idx)
-    if filename == '' then return idx end
+    if M.get_marked_file_name(idx) == '' then return idx end
   end
   return M.get_length() + 1
 end
@@ -124,7 +109,7 @@ function M.add_file(file_name_or_buf_id)
   local found_idx = get_first_empty_slot()
   harpoon.get_mark_config().marks[found_idx] = create_mark(buf_name)
   M.remove_empty_tail(false)
-  emit_changed()
+  harpoon.save()
 end
 
 -- _emit_on_changed == false should only be used internally
@@ -156,7 +141,7 @@ function M.store_offset()
     marks[idx].row = cursor_pos[1]
     marks[idx].col = cursor_pos[2]
   end)
-  emit_changed()
+  harpoon.save()
 end
 
 function M.rm_file(file_name_or_buf_id)
@@ -165,12 +150,12 @@ function M.rm_file(file_name_or_buf_id)
   if not M.valid_index(idx) then return end
   harpoon.get_mark_config().marks[idx] = create_mark('')
   M.remove_empty_tail(false)
-  emit_changed()
+  harpoon.save()
 end
 
 function M.clear_all()
   harpoon.get_mark_config().marks = {}
-  emit_changed()
+  harpoon.save()
 end
 
 --- ENTERPRISE PROGRAMMING
@@ -211,7 +196,7 @@ function M.set_current_at(idx)
     if not config.marks[i] then config.marks[i] = create_mark('') end
   end
 
-  emit_changed()
+  harpoon.save()
 end
 
 function M.set_mark_list(new_list)
@@ -223,7 +208,7 @@ function M.set_mark_list(new_list)
     end
   end
   config.marks = new_list
-  emit_changed()
+  harpoon.save()
 end
 
 function M.toggle_file(file_name_or_buf_id)
@@ -239,11 +224,6 @@ end
 
 function M.get_current_index()
   return M.get_index_of(vim.api.nvim_buf_get_name(0))
-end
-
-function M.on(event, cb)
-  if not callbacks[event] then callbacks[event] = {} end
-  table.insert(callbacks[event], cb)
 end
 
 return M
