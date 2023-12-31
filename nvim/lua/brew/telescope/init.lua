@@ -1,28 +1,27 @@
 local actions = require('telescope.actions')
 local search = require('brew.telescope.search')
-local nnoremap = require('brew').nnoremap
 local theorem_search = require('brew.telescope.math').theorem_search
+local k = vim.keymap.set
 
-nnoremap('<c-p>', search.files.repo)
-nnoremap('<c-f>', search.files.cwd)
+k('n', '<c-p>', search.files.repo)
+k('n', '<c-f>', search.files.cwd)
 
 -- the only other remap that starts with p is reserved for code formatting
-nnoremap('<leader>ps', search.string.repo)
-nnoremap('<leader>pf', search.string.cursor)
-nnoremap('<leader>pw', search.string.cwd)
+k('n', '<leader>ps', search.string.repo)
+k('n', '<leader>pf', search.string.cursor)
+k('n', '<leader>pw', search.string.cwd)
 
-nnoremap('<leader>sd', search.files.dots)
-nnoremap('<leader>su', search.files.university)
-
-nnoremap('<leader>p0', require('telescope.builtin').builtin)
+k('n', '<leader>sd', search.files.dots)
+k('n', '<leader>su', search.files.university)
 
 -- completely custom search only for nguyenvukhang/math
-nnoremap('<leader>pm', function() theorem_search(true) end)
-nnoremap('<leader>pt', function() theorem_search(false) end)
+k('n', '<leader>pm', function() theorem_search(true) end)
+k('n', '<leader>pt', function() theorem_search(false) end)
 
 -- local builtin = require('telescope.builtin')
--- nnoremap('<leader>sh', builtin.help_tags)
--- nnoremap('<leader>sm', builtin.man_pages)
+-- k('n', '<leader>p0', require('telescope.builtin').builtin)
+-- k('n', '<leader>sh', builtin.help_tags)
+-- k('n', '<leader>sm', builtin.man_pages)
 
 local qf_and_jump = function(bufnr)
   local as = require('telescope.actions.state')

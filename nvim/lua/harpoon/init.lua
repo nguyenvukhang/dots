@@ -156,7 +156,7 @@ M.my_setup = function()
       vim.notify('[harpoon] -> ' .. n .. '/4')
     end
   end
-  local nnoremap = function(L, R) vim.keymap.set('n', L, R, { noremap = true }) end
+  local nnoremap = function(L, R) vim.keymap.set('n', L, R) end
   nnoremap('<leader>m', ui.toggle_quick_menu)
   nnoremap('<leader>1', jump(1))
   nnoremap('<leader>2', jump(2))
