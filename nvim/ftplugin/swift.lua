@@ -1,3 +1,1 @@
-local nnoremap = require('brew').nnoremap
-
-nnoremap('<leader>p', ':w<CR>:silent !swiftformat "%:p"<CR>', false)
+vim.keymap.set('n', '<leader>p', ':w<CR>:silent !swiftformat "%:p"<CR>')

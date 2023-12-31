@@ -1,98 +1,99 @@
 local c = require('brew')
-local nnoremap, vnoremap, inoremap = c.nnoremap, c.vnoremap, c.inoremap
+local k = vim.keymap.set
+local s = { silent = true }
 
 -- no-ops
-nnoremap('<space>', '<nop>')
-nnoremap('<bs>', '<nop>')
-nnoremap('Q', '<nop>')
-nnoremap('K', '<nop>')
-nnoremap('<left>', '<nop>')
-nnoremap('<right>', '<nop>')
-nnoremap('<up>', '<nop>')
-nnoremap('<down>', '<nop>')
+k('n', '<space>', '<nop>')
+k('n', '<bs>', '<nop>')
+k('n', 'Q', '<nop>')
+k('n', 'K', '<nop>')
+k('n', '<left>', '<nop>')
+k('n', '<right>', '<nop>')
+k('n', '<up>', '<nop>')
+k('n', '<down>', '<nop>')
 
 -- remap Shift + Tab to actually give a tab char
-inoremap('<S-Tab>', '<C-V><Tab>')
+k('i', '<S-Tab>', '<C-V><Tab>')
 
 -- the only right way to setup H and L
-nnoremap('H', '^')
-nnoremap('L', '$')
-vnoremap('H', '^')
-vnoremap('L', '$')
+k('n', 'H', '^')
+k('n', 'L', '$')
+k('v', 'H', '^')
+k('v', 'L', '$')
 
 -- open file under cursor in a split
-nnoremap('gF', ':vs <cfile><cr>')
+k('n', 'gF', ':vs <cfile><cr>', s)
 
 -- open file under cursor with `open` (macOS)
-nnoremap('go', ':silent! !open <cfile><cr>')
+k('n', 'go', ':!open <cfile><cr>', s)
 
 -- slowly increase this until I can use the default
-nnoremap('<C-d>', '13j')
-nnoremap('<C-u>', '13k')
+k('n', '<C-d>', '13j', s)
+k('n', '<C-u>', '13k', s)
 
 -- quickfix list navigation
-nnoremap('<C-j>', ':cnext<cr>')
-nnoremap('<C-k>', ':cprev<cr>')
+k('n', '<C-j>', ':cnext<cr>', s)
+k('n', '<C-k>', ':cprev<cr>', s)
 
 -- color columns
-nnoremap('<leader>7', ':set colorcolumn=71<cr>')
-nnoremap('<leader>8', ':set colorcolumn=81<cr>')
+k('n', '<leader>7', ':set colorcolumn=71<cr>', s)
+k('n', '<leader>8', ':set colorcolumn=81<cr>', s)
 
 -- yank to clipboard (confirmed to work on mac)
-nnoremap('<leader>y', '"+y')
-vnoremap('<leader>y', '"+y')
+k('n', '<leader>y', '"+y')
+k('v', '<leader>y', '"+y')
 
 -- Yank the entire buffer to clipboard
-nnoremap('<leader>Y', 'gg"+yG<c-o>')
+k('n', '<leader>Y', 'gg"+yG<c-o>')
 
 -- preserve yank buffer on Visual Mode paste
-vnoremap('<leader>p', '"_dP')
+k('v', '<leader>p', '"_dP')
 
 -- split jumping
-nnoremap('<leader>h', ':wincmd h<cr>')
-nnoremap('<leader>l', ':wincmd l<cr>')
-nnoremap('<leader>j', ':wincmd j<cr>')
-nnoremap('<leader>k', ':wincmd k<cr>')
+k('n', '<leader>h', ':wincmd h<cr>', s)
+k('n', '<leader>l', ':wincmd l<cr>', s)
+k('n', '<leader>j', ':wincmd j<cr>', s)
+k('n', '<leader>k', ':wincmd k<cr>', s)
 
 -- replace in buffer
 -- :%s/\<foo\>/bar/g
-nnoremap('<leader>rb', ':%s/<C-r><C-w>//g<left><left>', true)
-nnoremap('<leader>rB', ':%s/\\<<C-r><C-w>\\>//g<left><left>', true)
+k('n', '<leader>rb', ':%s/<C-r><C-w>//g<left><left>')
+k('n', '<leader>rB', ':%s/\\<<C-r><C-w>\\>//g<left><left>')
 
 -- replace in line
-nnoremap('<leader>rl', ':s/<C-r><C-w>//g<left><left>', true)
-nnoremap('<leader>rL', ':s/\\<<C-r><C-w>\\>//g<left><left>', true)
+k('n', '<leader>rl', ':s/<C-r><C-w>//g<left><left>')
+k('n', '<leader>rL', ':s/\\<<C-r><C-w>\\>//g<left><left>')
 
 -- reverse (flip) visual lines
-vnoremap('<C-f>', "<esc>'<V'><esc>'<O<esc>m<'>:'<,.g/^/m '><CR>'<dd")
+k('v', '<C-f>', "<esc>'<V'><esc>'<O<esc>m<'>:'<,.g/^/m '><CR>'<dd")
 
 -- sort visual lines
-vnoremap('<C-s>', ':sort<CR>')
+k('v', '<C-s>', ':sort<CR>')
 
 -- search visual selection
-vnoremap('*', 'y/<C-r>"<cr>', true)
+k('v', '*', 'y/<C-r>"<cr>')
 
 -- refresh syntax highlighting
-nnoremap('<f1>', ':syntax sync fromstart<cr>', true)
-nnoremap('<leader>ph', ':syntax sync fromstart<CR>', true)
+k('n', '<f1>', ':syntax sync fromstart<cr>')
+k('n', '<leader>ph', ':syntax sync fromstart<CR>')
 
 -- toggle spell check
-nnoremap('<f5>', ':setlocal spell!<cr>:set spell?<cr>', true)
+k('n', '<f5>', ':setlocal spell!<cr>:set spell?<cr>')
 
 -- vim functions
-nnoremap('<leader>c', ':ColorizerToggle<cr>', true)
+k('n', '<leader>c', ':ColorizerToggle<cr>')
 
 -- lua functions
-nnoremap('<leader>o', c.toggle_qflist)
-nnoremap('<leader>d', c.toggle_diagnostics)
+k('n', '<leader>o', c.toggle_qflist)
+k('n', '<leader>d', c.toggle_diagnostics)
 
 -- to copy the behavior of `[(` and `[{` to `[[`
-nnoremap('[[', function() vim.fn.searchpair('\\[', '', '\\]', 'b') end)
-nnoremap(']]', function() vim.fn.searchpair('\\[', '', '\\]') end)
+k('n', '[[', function() vim.fn.searchpair('\\[', '', '\\]', 'b') end)
+k('n', ']]', function() vim.fn.searchpair('\\[', '', '\\]') end)
 
 -- diagnostics
-nnoremap('<leader>e', vim.diagnostic.open_float, true)
-nnoremap('<leader>p', ':Neoformat<CR>', true)
+k('n', '<leader>e', vim.diagnostic.open_float)
+k('n', '<leader>p', ':Neoformat<CR>')
 
 --[[
 vim.keymap.set('n', '*', function()
@@ -112,5 +113,5 @@ vim.keymap.set('n', '*', function()
   else
     return c.search(vim.fn.expand('<cword>'))
   end
-end, { noremap = true })
+end)
 --]]
