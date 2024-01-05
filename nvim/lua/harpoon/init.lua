@@ -45,19 +45,16 @@ end
 local function ensure_correct_config(config)
   local projects = config.projects
   local mark_key = mark_config_key()
-  if projects[mark_key] == nil then
-    projects[mark_key] = { mark = { marks = {} } }
-  end
+  if projects[mark_key] == nil then projects[mark_key] = { marks = {} } end
 
   local proj = projects[mark_key]
-  if proj.mark == nil then proj.mark = { marks = {} } end
-  local marks = proj.mark.marks
-  for idx, mark in pairs(marks) do
+  if proj == nil then proj = { marks = {} } end
+  for idx, mark in pairs(proj.marks) do
     if type(mark) == 'string' then
       mark = { filename = mark }
-      marks[idx] = mark
+      proj.marks[idx] = mark
     end
-    marks[idx].filename = utils.normalize_path(mark.filename)
+    proj.marks[idx].filename = utils.normalize_path(mark.filename)
   end
   return config
 end
@@ -138,7 +135,7 @@ function M.refresh_projects_b4update()
 end
 
 function M.get_mark_config()
-  return ensure_correct_config(HarpoonConfig).projects[mark_config_key()].mark
+  return ensure_correct_config(HarpoonConfig).projects[mark_config_key()]
 end
 
 function M.get_menu_config() return HarpoonConfig.menu or {} end
