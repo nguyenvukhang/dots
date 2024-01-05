@@ -30,13 +30,6 @@ local function create_mark(filename)
   return { filename = filename, row = pos[1], col = pos[2] }
 end
 
-local function mark_exists(buf_name)
-  for idx = 1, M.get_length() do
-    if M.get_marked_file_name(idx) == buf_name then return true end
-  end
-  return false
-end
-
 local function validate_buf_name(buf_name)
   if buf_name == '' or buf_name == nil then
     return error("Couldn't find a valid file name to mark, sorry.")
@@ -108,27 +101,18 @@ function M.add_file(file_name_or_buf_id)
   validate_buf_name(buf_name)
   local found_idx = get_first_empty_slot()
   harpoon.get_mark_config().marks[found_idx] = create_mark(buf_name)
-  M.remove_empty_tail(false)
+  M.remove_empty_tail()
   harpoon.save()
 end
 
 -- _emit_on_changed == false should only be used internally
-function M.remove_empty_tail(_emit_on_changed)
-  _emit_on_changed = _emit_on_changed == nil or _emit_on_changed
+function M.remove_empty_tail()
   local config = harpoon.get_mark_config()
-  local found = false
 
   for i = M.get_length(), 1, -1 do
-    local filename = M.get_marked_file_name(i)
-    if filename ~= '' then return end
-
-    if filename == '' then
-      table.remove(config.marks, i)
-      found = found or _emit_on_changed
-    end
+    if M.get_marked_file_name(i) ~= '' then return end
+    table.remove(config.marks, i)
   end
-
-  if found then emit_changed() end
 end
 
 function M.store_offset()
@@ -149,7 +133,7 @@ function M.rm_file(file_name_or_buf_id)
   local idx = M.get_index_of(buf_name)
   if not M.valid_index(idx) then return end
   harpoon.get_mark_config().marks[idx] = create_mark('')
-  M.remove_empty_tail(false)
+  M.remove_empty_tail()
   harpoon.save()
 end
 
@@ -209,17 +193,6 @@ function M.set_mark_list(new_list)
   end
   config.marks = new_list
   harpoon.save()
-end
-
-function M.toggle_file(file_name_or_buf_id)
-  local buf_name = get_buf_name(file_name_or_buf_id)
-  validate_buf_name(buf_name)
-
-  if mark_exists(buf_name) then
-    M.rm_file(buf_name)
-  else
-    M.add_file(buf_name)
-  end
 end
 
 function M.get_current_index()

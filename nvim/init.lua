@@ -1,12 +1,15 @@
 require('brew.lazy').setup {
-  'wuelnerdotexe/vim-astro',
   'nvim-lua/plenary.nvim',
+  'tpope/vim-surround',
+  'wuelnerdotexe/vim-astro',
   'hrsh7th/cmp-nvim-lsp',
   'hrsh7th/cmp-buffer',
   'hrsh7th/cmp-path',
   'hrsh7th/cmp-cmdline',
   'hrsh7th/vim-vsnip',
   'nvim-treesitter/playground',
+  'mfussenegger/nvim-jdtls',
+  'vimplug/nvim-colorizer.lua',
   {
     'nvim-telescope/telescope.nvim',
     dependencies = {
@@ -89,10 +92,6 @@ require('brew.lazy').setup {
       vim.cmd('cnoreabbrev MS MarkdownPreviewStop')
     end,
   },
-  'nvim-lua/plenary.nvim',
-  'mfussenegger/nvim-jdtls',
-  'tpope/vim-surround',
-  'vimplug/nvim-colorizer.lua',
   {
     'sbdchd/neoformat',
     config = function()
