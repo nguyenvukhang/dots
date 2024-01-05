@@ -46,12 +46,11 @@ local function ensure_correct_config(config)
   local projects = config.projects
   local mark_key = mark_config_key()
   if projects[mark_key] == nil then
-    projects[mark_key] = { mark = { marks = {} }, term = { cmds = {} } }
+    projects[mark_key] = { mark = { marks = {} } }
   end
 
   local proj = projects[mark_key]
   if proj.mark == nil then proj.mark = { marks = {} } end
-  if proj.term == nil then proj.term = { cmds = {} } end
   local marks = proj.mark.marks
   for idx, mark in pairs(marks) do
     if type(mark) == 'string' then
@@ -131,8 +130,8 @@ function M.refresh_projects_b4update()
     expand_dir(current_p_config)
   )
 
-  -- There was this issue where the vim.loop.cwd() didn't have marks or term, but had
-  -- an object for vim.loop.cwd()
+  -- There was this issue where the vim.loop.cwd() didn't have marks,
+  -- but had an object for vim.loop.cwd()
   ensure_correct_config(complete_config)
 
   HarpoonConfig = complete_config
