@@ -13,7 +13,7 @@ require('brew.lazy').setup {
   {
     'hrsh7th/nvim-cmp',
     -- while waiting for bugfix @ https://github.com/hrsh7th/nvim-cmp/issues/1780
-    dir = vim.env.HOME .. '/.local/src/nvim-cmp',
+    dev = true,
     config = function()
       local cmp = require('cmp')
       local ct = require('cmp.types')
