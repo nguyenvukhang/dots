@@ -1,15 +1,52 @@
+-- 'hrsh7th/nvim-cmp'
 require('brew.lazy').setup {
-  'nvim-lua/plenary.nvim',
   'tpope/vim-surround',
   'wuelnerdotexe/vim-astro',
-  'hrsh7th/cmp-nvim-lsp',
-  'hrsh7th/cmp-buffer',
-  'hrsh7th/cmp-path',
-  'hrsh7th/cmp-cmdline',
   'hrsh7th/vim-vsnip',
   'nvim-treesitter/playground',
   'mfussenegger/nvim-jdtls',
   'vimplug/nvim-colorizer.lua',
+  'hrsh7th/cmp-nvim-lsp',
+  'hrsh7th/cmp-buffer',
+  'hrsh7th/cmp-path',
+  'hrsh7th/cmp-cmdline',
+  {
+    'hrsh7th/nvim-cmp',
+    -- while waiting for bugfix @ https://github.com/hrsh7th/nvim-cmp/issues/1780
+    dir = vim.env.HOME .. '/.local/src/nvim-cmp',
+    config = function()
+      local cmp = require('cmp')
+      local ct = require('cmp.types')
+      cmp.setup {
+        formatting = {
+          expandable_indicator = false,
+          format = function(_, item)
+            item.menu = nil -- remove flair from completion item
+            return item
+          end,
+        },
+        mapping = {
+          ['<C-n>'] = cmp.mapping.select_next_item(),
+          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          ['<C-l>'] = cmp.mapping.confirm { select = true },
+        },
+        sources = cmp.config.sources({
+          {
+            name = 'nvim_lsp',
+            entry_filter = function(e) -- remove `Snippet` entries
+              return ct.lsp.CompletionItemKind[e:get_kind()] ~= 'Snippet'
+            end,
+          },
+        }, { { name = 'buffer' }, { name = 'path' } }),
+        preselect = cmp.PreselectMode.None,
+        snippet = {
+          expand = function(x) vim.fn['vsnip#anonymous'](x.body) end,
+        },
+      }
+      -- Use buffer source for `/` search
+      cmp.setup.cmdline('/', { sources = { { name = 'buffer' } } })
+    end,
+  },
   {
     'nvim-telescope/telescope.nvim',
     dependencies = {
@@ -97,43 +134,6 @@ require('brew.lazy').setup {
     config = function()
       vim.g.latexindent_opt = '-l -m'
       vim.g.neoformat_enabled_python = { 'black' }
-    end,
-  },
-  {
-    'hrsh7th/nvim-cmp',
-    -- while waiting for bugfix @ https://github.com/hrsh7th/nvim-cmp/issues/1780
-    dir = vim.env.HOME .. '/repos/nvim-cmp',
-    config = function()
-      local cmp = require('cmp')
-      local ct = require('cmp.types')
-      cmp.setup {
-        formatting = {
-          expandable_indicator = false,
-          format = function(_, item)
-            item.menu = nil -- remove flair from completion item
-            return item
-          end,
-        },
-        mapping = {
-          ['<C-n>'] = cmp.mapping.select_next_item(),
-          ['<C-p>'] = cmp.mapping.select_prev_item(),
-          ['<C-l>'] = cmp.mapping.confirm { select = true },
-        },
-        sources = cmp.config.sources({
-          {
-            name = 'nvim_lsp',
-            entry_filter = function(e) -- remove `Snippet` entries
-              return ct.lsp.CompletionItemKind[e:get_kind()] ~= 'Snippet'
-            end,
-          },
-        }, { { name = 'buffer' }, { name = 'path' } }),
-        preselect = cmp.PreselectMode.None,
-        snippet = {
-          expand = function(x) vim.fn['vsnip#anonymous'](x.body) end,
-        },
-      }
-      -- Use buffer source for `/` search
-      cmp.setup.cmdline('/', { sources = { { name = 'buffer' } } })
     end,
   },
   {
