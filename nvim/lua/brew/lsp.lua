@@ -39,19 +39,8 @@ M.python = function()
   })
 end
 M.swift = function()
-  local ios_sdk =
-    "'/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator16.4.sdk'"
   lsp.sourcekit.setup(base {
     filetypes = { 'objc', 'swift' },
-    cmd = {
-      'sourcekit-lsp',
-      '-Xswiftc',
-      "'-sdk'",
-      '-Xswiftc',
-      ios_sdk,
-      '-Xswiftc',
-      "'x86_64-apple-ios13.0-simulator'",
-    },
   })
 end
 

@@ -17,11 +17,11 @@ local cfg = {
     vim.opt.textwidth = 80
     vim.opt.formatoptions = vim.opt.formatoptions + 't'
     vim.bo.filetype = 'tex'
-    k('n', '<leader>be', 'cc\\begin{equation*}<CR><CR>\\end{equation*}<esc>k')
-    k('n', '<leader>ba', 'cc\\begin{align*}<CR><CR>\\end{align*}<esc>k')
-    k('n', '<leader>br', 'cc\\begin{array}<CR><CR>\\end{array}<esc>k')
-    k('n', '<leader>bc', 'cc\\begin{cases}<CR><CR>\\end{cases}<esc>k')
-    k('n', '<leader>bp', 'cc\\begin{proof}<CR><CR>\\end{proof}<esc>k')
+    k('n', '<leader>be', 'cc\\begin{equation*}<CR>\\end{equation*}<esc>k')
+    k('n', '<leader>ba', 'cc\\begin{align*}<CR>\\end{align*}<esc>k')
+    k('n', '<leader>br', 'cc\\begin{array}<CR>\\end{array}<esc>k')
+    k('n', '<leader>bc', 'cc\\begin{cases}<CR>\\end{cases}<esc>k')
+    k('n', '<leader>bp', 'cc\\begin{proof}<CR>\\end{proof}<esc>k')
     dollarDollar()
   end,
   markdown = function()
