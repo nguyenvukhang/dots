@@ -8,14 +8,22 @@
 import Cocoa
 import Foundation
 
-let s = CGEventSource(stateID: .hidSystemState)
+let eventSource = CGEventSource(stateID: .hidSystemState)
 
 final class Press {
-    let keycode: KeyCode, flags: CGEventFlags
-    init(_ keycode: KeyCode, _ flags: CGEventFlags) { self.keycode = keycode; self.flags = flags }
+    let keycode: KeyCode
+    let flags: CGEventFlags
+
+    init(_ keycode: KeyCode, _ flags: CGEventFlags) {
+        self.keycode = keycode
+        self.flags = flags
+    }
 
     private func event(down: Bool) -> CGEvent {
-        let ev = CGEvent(keyboardEventSource: s, virtualKey: keycode.rawValue, keyDown: down)!
+        let ev = CGEvent(
+            keyboardEventSource: eventSource,
+            virtualKey: keycode.rawValue,
+            keyDown: down)!
         ev.flags = self.flags
         return ev
     }
@@ -40,14 +48,15 @@ let notability = [
 
 let onenote = [
     Press(.p, [.maskCommand, .maskShift]), // Pen
-    Press(.e, [.maskAlternate, .maskCommand]) // Eraser
+    Press(.e, [.maskCommand, .maskShift]) // Eraser
 ]
 
 let d = UserDefaults.standard
 let i = d.integer(forKey: "tool")
 
 // let tbl = notability
-let tbl = goodNotes
+// let tbl = goodNotes
+let tbl = onenote
 
 tbl[i].press()
 d.setValue(i >= tbl.count - 1 || i < 0 ? 0 : i + 1, forKey: "tool")
