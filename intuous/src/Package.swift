@@ -9,5 +9,5 @@ let package = Package(
         .executableTarget(
             name: "intuous",
             path: ".",
-            exclude: ["reference", "Makefile"])
+            exclude: ["Makefile"])
     ])
