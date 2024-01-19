@@ -55,8 +55,8 @@ let d = UserDefaults.standard
 let i = d.integer(forKey: "tool")
 
 // let tbl = notability
-// let tbl = goodNotes
-let tbl = onenote
+let tbl = goodNotes
+// let tbl = onenote
 
 tbl[i].press()
 d.setValue(i >= tbl.count - 1 || i < 0 ? 0 : i + 1, forKey: "tool")
