@@ -21,6 +21,11 @@ local base = function(opts)
   return opts
 end
 
+M.matlab_ls = function()
+  require('lspconfig').matlab_ls.setup {
+    -- single_file_support = true,
+  }
+end
 M.clangd = function() lsp.clangd.setup(base { filetypes = { 'c', 'cpp' } }) end
 M.ocamllsp = function() lsp.ocamllsp.setup(base()) end
 M.typescript = function() lsp.tsserver.setup(base()) end

@@ -54,10 +54,7 @@ prompt_git() {
     echo "%F{241}($B)"
 }
 
-# PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}${PROMPT_ARROW} %f.%F{red}${PROMPT_ARROW} %f)'
-# PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}%M > %f.%F{red}%M > %f)'
-# PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}> %f.%F{red}> %f)'
-PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}ζ %f.%F{red}ζ %f)'
+PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}${PROMPT_ARROW} %f.%F{red}${PROMPT_ARROW} %f)'
 
 export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='  '"
 
@@ -65,6 +62,7 @@ export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='
 [ "$EDITOR" = "nvim" ] && export MANPAGER="nvim +Man!"
 
 PATH=/opt/homebrew/opt/jpeg/bin:$PATH
+PATH=/Applications/MATLAB_R2023b.app/bin:$PATH
 PATH=/opt/homebrew/opt/ruby/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
 export PATH
@@ -458,6 +456,8 @@ path() {
     [[ $P == *":"* ]] || break
   done
 }
+
+alias pulse='open "/Applications/Pulse Secure.app/Contents/Plugins/JamUI/PulseTray.app"'
 
 # arch -arm64 brew install pkg-config cairo pango libpng jpeg giflib librsvg
 # brew uninstall --ignore-dependencies pkg-config cairo pango libpng jpeg giflib librsvg
