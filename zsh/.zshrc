@@ -182,13 +182,13 @@ _gl() {
   return 0
 }
 gl() {
-  _gl -n ${1-$LINES}
+  _gl -n ${1-$LINES} $@
 }
 gla() {
-  _gl --all -n ${1-$LINES}
+  _gl --all -n ${1-$LINES} $@
 }
 gll() {
-  git log --graph --pretty=k --all
+  git log --graph --pretty=k --all $@
 }
 mongl() {
   for j in {1..120}; do
