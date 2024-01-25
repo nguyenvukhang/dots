@@ -48,15 +48,17 @@ let notability = [
 
 let onenote = [
     Press(.p, [.maskCommand, .maskShift]), // Pen
-    Press(.e, [.maskCommand, .maskShift]) // Eraser
+    Press(.e, [.maskCommand, .maskAlternate]) // Eraser
 ]
 
 let d = UserDefaults.standard
 let i = d.integer(forKey: "tool")
 
-// let tbl = notability
-let tbl = goodNotes
-// let tbl = onenote
+var tbl: [Press]
+
+// tbl = notability
+// tbl = goodNotes
+tbl = onenote
 
 tbl[i].press()
 d.setValue(i >= tbl.count - 1 || i < 0 ? 0 : i + 1, forKey: "tool")
