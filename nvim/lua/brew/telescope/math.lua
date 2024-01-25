@@ -17,6 +17,7 @@ local topic = {
   ['nonlinear-optimization-unconstrained.tex'] = '[NLOU]',
   ['ordinary-differential-equations.tex'] = '[ODE.]',
   ['plenary.tex'] = '[PLEN]',
+  ['statistics-1.tex'] = '[STC1]',
 }
 
 -- Gets called only once to parse everything out for the vimgrep, after that looks up directly.
