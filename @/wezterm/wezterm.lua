@@ -8,6 +8,14 @@ end
 
 local FONT = "JetBrains Mono Regular"
 
+-- load birthdays
+local BIRTHDAY_DB_PATH = "/Users/khang/dots/personal/birthdays/db.json"
+local BIRTHDAY_FILE = io.open(BIRTHDAY_DB_PATH, "r")
+local BIRTHDAYS
+if BIRTHDAY_FILE then
+	BIRTHDAYS = w.json_parse(BIRTHDAY_FILE:read("*a"))
+end
+
 local function key(k, m, a)
 	return { key = k, mods = m, action = a }
 end
@@ -81,5 +89,20 @@ config.keys = {
 		})
 	),
 }
+
+w.on("update-right-status", function(window, pane)
+	local output = "↑"
+	if BIRTHDAYS then
+		local today = BIRTHDAYS[os.date("%d-%b")]
+		if today ~= nil then
+			output = table.concat(today, ", ") .. " lvl up ↑"
+		end
+	end
+
+	window:set_right_status(w.format({
+		{ Foreground = { AnsiColor = "Green" } },
+		{ Text = output },
+	}))
+end)
 
 return config
