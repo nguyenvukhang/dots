@@ -255,6 +255,7 @@ ed() {
   t) t="$DOTS/tmux/tmux.conf" ;;
   u) t="$UNI_LAUNCH" ;;
   v) t="$DOTS/nvim/init.lua" ;;
+  w) t="$DOTS/@/wezterm/wezterm.lua" ;;
   z) t="$DOTS/zsh/.zshrc" ;;
   ze) t="$ZSHENV_PATH" ;;
   esac
