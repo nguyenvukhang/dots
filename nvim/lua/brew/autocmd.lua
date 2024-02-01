@@ -32,9 +32,11 @@ local cfg = {
   cpp = function() c.comment_string('// %s') end,
   swift = function() c.comment_string('// %s') end,
   astro = function() c.comment_string('// %s') end,
+  asm = function() c.comment_string('# %s') end,
 }
 
 c.autocmd { pattern = '*.tex', callback = cfg.latex }
+c.autocmd { pattern = '*.asm', callback = cfg.asm }
 c.autocmd { pattern = { '*.swift' }, callback = cfg.swift }
 c.autocmd { pattern = { '*.mdx', '*.md' }, callback = cfg.markdown }
 c.autocmd { pattern = { '*.java' }, callback = cfg.java }
