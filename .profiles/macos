@@ -2,6 +2,5 @@
 ~/.config/wezterm:@/wezterm
 ~/.config/ncspot:@/ncspot
 ~/.config/kitty:@/kitty
-~/.config/alatty:@/alatty
 ~/.config/tmux:tmux
 /etc/zshenv:zsh/zshenv/macOS

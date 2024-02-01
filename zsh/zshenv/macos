@@ -12,6 +12,7 @@ export N_PREFIX="$HOME/.local/n"
 
 PATH=$N_PREFIX/bin:$PATH
 PATH=$HOME/Library/Python/3.9/bin:$PATH
+PATH=/usr/local/bin:$PATH
 export PATH
 # PATH+=":$DOTS/personal/.local/bin.macos-arm"
 
