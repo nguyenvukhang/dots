@@ -127,8 +127,6 @@ function M.get_mark_config()
   return ensure_correct_config(HarpoonConfig).projects[mark_config_key()]
 end
 
-function M.get_menu_config() return HarpoonConfig.menu or {} end
-
 -- Sets a default config with no values
 M.setup()
 

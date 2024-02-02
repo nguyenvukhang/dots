@@ -1,4 +1,3 @@
-local harpoon = require('harpoon')
 local popup = require('plenary.popup')
 local Marked = require('harpoon.mark')
 local utils = require('harpoon.utils')
@@ -17,9 +16,8 @@ local function close_menu()
 end
 
 local function create_window()
-  local config = harpoon.get_menu_config()
-  local width = config.width or 60
-  local height = config.height or 10
+  local width = 60
+  local height = 10
   local borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' }
   local bufnr = vim.api.nvim_create_buf(false, false)
 
