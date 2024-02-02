@@ -1,4 +1,5 @@
 ~/.config/alacritty:@/alacritty
+~/.config/alatty:@/alatty
 ~/.config/wezterm:@/wezterm
 ~/.config/ncspot:@/ncspot
 ~/.config/kitty:@/kitty
