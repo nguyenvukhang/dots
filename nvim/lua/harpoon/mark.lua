@@ -37,17 +37,8 @@ local function validate_buf_name(buf_name)
 end
 
 local function filter_filetype()
-  local current_filetype = vim.bo.filetype
-  local excluded_filetypes = harpoon.get_global_settings().excluded_filetypes
-
-  if current_filetype == 'harpoon' then
+  if vim.bo.filetype == 'harpoon' then
     return error("You can't add harpoon to the harpoon")
-  end
-
-  if vim.tbl_contains(excluded_filetypes, current_filetype) then
-    return error(
-      'This filetype cannot be added or is included in the "excluded_filetypes" option'
-    )
   end
 end
 
