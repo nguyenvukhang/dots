@@ -1,9 +1,7 @@
 local Path = require('plenary.path')
 local utils = require('harpoon.utils')
 
-local config_path = vim.fn.stdpath('config')
 local data_path = vim.fn.stdpath('data')
-local user_config = string.format('%s/harpoon.json', config_path)
 local cache_config = string.format('%s/harpoon.json', data_path)
 
 local M = {}
@@ -79,21 +77,12 @@ local function read_config(local_config)
   return vim.json.decode(Path:new(local_config):read())
 end
 
--- 1. saved.  Where do we save?
-function M.setup(config)
-  if not config then config = {} end
-  local ok, u_config = pcall(read_config, user_config)
-  if not ok then u_config = {} end
+function M.setup()
   local ok2, c_config = pcall(read_config, cache_config)
   if not ok2 then c_config = {} end
   local complete_config = merge_tables({
     projects = {},
-    global_settings = {
-      ['save_on_toggle'] = false,
-      ['excluded_filetypes'] = { 'harpoon' },
-    },
-  }, expand_dir(c_config), expand_dir(u_config), expand_dir(config))
-  ensure_correct_config(complete_config)
+  }, expand_dir(c_config))
   HarpoonConfig = complete_config
 end
 
