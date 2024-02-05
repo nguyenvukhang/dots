@@ -250,7 +250,7 @@ ed() {
   case $1 in
   a) t="$DOTS/@/alacritty/alacritty.yml" ;;
   g) t="$DOTS/@/git/config" ;;
-  k) t="$DOTS/@/kitty/kitty.conf" ;;
+  k) t="$DOTS/@/alatty/alatty.conf" ;;
   s) t="$HOME/.ssh/config" ;;
   t) t="$DOTS/tmux/tmux.conf" ;;
   u) t="$UNI_LAUNCH" ;;
