@@ -28,17 +28,6 @@ export LANGUAGE=en_US.UTF-8 LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 LC_CTYPE=en_US.U
 export EDITOR=nvim
 export SHELL_SESSIONS_DISABLE=1 # remove ~/.zsh_sessions
 
-# Use tmux session as a shell wrapper.
-# Only quitting the base session will exit the terminal emulator.
-tmux_loop() {
-  ([[ $START_TMUX != true ]] || [ $TMUX ] || ! command -v tmux 2>/dev/null) && return
-  while; do
-    [[ $(tmux new -As z -n editor) == '[detached (from session z)]' ]] && exit
-    tmux has -t z && continue || exit
-  done
-}
-tmux_loop
-
 unsetopt BEEP       # prevents beeps in general
 setopt IGNOREEOF    # prevents <C-d> from quitting the shell
 setopt GLOBDOTS     # include hidden dir tab complete
