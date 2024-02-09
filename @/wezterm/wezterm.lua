@@ -6,7 +6,7 @@ if w.config_builder then
 	config = w.config_builder()
 end
 
-local FONT = "JetBrainsOneV4"
+local FONT = "JetBrainsOneV5"
 
 -- load birthdays
 local BIRTHDAY_DB_PATH = "/Users/khang/dots/personal/birthdays/db.json"
@@ -39,7 +39,7 @@ config.window_background_opacity = 1
 
 config.tab_bar_at_bottom = true
 config.show_new_tab_button_in_tab_bar = false
-config.use_fancy_tab_bar = false
+-- config.use_fancy_tab_bar = false
 config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1000 }
 
 -- disable all fancy fonts
