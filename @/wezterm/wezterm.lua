@@ -6,7 +6,7 @@ if w.config_builder then
 	config = w.config_builder()
 end
 
-local FONT = "JetBrainsOneV3"
+local FONT = "JetBrainsOneV4"
 
 -- load birthdays
 local BIRTHDAY_DB_PATH = "/Users/khang/dots/personal/birthdays/db.json"
@@ -33,9 +33,9 @@ config.window_decorations = "RESIZE"
 config.font = w.font({ family = FONT })
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 config.inactive_pane_hsb = { saturation = 1, brightness = 1 }
-config.window_background_opacity = 0.97
--- config.window_background_opacity = 1
-config.macos_window_background_blur = 8
+-- config.window_background_opacity = 0.97
+config.window_background_opacity = 1
+-- config.macos_window_background_blur = 8
 
 config.tab_bar_at_bottom = true
 config.show_new_tab_button_in_tab_bar = false
