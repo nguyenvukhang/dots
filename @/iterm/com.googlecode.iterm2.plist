@@ -360,19 +360,6 @@
 				<key>Red Component</key>
 				<real>0.92156862745098034</real>
 			</dict>
-			<key>ggj</key>
-			<dict>
-				<key>Alpha Component</key>
-				<real>1</real>
-				<key>Blue Component</key>
-				<real>0.0</real>
-				<key>Color Space</key>
-				<string>sRGB</string>
-				<key>Green Component</key>
-				<real>0.0</real>
-				<key>Red Component</key>
-				<real>0.0</real>
-			</dict>
 		</dict>
 	</dict>
 	<key>Default Bookmark Guid</key>
@@ -1359,7 +1346,7 @@
 			<key>Custom Directory</key>
 			<string>Advanced</string>
 			<key>Custom Window Title</key>
-			<string>Alatty</string>
+			<string>iTerm2</string>
 			<key>Default Bookmark</key>
 			<string>No</string>
 			<key>Description</key>

@@ -173,6 +173,7 @@ require('brew.statusline')
 require('brew.autocmd')
 
 vim.cmd('colo gruvbox8')
+-- require('gruvbox').load()
 
 vim.keymap.set("n", "<leader>n", "ciw\\mono{}<esc>P")
 vim.keymap.set("n", "<leader>N", "ciW\\mono{}<esc>P")

@@ -53,6 +53,8 @@ hi! link @text.environment GruvboxAqua
 hi! link @operator GruvboxOrange
 hi! link @punctuation.special GruvboxGray
 " hi! link @punctuation.bracket GruvboxGray
+hi! link @markup.environment GruvboxAqua
+hi! link @markup.environment.name Normal
 
 hi! link @javaDocComment GruvboxGray
 hi! link @spe GruvboxGray
