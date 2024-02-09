@@ -399,6 +399,8 @@
 	<false/>
 	<key>EnterCopyModeAutomatically</key>
 	<false/>
+	<key>FlashTabBarInFullscreen</key>
+	<false/>
 	<key>FocusOnRightOrMiddleClick</key>
 	<false/>
 	<key>GlobalKeyMap</key>
@@ -1596,6 +1598,8 @@
 	<false/>
 	<key>TripleClickSelectsFullWrappedLines</key>
 	<false/>
+	<key>URLHandlersByGuid</key>
+	<dict/>
 	<key>UseBorder</key>
 	<false/>
 	<key>UseMetal</key>
