@@ -9,7 +9,9 @@ local MATH_DIR = vim.env.REPOS .. '/math'
 
 local topic = {
   ['algorithm-design.tex'] = '[ALGD]',
+  ['functions.tex'] = '[FUNC]',
   ['calculus.tex'] = '[CALC]',
+  ['linear-algebra.tex'] = '[LINA]',
   ['real-analysis.tex'] = '[RELA]',
   ['numerical-analysis.tex'] = '[NUMA]',
   ['complex-analysis.tex'] = '[CPXA]',
