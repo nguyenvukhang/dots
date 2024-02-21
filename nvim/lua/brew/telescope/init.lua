@@ -49,7 +49,7 @@ require('telescope').setup {
     },
   },
   pickers = {
-    git_files = { hidden = true },
+    git_files = { hidden = true, previewer = false, theme = 'dropdown' },
     find_files = { hidden = true, previewer = false, theme = 'dropdown' },
     grep_string = {
       mappings = {
