@@ -1,9 +1,0 @@
-proc                  /proc           proc    defaults          0       0
-PARTUUID=887748b6-01  /boot           vfat    defaults          0       2
-PARTUUID=887748b6-02  /               ext4    defaults,noatime  0       1
-# a swapfile is not a swap partition, no line here
-#   use  dphys-swapfile swap[on|off]  for that
-
-# automatically mount the usb drive to /mnt/usb, but only if it's there.
-UUID=64A7-B0F2 /mnt/toshiba exfat defaults,nofail,umask=000,user,rw 0 0
-UUID=6355-123D /mnt/gauss exfat defaults,nofail,umask=000,user,rw 0 0
