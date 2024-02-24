@@ -72,8 +72,18 @@ local sha_to_register = function(_, map)
   map('i', '<CR>', function(bufnr)
     local entry = actions_state.get_selected_entry()
     local parts = vim.fn.split(entry[1], '|')
-    vim.fn.setreg('', parts[#parts])
+    local sha = parts[#parts]
+    vim.fn.setreg('', sha)
     actions.close(bufnr)
+
+    if vim.fn.expand('<cword>') == 'href' then
+      local line, cursor = vim.fn.getline('.'), vim.fn.col('.')
+      local hit = string.find(line, '{', cursor)
+      if hit == nil then return end
+      local left = string.sub(line, 0, hit)
+      local right = string.sub(line, hit + 1)
+      vim.api.nvim_set_current_line(left .. sha .. right)
+    end
   end)
   return true
 end
