@@ -68,24 +68,32 @@ local function gen_from_vimgrep_for_math_notes()
   return function(line) return setmetatable({ line }, mt_vimgrep_entry) end
 end
 
-local sha_to_register = function(_, map)
-  map('i', '<CR>', function(bufnr)
-    local entry = actions_state.get_selected_entry()
-    local parts = vim.fn.split(entry[1], '|')
-    local sha = parts[#parts]
-    vim.fn.setreg('', sha)
-    actions.close(bufnr)
+local sha_to_register = function(cword)
+  local function inner(_, map)
+    map('i', '<CR>', function(bufnr)
+      local entry = actions_state.get_selected_entry()
+      local parts = vim.fn.split(entry[1], '|')
+      local sha = parts[#parts]
+      vim.fn.setreg('', sha)
+      actions.close(bufnr)
 
-    if vim.fn.expand('<cword>') == 'href' then
-      local line, cursor = vim.fn.getline('.'), vim.fn.col('.')
-      local hit = string.find(line, '{', cursor)
-      if hit == nil then return end
-      local left = string.sub(line, 0, hit)
-      local right = string.sub(line, hit + 1)
-      vim.api.nvim_set_current_line(left .. sha .. right)
-    end
-  end)
-  return true
+      if cword == 'href' then
+        print('ON HREF')
+        local line, cursor = vim.fn.getline('.'), vim.fn.col('.')
+        print('LINE', line)
+        local hit = string.find(line, '{', cursor)
+        if hit == nil then return end
+        print('FOUND HIT')
+        local left = string.sub(line, 0, hit)
+        local right = string.sub(line, hit + 1)
+        vim.api.nvim_set_current_line(left .. sha .. right)
+      else
+        print('NOT ON HREF', cword)
+      end
+    end)
+    return true
+  end
+  return inner
 end
 
 -- completely custom search only for nguyenvukhang/math
@@ -110,7 +118,10 @@ local theorem_search = function(nav)
   local attach_mappings = nil
   -- sends the SHA to the unnamed register. comment out this key to revert
   -- to the default behavior of navigating to the header.
-  if not nav then attach_mappings = sha_to_register end
+  if not nav then
+    local cword = vim.fn.expand('<cword>')
+    attach_mappings = sha_to_register(cword)
+  end
 
   pickers
     .new(opts, {
