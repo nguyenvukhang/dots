@@ -46,7 +46,6 @@ local function gen_from_vimgrep_for_math_notes()
     col = function(_) return 0, true end,
     text = function(t) return parse(t)[3], true end,
     ordinal = function(t) return t.text end,
-    sha = function(t) return parse(t)[4], true end,
   }
   mt_vimgrep_entry = {
     cwd = MATH_DIR,
@@ -68,27 +67,20 @@ local function gen_from_vimgrep_for_math_notes()
   return function(line) return setmetatable({ line }, mt_vimgrep_entry) end
 end
 
-local sha_to_register = function(cword)
+local handle_sha = function(replace, ref, left, right)
   local function inner(_, map)
     map('i', '<CR>', function(bufnr)
       local entry = actions_state.get_selected_entry()
       local parts = vim.fn.split(entry[1], '|')
+      print(vim.inspect(entry))
       local sha = parts[#parts]
       vim.fn.setreg('', sha)
       actions.close(bufnr)
 
-      if cword == 'href' then
-        print('ON HREF')
-        local line, cursor = vim.fn.getline('.'), vim.fn.col('.')
-        print('LINE', line)
-        local hit = string.find(line, '{', cursor)
-        if hit == nil then return end
-        print('FOUND HIT')
-        local left = string.sub(line, 0, hit)
-        local right = string.sub(line, hit + 1)
-        vim.api.nvim_set_current_line(left .. sha .. right)
-      else
-        print('NOT ON HREF', cword)
+      if entry and replace then
+        vim.api.nvim_set_current_line(
+          string.format('%s\\href{%s}{%s}%s', left, sha, ref, right)
+        )
       end
     end)
     return true
@@ -98,7 +90,7 @@ end
 
 -- completely custom search only for nguyenvukhang/math
 ---@param nav boolean whether or not to jump to just copy the SHA
-local theorem_search = function(nav)
+local theorem_search = function(nav, replace)
   vim.cmd('norm! m`')
   local opts = {
     entry_maker = gen_from_vimgrep_for_math_notes(),
@@ -119,8 +111,12 @@ local theorem_search = function(nav)
   -- sends the SHA to the unnamed register. comment out this key to revert
   -- to the default behavior of navigating to the header.
   if not nav then
-    local cword = vim.fn.expand('<cword>')
-    attach_mappings = sha_to_register(cword)
+    local left, right, ref
+    if replace then
+      local r, l, line = vim.fn.col('.'), vim.fn.col('v'), vim.fn.getline('.')
+      ref, left, right = line:sub(l, r), line:sub(0, l - 1), line:sub(r + 1)
+    end
+    attach_mappings = handle_sha(replace, ref, left, right)
   end
 
   pickers

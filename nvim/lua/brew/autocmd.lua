@@ -24,10 +24,10 @@ local cfg = {
     k('n', '<leader>bc', 'cc\\begin{cases}<CR>\\end{cases}<esc>k')
     k('n', '<leader>bg', 'cc\\begin{gather*}<CR>\\end{gather*}<esc>k')
     -- jump to next/prev mark
-    k('n', '[[', '?\\v' .. MARKS .. '<CR>', { silent = true })
-    k('n', ']]', '/\\v' .. MARKS .. '<CR>', { silent = true })
+    k('n', '[[', '^?\\v' .. MARKS .. '<CR>f}<left>zz', { silent = true })
+    k('n', ']]', '^/\\v' .. MARKS .. '<CR>f}<left>zz', { silent = true })
     -- surround with \href{}{} and send telescope query for SHA
-    k('v', "<leader>h", 'c\\href{}{}<esc>P<right>%Fr:lua require("brew.telescope.math").theorem_search(false)<CR>')
+    -- k('v', "<leader>h", 'c\\href{}{}<esc>P<right>%Fr:lua require("brew.telescope.math").theorem_search(false)<CR>')
     dollarDollar()
   end,
   markdown = function()

@@ -78,7 +78,6 @@ def _draw_left_status(dd, sc, tab, before, mtl, index, is_last):
     if trailing_spaces:
         sc.draw(" " * trailing_spaces)
 
-    sc.cursor.bold = sc.cursor.italic = False
     sc.cursor.fg = 0
     if not is_last:
         sc.cursor.bg = as_rgb(color_as_int(dd.inactive_bg))
