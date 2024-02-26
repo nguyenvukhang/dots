@@ -79,7 +79,7 @@ alias grpo="$GIT remote prune origin"
 alias gt="$GIT tag"
 alias giti="$EDITOR .gitignore"
 alias gitm="$EDITOR .gitmodules"
-alias gsn="$GIT show --name-only"
+alias gsn="$GIT show --name-status"
 
 # git preview (quickly open files by number)
 gp() {
