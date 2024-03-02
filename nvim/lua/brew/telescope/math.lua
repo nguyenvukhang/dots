@@ -72,7 +72,6 @@ local handle_sha = function(replace, ref, left, right)
     map('i', '<CR>', function(bufnr)
       local entry = actions_state.get_selected_entry()
       local parts = vim.fn.split(entry[1], '|')
-      print(vim.inspect(entry))
       local sha = parts[#parts]
       vim.fn.setreg('', sha)
       actions.close(bufnr)
@@ -114,7 +113,16 @@ local theorem_search = function(nav, replace)
     local left, right, ref
     if replace then
       local r, l, line = vim.fn.col('.'), vim.fn.col('v'), vim.fn.getline('.')
+      if r < l then
+        l, r = r, l
+      end
       ref, left, right = line:sub(l, r), line:sub(0, l - 1), line:sub(r + 1)
+      print(vim.inspect {
+        right = { r, right },
+        left = { l, left },
+        ref = ref,
+        line_length = #line,
+      })
     end
     attach_mappings = handle_sha(replace, ref, left, right)
   end
