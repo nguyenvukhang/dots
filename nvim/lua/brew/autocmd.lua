@@ -8,6 +8,8 @@ local dollarDollar = function()
   k('v', 'a$', 'F$of$', { silent = true })
 end
 
+local MARKS = "\\\\Axiom|\\\\Principle|\\\\Algorithm|\\\\Corollary|\\\\Definition|\\\\Example|\\\\Exercise|\\\\Lemma|\\\\Problem|\\\\Proposition|\\\\Remark|\\\\Result|\\\\Theorem"
+
 local cfg = {
   java = function()
     vim.opt.tabstop = 4
@@ -21,6 +23,8 @@ local cfg = {
     k('n', '<leader>ba', 'cc\\begin{align*}<CR>\\end{align*}<esc>k')
     k('n', '<leader>bc', 'cc\\begin{cases}<CR>\\end{cases}<esc>k')
     k('n', '<leader>bg', 'cc\\begin{gather*}<CR>\\end{gather*}<esc>k')
+    k('n', '[[', '?\\v' .. MARKS .. '<CR>', { silent = true })
+    k('n', ']]', '/\\v' .. MARKS .. '<CR>', { silent = true })
     dollarDollar()
   end,
   markdown = function()
