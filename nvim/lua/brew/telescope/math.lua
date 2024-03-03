@@ -9,17 +9,21 @@ local MATH_DIR = vim.env.REPOS .. '/math'
 
 local topic = {
   ['algorithm-design.tex'] = '[ALGD]',
-  ['functions.tex'] = '[FUNC]',
   ['calculus.tex'] = '[CALC]',
-  ['linear-algebra.tex'] = '[LINA]',
-  ['real-analysis.tex'] = '[RELA]',
-  ['numerical-analysis.tex'] = '[NUMA]',
   ['complex-analysis.tex'] = '[CPXA]',
+  ['functions.tex'] = '[FUNC]',
+  ['linear-algebra.tex'] = '[LINA]',
   ['nonlinear-optimization-constrained.tex'] = '[NLOC]',
   ['nonlinear-optimization-unconstrained.tex'] = '[NLOU]',
+  ['numerical-analysis.tex'] = '[NUMA]',
   ['ordinary-differential-equations.tex'] = '[ODE.]',
   ['plenary.tex'] = '[PLEN]',
+  ['real-analysis.tex'] = '[RELA]',
   ['statistics-1.tex'] = '[STC1]',
+  ['statistics-1-examples.tex'] = '[STC1X]',
+  ['core/linear-algebra.tex'] = '[core::linalg]',
+  ['defs/calculus.tex'] = '[defs::calc]',
+  ['defs/linear-algebra.tex'] = '[defs::linalg]',
 }
 
 -- Gets called only once to parse everything out for the vimgrep, after that looks up directly.
