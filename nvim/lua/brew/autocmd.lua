@@ -8,7 +8,8 @@ local dollarDollar = function()
   k('v', 'a$', 'F$of$', { silent = true })
 end
 
-local MARKS = "\\\\Axiom|\\\\Principle|\\\\Algorithm|\\\\Corollary|\\\\Definition|\\\\Example|\\\\Exercise|\\\\Lemma|\\\\Problem|\\\\Proposition|\\\\Remark|\\\\Result|\\\\Theorem"
+local MARKS =
+  '\\\\Axiom|\\\\Principle|\\\\Algorithm|\\\\Corollary|\\\\Definition|\\\\Example|\\\\Exercise|\\\\Lemma|\\\\Problem|\\\\Proposition|\\\\Remark|\\\\Result|\\\\Theorem'
 
 local cfg = {
   java = function()
@@ -26,8 +27,17 @@ local cfg = {
     -- jump to next/prev mark
     k('n', '[[', '^?\\v' .. MARKS .. '<CR>f}<left>zz', { silent = true })
     k('n', ']]', '^/\\v' .. MARKS .. '<CR>f}<left>zz', { silent = true })
-    -- surround with \href{}{} and send telescope query for SHA
-    -- k('v', "<leader>h", 'c\\href{}{}<esc>P<right>%Fr:lua require("brew.telescope.math").theorem_search(false)<CR>')
+    -- go to definition for my notes
+    k('n', 'gd', function()
+      local cword = vim.fn.expand('<cword>')
+      if not cword then return end
+      local output = vim.fn.systemlist('minimath-go-to-definition ' .. cword)
+      if vim.v.shell_error ~= 0 then return end
+      local _, _, file, lnum = output[1]:find([[(..-):(%d+)]])
+      vim.cmd('e ' .. file)
+      vim.api.nvim_win_set_cursor(0, { tonumber(lnum), 0 })
+      print(vim.inspect { file = file, lnum = lnum })
+    end)
     dollarDollar()
   end,
   markdown = function()
