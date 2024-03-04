@@ -20,7 +20,7 @@ local topic = {
   ['nonlinear-optimization-constrained.tex'] = '[NLOC]',
   ['nonlinear-optimization-unconstrained.tex'] = '[NLOU]',
   ['numerical-analysis.tex'] = '[NUMA]',
-  ['ordinary-differential-equations.tex'] = '[ODE.]',
+  ['ordinary-differential-equations.tex'] = '[ODE ]',
   ['plenary.tex'] = '[PLEN]',
   ['real-analysis.tex'] = '[RELA]',
   ['statistics-1.tex'] = '[STC1]',
@@ -51,12 +51,12 @@ local function gen_from_vimgrep_for_math_notes()
     end,
     filename = function(t) return parse(t)[1], true end,
     lnum = function(t) return parse(t)[2], true end,
-    col = function(_) return 0, true end,
     text = function(t) return parse(t)[3], true end,
     ordinal = function(t) return t.text end,
   }
   mt_vimgrep_entry = {
     cwd = MATH_DIR,
+    col = 0,
     display = function(e)
       return (topic[e.filename] or '[????]') .. ' ' .. e.text
     end,
