@@ -4,6 +4,10 @@ local conf = require('telescope.config').values
 local Path = require('plenary.path')
 local actions_state = require('telescope.actions.state')
 local actions = require('telescope.actions')
+local make_entry = require('telescope.make_entry')
+local qf_and_jump = require('brew.telescope.qfnjump').qf_and_jump
+
+local M = {}
 
 local MATH_DIR = vim.env.REPOS .. '/math'
 
@@ -71,7 +75,7 @@ local function gen_from_vimgrep_for_math_notes()
   return function(line) return setmetatable({ line }, mt_vimgrep_entry) end
 end
 
-local handle_sha = function(replace, ref, left, right)
+local handle_sha = function(insert, ref, left, right)
   local function inner(_, map)
     map('i', '<CR>', function(bufnr)
       local entry = actions_state.get_selected_entry()
@@ -80,7 +84,7 @@ local handle_sha = function(replace, ref, left, right)
       vim.fn.setreg('', sha)
       actions.close(bufnr)
 
-      if entry and replace then
+      if entry and insert then
         vim.api.nvim_set_current_line(
           string.format('%s\\href{%s}{%s}%s', left, sha, ref, right)
         )
@@ -93,8 +97,8 @@ end
 
 -- completely custom search only for nguyenvukhang/math
 ---@param nav boolean whether or not to jump to just copy the SHA
-local theorem_search = function(nav, replace)
-  vim.cmd('norm! m`')
+---@param insert boolean whether or not to insert SHA at line
+M.theorem_search = function(nav, insert)
   local opts = {
     entry_maker = gen_from_vimgrep_for_math_notes(),
     cwd = MATH_DIR,
@@ -115,20 +119,14 @@ local theorem_search = function(nav, replace)
   -- to the default behavior of navigating to the header.
   if not nav then
     local left, right, ref
-    if replace then
+    if insert then
       local r, l, line = vim.fn.col('.'), vim.fn.col('v'), vim.fn.getline('.')
       if r < l then
         l, r = r, l
       end
       ref, left, right = line:sub(l, r), line:sub(0, l - 1), line:sub(r + 1)
-      print(vim.inspect {
-        right = { r, right },
-        left = { l, left },
-        ref = ref,
-        line_length = #line,
-      })
     end
-    attach_mappings = handle_sha(replace, ref, left, right)
+    attach_mappings = handle_sha(insert, ref, left, right)
   end
 
   pickers
@@ -142,4 +140,26 @@ local theorem_search = function(nav, replace)
     :find()
 end
 
-return { theorem_search = theorem_search }
+-- completely custom lsp search only for nguyenvukhang/math
+M.list_references = function(cword)
+  local opts = {
+    entry_maker = make_entry.gen_from_vimgrep(),
+    cwd = MATH_DIR,
+  }
+  local find_command = { 'minimath-lsp', 'references', cword }
+
+  pickers
+    .new(opts, {
+      prompt_title = 'References',
+      finder = finders.new_oneshot_job(find_command, opts),
+      previewer = conf.grep_previewer(opts),
+      sorter = conf.generic_sorter(opts),
+      attach_mappings = function(_, map)
+        map('i', '<CR>', qf_and_jump)
+        return true
+      end,
+    })
+    :find()
+end
+
+return M

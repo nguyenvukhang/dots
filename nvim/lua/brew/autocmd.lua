@@ -31,12 +31,16 @@ local cfg = {
     k('n', 'gd', function()
       local cword = vim.fn.expand('<cword>')
       if not cword then return end
-      local output = vim.fn.systemlist('minimath-go-to-definition ' .. cword)
+      local output = vim.fn.systemlist('minimath-lsp definition ' .. cword)
       if vim.v.shell_error ~= 0 then return end
       local _, _, file, lnum = output[1]:find([[(..-):(%d+)]])
       vim.cmd('e ' .. file)
       vim.api.nvim_win_set_cursor(0, { tonumber(lnum), 0 })
-      print(vim.inspect { file = file, lnum = lnum })
+    end)
+    k('n', 'gr', function()
+      local cword = vim.fn.expand('<cword>')
+      if not cword then return end
+      require("brew.telescope.math").list_references(cword)
     end)
     dollarDollar()
   end,
