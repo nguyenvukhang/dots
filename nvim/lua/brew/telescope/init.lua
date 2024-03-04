@@ -2,6 +2,7 @@ local actions = require('telescope.actions')
 local search = require('brew.telescope.search')
 local theorem_search = require('brew.telescope.math').theorem_search
 local k = vim.keymap.set
+local qf_and_jump = require('brew.telescope.qfnjump').qf_and_jump
 
 k('n', '<c-p>', search.files.repo)
 k('n', '<c-f>', search.files.cwd)
@@ -23,20 +24,6 @@ k('v', '<leader>h', function() theorem_search(false, true) end)
 -- k('n', '<leader>p0', require('telescope.builtin').builtin)
 -- k('n', '<leader>sh', builtin.help_tags)
 -- k('n', '<leader>sm', builtin.man_pages)
-
-local qf_and_jump = function(bufnr)
-  local as = require('telescope.actions.state')
-  local m, qf = as.get_current_picker(bufnr).manager, {}
-  for e in m:iter() do
-    local i, t, v = { bufnr = e.bufnr }, e.text, e.value
-    i.filename = require('telescope.from_entry').path(e, false, false)
-    i.lnum, i.col = vim.F.if_nil(e.lnum, 1), vim.F.if_nil(e.col, 1)
-    i.text = t and t or type(v) == 'table' and v.text or v
-    table.insert(qf, i)
-  end
-  vim.fn.setqflist(qf, 'r')
-  return require('telescope.actions.set').select(bufnr, 'default')
-end
 
 require('telescope').setup {
   defaults = {
