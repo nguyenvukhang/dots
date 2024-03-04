@@ -81,6 +81,16 @@ alias giti="$EDITOR .gitignore"
 alias gitm="$EDITOR .gitmodules"
 alias gsn="$GIT show --name-status"
 
+gmb() {
+  PREV=$(git branch --show-current)
+  if [[ $PREV == $1 ]]; then
+    return
+  fi
+  git checkout $1
+  git reset --hard $PREV
+  git checkout $PREV
+}
+
 # git preview (quickly open files by number)
 gp() {
   # macOS-only
