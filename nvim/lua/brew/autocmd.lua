@@ -29,6 +29,7 @@ local cfg = {
     k('n', ']]', 'j^/\\v' .. MARKS .. '\\{<CR>f}<left>zz', { silent = true })
     -- go to definition for my notes
     k('n', 'gd', function()
+      vim.cmd('w')
       local cword = vim.fn.expand('<cword>')
       if not cword then return end
       local output = vim.fn.systemlist('minimath-lsp definition ' .. cword)
@@ -40,7 +41,7 @@ local cfg = {
     k('n', 'gr', function()
       local cword = vim.fn.expand('<cword>')
       if not cword then return end
-      require("brew.telescope.math").list_references(cword)
+      require('brew.telescope.math').list_references(cword)
     end)
     dollarDollar()
   end,
