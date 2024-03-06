@@ -26,6 +26,7 @@ local topic = {
   ['statistics-1.tex'] = '[STC1]',
   ['statistics-1-examples.tex'] = '[STC1X]',
   ['core/linear-algebra.tex'] = '[core/linalg]',
+  ['core/functions.tex'] = '[core/func]',
   ['defs/calculus.tex'] = '[defs/calc]',
   ['defs/linear-algebra.tex'] = '[defs/linalg]',
 }
