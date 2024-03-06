@@ -110,7 +110,7 @@ require('brew.lazy').setup {
       lsp.swift()
       -- lsp.matlab_ls()
       -- lsp.astro()
-      -- lsp.go()
+      lsp.go()
     end,
   },
   {

@@ -25,9 +25,9 @@ local topic = {
   ['real-analysis.tex'] = '[RELA]',
   ['statistics-1.tex'] = '[STC1]',
   ['statistics-1-examples.tex'] = '[STC1X]',
-  ['core/linear-algebra.tex'] = '[core::linalg]',
-  ['defs/calculus.tex'] = '[defs::calc]',
-  ['defs/linear-algebra.tex'] = '[defs::linalg]',
+  ['core/linear-algebra.tex'] = '[core/linalg]',
+  ['defs/calculus.tex'] = '[defs/calc]',
+  ['defs/linear-algebra.tex'] = '[defs/linalg]',
 }
 
 -- Gets called only once to parse everything out for the vimgrep, after that looks up directly.
