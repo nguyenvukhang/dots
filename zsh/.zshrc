@@ -187,6 +187,9 @@ gla() {
   _gl --all -n ${1-$LINES} $@
 }
 gll() {
+  git log --graph --pretty=k $@
+}
+glal() {
   git log --graph --pretty=k --all $@
 }
 mongl() {

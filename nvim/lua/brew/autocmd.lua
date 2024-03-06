@@ -25,8 +25,8 @@ local cfg = {
     k('n', '<leader>bc', 'cc\\begin{cases}<CR>\\end{cases}<esc>k')
     k('n', '<leader>bg', 'cc\\begin{gather*}<CR>\\end{gather*}<esc>k')
     -- jump to next/prev mark
-    k('n', '[[', '^?\\v' .. MARKS .. '<CR>f}<left>zz', { silent = true })
-    k('n', ']]', '^/\\v' .. MARKS .. '<CR>f}<left>zz', { silent = true })
+    k('n', '[[', 'k^?\\v' .. MARKS .. '\\{<CR>f}<left>zz', { silent = true })
+    k('n', ']]', 'j^/\\v' .. MARKS .. '\\{<CR>f}<left>zz', { silent = true })
     -- go to definition for my notes
     k('n', 'gd', function()
       local cword = vim.fn.expand('<cword>')
