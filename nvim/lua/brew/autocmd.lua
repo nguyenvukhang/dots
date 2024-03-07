@@ -43,6 +43,21 @@ local cfg = {
       if not cword then return end
       require('brew.telescope.math').list_references(cword)
     end)
+
+    -- for migration
+    local get_def = '^<right>viwu"dyw'
+    local get_sha = '$F\\"sD'
+    local get_title = '^2f{"tyi{'
+    k(
+      'n',
+      '<leader>u',
+      get_def
+        .. get_sha
+        .. get_title
+        .. 'cc'
+        .. '\\begin{}<esc>"dPyyp^<right>cwend<esc><up>'
+        .. 'A[]<esc>"tP$"sp'
+    )
     dollarDollar()
   end,
   markdown = function()
