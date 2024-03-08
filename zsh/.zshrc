@@ -93,8 +93,11 @@ gmb() {
 
 # git preview (quickly open files by number)
 gp() {
+  if [ -z $1 ]; then
+    return
+  fi
   # macOS-only
-  $GIT ls-files $@ | tr \\n \\0 | xargs -0 $EDITOR
+  $GIT ls-files $1 | tr \\n \\0 | xargs -0 $EDITOR
 
   # gnu xargs only
   # $GIT ls-files $@ | xargs -d '\n' $EDITOR
