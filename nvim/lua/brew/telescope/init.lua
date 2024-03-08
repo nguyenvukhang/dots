@@ -1,6 +1,5 @@
 local actions = require('telescope.actions')
 local search = require('brew.telescope.search')
-local theorem_search = require('brew.telescope.math').theorem_search
 local k = vim.keymap.set
 local qf_and_jump = require('brew.telescope.qfnjump').qf_and_jump
 
@@ -14,12 +13,6 @@ k('n', '<leader>pw', search.string.cwd)
 
 k('n', '<leader>sd', search.files.dots)
 k('n', '<leader>su', search.files.university)
-
--- completely custom search only for nguyenvukhang/math
-k('n', '<leader>pm', function() theorem_search(true, false) end)
-k('n', '<leader>pt', function() theorem_search(false, false) end)
-k('v', '<leader>h', function() theorem_search(false, true, 'h') end)
-k('v', '<leader>a', function() theorem_search(false, true, 'a') end)
 
 -- local builtin = require('telescope.builtin')
 -- k('n', '<leader>p0', require('telescope.builtin').builtin)
