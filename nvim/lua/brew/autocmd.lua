@@ -56,7 +56,7 @@ local cfg = {
         .. get_title
         .. 'cc'
         .. '\\begin{}<esc>"dPyyp^<right>cwend<esc><up>'
-        .. 'A[]<esc>"tP$"sp'
+        .. 'A[]<esc>"tP$"spjjddkdd'
     )
     dollarDollar()
   end,
