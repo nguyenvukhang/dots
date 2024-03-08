@@ -16,6 +16,7 @@ local minimath = function()
   k('n', '<leader>ba', 'cc\\begin{align*}<CR>\\end{align*}<esc>k')
   k('n', '<leader>bc', 'cc\\begin{cases}<CR>\\end{cases}<esc>k')
   k('n', '<leader>bg', 'cc\\begin{gather*}<CR>\\end{gather*}<esc>k')
+  k('n', '<leader>bt', 'cc\\begin{Theorem}<CR>\\end{Theorem}<esc>k')
 
   -- jump to next/prev mark
   k('n', '[[', '^k?\\v^\\\\begin\\{(' .. math.marks .. ')\\}<cr>', sil)
