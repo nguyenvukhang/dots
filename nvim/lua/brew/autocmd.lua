@@ -1,5 +1,37 @@
 local c = require('brew')
 local k = vim.keymap.set
+local math = require('brew.telescope.math')
+local theorem_search = math.theorem_search
+
+local minimath = function()
+  -- completely custom search only for nguyenvukhang/math
+  k('n', '<leader>pm', function() theorem_search(true, false) end)
+  k('n', '<leader>pt', function() theorem_search(false, false) end)
+  k('v', '<leader>h', function() theorem_search(false, true, 'h') end)
+  k('v', '<leader>a', function() theorem_search(false, true, 'a') end)
+
+  -- environment wrappers
+  k('n', '<leader>be', 'cc\\begin{equation*}<CR>\\end{equation*}<esc>k')
+  k('n', '<leader>ba', 'cc\\begin{align*}<CR>\\end{align*}<esc>k')
+  k('n', '<leader>bc', 'cc\\begin{cases}<CR>\\end{cases}<esc>k')
+  k('n', '<leader>bg', 'cc\\begin{gather*}<CR>\\end{gather*}<esc>k')
+
+  -- jump to next/prev mark
+  k(
+    'n',
+    '[[',
+    -- 'k^?\\v\\begin\\{(' .. math.marks .. ')\\{<CR>f}<left>zz',
+    '^k?\\v^\\\\begin\\{(' .. math.marks .. ')\\}<cr>',
+    { silent = true }
+  )
+  k(
+    'n',
+    ']]',
+    '^j/\\v^\\\\begin\\{(' .. math.marks .. ')\\}<cr>',
+    { silent = true }
+  )
+  -- k('n', ']]', 'j^/\\v' .. MARKS .. '\\{<CR>f}<left>zz', { silent = true })
+end
 
 local dollarDollar = function()
   k('o', 'i$', ':<c-u>norm! T$vt$<cr>', { silent = true })
@@ -7,9 +39,6 @@ local dollarDollar = function()
   k('v', 'i$', 'T$ot$', { silent = true })
   k('v', 'a$', 'F$of$', { silent = true })
 end
-
-local MARKS =
-  '\\\\Axiom|\\\\Principle|\\\\Algorithm|\\\\Corollary|\\\\Definition|\\\\Example|\\\\Exercise|\\\\Lemma|\\\\Problem|\\\\Proposition|\\\\Remark|\\\\Result|\\\\Theorem'
 
 local cfg = {
   java = function()
@@ -20,13 +49,7 @@ local cfg = {
     vim.opt.textwidth = 80
     vim.opt.formatoptions = vim.opt.formatoptions + 't'
     vim.bo.filetype = 'tex'
-    k('n', '<leader>be', 'cc\\begin{equation*}<CR>\\end{equation*}<esc>k')
-    k('n', '<leader>ba', 'cc\\begin{align*}<CR>\\end{align*}<esc>k')
-    k('n', '<leader>bc', 'cc\\begin{cases}<CR>\\end{cases}<esc>k')
-    k('n', '<leader>bg', 'cc\\begin{gather*}<CR>\\end{gather*}<esc>k')
-    -- jump to next/prev mark
-    k('n', '[[', 'k^?\\v' .. MARKS .. '\\{<CR>f}<left>zz', { silent = true })
-    k('n', ']]', 'j^/\\v' .. MARKS .. '\\{<CR>f}<left>zz', { silent = true })
+    minimath()
     -- go to definition for my notes
     k('n', 'gd', function()
       vim.cmd('w')
@@ -44,20 +67,6 @@ local cfg = {
       require('brew.telescope.math').list_references(cword)
     end)
 
-    -- for migration
-    local get_def = '^<right>viwu"dyw'
-    local get_sha = '$F\\"sD'
-    local get_title = '^2f{"tyi{'
-    k(
-      'n',
-      '<leader>u',
-      get_def
-        .. get_sha
-        .. get_title
-        .. 'cc'
-        .. '\\begin{}<esc>"dPyyp^<right>cwend<esc><up>'
-        .. 'A[]<esc>"tP$"spjjddkdd'
-    )
     dollarDollar()
   end,
   markdown = function()

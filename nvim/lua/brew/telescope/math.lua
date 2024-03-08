@@ -8,7 +8,7 @@ local qf_and_jump = require('brew.telescope.qfnjump').qf_and_jump
 
 local M = {}
 
-local marks = table.concat({
+M.marks = table.concat({
   'Algorithm',
   'Axiom',
   'Corollary',
@@ -27,7 +27,7 @@ local find_command = {
   'rg',
   '--vimgrep',
   '-ttex',
-  '^\\\\begin\\{(' .. marks .. ')\\}\\[.*\\\\label',
+  '^\\\\begin\\{(' .. M.marks .. ')\\}\\[.*\\\\label',
 }
 
 local topic = {
