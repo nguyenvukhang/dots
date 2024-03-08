@@ -8,7 +8,27 @@ local qf_and_jump = require('brew.telescope.qfnjump').qf_and_jump
 
 local M = {}
 
-local MATH_DIR = vim.env.REPOS .. '/math'
+local marks = table.concat({
+  'Algorithm',
+  'Axiom',
+  'Corollary',
+  'Definition',
+  'Example',
+  'Exercise',
+  'Lemma',
+  'Principle',
+  'Problem',
+  'Proposition',
+  'Remark',
+  'Result',
+  'Theorem',
+}, '|')
+local find_command = {
+  'rg',
+  '--vimgrep',
+  '-ttex',
+  '^\\\\begin\\{(' .. marks .. ')\\}\\[.*\\\\label',
+}
 
 local topic = {
   ['algorithm-design.tex'] = '[ALD]',
@@ -73,19 +93,21 @@ local function gen_from_vimgrep_for_math_notes()
   return function(line) return setmetatable({ line }, mt_vimgrep_entry) end
 end
 
-local handle_sha = function(insert, ref, left, right)
+local handle_sha = function(insert, ref, left, right, fmt)
   local function inner(_, map)
     map('i', '<CR>', function(bufnr)
       local entry = actions_state.get_selected_entry()
-      local parts = vim.fn.split(entry[1], '|')
-      local sha = parts[#parts]
+      local _, _, sha = string.find(entry[1], '\\label{(.*)}')
       vim.fn.setreg('', sha)
       actions.close(bufnr)
 
       if entry and insert then
-        vim.api.nvim_set_current_line(
-          string.format('%s\\href{%s}{%s}%s', left, sha, ref, right)
-        )
+        local line = vim.api.nvim_set_current_line
+        if fmt == 'h' then
+          line(string.format('%s\\href{%s}{%s}%s', left, sha, ref, right))
+        elseif fmt == 'a' then
+          line(string.format('%s\\autoref{%s}%s', left, sha, right))
+        end
       end
     end)
     return true
@@ -93,36 +115,12 @@ local handle_sha = function(insert, ref, left, right)
   return inner
 end
 
-local marks = table.concat({
-  'Algorithm',
-  'Axiom',
-  'Corollary',
-  'Definition',
-  'Example',
-  'Exercise',
-  'Lemma',
-  'Principle',
-  'Problem',
-  'Proposition',
-  'Remark',
-  'Result',
-  'Theorem',
-}, '|')
-
 -- completely custom search only for nguyenvukhang/math
 ---@param nav boolean whether or not to jump to just copy the SHA
 ---@param insert boolean whether or not to insert SHA at line
-M.theorem_search = function(nav, insert)
-  local opts = {
-    entry_maker = gen_from_vimgrep_for_math_notes(),
-    -- entry_maker = make_entry.gen_from_vimgrep(),
-  }
-  local find_command = {
-    'rg',
-    '--vimgrep',
-    '-ttex',
-    '^\\\\begin\\{(' .. marks .. ')\\}\\[.*\\\\label',
-  }
+---@param link_type? 'h' | 'a' type of ref (href/autoref)
+M.theorem_search = function(nav, insert, link_type)
+  local opts = { entry_maker = gen_from_vimgrep_for_math_notes() }
 
   local attach_mappings = nil
   -- sends the SHA to the unnamed register. comment out this key to revert
@@ -136,7 +134,7 @@ M.theorem_search = function(nav, insert)
       end
       ref, left, right = line:sub(l, r), line:sub(0, l - 1), line:sub(r + 1)
     end
-    attach_mappings = handle_sha(insert, ref, left, right)
+    attach_mappings = handle_sha(insert, ref, left, right, link_type)
   end
 
   pickers
@@ -152,10 +150,7 @@ end
 
 -- completely custom lsp search only for nguyenvukhang/math
 M.list_references = function(cword)
-  local opts = {
-    entry_maker = make_entry.gen_from_vimgrep(),
-    cwd = MATH_DIR,
-  }
+  local opts = { entry_maker = make_entry.gen_from_vimgrep() }
   local find_command = { 'minimath-lsp', 'references', cword }
 
   pickers
