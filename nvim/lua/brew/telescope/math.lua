@@ -1,7 +1,6 @@
 local pickers = require('telescope.pickers')
 local finders = require('telescope.finders')
 local conf = require('telescope.config').values
-local Path = require('plenary.path')
 local actions_state = require('telescope.actions.state')
 local actions = require('telescope.actions')
 local make_entry = require('telescope.make_entry')
@@ -12,52 +11,50 @@ local M = {}
 local MATH_DIR = vim.env.REPOS .. '/math'
 
 local topic = {
-  ['algorithm-design.tex'] = '[ALGD]',
-  ['calculus.tex'] = '[CALC]',
-  ['complex-analysis.tex'] = '[CPXA]',
-  ['functions.tex'] = '[FUNC]',
-  ['linear-algebra.tex'] = '[LINA]',
-  ['nonlinear-optimization-constrained.tex'] = '[NLOC]',
-  ['nonlinear-optimization-unconstrained.tex'] = '[NLOU]',
-  ['numerical-analysis.tex'] = '[NUMA]',
-  ['ordinary-differential-equations.tex'] = '[ODE ]',
+  ['algorithm-design.tex'] = '[ALD]',
+  ['calculus.tex'] = '[CAL]',
+  ['complex-analysis.tex'] = '[CPA]',
+  ['functions.tex'] = '[FUN]',
+  ['linear-algebra.tex'] = '[LNA]',
+  ['nonlinear-optimization-constrained.tex'] = '[NOC]',
+  ['nonlinear-optimization-unconstrained.tex'] = '[NOU]',
+  ['numerical-analysis.tex'] = '[NMA]',
+  ['ordinary-differential-equations.tex'] = '[ODE]',
   ['plenary.tex'] = '[PLEN]',
-  ['real-analysis.tex'] = '[RELA]',
-  ['statistics-1.tex'] = '[STC1]',
-  ['statistics-1-examples.tex'] = '[STC1X]',
-  ['core/linear-algebra.tex'] = '[core/linalg]',
-  ['core/functions.tex'] = '[core/func]',
-  ['defs/calculus.tex'] = '[defs/calc]',
-  ['defs/linear-algebra.tex'] = '[defs/linalg]',
+  ['real-analysis.tex'] = '[REA]',
+  ['statistics-1.tex'] = '[ST1]',
+  ['statistics-1-examples.tex'] = '[ST1X]',
+  ['core/linear-algebra.tex'] = '[c/LNA]',
+  ['core/functions.tex'] = '[c/FUN]',
+  ['defs/calculus.tex'] = '[d/CAL]',
+  ['defs/linear-algebra.tex'] = '[d/CAL]',
+  ['sandbox.tex'] = '[SBX]',
 }
 
 -- Gets called only once to parse everything out for the vimgrep, after that looks up directly.
 local parse = function(t)
-  local _, _, filename, lnum, text, sha =
-    t.value:find([[(..-):(%d+):(.*)|(.*)]])
+  local k, _, filename, lnum, text = string.find(t.value, [[(..-):(%d+):(.*)]])
+  _, _, k, text = string.find(text, '\\begin{(.*)}%[(.*)%]')
+  text = k .. ': ' .. text
   lnum = tonumber(lnum)
-  t.filename, t.lnum, t.col, t.text = filename, lnum, 1, text
-  return { filename, lnum, text, sha }
+  t.filename, t.lnum, t.text = filename, lnum, text
+  return { filename, lnum, text }
 end
 
+-- local raw = '\\begin{definition}[dank memes]'
+-- local _, _, mark, text = string.find(raw, '\\begin{(.*)}%[(.*)%]')
+-- print(vim.inspect { mark = mark, text = text })
+--
 local function gen_from_vimgrep_for_math_notes()
   local mt_vimgrep_entry
   local execute_keys = {
-    path = function(t)
-      if Path:new(t.filename):is_absolute() then
-        return t.filename, false
-      else
-        return Path:new({ t.cwd, t.filename }):absolute(), false
-      end
-    end,
+    path = function(t) return t.filename end,
     filename = function(t) return parse(t)[1], true end,
     lnum = function(t) return parse(t)[2], true end,
     text = function(t) return parse(t)[3], true end,
     ordinal = function(t) return t.text end,
   }
   mt_vimgrep_entry = {
-    cwd = MATH_DIR,
-    col = 0,
     display = function(e)
       return (topic[e.filename] or '[????]') .. ' ' .. e.text
     end,
@@ -66,9 +63,9 @@ local function gen_from_vimgrep_for_math_notes()
       if raw then return raw end
       local executor = rawget(execute_keys, k)
       if executor then
-        local val, save = executor(t)
-        if save then rawset(t, k, val) end
-        return val
+        local v, save = executor(t)
+        if save then rawset(t, k, v) end
+        return v
       end
       return rawget(t, rawget({ display = 1, ordinal = 1, value = 1 }, k))
     end,
@@ -96,24 +93,36 @@ local handle_sha = function(insert, ref, left, right)
   return inner
 end
 
+local marks = table.concat({
+  'Algorithm',
+  'Axiom',
+  'Corollary',
+  'Definition',
+  'Example',
+  'Exercise',
+  'Lemma',
+  'Principle',
+  'Problem',
+  'Proposition',
+  'Remark',
+  'Result',
+  'Theorem',
+}, '|')
+
 -- completely custom search only for nguyenvukhang/math
 ---@param nav boolean whether or not to jump to just copy the SHA
 ---@param insert boolean whether or not to insert SHA at line
 M.theorem_search = function(nav, insert)
   local opts = {
     entry_maker = gen_from_vimgrep_for_math_notes(),
-    cwd = MATH_DIR,
+    -- entry_maker = make_entry.gen_from_vimgrep(),
   }
-  -- local find_command = {
-  --   'rg',
-  --   '--max-depth',
-  --   '1',
-  --   '--vimgrep',
-  --   '^\\\\(Axiom|Principle|Algorithm|Corollary|Definition|Example|Exercise|Lemma|Problem|Proposition|Remark|Result|Theorem)',
-  --   '-g',
-  --   '*.tex',
-  -- }
-  local find_command = { 'minimath-telescope' }
+  local find_command = {
+    'rg',
+    '--vimgrep',
+    '-ttex',
+    '^\\\\begin\\{(' .. marks .. ')\\}\\[.*\\\\label',
+  }
 
   local attach_mappings = nil
   -- sends the SHA to the unnamed register. comment out this key to revert
