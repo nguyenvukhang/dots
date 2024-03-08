@@ -2,6 +2,7 @@ local c = require('brew')
 local k = vim.keymap.set
 local math = require('brew.telescope.math')
 local theorem_search = math.theorem_search
+local sil = { silent = true }
 
 local minimath = function()
   -- completely custom search only for nguyenvukhang/math
@@ -17,27 +18,15 @@ local minimath = function()
   k('n', '<leader>bg', 'cc\\begin{gather*}<CR>\\end{gather*}<esc>k')
 
   -- jump to next/prev mark
-  k(
-    'n',
-    '[[',
-    -- 'k^?\\v\\begin\\{(' .. math.marks .. ')\\{<CR>f}<left>zz',
-    '^k?\\v^\\\\begin\\{(' .. math.marks .. ')\\}<cr>',
-    { silent = true }
-  )
-  k(
-    'n',
-    ']]',
-    '^j/\\v^\\\\begin\\{(' .. math.marks .. ')\\}<cr>',
-    { silent = true }
-  )
-  -- k('n', ']]', 'j^/\\v' .. MARKS .. '\\{<CR>f}<left>zz', { silent = true })
+  k('n', '[[', '^k?\\v^\\\\begin\\{(' .. math.marks .. ')\\}<cr>', sil)
+  k('n', ']]', '^j/\\v^\\\\begin\\{(' .. math.marks .. ')\\}<cr>', sil)
 end
 
 local dollarDollar = function()
-  k('o', 'i$', ':<c-u>norm! T$vt$<cr>', { silent = true })
-  k('o', 'a$', ':<c-u>norm! F$vf$<cr>', { silent = true })
-  k('v', 'i$', 'T$ot$', { silent = true })
-  k('v', 'a$', 'F$of$', { silent = true })
+  k('o', 'i$', ':<c-u>norm! T$vt$<cr>', sil)
+  k('o', 'a$', ':<c-u>norm! F$vf$<cr>', sil)
+  k('v', 'i$', 'T$ot$', sil)
+  k('v', 'a$', 'F$of$', sil)
 end
 
 local cfg = {
@@ -55,16 +44,20 @@ local cfg = {
       vim.cmd('w')
       local cword = vim.fn.expand('<cword>')
       if not cword then return end
-      local output = vim.fn.systemlist('minimath-lsp definition ' .. cword)
+      local cmd = "rg --vimgrep -ttex '\\\\label\\{" .. cword .. "\\}'"
+      local output = vim.fn.systemlist(cmd)
       if vim.v.shell_error ~= 0 then return end
       local _, _, file, lnum = output[1]:find([[(..-):(%d+)]])
       vim.cmd('e ' .. file)
       vim.api.nvim_win_set_cursor(0, { tonumber(lnum), 0 })
     end)
     k('n', 'gr', function()
+      vim.cmd('w')
       local cword = vim.fn.expand('<cword>')
       if not cword then return end
-      require('brew.telescope.math').list_references(cword)
+      vim.cmd(
+        'vimgrep /\\v\\\\(autoref|href)\\{' .. cword .. '\\}/ *.tex **/*.tex'
+      )
     end)
 
     dollarDollar()
