@@ -81,6 +81,9 @@ alias giti="$EDITOR .gitignore"
 alias gitm="$EDITOR .gitmodules"
 alias gsn="$GIT show --name-status"
 
+# to get remote branches on bare checkouts, run
+# git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+
 gmb() {
   PREV=$(git branch --show-current)
   if [[ $PREV == $1 ]]; then
