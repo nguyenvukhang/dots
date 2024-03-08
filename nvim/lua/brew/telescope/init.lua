@@ -18,7 +18,8 @@ k('n', '<leader>su', search.files.university)
 -- completely custom search only for nguyenvukhang/math
 k('n', '<leader>pm', function() theorem_search(true, false) end)
 k('n', '<leader>pt', function() theorem_search(false, false) end)
-k('v', '<leader>h', function() theorem_search(false, true) end)
+k('v', '<leader>h', function() theorem_search(false, true, 'h') end)
+k('v', '<leader>a', function() theorem_search(false, true, 'a') end)
 
 -- local builtin = require('telescope.builtin')
 -- k('n', '<leader>p0', require('telescope.builtin').builtin)
