@@ -5,6 +5,8 @@ local actions_state = require('telescope.actions.state')
 local actions = require('telescope.actions')
 local make_entry = require('telescope.make_entry')
 local qf_and_jump = require('brew.telescope.qfnjump').qf_and_jump
+local sil = { silent = true }
+local k = vim.keymap.set
 
 local M = {}
 
@@ -165,6 +167,48 @@ M.list_references = function(cword)
       end,
     })
     :find()
+end
+
+M.remaps = function()
+  -- completely custom search only for nguyenvukhang/math
+  k('n', '<leader>pm', function() M.theorem_search(true, false) end)
+  k('n', '<leader>pt', function() M.theorem_search(false, false) end)
+  k('v', '<leader>h', function() M.theorem_search(false, true, 'h') end)
+  k('v', '<leader>a', function() M.theorem_search(false, true, 'a') end)
+
+  -- environment wrappers
+  k('n', '<leader>be', 'cc\\begin{equation*}<CR>\\end{equation*}<esc>k')
+  k('n', '<leader>ba', 'cc\\begin{align*}<CR>\\end{align*}<esc>k')
+  k('n', '<leader>bc', 'cc\\begin{cases}<CR>\\end{cases}<esc>k')
+  k('n', '<leader>bg', 'cc\\begin{gather*}<CR>\\end{gather*}<esc>k')
+  k('n', '<leader>bt', 'cc\\begin{Theorem}<CR>\\end{Theorem}<esc>k')
+
+  -- jump to next/prev mark
+  k('n', '[[', '^k?\\v^\\\\begin\\{(' .. M.marks .. ')\\}<cr>', sil)
+  k('n', ']]', '^j/\\v^\\\\begin\\{(' .. M.marks .. ')\\}<cr>', sil)
+
+  -- go to definition
+  k('n', 'gd', function()
+    vim.cmd('w')
+    local cword = vim.fn.expand('<cword>')
+    if not cword then return end
+    local cmd = "rg --vimgrep -ttex '\\\\label\\{" .. cword .. "\\}'"
+    local output = vim.fn.systemlist(cmd)
+    if vim.v.shell_error ~= 0 then return end
+    local _, _, file, lnum = output[1]:find([[(..-):(%d+)]])
+    vim.cmd('e ' .. file)
+    vim.api.nvim_win_set_cursor(0, { tonumber(lnum), 0 })
+  end)
+
+  -- go to references
+  k('n', 'gr', function()
+    vim.cmd('w')
+    local cword = vim.fn.expand('<cword>')
+    if not cword then return end
+    vim.cmd(
+      'vimgrep /\\v\\\\(autoref|href)\\{' .. cword .. '\\}/ *.tex **/*.tex'
+    )
+  end)
 end
 
 return M
