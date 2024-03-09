@@ -3,14 +3,10 @@ local finders = require('telescope.finders')
 local conf = require('telescope.config').values
 local actions_state = require('telescope.actions.state')
 local actions = require('telescope.actions')
-local make_entry = require('telescope.make_entry')
-local qf_and_jump = require('brew.telescope.qfnjump').qf_and_jump
 local sil = { silent = true }
-local k = vim.keymap.set
-
 local M = {}
 
-M.marks = table.concat({
+local marks = table.concat({
   'Algorithm',
   'Axiom',
   'Corollary',
@@ -29,7 +25,10 @@ local find_command = {
   'rg',
   '--vimgrep',
   '-ttex',
-  '^\\\\begin\\{(' .. M.marks .. ')\\}\\[.*\\\\label',
+  -- '^\\\\begin\\{(' .. marks .. ')\\}\\[.*\\\\label',
+  '^\\\\('
+    .. marks
+    .. ').*\\\\label',
 }
 
 local topic = {
@@ -56,17 +55,14 @@ local topic = {
 -- Gets called only once to parse everything out for the vimgrep, after that looks up directly.
 local parse = function(t)
   local k, _, filename, lnum, text = string.find(t.value, [[(..-):(%d+):(.*)]])
-  _, _, k, text = string.find(text, '\\begin{(.*)}%[(.*)%]')
-  text = k .. ': ' .. text
+  -- _, _, k, text = string.find(text, '\\begin{(.*)}%[(.*)%]')
+  _, _, k, text = string.find(text, '\\(.*){(.*)}\\label{.*}')
+  text = (#text > 0) and k .. ': ' .. text or k
   lnum = tonumber(lnum)
   t.filename, t.lnum, t.text = filename, lnum, text
   return { filename, lnum, text }
 end
 
--- local raw = '\\begin{definition}[dank memes]'
--- local _, _, mark, text = string.find(raw, '\\begin{(.*)}%[(.*)%]')
--- print(vim.inspect { mark = mark, text = text })
---
 local function gen_from_vimgrep_for_math_notes()
   local mt_vimgrep_entry
   local execute_keys = {
@@ -117,25 +113,26 @@ local handle_sha = function(insert, ref, left, right, fmt)
   return inner
 end
 
+local split_visual_line = function()
+  local r, l, line = vim.fn.col('.'), vim.fn.col('v'), vim.fn.getline('.')
+  if r < l then
+    l, r = r, l
+  end
+  return line:sub(l, r), line:sub(0, l - 1), line:sub(r + 1)
+end
+
 -- completely custom search only for nguyenvukhang/math
 ---@param nav boolean whether or not to jump to just copy the SHA
 ---@param insert boolean whether or not to insert SHA at line
 ---@param link_type? 'h' | 'a' type of ref (href/autoref)
-M.theorem_search = function(nav, insert, link_type)
+local theorem_search = function(nav, insert, link_type)
   local opts = { entry_maker = gen_from_vimgrep_for_math_notes() }
 
   local attach_mappings = nil
   -- sends the SHA to the unnamed register. comment out this key to revert
   -- to the default behavior of navigating to the header.
   if not nav then
-    local left, right, ref
-    if insert then
-      local r, l, line = vim.fn.col('.'), vim.fn.col('v'), vim.fn.getline('.')
-      if r < l then
-        l, r = r, l
-      end
-      ref, left, right = line:sub(l, r), line:sub(0, l - 1), line:sub(r + 1)
-    end
+    local ref, left, right = split_visual_line()
     attach_mappings = handle_sha(insert, ref, left, right, link_type)
   end
 
@@ -150,64 +147,40 @@ M.theorem_search = function(nav, insert, link_type)
     :find()
 end
 
--- completely custom lsp search only for nguyenvukhang/math
-M.list_references = function(cword)
-  local opts = { entry_maker = make_entry.gen_from_vimgrep() }
-  local find_command = { 'minimath-lsp', 'references', cword }
-
-  pickers
-    .new(opts, {
-      prompt_title = 'References',
-      finder = finders.new_oneshot_job(find_command, opts),
-      previewer = conf.grep_previewer(opts),
-      sorter = conf.generic_sorter(opts),
-      attach_mappings = function(_, map)
-        map('i', '<CR>', qf_and_jump)
-        return true
-      end,
-    })
-    :find()
-end
-
 M.remaps = function()
+  local k, v = vim.keymap.set, vim.cmd
   -- completely custom search only for nguyenvukhang/math
-  k('n', '<leader>pm', function() M.theorem_search(true, false) end)
-  k('n', '<leader>pt', function() M.theorem_search(false, false) end)
-  k('v', '<leader>h', function() M.theorem_search(false, true, 'h') end)
-  k('v', '<leader>a', function() M.theorem_search(false, true, 'a') end)
+  k('n', '<leader>pm', function() theorem_search(true, false) end)
+  k('n', '<leader>pt', function() theorem_search(false, false) end)
+  k('v', '<leader>h', function() theorem_search(false, true, 'h') end)
+  k('v', '<leader>a', function() theorem_search(false, true, 'a') end)
 
   -- environment wrappers
   k('n', '<leader>be', 'cc\\begin{equation*}<CR>\\end{equation*}<esc>k')
   k('n', '<leader>ba', 'cc\\begin{align*}<CR>\\end{align*}<esc>k')
   k('n', '<leader>bc', 'cc\\begin{cases}<CR>\\end{cases}<esc>k')
   k('n', '<leader>bg', 'cc\\begin{gather*}<CR>\\end{gather*}<esc>k')
-  k('n', '<leader>bt', 'cc\\begin{Theorem}<CR>\\end{Theorem}<esc>k')
 
   -- jump to next/prev mark
-  k('n', '[[', '^k?\\v^\\\\begin\\{(' .. M.marks .. ')\\}<cr>', sil)
-  k('n', ']]', '^j/\\v^\\\\begin\\{(' .. M.marks .. ')\\}<cr>', sil)
+  k('n', '[[', '^k?\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz', sil)
+  k('n', ']]', '^j/\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz', sil)
 
-  -- go to definition
+  -- go to definition (looks for `\label{<cword>}`)
   k('n', 'gd', function()
-    vim.cmd('w')
     local cword = vim.fn.expand('<cword>')
     if not cword then return end
-    local cmd = "rg --vimgrep -ttex '\\\\label\\{" .. cword .. "\\}'"
-    local output = vim.fn.systemlist(cmd)
-    if vim.v.shell_error ~= 0 then return end
-    local _, _, file, lnum = output[1]:find([[(..-):(%d+)]])
-    vim.cmd('e ' .. file)
-    vim.api.nvim_win_set_cursor(0, { tonumber(lnum), 0 })
+    v('sil lgr --no-column -ttex \\label\\\\{' .. cword .. '}$')
+    -- v('silent! lgr /\\v\\\\label\\{' .. cword .. '\\}$/ **/*.tex')
   end)
 
-  -- go to references
+  -- go to references (looks for `\autoref{<cword>}` or `\href{<cword>}`)
   k('n', 'gr', function()
-    vim.cmd('w')
-    local cword = vim.fn.expand('<cword>')
-    if not cword then return end
-    vim.cmd(
-      'vimgrep /\\v\\\\(autoref|href)\\{' .. cword .. '\\}/ *.tex **/*.tex'
-    )
+    local sha = vim.fn.expand('<cword>')
+    if not sha then return end
+    v("sil gr --no-column -ttex '\\\\(autoref\\|href)\\{" .. sha .. "\\}'")
+    v('silent bel copen')
+    -- v('silent! vim /\\v\\\\(autoref|href)\\{' .. cword .. '\\}/g **/*.tex')
+    -- v('silent! bel copen')
   end)
 end
 
