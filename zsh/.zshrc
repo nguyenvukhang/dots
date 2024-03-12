@@ -85,13 +85,9 @@ alias gsn="$GIT show --name-status"
 # git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
 
 gmb() {
-  PREV=$(git branch --show-current)
-  if [[ $PREV == $1 ]]; then
-    return
-  fi
+  local PREV=$(git rev-parse HEAD)
   git checkout $1
   git reset --hard $PREV
-  git checkout $PREV
 }
 
 # git preview (quickly open files by number)
@@ -281,7 +277,7 @@ alias 2k="cd $DOTS/@/kitty"
 alias 2l="cd $HOME/.local"
 alias 2lb="cd $HOME/.local/bin"
 alias 2ls="cd $HOME/.local/src"
-alias 2m="cd $REPOS/math"
+alias 2m="cd $REPOS/math/main"
 alias 2mc="cd '$HOME/Library/Application Support/PrismLauncher/instances'"
 alias 2n="cd $REPOS/notes"
 alias 2o="cd $HOME/repos"
