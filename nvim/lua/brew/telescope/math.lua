@@ -164,6 +164,8 @@ M.remaps = function()
   -- jump to next/prev mark
   k('n', '[[', '^k?\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz', sil)
   k('n', ']]', '^j/\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz', sil)
+  k('v', '[[', '^k?\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz', sil)
+  k('v', ']]', '^j/\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz', sil)
 
   -- go to definition (looks for `\label{<cword>}`)
   k('n', 'gd', function()
