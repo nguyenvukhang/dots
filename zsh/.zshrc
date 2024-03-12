@@ -92,14 +92,9 @@ gmb() {
 
 # git preview (quickly open files by number)
 gp() {
-  if [ -z $1 ]; then
-    return
+  if [ ! -z $1 ]; then
+    $EDITOR $($GIT ls-files $@)
   fi
-  # macOS-only
-  $GIT ls-files $1 | tr \\n \\0 | xargs -0 $EDITOR
-
-  # gnu xargs only
-  # $GIT ls-files $@ | xargs -d '\n' $EDITOR
 }
 
 # if it's already checked out somewhere, go there, else:
@@ -110,6 +105,9 @@ gco() {
 
   # do nothing if it's not in a git repository
   [[ $X == 'fatal: not a git repository'* ]] && echo "$X" && return
+
+  # do nothing if git status is unclean
+  [[ $X == 'error: Your local changes t'* ]] && echo "$X" && return
 
   # first match: absolute path to existing worktree
   if [[ $X =~ ^fatal:.*is\ already\ checked\ out\ at\ \'(.*)\'$ ]]; then
