@@ -177,7 +177,7 @@ M.remaps = function()
   k('n', 'gr', function()
     local sha = vim.fn.expand('<cword>')
     if not sha then return end
-    v("sil gr --no-column -ttex '\\\\(autoref\\|href)\\{" .. sha .. "\\}'")
+    v("sil gr --no-column -ttex '\\\\(auto\\|h\\|name)ref\\{" .. sha .. "\\}'")
     v('silent bel copen')
     -- v('silent! vim /\\v\\\\(autoref|href)\\{' .. cword .. '\\}/g **/*.tex')
     -- v('silent! bel copen')
