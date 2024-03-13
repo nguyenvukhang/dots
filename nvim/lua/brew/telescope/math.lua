@@ -41,15 +41,19 @@ local topic = {
   ['nonlinear-optimization-unconstrained.tex'] = '[NOU]',
   ['numerical-analysis.tex'] = '[NMA]',
   ['ordinary-differential-equations.tex'] = '[ODE]',
-  ['plenary.tex'] = '[PLEN]',
+  ['plenary.tex'] = '[PLN]',
   ['real-analysis.tex'] = '[REA]',
   ['statistics-1.tex'] = '[ST1]',
-  ['statistics-1-examples.tex'] = '[ST1X]',
-  ['core/linear-algebra.tex'] = '[c/LNA]',
-  ['core/functions.tex'] = '[c/FUN]',
+  ['statistics-examples.tex'] = '[STX]',
+  ['sandbox.tex'] = '[SBX]',
+  ['draft.tex'] = '[DFT]',
   ['defs/calculus.tex'] = '[d/CAL]',
   ['defs/linear-algebra.tex'] = '[d/CAL]',
-  ['sandbox.tex'] = '[SBX]',
+  ['defs/counting.tex'] = '[d/CNT]',
+  ['core/linear-algebra.tex'] = '[c/LNA]',
+  ['core/functions.tex'] = '[c/FUN]',
+  ['core/counting.tex'] = '[c/CNT]',
+  ['core/real-analysis.tex'] = '[c/REA]',
 }
 
 -- Gets called only once to parse everything out for the vimgrep, after that looks up directly.
@@ -74,7 +78,7 @@ local function gen_from_vimgrep_for_math_notes()
   }
   mt_vimgrep_entry = {
     display = function(e)
-      return (topic[e.filename] or '[????]') .. ' ' .. e.text
+      return (topic[e.filename] or '[...]') .. ' ' .. e.text
     end,
     __index = function(t, k)
       local raw = rawget(mt_vimgrep_entry, k)
