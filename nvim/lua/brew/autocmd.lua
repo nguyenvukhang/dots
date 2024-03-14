@@ -23,7 +23,7 @@ local cfg = {
     dollarDollar()
   end,
   markdown = function()
-    vim.opt.textwidth = 70
+    vim.opt.textwidth = 80
     vim.bo.filetype = 'markdown'
     dollarDollar()
   end,

@@ -21,15 +21,9 @@ local marks = table.concat({
   'Result',
   'Theorem',
 }, '|')
-local find_command = {
-  'rg',
-  '--vimgrep',
-  '-ttex',
-  -- '^\\\\begin\\{(' .. marks .. ')\\}\\[.*\\\\label',
-  '^\\\\('
-    .. marks
-    .. ').*\\\\label',
-}
+local find_query = '^\\\\(' .. marks .. ').*\\\\label'
+local find_command = { 'rg', '--vimgrep', '-ttex', find_query }
+-- '^\\\\begin\\{(' .. marks .. ')\\}\\[.*\\\\label',
 
 local topic = {
   ['algorithm-design.tex'] = '[ALD]',
@@ -48,7 +42,7 @@ local topic = {
   ['sandbox.tex'] = '[SBX]',
   ['draft.tex'] = '[DFT]',
   ['defs/calculus.tex'] = '[d/CAL]',
-  ['defs/linear-algebra.tex'] = '[d/CAL]',
+  ['defs/linear-algebra.tex'] = '[d/LNA]',
   ['defs/counting.tex'] = '[d/CNT]',
   ['core/linear-algebra.tex'] = '[c/LNA]',
   ['core/functions.tex'] = '[c/FUN]',
@@ -129,7 +123,9 @@ end
 ---@param nav boolean whether or not to jump to just copy the SHA
 ---@param insert boolean whether or not to insert SHA at line
 ---@param link_type? 'h' | 'a' type of ref (href/autoref)
-local theorem_search = function(nav, insert, link_type)
+---@param is_local? boolean whether or not to search locally
+local theorem_search = function(nav, insert, link_type, is_local)
+  is_local = is_local or false
   local opts = { entry_maker = gen_from_vimgrep_for_math_notes() }
 
   local attach_mappings = nil
@@ -140,10 +136,17 @@ local theorem_search = function(nav, insert, link_type)
     attach_mappings = handle_sha(insert, ref, left, right, link_type)
   end
 
+  local command
+  if is_local then
+    command = { 'rg', '--vimgrep', find_query, vim.fn.expand('%') }
+  else
+    command = find_command
+  end
+
   pickers
     .new(opts, {
       prompt_title = 'Theorems',
-      finder = finders.new_oneshot_job(find_command, opts),
+      finder = finders.new_oneshot_job(command, opts),
       previewer = conf.grep_previewer(opts),
       sorter = conf.generic_sorter(opts),
       attach_mappings = attach_mappings,
@@ -155,6 +158,7 @@ M.remaps = function()
   local k, v = vim.keymap.set, vim.cmd
   -- completely custom search only for nguyenvukhang/math
   k('n', '<leader>pm', function() theorem_search(true, false) end)
+  k('n', '<leader>pM', function() theorem_search(true, false, nil, true) end)
   k('n', '<leader>pt', function() theorem_search(false, false) end)
   k('v', '<leader>h', function() theorem_search(false, true, 'h') end)
   k('v', '<leader>a', function() theorem_search(false, true, 'a') end)
