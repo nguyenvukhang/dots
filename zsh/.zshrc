@@ -227,6 +227,10 @@ gca() {
   fi
 }
 
+grs() {
+  git reset --soft $1 && git commit
+}
+
 yeet() {
   if [ $TMUX ]; then
     echo "Using tmux to push..."

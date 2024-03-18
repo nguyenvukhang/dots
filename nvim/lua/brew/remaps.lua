@@ -46,9 +46,6 @@ k('v', '<leader>y', '"+y')
 -- Yank the entire buffer to clipboard
 k('n', '<leader>Y', 'gg"+yG<c-o>')
 
--- preserve yank buffer on Visual Mode paste
-k('v', '<leader>p', '"_dP')
-
 -- split jumping
 k('n', '<leader>h', ':wincmd h<cr>', s)
 k('n', '<leader>l', ':wincmd l<cr>', s)
