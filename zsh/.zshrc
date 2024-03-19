@@ -75,6 +75,7 @@ alias gms="$GIT merge --squash"
 alias gpdo="$GIT push -d origin"
 alias gr="$GIT reset"
 alias grh="$GIT reset --hard"
+alias grs="$GIT reset --soft"
 alias grpo="$GIT remote prune origin"
 alias gt="$GIT tag"
 alias giti="$EDITOR .gitignore"
@@ -229,7 +230,7 @@ gca() {
 
 # git reverse-squash
 # squashes all changes into the target commit
-grs() {
+grv() {
   git reset --soft $1 && git commit --amend --no-edit
 }
 
