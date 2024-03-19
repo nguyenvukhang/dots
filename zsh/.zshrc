@@ -227,8 +227,10 @@ gca() {
   fi
 }
 
+# git reverse-squash
+# squashes all changes into the target commit
 grs() {
-  git reset --soft $1 && git commit
+  git reset --soft $1 && git commit --amend --no-edit
 }
 
 yeet() {
