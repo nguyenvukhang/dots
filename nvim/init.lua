@@ -134,7 +134,11 @@ require('brew.lazy').setup {
   {
     'sbdchd/neoformat',
     config = function()
-      vim.g.latexindent_opt = '-l -m'
+      vim.g.neoformat_tex_latexindent = {
+        ['exe'] = 'latexindent',
+        ['args'] = { '-l', '-m' },
+        ['stdin'] = 1,
+      }
       vim.g.neoformat_enabled_python = { 'black' }
     end,
   },
@@ -175,6 +179,3 @@ require('brew.autocmd')
 
 vim.cmd('colo gruvbox8')
 -- require('gruvbox').load()
-
-vim.keymap.set("n", "<leader>n", "ciw\\mono{}<esc>P")
-vim.keymap.set("n", "<leader>N", "ciW\\mono{}<esc>P")
