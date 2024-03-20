@@ -136,7 +136,7 @@ require('brew.lazy').setup {
     config = function()
       vim.g.neoformat_tex_latexindent = {
         ['exe'] = 'latexindent',
-        ['args'] = { '-l', '-m' },
+        ['args'] = { '-l', '-m', '-g=/dev/null' },
         ['stdin'] = 1,
       }
       vim.g.neoformat_enabled_python = { 'black' }
