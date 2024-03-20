@@ -90,7 +90,8 @@ k('n', ']]', function() vim.fn.searchpair('\\[', '', '\\]') end)
 
 -- diagnostics
 k('n', '<leader>e', vim.diagnostic.open_float)
-k('n', '<leader>p', ':Neoformat<CR>')
+-- k('n', '<leader>p', ':Neoformat<CR>')
+k('n', '<leader>p', ":lua require('conform').format({async=true})<CR>")
 
 --[[
 vim.keymap.set('n', '*', function()
