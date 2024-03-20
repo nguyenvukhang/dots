@@ -132,14 +132,24 @@ require('brew.lazy').setup {
     end,
   },
   {
-    'sbdchd/neoformat',
+    'stevearc/conform.nvim',
     config = function()
-      vim.g.neoformat_tex_latexindent = {
-        ['exe'] = 'latexindent',
-        ['args'] = { '-l', '-m', '-g=/dev/null' },
-        ['stdin'] = 1,
+      local conform = require('conform')
+      conform.setup {
+        formatters = {
+          latexindent = { prepend_args = { '-l', '-m', '-g=/dev/null' } },
+        },
+        async = true,
+        formatters_by_ft = {
+          java = { 'clang_format' },
+          lua = { 'stylua' },
+          python = { 'black' },
+          javascript = { 'prettier' },
+          yaml = { 'prettier' },
+          tex = { 'latexindent' },
+          rust = { 'rustfmt' },
+        },
       }
-      vim.g.neoformat_enabled_python = { 'black' }
     end,
   },
   {
