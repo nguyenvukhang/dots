@@ -1,6 +1,5 @@
 local c = require('brew')
 local k = vim.keymap.set
-local math = require('brew.telescope.math')
 local sil = { silent = true }
 
 local dollarDollar = function()
@@ -19,7 +18,7 @@ local cfg = {
     vim.opt.textwidth = 80
     vim.opt.formatoptions = vim.opt.formatoptions + 't'
     vim.bo.filetype = 'tex'
-    math.remaps()
+    require('brew.telescope.math').remaps()
     dollarDollar()
   end,
   markdown = function()
