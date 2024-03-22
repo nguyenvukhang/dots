@@ -136,12 +136,18 @@ require('brew.lazy').setup {
     config = function()
       local conform = require('conform')
       conform.setup {
+        notify_on_error = true,
         formatters = {
           latexindent = { prepend_args = { '-l', '-m', '-g=/dev/null' } },
         },
         async = true,
         formatters_by_ft = {
           java = { 'clang_format' },
+          c = { 'clang_format' },
+          cpp = { 'clang_format' },
+          bash = { 'shfmt' },
+          sh = { 'shfmt' },
+          zsh = { 'shfmt' },
           lua = { 'stylua' },
           python = { 'black' },
           javascript = { 'prettier' },

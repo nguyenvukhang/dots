@@ -14,6 +14,7 @@ local marks = table.concat({
   'Example',
   'Exercise',
   'Lemma',
+  'Notation',
   'Principle',
   'Problem',
   'Proposition',
@@ -41,6 +42,7 @@ local topic = {
   ['statistics-examples.tex'] = '[STX]',
   ['sandbox.tex'] = '[SBX]',
   ['draft.tex'] = '[DFT]',
+  ['errors.tex'] = '[ERR]',
   ['defs/calculus.tex'] = '[d/CAL]',
   ['defs/linear-algebra.tex'] = '[d/LNA]',
   ['defs/counting.tex'] = '[d/CNT]',
@@ -48,6 +50,7 @@ local topic = {
   ['core/functions.tex'] = '[c/FUN]',
   ['core/counting.tex'] = '[c/CNT]',
   ['core/real-analysis.tex'] = '[c/REA]',
+  ['lib/linear-algebra.tex'] = '[l/LNA]',
 }
 
 -- Gets called only once to parse everything out for the vimgrep, after that looks up directly.
