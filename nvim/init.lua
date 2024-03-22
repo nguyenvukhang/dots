@@ -12,8 +12,6 @@ require('brew.lazy').setup {
   'hrsh7th/cmp-cmdline',
   {
     'hrsh7th/nvim-cmp',
-    -- while waiting for bugfix @ https://github.com/hrsh7th/nvim-cmp/issues/1780
-    dev = true,
     config = function()
       local cmp = require('cmp')
       local ct = require('cmp.types')
