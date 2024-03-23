@@ -15,17 +15,12 @@ end
 M.toggle_qflist = function() vim.cmd(qf_is_open() and 'cclose' or 'bel copen') end
 
 -- Toggle diagnostics quickfix list
-local toggle_diagnostics = function(all)
+M.toggle_diagnostics = function()
   -- close diagnostics if qflist is already open
   if qf_is_open() then return vim.cmd('cclose') end
 
-  -- load diagnostics
-  local diagnostics
-  if all then
-    diagnostics = vim.diagnostics.get()
-  else
-    diagnostics = vim.diagnostics.get(0)
-  end
+  -- load diagnostics of local buffer
+  local diagnostics = vim.diagnostic.get(0)
 
   -- check if there are any diagnostics
   if vim.tbl_isempty(diagnostics) then return vim.notify('No diagnostics') end
@@ -33,9 +28,6 @@ local toggle_diagnostics = function(all)
   fn.setqflist(vim.diagnostic.toqflist(diagnostics))
   vim.cmd('bel copen') -- open quickfix window
 end
-
-M.toggle_diagnostics = function() toggle_diagnostics(false) end
-M.toggle_all_diagnostics = function() toggle_diagnostics(true) end
 
 -- lists files and sub-directories in a directory
 M.list_dir = function(dir)
