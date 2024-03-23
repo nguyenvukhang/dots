@@ -83,7 +83,7 @@ k('n', '<leader>c', ':ColorizerToggle<cr>')
 -- lua functions
 k('n', '<leader>o', c.toggle_qflist)
 k('n', '<leader>d', c.toggle_diagnostics)
-k('n', '<leader>D', c.toggle_all_diagnostics)
+k('n', '<leader>D', vim.diagnostic.setqflist)
 
 -- to copy the behavior of `[(` and `[{` to `[[`
 k('n', '[[', function() vim.fn.searchpair('\\[', '', '\\]', 'b') end)
