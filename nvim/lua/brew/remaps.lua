@@ -92,7 +92,15 @@ k('n', ']]', function() vim.fn.searchpair('\\[', '', '\\]') end)
 -- diagnostics
 k('n', '<leader>e', vim.diagnostic.open_float)
 -- k('n', '<leader>p', ':Neoformat<CR>')
-k('n', '<leader>p', ":lua require('conform').format({async=true})<CR>")
+k('n', '<leader>p', function()
+  local cf = require('conform')
+  local fmt = vim.tbl_map(function(t) return t.name end, cf.list_formatters())
+  if vim.tbl_isempty(fmt) then
+    return print('No formatters defined for this filetype.')
+  end
+  print('[fmt]', table.concat(fmt, ', '))
+  cf.format { async = true }
+end)
 
 --[[
 vim.keymap.set('n', '*', function()

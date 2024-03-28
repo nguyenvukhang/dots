@@ -136,11 +136,17 @@ require('brew.lazy').setup {
       conform.setup {
         notify_on_error = true,
         formatters = {
-          latexindent = { prepend_args = { '-l', '-m', '-g=/dev/null' } },
+          latexindent = function()
+            local lnum = tonumber(vim.fn.line('.'))
+            local t, b = lnum - 50, lnum + 50
+            local lines = '--lines ' .. t .. '-' .. b
+            return { prepend_args = { '-l', '-m', '-g=/dev/null', lines } }
+          end,
         },
         async = true,
         formatters_by_ft = {
           java = { 'clang_format' },
+          markdown = { 'prettier' },
           c = { 'clang_format' },
           cpp = { 'clang_format' },
           bash = { 'shfmt' },
