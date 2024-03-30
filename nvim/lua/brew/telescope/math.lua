@@ -53,12 +53,19 @@ local topic = {
   ['lib/linear-algebra.tex'] = '[l/LNA]',
 }
 
+local sanitize = function(t)
+  return t:gsub('%$', '')
+    :gsub('\\mathbb ', '')
+    :gsub('\\mathcal ', '')
+    :gsub('\\', '')
+end
+
 -- Gets called only once to parse everything out for the vimgrep, after that looks up directly.
 local parse = function(t)
-  local k, _, filename, lnum, text = string.find(t.value, [[(..-):(%d+):(.*)]])
-  -- _, _, k, text = string.find(text, '\\begin{(.*)}%[(.*)%]')
-  _, _, k, text = string.find(text, '\\(.*){(.*)}\\label{.*}')
-  text = (#text > 0) and k .. ': ' .. text or k
+  local kind, _, filename, lnum, text = string.find(t.value, [[(..-):(%d+):(.*)]])
+  _, _, kind, text = string.find(text, '([A-Z][a-z]+){(.*)}\\label{.*}')
+  text = (#text > 0) and kind .. ': ' .. text or kind
+  text = sanitize(text)
   lnum = tonumber(lnum)
   t.filename, t.lnum, t.text = filename, lnum, text
   return { filename, lnum, text }
