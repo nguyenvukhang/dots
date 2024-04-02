@@ -155,6 +155,7 @@ require('brew.lazy').setup {
           lua = { 'stylua' },
           python = { 'black' },
           javascript = { 'prettier' },
+          json = { 'prettier' },
           yaml = { 'prettier' },
           tex = { 'latexindent' },
           rust = { 'rustfmt' },

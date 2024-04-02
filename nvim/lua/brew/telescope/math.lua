@@ -62,7 +62,8 @@ end
 
 -- Gets called only once to parse everything out for the vimgrep, after that looks up directly.
 local parse = function(t)
-  local kind, _, filename, lnum, text = string.find(t.value, [[(..-):(%d+):(.*)]])
+  local kind, _, filename, lnum, text =
+    string.find(t.value, [[(..-):(%d+):(.*)]])
   _, _, kind, text = string.find(text, '([A-Z][a-z]+){(.*)}\\label{.*}')
   text = (#text > 0) and kind .. ': ' .. text or kind
   text = sanitize(text)
@@ -164,30 +165,13 @@ local theorem_search = function(nav, insert, link_type, is_local)
     :find()
 end
 
-M.remaps = function()
+M.overriding_remaps = function()
   local k, v = vim.keymap.set, vim.cmd
-  -- completely custom search only for nguyenvukhang/math
-  k('n', '<leader>pm', function() theorem_search(true, false) end)
-  k('n', '<leader>pM', function() theorem_search(true, false, nil, true) end)
-  k('n', '<leader>pt', function() theorem_search(false, false) end)
-  k('n', '<leader>pT', function() theorem_search(false, false, nil, true) end)
-  k('v', '<leader>h', function() theorem_search(false, true, 'h') end)
-  k('v', '<leader>H', function() theorem_search(false, true, 'h', true) end)
-  k('v', '<leader>a', function() theorem_search(false, true, 'a') end)
-  k('v', '<leader>A', function() theorem_search(false, true, 'a', true) end)
-
-  -- environment wrappers
-  k('n', '<leader>be', 'cc\\begin{equation*}<CR>\\end{equation*}<esc>k')
-  k('n', '<leader>ba', 'cc\\begin{align*}<CR>\\end{align*}<esc>k')
-  k('n', '<leader>bc', 'cc\\begin{cases}<CR>\\end{cases}<esc>k')
-  k('n', '<leader>bg', 'cc\\begin{gather*}<CR>\\end{gather*}<esc>k')
-  k('n', '<leader>bp', 'o<CR>\\begin{proof}<CR>\\end{proof}<esc>k')
-
   -- jump to next/prev mark
-  k('n', '[[', '^k?\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz', sil)
-  k('n', ']]', '^j/\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz', sil)
-  k('v', '[[', '^k?\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz', sil)
-  k('v', ']]', '^j/\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz', sil)
+  k('n', '[[', '^k?\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz')
+  k('n', ']]', '^j/\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz')
+  k('v', '[[', '^k?\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz')
+  k('v', ']]', '^j/\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz')
 
   -- go to definition (looks for `\label{<cword>}`)
   k('n', 'gd', function()
@@ -206,6 +190,26 @@ M.remaps = function()
     -- v('silent! vim /\\v\\\\(autoref|href)\\{' .. cword .. '\\}/g **/*.tex')
     -- v('silent! bel copen')
   end)
+
+  -- environment wrappers
+  k('n', '<leader>be', 'cc\\begin{equation*}<CR>\\end{equation*}<esc>k')
+  k('n', '<leader>ba', 'cc\\begin{align*}<CR>\\end{align*}<esc>k')
+  k('n', '<leader>bc', 'cc\\begin{cases}<CR>\\end{cases}<esc>k')
+  k('n', '<leader>bg', 'cc\\begin{gather*}<CR>\\end{gather*}<esc>k')
+  k('n', '<leader>bp', 'o<CR>\\begin{proof}<CR>\\end{proof}<esc>k')
+end
+
+M.remaps = function()
+  local k = vim.keymap.set
+  -- completely custom search only for nguyenvukhang/math
+  k('n', '<leader>pm', function() theorem_search(true, false) end)
+  k('n', '<leader>pM', function() theorem_search(true, false, nil, true) end)
+  k('n', '<leader>pt', function() theorem_search(false, false) end)
+  k('n', '<leader>pT', function() theorem_search(false, false, nil, true) end)
+  k('v', '<leader>h', function() theorem_search(false, true, 'h') end)
+  k('v', '<leader>H', function() theorem_search(false, true, 'h', true) end)
+  k('v', '<leader>a', function() theorem_search(false, true, 'a') end)
+  k('v', '<leader>A', function() theorem_search(false, true, 'a', true) end)
 end
 
 return M
