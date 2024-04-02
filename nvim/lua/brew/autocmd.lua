@@ -18,7 +18,6 @@ local cfg = {
     vim.opt.textwidth = 80
     vim.opt.formatoptions = vim.opt.formatoptions + 't'
     vim.bo.filetype = 'tex'
-    require('brew.telescope.math').remaps()
     dollarDollar()
   end,
   markdown = function()

@@ -140,7 +140,7 @@ require('brew.lazy').setup {
             local lnum = tonumber(vim.fn.line('.'))
             local t, b = lnum - 50, lnum + 50
             local lines = '--lines ' .. t .. '-' .. b
-            return { prepend_args = { '-l', '-m', '-g=/dev/null', lines } }
+            return { prepend_args = { '-l', '-g=/dev/null' } }
           end,
         },
         async = true,
