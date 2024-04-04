@@ -1,3 +1,47 @@
+local topic = {
+  ['algorithm_design.tex'] = '[ALD]',
+  ['calculus.tex'] = '[CAL]',
+  ['complex_analysis.tex'] = '[CPA]',
+  ['functions.tex'] = '[FUN]',
+  ['linear_algebra.tex'] = '[LNA]',
+  ['nonlinear_optimization_constrained.tex'] = '[NOC]',
+  ['nonlinear_optimization_unconstrained.tex'] = '[NOU]',
+  ['numerical_analysis.tex'] = '[NMA]',
+  ['ordinary_differential_equations.tex'] = '[ODE]',
+  ['plenary.tex'] = '[PLN]',
+  ['real_analysis.tex'] = '[REA]',
+  ['statistics_1.tex'] = '[ST1]',
+  ['statistics_examples.tex'] = '[STX]',
+  ['sandbox.tex'] = '[SBX]',
+  ['draft.tex'] = '[DFT]',
+  ['errors.tex'] = '[ERR]',
+  ['defs/calculus.tex'] = '[d/CAL]',
+  ['defs/linear_algebra.tex'] = '[d/LNA]',
+  ['defs/counting.tex'] = '[d/CNT]',
+  ['core/linear_algebra/mod.tex'] = '[c/LNA]',
+  ['core/linear_algebra/bases.tex'] = '[c/LNA]',
+  ['core/linear_algebra/change_of_basis.tex'] = '[c/LNA]',
+  ['core/linear_algebra/duality_dual_space_and_dual_map.tex'] = '[c/LNA]',
+  ['core/linear_algebra/eigenvalues_and_eigenvectors.tex'] = '[c/LNA]',
+  ['core/linear_algebra/inner_product_spaces.tex'] = '[c/LNA]',
+  ['core/linear_algebra/invertibility_and_isomorphisms.tex'] = '[c/LNA]',
+  ['core/linear_algebra/isomorphic_vector_spaces.tex'] = '[c/LNA]',
+  ['core/linear_algebra/kernel_and_range.tex'] = '[c/LNA]',
+  ['core/linear_algebra/linear_maps.tex'] = '[c/LNA]',
+  ['core/linear_algebra/linear_maps_and_matrix_multiplication.tex'] = '[c/LNA]',
+  ['core/linear_algebra/matrix_multiplication.tex'] = '[c/LNA]',
+  ['core/linear_algebra/orthogonal_bases.tex'] = '[c/LNA]',
+  ['core/linear_algebra/orthogonal_compl_and_min_problems.tex'] = '[c/LNA]',
+  ['core/linear_algebra/polynomials.tex'] = '[c/LNA]',
+  ['core/linear_algebra/products_of_vector_spaces.tex'] = '[c/LNA]',
+  ['core/linear_algebra/linear_map_as_a_matrix.tex'] = '[c/LNA]',
+  ['core/linear_algebra/span_and_linear_independence.tex'] = '[c/LNA]',
+  ['core/linear_algebra/vector_spaces.tex'] = '[c/LNA]',
+  ['core/counting.tex'] = '[c/CNT]',
+  ['core/real_analysis.tex'] = '[c/REA]',
+  ['lib/linear_algebra.tex'] = '[l/LNA]',
+}
+
 local pickers = require('telescope.pickers')
 local finders = require('telescope.finders')
 local conf = require('telescope.config').values
@@ -25,32 +69,6 @@ local marks = table.concat({
 local find_query = '^\\\\(' .. marks .. ').*\\\\label'
 local find_command = { 'rg', '--vimgrep', '-ttex', find_query }
 -- '^\\\\begin\\{(' .. marks .. ')\\}\\[.*\\\\label',
-
-local topic = {
-  ['algorithm_design.tex'] = '[ALD]',
-  ['calculus.tex'] = '[CAL]',
-  ['complex_analysis.tex'] = '[CPA]',
-  ['functions.tex'] = '[FUN]',
-  ['linear_algebra.tex'] = '[LNA]',
-  ['nonlinear_optimization_constrained.tex'] = '[NOC]',
-  ['nonlinear_optimization_unconstrained.tex'] = '[NOU]',
-  ['numerical_analysis.tex'] = '[NMA]',
-  ['ordinary_differential_equations.tex'] = '[ODE]',
-  ['plenary.tex'] = '[PLN]',
-  ['real_analysis.tex'] = '[REA]',
-  ['statistics_1.tex'] = '[ST1]',
-  ['statistics_examples.tex'] = '[STX]',
-  ['sandbox.tex'] = '[SBX]',
-  ['draft.tex'] = '[DFT]',
-  ['errors.tex'] = '[ERR]',
-  ['defs/calculus.tex'] = '[d/CAL]',
-  ['defs/linear_algebra.tex'] = '[d/LNA]',
-  ['defs/counting.tex'] = '[d/CNT]',
-  ['core/linear_algebra.tex'] = '[c/LNA]',
-  ['core/counting.tex'] = '[c/CNT]',
-  ['core/real_analysis.tex'] = '[c/REA]',
-  ['lib/linear_algebra.tex'] = '[l/LNA]',
-}
 
 local sanitize = function(t)
   return t:gsub('%$', '')
@@ -167,10 +185,10 @@ end
 M.overriding_remaps = function()
   local k, v = vim.keymap.set, vim.cmd
   -- jump to next/prev mark
-  k('n', '[[', '^k?\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz')
-  k('n', ']]', '^j/\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz')
-  k('v', '[[', '^k?\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz')
-  k('v', ']]', '^j/\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz')
+  k('n', '[[', '^k?\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz', sil)
+  k('n', ']]', '^j/\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz', sil)
+  k('v', '[[', '^k?\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz', sil)
+  k('v', ']]', '^j/\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz', sil)
 
   -- go to definition (looks for `\label{<cword>}`)
   k('n', 'gd', function()
