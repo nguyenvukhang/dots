@@ -32,6 +32,7 @@ local topic = {
   ['core/linear_algebra/matrix_multiplication.tex'] = '[c/LNA]',
   ['core/linear_algebra/orthogonal_bases.tex'] = '[c/LNA]',
   ['core/linear_algebra/orthogonal_compl_and_min_problems.tex'] = '[c/LNA]',
+  ['core/linear_algebra/operators_on_inner_product_spaces.tex'] = '[c/LNA]',
   ['core/linear_algebra/polynomials.tex'] = '[c/LNA]',
   ['core/linear_algebra/products_of_vector_spaces.tex'] = '[c/LNA]',
   ['core/linear_algebra/linear_map_as_a_matrix.tex'] = '[c/LNA]',
@@ -40,6 +41,19 @@ local topic = {
   ['core/counting.tex'] = '[c/CNT]',
   ['core/real_analysis.tex'] = '[c/REA]',
   ['lib/linear_algebra.tex'] = '[l/LNA]',
+  ['lib/numerical_analysis/cholesky_decomp.tex'] = '[l/NMA]',
+  ['lib/numerical_analysis/eqn_solv_methods.tex'] = '[l/NMA]',
+  ['lib/numerical_analysis/floating_point_rep.tex'] = '[l/NMA]',
+  ['lib/numerical_analysis/forw_elim_backw_sub.tex'] = '[l/NMA]',
+  ['lib/numerical_analysis/introduction.tex'] = '[l/NMA]',
+  ['lib/numerical_analysis/linear_least_squares.tex'] = '[l/NMA]',
+  ['lib/numerical_analysis/lu_factorization.tex'] = '[l/NMA]',
+  ['lib/numerical_analysis/mod.tex'] = '[l/NMA]',
+  ['lib/numerical_analysis/qr_factorization.tex'] = '[l/NMA]',
+  ['lib/numerical_analysis/qr_via_givens_rotations.tex'] = '[l/NMA]',
+  ['lib/numerical_analysis/qr_via_householder_refls.tex'] = '[l/NMA]',
+  ['lib/numerical_analysis/single_value_decomp.tex'] = '[l/NMA]',
+  ['lib/numerical_analysis/special_systems.tex'] = '[l/NMA]',
 }
 
 local pickers = require('telescope.pickers')
