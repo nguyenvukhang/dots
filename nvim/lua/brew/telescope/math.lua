@@ -57,6 +57,7 @@ local topic = {
   ['lib/numerical_analysis/single_value_decomp.tex'] = '[l/NMA]',
   ['lib/numerical_analysis/special_systems.tex'] = '[l/NMA]',
   ['lib/numerical_analysis/polynomials.tex'] = '[l/NMA]',
+  ['lib/numerical_analysis/integration.tex'] = '[l/NMA]',
 }
 
 local pickers = require('telescope.pickers')

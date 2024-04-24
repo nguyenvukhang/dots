@@ -154,6 +154,7 @@ require('brew.lazy').setup {
           zsh = { 'shfmt' },
           lua = { 'stylua' },
           python = { 'black' },
+          ocaml = { 'ocamlformat' },
           javascript = { 'prettier' },
           json = { 'prettier' },
           yaml = { 'prettier' },
