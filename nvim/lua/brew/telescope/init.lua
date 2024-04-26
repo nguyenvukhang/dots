@@ -10,6 +10,7 @@ k('n', '<c-f>', search.files.cwd)
 
 -- the only other remap that starts with p is reserved for code formatting
 k('n', '<leader>ps', search.string.repo)
+k('n', '<leader>pS', search.string.repo_live)
 k('n', '<leader>pf', search.string.cursor)
 k('n', '<leader>pw', search.string.cwd)
 

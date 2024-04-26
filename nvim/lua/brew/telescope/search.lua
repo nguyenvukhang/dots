@@ -25,6 +25,13 @@ M.string.repo = function()
   builtin.grep_string(t)
 end
 
+M.string.repo_live = function()
+  local repo_dir = git_workspace_root()
+  if not repo_dir then return end
+  t.prompt_title, t.cwd = 'Word in Repo (Live)', repo_dir
+  builtin.live_grep(t)
+end
+
 -- current working dir operations
 
 M.files.cwd = function()
