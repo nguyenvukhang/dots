@@ -19,45 +19,11 @@ local topic = {
   ['defs/calculus.tex'] = '[d/CAL]',
   ['defs/linear_algebra.tex'] = '[d/LNA]',
   ['defs/counting.tex'] = '[d/CNT]',
-  ['core/linear_algebra/bases.tex'] = '[c/LNA]',
-  ['core/linear_algebra/change_of_basis.tex'] = '[c/LNA]',
-  ['core/linear_algebra/duality_dual_space_and_dual_map.tex'] = '[c/LNA]',
-  ['core/linear_algebra/eigenvalues_and_eigenvectors.tex'] = '[c/LNA]',
-  ['core/linear_algebra/inner_product_spaces.tex'] = '[c/LNA]',
-  ['core/linear_algebra/invertibility_and_isomorphisms.tex'] = '[c/LNA]',
-  ['core/linear_algebra/isomorphic_vector_spaces.tex'] = '[c/LNA]',
-  ['core/linear_algebra/kernel_and_range.tex'] = '[c/LNA]',
-  ['core/linear_algebra/linear_map_as_a_matrix.tex'] = '[c/LNA]',
-  ['core/linear_algebra/linear_maps.tex'] = '[c/LNA]',
-  ['core/linear_algebra/linear_maps_and_matrix_multiplication.tex'] = '[c/LNA]',
-  ['core/linear_algebra/matrix_multiplication.tex'] = '[c/LNA]',
-  ['core/linear_algebra/mod.tex'] = '[c/LNA]',
-  ['core/linear_algebra/operators_on_inner_product_spaces.tex'] = '[c/LNA]',
-  ['core/linear_algebra/orthogonal_bases.tex'] = '[c/LNA]',
-  ['core/linear_algebra/orthogonal_compl_and_min_problems.tex'] = '[c/LNA]',
-  ['core/linear_algebra/polynomials.tex'] = '[c/LNA]',
-  ['core/linear_algebra/products_of_vector_spaces.tex'] = '[c/LNA]',
-  ['core/linear_algebra/span_and_linear_independence.tex'] = '[c/LNA]',
-  ['core/linear_algebra/vector_spaces.tex'] = '[c/LNA]',
+  ['core/linear_algebra/'] = '[c/LNA]',
   ['core/counting.tex'] = '[c/CNT]',
   ['core/real_analysis.tex'] = '[c/REA]',
   ['lib/linear_algebra.tex'] = '[l/LNA]',
-  ['lib/numerical_analysis/cholesky_decomp.tex'] = '[l/NMA]',
-  ['lib/numerical_analysis/eqn_solv_methods.tex'] = '[l/NMA]',
-  ['lib/numerical_analysis/floating_point_rep.tex'] = '[l/NMA]',
-  ['lib/numerical_analysis/forw_elim_backw_sub.tex'] = '[l/NMA]',
-  ['lib/numerical_analysis/interpolation.tex'] = '[l/NMA]',
-  ['lib/numerical_analysis/introduction.tex'] = '[l/NMA]',
-  ['lib/numerical_analysis/linear_least_squares.tex'] = '[l/NMA]',
-  ['lib/numerical_analysis/lu_factorization.tex'] = '[l/NMA]',
-  ['lib/numerical_analysis/mod.tex'] = '[l/NMA]',
-  ['lib/numerical_analysis/qr_factorization.tex'] = '[l/NMA]',
-  ['lib/numerical_analysis/qr_via_givens_rotations.tex'] = '[l/NMA]',
-  ['lib/numerical_analysis/qr_via_householder_refls.tex'] = '[l/NMA]',
-  ['lib/numerical_analysis/single_value_decomp.tex'] = '[l/NMA]',
-  ['lib/numerical_analysis/special_systems.tex'] = '[l/NMA]',
-  ['lib/numerical_analysis/polynomials.tex'] = '[l/NMA]',
-  ['lib/numerical_analysis/integration.tex'] = '[l/NMA]',
+  ['lib/numerical_analysis/'] = '[l/NMA]',
 }
 
 local pickers = require('telescope.pickers')
@@ -107,6 +73,18 @@ local parse = function(t)
   return { filename, lnum, text }
 end
 
+local get_abbrev = function(query)
+  local res = topic[query]
+  if res ~= nil then return res end
+  for k, v in pairs(topic) do
+    if vim.startswith(query, k) then
+      topic[query] = v
+      return v
+    end
+  end
+  return '[...]'
+end
+
 local function gen_from_vimgrep_for_math_notes()
   local mt_vimgrep_entry
   local execute_keys = {
@@ -117,9 +95,7 @@ local function gen_from_vimgrep_for_math_notes()
     ordinal = function(t) return t.text end,
   }
   mt_vimgrep_entry = {
-    display = function(e)
-      return (topic[e.filename] or '[...]') .. ' ' .. e.text
-    end,
+    display = function(e) return get_abbrev(e.filename) .. ' ' .. e.text end,
     __index = function(t, k)
       local raw = rawget(mt_vimgrep_entry, k)
       if raw then return raw end
