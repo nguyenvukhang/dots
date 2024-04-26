@@ -13,7 +13,7 @@ alias rg="rg --hidden"
 [[ ! -r $HOME/.opam/opam-init/init.zsh ]] || source $HOME/.opam/opam-init/init.zsh >/dev/null 2>/dev/null
 
 has() {
-  command -v $1 >/dev/null
+	command -v $1 >/dev/null
 }
 
 # special directories
@@ -34,13 +34,13 @@ setopt GLOBDOTS     # include hidden dir tab complete
 setopt PROMPT_SUBST # enable scriptig in the prompt
 
 prompt_git() {
-  local B=$(git branch --show-current 2>/dev/null)
-  [ -z $B ] && return
-  local R=$(git config --get remote.origin.url 2>/dev/null)
-  R=${R##*/}
-  [[ $R =~ '^(.*)\.git$' ]] &&
-    echo "%F{241}(%F{246}${match[1]}%F{241}/$B)" ||
-    echo "%F{241}($B)"
+	local B=$(git branch --show-current 2>/dev/null)
+	[ -z $B ] && return
+	local R=$(git config --get remote.origin.url 2>/dev/null)
+	R=${R##*/}
+	[[ $R =~ '^(.*)\.git$' ]] &&
+		echo "%F{241}(%F{246}${match[1]}%F{241}/$B)" ||
+		echo "%F{241}($B)"
 }
 
 PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}${PROMPT_ARROW} %f.%F{red}${PROMPT_ARROW} %f)'
@@ -86,53 +86,53 @@ alias gsn="$GIT show --name-status"
 # git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
 
 gmb() {
-  local PREV=$(git rev-parse HEAD)
-  git checkout $1
-  git reset --hard $PREV
+	local PREV=$(git rev-parse HEAD)
+	git checkout $1
+	git reset --hard $PREV
 }
 
 # git preview (quickly open files by number)
 gp() {
-  if [ ! -z $1 ]; then
-    $EDITOR $($GIT ls-files $@)
-  fi
+	if [ ! -z $1 ]; then
+		$EDITOR $($GIT ls-files $@)
+	fi
 }
 
 # if it's already checked out somewhere, go there, else:
 # if there's a worktree whose directory matches the query, go there
 gco() {
-  # do nothing if it exits ok on default command
-  X=$($GIT checkout $@ 2>&1) && echo "$X" && return
+	# do nothing if it exits ok on default command
+	X=$($GIT checkout $@ 2>&1) && echo "$X" && return
 
-  # do nothing if it's not in a git repository
-  [[ $X == 'fatal: not a git repository'* ]] && echo "$X" && return
+	# do nothing if it's not in a git repository
+	[[ $X == 'fatal: not a git repository'* ]] && echo "$X" && return
 
-  # do nothing if git status is unclean
-  [[ $X == 'error: Your local changes t'* ]] && echo "$X" && return
+	# do nothing if git status is unclean
+	[[ $X == 'error: Your local changes t'* ]] && echo "$X" && return
 
-  # first match: absolute path to existing worktree
-  if [[ $X =~ ^fatal:.*is\ already\ checked\ out\ at\ \'(.*)\'$ ]]; then
-    printf "\e[30m* \e[32m${1}\e[30m (Already checked out)\e[0m\n"
-    cd ${match[1]}
-    return
-  fi
+	# first match: absolute path to existing worktree
+	if [[ $X =~ ^fatal:.*is\ already\ checked\ out\ at\ \'(.*)\'$ ]]; then
+		printf "\e[30m* \e[32m${1}\e[30m (Already checked out)\e[0m\n"
+		cd ${match[1]}
+		return
+	fi
 
-  local TARGET_DIR= TARGET_BRANCH= LINE_DIR= LINE_BRANCH=
+	local TARGET_DIR= TARGET_BRANCH= LINE_DIR= LINE_BRANCH=
 
-  # Iterate over worktree directories. Only look for directory matches
-  # here. If there were branch matches they would have been caught
-  # earlier already.
-  while IFS= read -r line; do
-    if [[ $line =~ ^worktree\ (.*)$ ]]; then
-      if [[ "${line##*/}" == $1 ]]; then
-        printf "\e[30m* \e[32m${1}\e[30m (worktree --list)\e[0m\n"
-        cd ${match[1]} && return
-      fi
-    fi
-  done < <(git worktree list --porcelain)
+	# Iterate over worktree directories. Only look for directory matches
+	# here. If there were branch matches they would have been caught
+	# earlier already.
+	while IFS= read -r line; do
+		if [[ $line =~ ^worktree\ (.*)$ ]]; then
+			if [[ "${line##*/}" == $1 ]]; then
+				printf "\e[30m* \e[32m${1}\e[30m (worktree --list)\e[0m\n"
+				cd ${match[1]} && return
+			fi
+		fi
+	done < <(git worktree list --porcelain)
 
-  # nowhere to jump
-  echo $X
+	# nowhere to jump
+	echo $X
 }
 
 # git clone
@@ -142,14 +142,14 @@ gco() {
 # gcl https://github.com/neovim/neovim.git
 # gcl neovim/neovim
 gcl() {
-  local repo="${@: -1}" other_args=(${@:1:-1}) url
-  if [[ $repo =~ '^(https://.*/.*|git@.*:.*)/' ]]; then
-    url=$repo
-  elif [[ $repo =~ '^(.*)/(.*)$' ]]; then
-    url=git@github.com:${match[1]}/${match[2]}.git
-  fi
-  [ -z $url ] && echo "Unable to parse requested repo." && return 1
-  git clone $other_args $url
+	local repo="${@: -1}" other_args=(${@:1:-1}) url
+	if [[ $repo =~ '^(https://.*/.*|git@.*:.*)/' ]]; then
+		url=$repo
+	elif [[ $repo =~ '^(.*)/(.*)$' ]]; then
+		url=git@github.com:${match[1]}/${match[2]}.git
+	fi
+	[ -z $url ] && echo "Unable to parse requested repo." && return 1
+	git clone $other_args $url
 }
 
 # git clone --bare
@@ -157,91 +157,91 @@ gcl() {
 # USAGE:
 # see gcl() USAGE
 gcb() {
-  gcl --bare $1
+	gcl --bare $1
 }
 
 # git logs
 _gl() {
-  local i=$(($LINES / 2 > 10 ? $LINES / 2 : 10))
-  while IFS= read -r line; do
-    line=${line//origin\//*}
-    line=${line/ weeks ago/w}
-    line=${line/ week ago/w}
-    line=${line/ days ago/d}
-    line=${line/ day ago/d}
-    line=${line/ hours ago/h}
-    line=${line/ hour ago/h}
-    line=${line/ minutes ago/m}
-    line=${line/ minute ago/m}
-    line=${line/ seconds ago/s}
-    line=${line/ second ago/s}
-    echo -n $line
-    printf "\e[0m\n" && let i--
-    [[ $i -eq 0 ]] && break
-  done < <(git -c 'color.ui=always' log --pretty=k --graph $@)
-  return 0
+	local i=$(($LINES / 2 > 10 ? $LINES / 2 : 10))
+	while IFS= read -r line; do
+		line=${line//origin\//*}
+		line=${line/ weeks ago/w}
+		line=${line/ week ago/w}
+		line=${line/ days ago/d}
+		line=${line/ day ago/d}
+		line=${line/ hours ago/h}
+		line=${line/ hour ago/h}
+		line=${line/ minutes ago/m}
+		line=${line/ minute ago/m}
+		line=${line/ seconds ago/s}
+		line=${line/ second ago/s}
+		echo -n $line
+		printf "\e[0m\n" && let i--
+		[[ $i -eq 0 ]] && break
+	done < <(git -c 'color.ui=always' log --pretty=k --graph $@)
+	return 0
 }
 gl() {
-  _gl -n ${1-$LINES} $@
+	_gl -n ${1-$LINES} $@
 }
 gla() {
-  _gl --all -n ${1-$LINES} $@
+	_gl --all -n ${1-$LINES} $@
 }
 gll() {
-  git log --graph --pretty=k $@
+	git log --graph --pretty=k $@
 }
 glal() {
-  git log --graph --pretty=k --all $@
+	git log --graph --pretty=k --all $@
 }
 mongl() {
-  for j in {1..120}; do
-    clear && gla ${1-$LINES} && sleep 1
-  done
+	for j in {1..120}; do
+		clear && gla ${1-$LINES} && sleep 1
+	done
 }
 
 # git search log
 gsl() {
-  git log --all --pretty=s --color=always |
-    fzf --height=${1-7} --ansi -m --bind 'enter:select-all+accept'
+	git log --all --pretty=s --color=always |
+		fzf --height=${1-7} --ansi -m --bind 'enter:select-all+accept'
 }
 
 # git search log (with filenames) and open in editor
 gslf() {
-  git log --all --pretty=s --compact-summary | $EDITOR -
+	git log --all --pretty=s --compact-summary | $EDITOR -
 }
 
 # git commit
 gcm() {
-  if [ $1 ]; then
-    git commit -m $1
-  else
-    git commit
-  fi
+	if [ $1 ]; then
+		git commit -m $1
+	else
+		git commit
+	fi
 }
 
 # git commit --amend
 gca() {
-  if [ $1 ]; then
-    git commit --amend -m $1
-  else
-    git commit --amend
-  fi
+	if [ $1 ]; then
+		git commit --amend -m $1
+	else
+		git commit --amend
+	fi
 }
 
 # git reverse-squash
 # squashes all changes into the target commit
 grv() {
-  git reset --soft $1 && git commit --amend --no-edit
+	git reset --soft $1 && git commit --amend --no-edit
 }
 
 yeet() {
-  if [ $TMUX ]; then
-    echo "Using tmux to push..."
-    local CMD="echo 'pushing...'; git push $@; sleep 2"
-    tmux split-window -dv -l 5 "sh -c '$CMD'"
-  else
-    git push $@
-  fi
+	if [ $TMUX ]; then
+		echo "Using tmux to push..."
+		local CMD="echo 'pushing...'; git push $@; sleep 2"
+		tmux split-window -dv -l 5 "sh -c '$CMD'"
+	else
+		git push $@
+	fi
 }
 
 # alt way (derived):
@@ -255,20 +255,20 @@ yeet() {
 # git filter-branch --index-filter "git rm -rf --cached --ignore-unmatch path_to_file" HEAD
 
 ed() {
-  local t
-  case $1 in
-  a) t="$DOTS/@/alacritty/alacritty.yml" ;;
-  g) t="$DOTS/@/git/config" ;;
-  k) t="$DOTS/@/alatty/alatty.conf" ;;
-  s) t="$HOME/.ssh/config" ;;
-  t) t="$DOTS/tmux/tmux.conf" ;;
-  u) t="$UNI_LAUNCH" ;;
-  v) t="$DOTS/nvim/init.lua" ;;
-  w) t="$DOTS/@/wezterm/wezterm.lua" ;;
-  z) t="$DOTS/zsh/.zshrc" ;;
-  ze) t="$ZSHENV_PATH" ;;
-  esac
-  [ $t ] && $EDITOR $t || echo "nothing happened."
+	local t
+	case $1 in
+	a) t="$DOTS/@/alacritty/alacritty.yml" ;;
+	g) t="$DOTS/@/git/config" ;;
+	k) t="$DOTS/@/alatty/alatty.conf" ;;
+	s) t="$HOME/.ssh/config" ;;
+	t) t="$DOTS/tmux/tmux.conf" ;;
+	u) t="$UNI_LAUNCH" ;;
+	v) t="$DOTS/nvim/init.lua" ;;
+	w) t="$DOTS/@/wezterm/wezterm.lua" ;;
+	z) t="$DOTS/zsh/.zshrc" ;;
+	ze) t="$ZSHENV_PATH" ;;
+	esac
+	[ $t ] && $EDITOR $t || echo "nothing happened."
 }
 
 alias 2A="cd /Applications"
@@ -296,46 +296,57 @@ alias o="cd .." # out
 alias b="cd -"  # back
 
 2r() { # go to git root
-  cd $(git rev-parse --show-toplevel)
+	cd $(git rev-parse --show-toplevel)
 }
 
 if has exa; then
-  EXA_OPTS=(--group-directories-first -s Name -I '.DS_Store')
-  alias ls="exa -a $EXA_OPTS"
-  alias lss="exa -a --tree -L 2 $EXA_OPTS"
-  alias lsss="exa -a --tree -L 3 $EXA_OPTS"
-  alias ll="exa -lag $EXA_OPTS"
+	EXA_OPTS=(--group-directories-first -s Name -I '.DS_Store')
+	alias ls="exa -a $EXA_OPTS"
+	alias lss="exa -a --tree -L 2 $EXA_OPTS"
+	alias lsss="exa -a --tree -L 3 $EXA_OPTS"
+	alias ll="exa -lag $EXA_OPTS"
 else
-  alias ls='ls -A --color=auto'
-  alias ll='ls -lAg --color=auto'
+	alias ls='ls -A --color=auto'
+	alias ll='ls -lAg --color=auto'
 fi
 
 # g for jump (requires fd and fzf)
+__g() {
+	[[ ! $(command ls -Ap) = *"/"* ]] && return # end if no child dir
+	local FZF=(--height=7 +m --no-mouse --reverse --no-info
+		--prompt='  ' --header=${PWD/$HOME/'~'} --expect 'esc,left,enter,right')
+	[[ $($FD_BIN $FD_ARGS | fzf $FZF) =~ '^(.*)'$'\n''(.*)$' ]]
+	case ${match[1]} in
+	left) cd .. && g ;;
+	enter) [ ${match[2]} ] && cd ${match[2]} ;;
+	right) [ ${match[2]} ] && cd ${match[2]} && g ;;
+	esac
+}
+
+# g for jump (requires fd and fzf)
+G() {
+	local FD_ARGS=(-HI -d ${1-4} -t d -E '.git')
+	__g
+}
+
+# g for jump (requires fd and fzf)
 g() {
-  [[ ! $(command ls -Ap) = *"/"* ]] && return # end if no child dir
-  local FD_ARGS=(-HI -d ${1-4} -t d -E '.git' -E 'node_modules')
-  local FZF=(--height=7 +m --no-mouse --reverse --no-info
-    --prompt='  ' --header=${PWD/$HOME/'~'} --expect 'esc,left,enter,right')
-  [[ $($FD_BIN $FD_ARGS | fzf $FZF) =~ '^(.*)'$'\n''(.*)$' ]]
-  case ${match[1]} in
-  left) cd .. && g ;;
-  enter) [ ${match[2]} ] && cd ${match[2]} ;;
-  right) [ ${match[2]} ] && cd ${match[2]} && g ;;
-  esac
+	local FD_ARGS=(-HI -d ${1-4} -t d -E '.git' -E 'node_modules' -E 'target')
+	__g
 }
 
 # pdfgrep with nice setup
 pd() {
-  pdfgrep --with-filename --page-number $@ -- **/*.pdf
+	pdfgrep --with-filename --page-number $@ -- **/*.pdf
 }
 
 # run a command in a loop
 mon() {
-  while; do
-    clear
-    echo "-> $PWD" && $@
-    sleep 1
-  done
+	while; do
+		clear
+		echo "-> $PWD" && $@
+		sleep 1
+	done
 }
 
 alias ct="printf '\033[2J\033[3J\033[1;1H'" # clear terminal
@@ -355,116 +366,116 @@ bindkey '^[[Z' reverse-menu-complete
 
 # t: run the obvious thing
 t() {
-  if [ -f run ]; then
-    bash run $@
-  elif [ -f build.sh ]; then
-    bash build.sh $@
-  elif [ -f Makefile ]; then
-    make $@
-  elif [ -f run.py ]; then
-    python3 run.py $@
-  elif [ -f Cargo.toml ]; then
-    cargo run $@
-  elif [ -f package.json ]; then
-    yarn dev
-  fi
+	if [ -f run ]; then
+		bash run $@
+	elif [ -f build.sh ]; then
+		bash build.sh $@
+	elif [ -f Makefile ]; then
+		make $@
+	elif [ -f run.py ]; then
+		python3 run.py $@
+	elif [ -f Cargo.toml ]; then
+		cargo run $@
+	elif [ -f package.json ]; then
+		yarn dev
+	fi
 }
 
 # clears jdtls (nvim) cache
 jclear() {
-  rm -rf $HOME/.cache/nvim/jdtls
-  mkdir -p $HOME/.cache/nvim/jdtls
+	rm -rf $HOME/.cache/nvim/jdtls
+	mkdir -p $HOME/.cache/nvim/jdtls
 }
 
 # file opener
 view() {
-  local x=$($FD_BIN -tf -tl | fzf)
-  [ $x ] && open "$x"
+	local x=$($FD_BIN -tf -tl | fzf)
+	[ $x ] && open "$x"
 }
 
 tm() {
-  [ $TMUX ] && local a=switch || local a=a
-  case $1 in
-  ls) tmux $@ ;;
-  -d) tmux detach ;;
-  -k)
-    shift
-    [ $1 ] || set -- $(tmux ls | fzf -0 $FZF_OPTS)
-    [ $1 ] && tmux kill-session -t $1
-    ;;
-  '')
-    local S=$(tmux ls 2>/dev/null)
-    if [ -z $S ]; then
-      tmux new -s 0
-    else
-      S=$(printf $S | fzf $FZF_OPTS)
-      [ $S ] && tmux $a -t ${S%%:*}
-    fi
-    ;;
-  *)
-    tmux has -t $1 2>/dev/null || tmux new -ds $1
-    tmux $a -t $1
-    ;;
-  esac
+	[ $TMUX ] && local a=switch || local a=a
+	case $1 in
+	ls) tmux $@ ;;
+	-d) tmux detach ;;
+	-k)
+		shift
+		[ $1 ] || set -- $(tmux ls | fzf -0 $FZF_OPTS)
+		[ $1 ] && tmux kill-session -t $1
+		;;
+	'')
+		local S=$(tmux ls 2>/dev/null)
+		if [ -z $S ]; then
+			tmux new -s 0
+		else
+			S=$(printf $S | fzf $FZF_OPTS)
+			[ $S ] && tmux $a -t ${S%%:*}
+		fi
+		;;
+	*)
+		tmux has -t $1 2>/dev/null || tmux new -ds $1
+		tmux $a -t $1
+		;;
+	esac
 }
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/Users/khang/.local/miniconda3/bin/conda' 'shell.zsh' 'hook' 2>/dev/null)"
 if [ $? -eq 0 ]; then
-  eval "$__conda_setup"
+	eval "$__conda_setup"
 else
-  if [ -f "/Users/khang/.local/miniconda3/etc/profile.d/conda.sh" ]; then
-    . "/Users/khang/.local/miniconda3/etc/profile.d/conda.sh"
-  else
-    export PATH="/Users/khang/.local/miniconda3/bin:$PATH"
-  fi
+	if [ -f "/Users/khang/.local/miniconda3/etc/profile.d/conda.sh" ]; then
+		. "/Users/khang/.local/miniconda3/etc/profile.d/conda.sh"
+	else
+		export PATH="/Users/khang/.local/miniconda3/bin:$PATH"
+	fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
 
 ca() {
-  case $1 in
-  -d) conda deactivate ;;
-  ml) conda activate $1 ;;
-  *)
-    echo 'Defaulting to: [ml]'
-    ca ml
-    ;;
-  esac
+	case $1 in
+	-d) conda deactivate ;;
+	ml) conda activate $1 ;;
+	*)
+		echo 'Defaulting to: [ml]'
+		ca ml
+		;;
+	esac
 }
 
 # killing Goodnotes
 kgn() {
-  PID=$(ps x | grep Goodnotes | grep -v grep)
-  PID="${PID#"${PID%%[![:space:]]*}"}" # remove spaces from the front
-  PID=${PID%% *}                       # get contents before the first space
-  if [ $PID ]; then
-    echo "Killing $PID" && kill $PID
-  else
-    echo "No matching process found"
-  fi
+	PID=$(ps x | grep Goodnotes | grep -v grep)
+	PID="${PID#"${PID%%[![:space:]]*}"}" # remove spaces from the front
+	PID=${PID%% *}                       # get contents before the first space
+	if [ $PID ]; then
+		echo "Killing $PID" && kill $PID
+	else
+		echo "No matching process found"
+	fi
 }
 
 # Mark and Jump directories
 ZSH_HARPOON=$HOME/.local/.harpoon
 mm() {
-  echo ${PWD/$HOME/'~'} >>$ZSH_HARPOON && $EDITOR $ZSH_HARPOON
+	echo ${PWD/$HOME/'~'} >>$ZSH_HARPOON && $EDITOR $ZSH_HARPOON
 }
 j() {
-  RESULT=$(cat $ZSH_HARPOON | fzf --header='Harpoon!')
-  if [ $RESULT ]; then
-    cd ${RESULT/'~'/$HOME}
-  fi
+	RESULT=$(cat $ZSH_HARPOON | fzf --header='Harpoon!')
+	if [ $RESULT ]; then
+		cd ${RESULT/'~'/$HOME}
+	fi
 }
 
 path() {
-  local P=$PATH
-  while true; do
-    echo "* ${P%%:*}"
-    P=${P#*:}
-    [[ $P == *":"* ]] || break
-  done
+	local P=$PATH
+	while true; do
+		echo "* ${P%%:*}"
+		P=${P#*:}
+		[[ $P == *":"* ]] || break
+	done
 }
 
 alias pulse='open "/Applications/Pulse Secure.app/Contents/Plugins/JamUI/PulseTray.app"'
