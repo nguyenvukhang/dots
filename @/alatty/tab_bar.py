@@ -10,7 +10,7 @@ CLOCK_FG = as_rgb(color_as_int(OPTS.color3))
 DATE_FG = as_rgb(color_as_int(OPTS.color5))
 BDAE_FG = as_rgb(color_as_int(OPTS.color2))
 NWEEKS_FG = as_rgb(color_as_int(OPTS.color8))
-NOW = lambda: datetime.datetime.now()
+NOW = datetime.datetime.now
 
 
 WEEKS = (
@@ -47,8 +47,7 @@ def birthday(now):
 
 def week(now: datetime.datetime):
     w0 = datetime.datetime(2024, 1, 8)
-    i = int((now - w0).days / 7)
-    return WEEKS[i - 1]
+    return WEEKS[int((now - w0).days / 7) - 1]
 
 
 def right_cells(now: datetime.datetime):
