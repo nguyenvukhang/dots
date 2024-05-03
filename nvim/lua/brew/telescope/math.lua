@@ -24,6 +24,7 @@ local topic = {
   ['core/real_analysis.tex'] = '[c/REA]',
   ['lib/linear_algebra.tex'] = '[l/LNA]',
   ['lib/numerical_analysis/'] = '[l/NMA]',
+  ['lib/statistics/'] = '[l/STC]',
 }
 
 local pickers = require('telescope.pickers')

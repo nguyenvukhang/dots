@@ -478,6 +478,11 @@ path() {
 	done
 }
 
+# chinese pinyin!
+chpy() {
+	$HOMEBREW_PREFIX/lib/ruby/gems/3.3.0/bin/ch2py --tonemarks $@
+}
+
 alias pulse='open "/Applications/Pulse Secure.app/Contents/Plugins/JamUI/PulseTray.app"'
 
 # arch -arm64 brew install pkg-config cairo pango libpng jpeg giflib librsvg
