@@ -52,7 +52,10 @@ local marks = table.concat({
   'Result',
   'Theorem',
 }, '|')
-local find_query = '^\\\\(' .. marks .. ').*\\\\label'
+-- The regex [^}]
+-- matches anything but a closing } brace. This means we're looking for
+-- non-empty titles.
+local find_query = '^\\\\(' .. marks .. ')\\{[^}].*\\\\label'
 local find_command = { 'rg', '--vimgrep', '-ttex', find_query }
 -- '^\\\\begin\\{(' .. marks .. ')\\}\\[.*\\\\label',
 
@@ -68,7 +71,7 @@ local parse = function(t)
   local kind, _, filename, lnum, text =
     string.find(t.value, [[(..-):(%d+):(.*)]])
   _, _, kind, text = string.find(text, '([A-Z][a-z]+){(.*)}\\label{.*}')
-  text = (#text > 0) and kind .. ': ' .. text or kind
+  text = (#text > 0) and kind .. ': ' .. text or ""
   text = sanitize(text)
   lnum = tonumber(lnum)
   t.filename, t.lnum, t.text = filename, lnum, text
