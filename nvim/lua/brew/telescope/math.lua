@@ -19,6 +19,7 @@ local topic = {
   ['defs/calculus.tex'] = '[d/CAL]',
   ['defs/linear_algebra.tex'] = '[d/LNA]',
   ['defs/counting.tex'] = '[d/CNT]',
+  ['defs/real_analysis.tex'] = '[d/REA]',
   ['core/linear_algebra/'] = '[c/LNA]',
   ['core/counting.tex'] = '[c/CNT]',
   ['core/real_analysis.tex'] = '[c/REA]',
