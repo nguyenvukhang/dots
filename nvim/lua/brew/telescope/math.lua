@@ -64,8 +64,8 @@ end
 
 -- Gets called only once to parse everything out for the vimgrep, after that looks up directly.
 local parse = function(t)
-  local _, _, filename, lnum, mark, title =
-    string.find(t.value, [[(..-):(%d+):(.*):(.*)]])
+  local _, _, filename, lnum, mark, title, sha =
+    string.find(t.value, [[(..-):(%d+):(.*):(.*):([a-f0-9])]])
   local text = sanitize(mark .. ': ' .. title)
   lnum = tonumber(lnum)
   t.filename, t.lnum, t.text = filename, lnum, text
