@@ -51,29 +51,20 @@ local marks = table.concat({
 -- The regex [^}]
 -- matches anything but a closing } brace. This means we're looking for
 -- non-empty titles.
+--[[
 local find_query = '^\\\\(' .. marks .. ')\\{[^}].*\\\\label'
 local find_command = { 'rg', '--vimgrep', '-ttex', find_query }
--- '^\\\\begin\\{(' .. marks .. ')\\}\\[.*\\\\label',
-
-local sanitize = function(t)
-  return t:gsub('%$', '')
-    :gsub('\\mathbb ', '')
-    :gsub('\\mathcal ', '')
-    :gsub('\\', '')
-end
+--]]
 
 -- Gets called only once to parse everything out for the vimgrep, after that looks up directly.
 local parse = function(t)
-  local _, _, filename, lnum, mark, title, sha =
-    string.find(t.value, [[(..-):(%d+):(.*):(.*):([a-f0-9])]])
-  local text = sanitize(mark .. ': ' .. title)
-  lnum = tonumber(lnum)
-  t.filename, t.lnum, t.text = filename, lnum, text
-  return { filename, lnum, text }
+  local text, _, fp, lnum, mark, title = t.value:find([[(..-):(%d+):(.*):(.*)]])
+  text, lnum = mark .. ': ' .. title, tonumber(lnum)
+  t.filename, t.lnum, t.text = fp, lnum, text
+  return { fp, lnum, text }
 end
 
 local get_abbrev = function(query)
-  print(query)
   local res = topic[query]
   if res ~= nil then return res end
   for k, v in pairs(topic) do
@@ -82,7 +73,7 @@ local get_abbrev = function(query)
       return v
     end
   end
-  return '[...]'
+  return '[ • ]'
 end
 
 local function gen_from_vimgrep_for_math_notes()
