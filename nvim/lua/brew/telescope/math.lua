@@ -6,15 +6,10 @@ local topic = {
   ['_/linear_algebra.tex'] = '[LNA]',
   ['_/nonlinear_optimization_constrained.tex'] = '[NOC]',
   ['_/nonlinear_optimization_unconstrained.tex'] = '[NOU]',
-  ['_/numerical_analysis.tex'] = '[NMA]',
   ['_/ordinary_differential_equations.tex'] = '[ODE]',
   ['_/plenary.tex'] = '[PLN]',
   ['_/polynomials.tex'] = '[POL]',
-  ['_/real_analysis.tex'] = '[REA]',
-  ['_/statistics_1.tex'] = '[ST1]',
   ['_/statistics_examples.tex'] = '[STX]',
-  ['_/sandbox.tex'] = '[SBX]',
-  ['_/draft.tex'] = '[DFT]',
   ['_/errors.tex'] = '[ERR]',
   ['defs/calculus.tex'] = '[d/CAL]',
   ['defs/linear_algebra.tex'] = '[d/LNA]',
@@ -26,6 +21,7 @@ local topic = {
   ['lib/linear_algebra.tex'] = '[l/LNA]',
   ['lib/numerical_analysis/'] = '[l/NMA]',
   ['lib/statistics/'] = '[l/STC]',
+  ['lib/real_analysis/'] = '[l/REA]',
 }
 
 local pickers = require('telescope.pickers')
@@ -77,6 +73,7 @@ local parse = function(t)
 end
 
 local get_abbrev = function(query)
+  print(query)
   local res = topic[query]
   if res ~= nil then return res end
   for k, v in pairs(topic) do
