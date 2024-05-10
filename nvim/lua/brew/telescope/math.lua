@@ -70,8 +70,9 @@ end
 local parse = function(t)
   local kind, _, filename, lnum, text =
     string.find(t.value, [[(..-):(%d+):(.*)]])
+  -- column number is swallowed up with text and eliminated in the next line.
   _, _, kind, text = string.find(text, '([A-Z][a-z]+){(.*)}\\label{.*}')
-  text = (#text > 0) and kind .. ': ' .. text or ""
+  text = (#text > 0) and kind .. ': ' .. text or ''
   text = sanitize(text)
   lnum = tonumber(lnum)
   t.filename, t.lnum, t.text = filename, lnum, text
