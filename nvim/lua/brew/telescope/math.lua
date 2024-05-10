@@ -58,7 +58,8 @@ local find_command = { 'rg', '--vimgrep', '-ttex', find_query }
 
 -- Gets called only once to parse everything out for the vimgrep, after that looks up directly.
 local parse = function(t)
-  local text, _, fp, lnum, mark, title = t.value:find([[(..-):(%d+):(.*):(.*)]])
+  local text, _, fp, lnum, mark, title =
+    t.value:find([[(..-):(%d+):(.*):(.*):]])
   text, lnum = mark .. ': ' .. title, tonumber(lnum)
   t.filename, t.lnum, t.text = fp, lnum, text
   return { fp, lnum, text }
@@ -106,7 +107,7 @@ local handle_sha = function(insert, ref, left, right, fmt)
   local function inner(_, map)
     map('i', '<CR>', function(bufnr)
       local entry = actions_state.get_selected_entry()
-      local _, _, sha = string.find(entry[1], '\\label{(.*)}')
+      local _, _, sha = string.find(entry[1], '.*:(.*)')
       vim.fn.setreg('', sha)
       actions.close(bufnr)
 
