@@ -68,12 +68,9 @@ end
 
 -- Gets called only once to parse everything out for the vimgrep, after that looks up directly.
 local parse = function(t)
-  local kind, _, filename, lnum, text =
-    string.find(t.value, [[(..-):(%d+):(.*)]])
-  -- column number is swallowed up with text and eliminated in the next line.
-  _, _, kind, text = string.find(text, '([A-Z][a-z]+){(.*)}\\label{.*}')
-  text = (#text > 0) and kind .. ': ' .. text or ''
-  text = sanitize(text)
+  local _, _, filename, lnum, mark, title =
+    string.find(t.value, [[(..-):(%d+):(.*):(.*)]])
+  local text = sanitize(mark .. ': ' .. title)
   lnum = tonumber(lnum)
   t.filename, t.lnum, t.text = filename, lnum, text
   return { filename, lnum, text }
@@ -166,9 +163,9 @@ local theorem_search = function(nav, insert, link_type, is_local)
 
   local command
   if is_local then
-    command = { 'rg', '--vimgrep', find_query, vim.fn.expand('%') }
+    command = { 'minimath-lsp', vim.fn.expand('%') }
   else
-    command = find_command
+    command = { 'minimath-lsp' }
   end
 
   pickers
