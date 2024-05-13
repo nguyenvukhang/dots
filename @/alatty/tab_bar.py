@@ -47,7 +47,8 @@ def birthday(now):
 
 def week(now: datetime.datetime):
     w0 = datetime.datetime(2024, 1, 8)
-    return WEEKS[int((now - w0).days / 7) - 1]
+    idx = int((now - w0).days / 7) - 1
+    return WEEKS[idx] if idx < len(WEEKS) else "<>"
 
 
 def right_cells(now: datetime.datetime):
