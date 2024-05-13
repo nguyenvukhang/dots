@@ -1,0 +1,19 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\SimonTatham\PuTTY\Sessions\henna]
+"Color0"="40,40,40"
+"Color1"="234,105,98"
+"Color2"="169,182,101"
+"Color3"="216,166,87"
+"Color4"="125,174,163"
+"Color5"="211,134,155"
+"Color6"="137,180,140"
+"Color7"="168,153,132"
+"Color8"="146,131,116"
+"Color9"="234,105,98"
+"Color10"="169,182,101"
+"Color11"="216,166,87"
+"Color12"="125,174,163"
+"Color13"="211,134,155"
+"Color14"="137,180,140"
+"Color15"="235,219,178"
