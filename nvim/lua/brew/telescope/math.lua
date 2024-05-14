@@ -22,6 +22,7 @@ local topic = {
   ['lib/numerical_analysis/'] = '[l/NMA]',
   ['lib/statistics/'] = '[l/STC]',
   ['lib/real_analysis/'] = '[l/REA]',
+  ['lib/machine_learning/'] = '[l/ML]',
 }
 
 local pickers = require('telescope.pickers')
