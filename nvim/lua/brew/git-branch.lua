@@ -16,7 +16,7 @@ local function update_branch()
   if c.d and #c.d > 0 then
     local f = c.d .. sep .. 'HEAD'
     get_head(f)
-    df:start(f, {}, vim.schedule_wrap(update_branch))
+    df:start(f, sep ~= '\\' and {} or 1000, vim.schedule_wrap(update_branch))
   else
     c.b = '' -- git dir not found
   end
