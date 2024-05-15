@@ -59,9 +59,14 @@ local find_command = { 'rg', '--vimgrep', '-ttex', find_query }
 
 -- Gets called only once to parse everything out for the vimgrep, after that looks up directly.
 local parse = function(t)
-  local text, _, fp, lnum, mark, title =
-    t.value:find([[(..-):(%d+):(.*):(.*):]])
-  text, lnum = mark .. ': ' .. title, tonumber(lnum)
+  local i1 = t.value:find(':')
+  local i2 = t.value:find(':', i1 + 1)
+  local i3 = t.value:find(':', i2 + 1)
+  local fp = t.value:sub(1, i1 - 1)
+  local lnum = tonumber(t.value:sub(i1 + 1, i2 - 1))
+  local mark = t.value:sub(i2 + 1, i3 - 1)
+  local title = t.value:sub(i3 + 1, -9)
+  local text = mark .. ': ' .. title
   t.filename, t.lnum, t.text = fp, lnum, text
   return { fp, lnum, text }
 end

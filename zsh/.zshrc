@@ -460,10 +460,7 @@ kgn() {
 }
 
 # Mark and Jump directories
-ZSH_HARPOON=$HOME/.local/.harpoon
-mm() {
-	echo ${PWD/$HOME/'~'} >>$ZSH_HARPOON && $EDITOR $ZSH_HARPOON
-}
+
 j() {
 	RESULT=$(cat $ZSH_HARPOON | fzf --header='Harpoon!')
 	if [ $RESULT ]; then
