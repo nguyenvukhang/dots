@@ -33,6 +33,10 @@ local actions = require('telescope.actions')
 local sil = { silent = true }
 local M = {}
 
+-- extra topics
+topic['defs/machine_learning'] = '[d/ML]'
+topic['lib/neural_network/'] = '[l/NN]'
+
 local marks = table.concat({
   'Algorithm',
   'Axiom',
