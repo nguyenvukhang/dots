@@ -240,7 +240,7 @@ yeet() {
 		local CMD="echo 'pushing...'; git push $@; sleep 2"
 		tmux split-window -dv -l 5 "sh -c '$CMD'"
 	elif [[ $1 == '-f' ]]; then
-		git push --force-if-includes
+		git push --force-with-lease
 	else
 		git push $@
 	fi
