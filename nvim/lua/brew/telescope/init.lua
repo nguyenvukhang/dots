@@ -3,7 +3,7 @@ local search = require('brew.telescope.search')
 local k = vim.keymap.set
 local qf_and_jump = require('brew.telescope.qfnjump').qf_and_jump
 
-require("brew.telescope.math").remaps()
+require('brew.telescope.math').remaps()
 
 k('n', '<c-p>', search.files.repo)
 k('n', '<c-f>', search.files.cwd)
@@ -25,7 +25,7 @@ k('n', '<leader>su', search.files.university)
 require('telescope').setup {
   defaults = {
     layout_strategy = 'flex',
-    vimgrep_arguments = { 'rg', '--vimgrep', '--hidden', '--smart-case' },
+    vimgrep_arguments = { 'rg', '--vimgrep', '--hidden' },
     color_devicons = false,
     selection_caret = '  ',
     mappings = { i = { ['<esc>'] = actions.close } },

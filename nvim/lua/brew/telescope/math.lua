@@ -13,8 +13,10 @@ local topic = {
   ['_/errors.tex'] = '[ERR]',
   ['defs/calculus.tex'] = '[d/CAL]',
   ['defs/linear_algebra.tex'] = '[d/LNA]',
+  ['defs/optimization.tex'] = '[d/OPT]',
   ['defs/counting.tex'] = '[d/CNT]',
   ['defs/real_analysis.tex'] = '[d/REA]',
+  ['defs/machine_learning.tex'] = '[d/REA]',
   ['core/linear_algebra/'] = '[c/LNA]',
   ['core/counting.tex'] = '[c/CNT]',
   ['core/real_analysis.tex'] = '[c/REA]',
@@ -23,6 +25,8 @@ local topic = {
   ['lib/statistics/'] = '[l/STC]',
   ['lib/real_analysis/'] = '[l/REA]',
   ['lib/machine_learning/'] = '[l/ML]',
+  ['lib/neural_network/'] = '[l/NN]',
+  ['lib/calculus/'] = '[l/CAL]',
 }
 
 local pickers = require('telescope.pickers')
@@ -32,10 +36,6 @@ local actions_state = require('telescope.actions.state')
 local actions = require('telescope.actions')
 local sil = { silent = true }
 local M = {}
-
--- extra topics
-topic['defs/machine_learning'] = '[d/ML]'
-topic['lib/neural_network/'] = '[l/NN]'
 
 local marks = table.concat({
   'Algorithm',
