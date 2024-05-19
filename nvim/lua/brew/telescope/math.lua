@@ -20,7 +20,7 @@ local topic = {
   ['core/linear_algebra/'] = '[c/LNA]',
   ['core/counting.tex'] = '[c/CNT]',
   ['core/real_analysis.tex'] = '[c/REA]',
-  ['lib/linear_algebra.tex'] = '[l/LNA]',
+  ['lib/linear_algebra/'] = '[l/LNA]',
   ['lib/numerical_analysis/'] = '[l/NMA]',
   ['lib/statistics/'] = '[l/STC]',
   ['lib/real_analysis/'] = '[l/REA]',
@@ -181,14 +181,14 @@ end
 M.overriding_remaps = function()
   local k, v = vim.keymap.set, vim.cmd
   -- jump to next/prev mark
-  k('n', '[[', '^k?\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz', sil)
-  k('n', ']]', '^j/\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz', sil)
-  k('v', '[[', '^k?\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz', sil)
-  k('v', ']]', '^j/\\v^\\\\(' .. marks .. ')\\{<cr>f{lzz', sil)
-  k('n', '[{', '^k?\\v^\\\\subsection\\{<cr>f{lzz', sil)
-  k('n', ']}', '^j/\\v^\\\\subsection\\{<cr>f{lzz', sil)
-  k('v', '[{', '^k?\\v^\\\\subsection\\{<cr>f{lzz', sil)
-  k('v', ']}', '^j/\\v^\\\\subsection\\{<cr>f{lzz', sil)
+  k('n', '[[', '^k?\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
+  k('n', ']]', '^j/\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
+  k('v', '[[', '^k?\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
+  k('v', ']]', '^j/\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
+  k('n', '[{', '^k?\\v^\\\\subsection<cr>f{lzz', sil)
+  k('n', ']}', '^j/\\v^\\\\subsection<cr>f{lzz', sil)
+  k('v', '[{', '^k?\\v^\\\\subsection<cr>f{lzz', sil)
+  k('v', ']}', '^j/\\v^\\\\subsection<cr>f{lzz', sil)
 
   -- go to definition (looks for `\label{<cword>}`)
   k('n', 'gd', function()

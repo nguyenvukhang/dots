@@ -21,8 +21,9 @@ local base = function(opts)
   return opts
 end
 
+M.mylsp = function() lsp.mylsp.setup(base()) end
 M.matlab_ls = function()
-  require('lspconfig').matlab_ls.setup {
+  lsp.matlab_ls.setup {
     -- single_file_support = true,
   }
 end
@@ -135,5 +136,7 @@ M.java = function()
     init_options = { bundles = {} },
   })
 end
+
+M.base = base;
 
 return M
