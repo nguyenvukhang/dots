@@ -1,3 +1,4 @@
+--[[
 local base = require('brew.lsp').base
 
 vim.lsp.start(base {
@@ -9,3 +10,4 @@ vim.lsp.start(base {
     vim.fs.find({ 'Cargo.toml' }, { upward = true })[1]
   ),
 })
+--]]
