@@ -2,7 +2,6 @@
 require('brew.lazy').setup {
   'tpope/vim-surround',
   'wuelnerdotexe/vim-astro',
-  'hrsh7th/vim-vsnip',
   'nvim-treesitter/playground',
   'mfussenegger/nvim-jdtls',
   'vimplug/nvim-colorizer.lua',
@@ -13,8 +12,7 @@ require('brew.lazy').setup {
   {
     'hrsh7th/nvim-cmp',
     config = function()
-      local cmp = require('cmp')
-      local ct = require('cmp.types')
+      local cmp, ct = require('cmp'), require('cmp.types')
       cmp.setup {
         formatting = {
           expandable_indicator = false,
@@ -37,9 +35,7 @@ require('brew.lazy').setup {
           },
         }, { { name = 'buffer' }, { name = 'path' } }),
         preselect = cmp.PreselectMode.None,
-        snippet = {
-          expand = function(x) vim.fn['vsnip#anonymous'](x.body) end,
-        },
+        snippet = { expand = function(x) vim.snippet.expand(x.body) end },
       }
       -- Use buffer source for `/` search
       cmp.setup.cmdline('/', { sources = { { name = 'buffer' } } })
