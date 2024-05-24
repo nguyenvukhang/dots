@@ -157,6 +157,7 @@ require('brew.lazy').setup {
           yaml = { 'prettier' },
           tex = { 'latexindent' },
           rust = { 'rustfmt' },
+          swift = { 'swiftformat' },
         },
       }
     end,
