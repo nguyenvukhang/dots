@@ -1,5 +1,3 @@
-START_TMUX=false
-
 [ -z $FD_BIN ] && FD_BIN=fd
 alias fd="$FD_BIN --hidden"
 alias rg="rg --hidden"
@@ -18,6 +16,7 @@ has() {
 
 # special directories
 export UNI=$HOME/uni REPOS=$HOME/repos
+export DOTS=$HOME/dots
 
 # bye __pycache__
 export PYTHONPYCACHEPREFIX=/tmp/pycache
@@ -43,6 +42,7 @@ prompt_git() {
 		echo "%F{241}($B)"
 }
 
+PROMPT_ARROW='>'
 PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}${PROMPT_ARROW} %f.%F{red}${PROMPT_ARROW} %f)'
 
 export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='  ' --no-separator"
@@ -50,9 +50,7 @@ export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='
 # use neovim as manpager
 [ "$EDITOR" = "nvim" ] && export MANPAGER="nvim +Man!"
 
-PATH=/opt/homebrew/opt/jpeg/bin:$PATH
-PATH=/Applications/MATLAB_R2023b.app/bin:$PATH
-PATH=/opt/homebrew/opt/ruby/bin:$PATH
+PATH=/usr/local/go/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
 export PATH
 
@@ -487,3 +485,5 @@ alias pulse='open "/Applications/Pulse Secure.app/Contents/Plugins/JamUI/PulseTr
 
 # arch -arm64 brew install pkg-config cairo pango libpng jpeg giflib librsvg
 # brew uninstall --ignore-dependencies pkg-config cairo pango libpng jpeg giflib librsvg
+
+export N_PREFIX="$HOME/.local/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
