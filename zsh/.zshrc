@@ -420,70 +420,20 @@ tm() {
 	esac
 }
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/khang/.local/miniconda3/bin/conda' 'shell.zsh' 'hook' 2>/dev/null)"
-if [ $? -eq 0 ]; then
-	eval "$__conda_setup"
-else
-	if [ -f "/Users/khang/.local/miniconda3/etc/profile.d/conda.sh" ]; then
-		. "/Users/khang/.local/miniconda3/etc/profile.d/conda.sh"
-	else
-		export PATH="/Users/khang/.local/miniconda3/bin:$PATH"
-	fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-ca() {
-	case $1 in
-	-d) conda deactivate ;;
-	ml) conda activate $1 ;;
-	*)
-		echo 'Defaulting to: [ml]'
-		ca ml
-		;;
-	esac
-}
-
-# killing Goodnotes
-kgn() {
-	PID=$(ps x | grep Goodnotes | grep -v grep)
-	PID="${PID#"${PID%%[![:space:]]*}"}" # remove spaces from the front
-	PID=${PID%% *}                       # get contents before the first space
-	if [ $PID ]; then
-		echo "Killing $PID" && kill $PID
-	else
-		echo "No matching process found"
-	fi
-}
-
-# Mark and Jump directories
-
-j() {
-	RESULT=$(cat $ZSH_HARPOON | fzf --header='Harpoon!')
-	if [ $RESULT ]; then
-		cd ${RESULT/'~'/$HOME}
-	fi
-}
-
-path() {
-	local P=$PATH
-	while true; do
-		echo "* ${P%%:*}"
-		P=${P#*:}
-		[[ $P == *":"* ]] || break
-	done
-}
-
-# chinese pinyin!
-chpy() {
-	$HOMEBREW_PREFIX/lib/ruby/gems/3.3.0/bin/ch2py --tonemarks $@
-}
-
-alias pulse='open "/Applications/Pulse Secure.app/Contents/Plugins/JamUI/PulseTray.app"'
-
 # arch -arm64 brew install pkg-config cairo pango libpng jpeg giflib librsvg
 # brew uninstall --ignore-dependencies pkg-config cairo pango libpng jpeg giflib librsvg
 
 export N_PREFIX="$HOME/.local/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
+
+# >>> mamba initialize >>>
+# !! Contents within this block are managed by 'mamba init' !!
+export MAMBA_EXE='/home/khang/.local/bin/micromamba';
+export MAMBA_ROOT_PREFIX='/home/khang/.local/micromamba';
+__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__mamba_setup"
+else
+    alias micromamba="$MAMBA_EXE"  # Fallback on help from mamba activate
+fi
+unset __mamba_setup
+# <<< mamba initialize <<<
