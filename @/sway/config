@@ -15,15 +15,13 @@ set $term /home/khang/repos/alatty/linux-package/bin/alatty
 # on the original workspace that the command was run on.
 set $menu rofi -show run
 
-include /etc/sway/config-vars.d/*
-
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output * bg /usr/share/backgrounds/warty-final-ubuntu.png fill
 
-# run this in terminal to disable the primary monitor
-# swaymsg output eDP-1 disable
+# disable the primary monitor
+output eDP-1 disable
 
 ### Key bindings
 #
@@ -34,7 +32,7 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
     bindsym $mod+Shift+Return exec foot
 
     # Kill focused window
-    bindsym $mod+Shift+q kill
+    bindsym $mod+q kill
 
     # Start your launcher
     bindsym $mod+space exec $menu
@@ -108,7 +106,8 @@ bar {
     colors {
         statusline #ffffff
         background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
+        inactive_workspace #323232 #323232 #888888
+        focused_workspace #323232 #c4b5fd #333333
     }
 }
 
@@ -119,12 +118,6 @@ input * {
     repeat_rate 35
 }
 
-# for_window * titlebar hide
-# font pango:monospace 0
-# default_border none
-
-# default_border none
-# default_floating_border none
-font pango:monospace 0.01
-# titlebar_padding 1
-# titlebar_border_thickness 0
+default_border none
+default_floating_border none
+font pango:monospace 9
