@@ -61,10 +61,10 @@ output eDP-1 disable
     # bindsym $mod+$right focus right
 
     # Move the focused window with the same, but add Shift
-    # bindsym $mod+Shift+$left move left
-    # bindsym $mod+Shift+$down move down
-    # bindsym $mod+Shift+$up move up
-    # bindsym $mod+Shift+$right move right
+    bindsym $mod+Ctrl+Shift+$left move left
+    bindsym $mod+Ctrl+Shift+$down move down
+    bindsym $mod+Ctrl+Shift+$up move up
+    bindsym $mod+Ctrl+Shift+$right move right
 
 #
 # Workspaces:
@@ -115,7 +115,7 @@ client.focused #c4b5fd #c4b5fd #c4b5fd #c4b5fd #c4b5fd
 include /etc/sway/config.d/*
 
 input * {
-    repeat_delay 200
+    repeat_delay 220
     repeat_rate 35
 }
 
