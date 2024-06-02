@@ -51,6 +51,7 @@ export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='
 [ "$EDITOR" = "nvim" ] && export MANPAGER="nvim +Man!"
 
 PATH=/usr/local/go/bin:$PATH
+PATH=$HOME/.local/bin/luals/bin:$PATH
 PATH=$HOME/go/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
 export PATH
