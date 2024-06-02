@@ -51,6 +51,7 @@ export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='
 [ "$EDITOR" = "nvim" ] && export MANPAGER="nvim +Man!"
 
 PATH=/usr/local/go/bin:$PATH
+PATH=$HOME/go/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
 export PATH
 
@@ -420,20 +421,28 @@ tm() {
 	esac
 }
 
+if [[ $(cat /etc/os-release 2>/dev/null) == *'ubuntu'* ]]; then
+	open() {
+    nohup xdg-open $@ 2>/dev/null &!
+	}
+fi
+
 # arch -arm64 brew install pkg-config cairo pango libpng jpeg giflib librsvg
 # brew uninstall --ignore-dependencies pkg-config cairo pango libpng jpeg giflib librsvg
 
-export N_PREFIX="$HOME/.local/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
+export N_PREFIX="$HOME/.local/n"
+[[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin" # Added by n-install (see http://git.io/n-install-repo).
 
 # >>> mamba initialize >>>
 # !! Contents within this block are managed by 'mamba init' !!
-export MAMBA_EXE='/home/khang/.local/bin/micromamba';
-export MAMBA_ROOT_PREFIX='/home/khang/.local/micromamba';
-__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+export MAMBA_EXE='/home/khang/.local/bin/micromamba'
+export MAMBA_ROOT_PREFIX='/home/khang/.local/micromamba'
+__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2>/dev/null)"
 if [ $? -eq 0 ]; then
-    eval "$__mamba_setup"
+	eval "$__mamba_setup"
 else
-    alias micromamba="$MAMBA_EXE"  # Fallback on help from mamba activate
+	alias micromamba="$MAMBA_EXE" # Fallback on help from mamba activate
 fi
 unset __mamba_setup
 # <<< mamba initialize <<<
+alias ca='micromamba activate ml'
