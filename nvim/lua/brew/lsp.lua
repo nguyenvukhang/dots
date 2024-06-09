@@ -37,7 +37,7 @@ M.python = function()
     settings = {
       python = {
         analysis = {
-          typeCheckingMode = 'off',
+          -- typeCheckingMode = 'off',
           useLibraryCodeForTypes = true,
         },
       },
@@ -47,6 +47,7 @@ end
 M.swift = function()
   lsp.sourcekit.setup(base {
     filetypes = { 'objc', 'swift' },
+    root_dir = lsp.util.root_pattern('Package.swift', '.git'),
   })
 end
 
@@ -137,6 +138,6 @@ M.java = function()
   })
 end
 
-M.base = base;
+M.base = base
 
 return M

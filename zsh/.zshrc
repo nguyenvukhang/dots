@@ -428,6 +428,36 @@ if [[ $(cat /etc/os-release 2>/dev/null) == *'ubuntu'* ]]; then
 	}
 fi
 
+ca() {
+	case $1 in
+	-d) micromamba deactivate ;;
+	ml) micromamba activate $1 ;;
+	*)
+		echo 'Defaulting to: [ml]'
+		ca ml
+		;;
+	esac
+}
+
+# killing Goodnotes
+kgn() {
+	PID=$(ps x | grep Goodnotes | grep -v grep)
+	PID="${PID#"${PID%%[![:space:]]*}"}" # remove spaces from the front
+	PID=${PID%% *}                       # get contents before the first space
+	if [ $PID ]; then
+		echo "Killing $PID" && kill $PID
+	else
+		echo "No matching process found"
+	fi
+}
+
+# chinese pinyin!
+chpy() {
+	$HOMEBREW_PREFIX/lib/ruby/gems/3.3.0/bin/ch2py --tonemarks $@
+}
+
+alias pulse='open "/Applications/Pulse Secure.app/Contents/Plugins/JamUI/PulseTray.app"'
+
 # arch -arm64 brew install pkg-config cairo pango libpng jpeg giflib librsvg
 # brew uninstall --ignore-dependencies pkg-config cairo pango libpng jpeg giflib librsvg
 
