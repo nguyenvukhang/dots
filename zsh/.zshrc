@@ -424,7 +424,7 @@ tm() {
 
 if [[ $(cat /etc/os-release 2>/dev/null) == *'ubuntu'* ]]; then
 	open() {
-    nohup xdg-open $@ 2>/dev/null &!
+    nohup xdg-open $@ 2>/dev/null 2>&1 &!
 	}
 fi
 
