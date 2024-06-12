@@ -1,0 +1,18 @@
+set adjust-open best-fit
+set double-click-follow false
+
+unmap r
+unmap b
+unmap f
+
+map <Super-[> toggle_index
+map t toggle_index
+map [index] t toggle_index
+
+map <Space> toggle_index
+map [index] <Space> toggle_index
+
+map b jumplist backward
+map f jumplist forward
+map [ jumplist backward
+map ] jumplist forward
