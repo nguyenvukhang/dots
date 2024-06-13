@@ -18,20 +18,28 @@ has() {
 export UNI=$HOME/uni REPOS=$HOME/repos
 export DOTS=$HOME/dots
 
-# bye __pycache__
-export PYTHONPYCACHEPREFIX=/tmp/pycache
+export PYTHONPYCACHEPREFIX=/tmp/pycache        # bye __pycache__
+export LANGUAGE=en_US.UTF-8 LC_ALL=en_US.UTF-8 # locale standardize
+export LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8   # locale standardize
+export SHELL_SESSIONS_DISABLE=1                # remove ~/.zsh_sessions
 
-# locale standardize
-export LANGUAGE=en_US.UTF-8 LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
+export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='  ' --no-separator"
 
 export EDITOR=nvim
-export SHELL_SESSIONS_DISABLE=1 # remove ~/.zsh_sessions
+[ "$EDITOR" = "nvim" ] && export MANPAGER="nvim +Man!" # use neovim as manpager
+
+PATH=/usr/local/go/bin:$PATH
+PATH=$HOME/.local/bin/luals/bin:$PATH
+PATH=$HOME/go/bin:$PATH
+PATH=$HOME/.local/bin:$PATH
+export PATH
 
 unsetopt BEEP       # prevents beeps in general
 setopt IGNOREEOF    # prevents <C-d> from quitting the shell
 setopt GLOBDOTS     # include hidden dir tab complete
 setopt PROMPT_SUBST # enable scriptig in the prompt
 
+# ZSH shell prompt settings (+git)
 prompt_git() {
 	local B=$(git branch --show-current 2>/dev/null)
 	[ -z $B ] && return
@@ -41,21 +49,10 @@ prompt_git() {
 		echo "%F{241}(%F{246}${match[1]}%F{241}/$B)" ||
 		echo "%F{241}($B)"
 }
-
 PROMPT_ARROW='>'
 PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}${PROMPT_ARROW} %f.%F{red}${PROMPT_ARROW} %f)'
 
-export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='  ' --no-separator"
-
-# use neovim as manpager
-[ "$EDITOR" = "nvim" ] && export MANPAGER="nvim +Man!"
-
-PATH=/usr/local/go/bin:$PATH
-PATH=$HOME/.local/bin/luals/bin:$PATH
-PATH=$HOME/go/bin:$PATH
-PATH=$HOME/.local/bin:$PATH
-export PATH
-
+# {{{ Git shenanigans
 has git-nu && GIT=git-nu || GIT=git
 
 alias gs="$GIT status"
@@ -245,6 +242,7 @@ yeet() {
 		git push $@
 	fi
 }
+# }}}
 
 # alt way (derived):
 # 1. rm -rf a/submodule
@@ -318,7 +316,7 @@ __g() {
 	[[ ! $(command ls -Ap) = *"/"* ]] && return # end if no child dir
 	local FZF=(--height=7 +m --no-mouse --reverse --no-info
 		--prompt='  ' --header=${PWD/$HOME/'~'} --expect 'esc,left,enter,right')
-	[[ $($FD_BIN $FD_ARGS | fzf $FZF) =~ '^(.*)'$'\n''(.*)$' ]]
+	[[ $(fd $FD_ARGS | fzf $FZF) =~ '^(.*)'$'\n''(.*)$' ]]
 	case ${match[1]} in
 	left) cd .. && g ;;
 	enter) [ ${match[2]} ] && cd ${match[2]} ;;
@@ -390,54 +388,11 @@ jclear() {
 	mkdir -p $HOME/.cache/nvim/jdtls
 }
 
-# file opener
-view() {
-	local x=$($FD_BIN -tf -tl | fzf)
-	[ $x ] && open "$x"
-}
-
-tm() {
-	[ $TMUX ] && local a=switch || local a=a
-	case $1 in
-	ls) tmux $@ ;;
-	-d) tmux detach ;;
-	-k)
-		shift
-		[ $1 ] || set -- $(tmux ls | fzf -0 $FZF_OPTS)
-		[ $1 ] && tmux kill-session -t $1
-		;;
-	'')
-		local S=$(tmux ls 2>/dev/null)
-		if [ -z $S ]; then
-			tmux new -s 0
-		else
-			S=$(printf $S | fzf $FZF_OPTS)
-			[ $S ] && tmux $a -t ${S%%:*}
-		fi
-		;;
-	*)
-		tmux has -t $1 2>/dev/null || tmux new -ds $1
-		tmux $a -t $1
-		;;
-	esac
-}
-
 if [[ $(cat /etc/os-release 2>/dev/null) == *'ubuntu'* ]]; then
 	open() {
-    nohup xdg-open $@ 2>/dev/null 2>&1 &!
+		nohup xdg-open $@ 2>/dev/null 2>&1 &
 	}
 fi
-
-ca() {
-	case $1 in
-	-d) micromamba deactivate ;;
-	ml) micromamba activate $1 ;;
-	*)
-		echo 'Defaulting to: [ml]'
-		ca ml
-		;;
-	esac
-}
 
 # killing Goodnotes
 kgn() {
@@ -457,9 +412,6 @@ chpy() {
 }
 
 alias pulse='open "/Applications/Pulse Secure.app/Contents/Plugins/JamUI/PulseTray.app"'
-
-# arch -arm64 brew install pkg-config cairo pango libpng jpeg giflib librsvg
-# brew uninstall --ignore-dependencies pkg-config cairo pango libpng jpeg giflib librsvg
 
 export N_PREFIX="$HOME/.local/n"
 [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin" # Added by n-install (see http://git.io/n-install-repo).
