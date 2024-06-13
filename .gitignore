@@ -3,6 +3,7 @@ node_modules/
 .netrwhist
 .zsh_history
 .zsh_sessions
+.zcompdump
 .history
 .build/
 .swiftpm/
