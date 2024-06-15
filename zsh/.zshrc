@@ -133,14 +133,15 @@ gco() {
 # gcl https://github.com/neovim/neovim.git
 # gcl neovim/neovim
 gcl() {
-	local repo="${@: -1}" other_args=(${@:1:-1}) url
+	local repo="$1" url
+	shift
 	if [[ $repo =~ '^(https://.*/.*|git@.*:.*)/' ]]; then
-		url=$repo
+		url=$repo # url starts with 'https://' or 'git@' and has another '/' after.
 	elif [[ $repo =~ '^(.*)/(.*)$' ]]; then
-		url=git@github.com:${match[1]}/${match[2]}.git
+		url=git@github.com:${match[1]}/${match[2]}.git # default to github.
 	fi
 	[ -z $url ] && echo "Unable to parse requested repo." && return 1
-	git clone $other_args $url
+	git clone $url $@
 }
 
 # git clone --bare
@@ -152,34 +153,11 @@ gcb() {
 }
 
 # git logs
-_gl() {
-	local i=$(($LINES / 2 > 10 ? $LINES / 2 : 10))
-	while IFS= read -r line; do
-		line=${line//origin\//*}
-		line=${line/ weeks ago/w}
-		line=${line/ week ago/w}
-		line=${line/ days ago/d}
-		line=${line/ day ago/d}
-		line=${line/ hours ago/h}
-		line=${line/ hour ago/h}
-		line=${line/ minutes ago/m}
-		line=${line/ minute ago/m}
-		line=${line/ seconds ago/s}
-		line=${line/ second ago/s}
-		echo -n $line
-		printf "\e[0m\n" && let i--
-		[[ $i -eq 0 ]] && break
-	done < <(git -c 'color.ui=always' log --pretty=k --graph $@)
-	return 0
-}
-gl() {
-	_gl -n ${1-$LINES} $@
-}
-gla() {
-	_gl --all -n ${1-$LINES} $@
-}
+alias gl='git log -n 12 --graph --pretty=k'
+alias gla='git log -n 12 --graph --pretty=k --all'
 alias gll='git log --graph --pretty=k'
 alias glal='git log --graph --pretty=k --all'
+
 mongl() {
 	for j in {1..120}; do
 		clear && gla ${1-$LINES} && sleep 1
