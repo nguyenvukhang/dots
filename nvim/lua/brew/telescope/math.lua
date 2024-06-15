@@ -211,6 +211,7 @@ M.overriding_remaps = function()
 
   -- environment wrappers
   k('n', '<leader>be', 'cc\\begin{equation*}<CR>\\end{equation*}<esc>k')
+  k('n', '<leader>bi', 'cc\\begin{itemize}<CR>\\end{itemize}<esc>k')
   k('n', '<leader>ba', 'cc\\begin{align*}<CR>\\end{align*}<esc>k')
   k('n', '<leader>bc', 'cc\\begin{cases}<CR>\\end{cases}<esc>k')
   k('n', '<leader>bg', 'cc\\begin{gather*}<CR>\\end{gather*}<esc>k')
