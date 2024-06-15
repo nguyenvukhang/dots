@@ -1,16 +1,15 @@
-# cargo (rust)
-[ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
-
-# opam (OCaml)
-[[ ! -r $HOME/.opam/opam-init/init.zsh ]] || source $HOME/.opam/opam-init/init.zsh >/dev/null 2>/dev/null
-
+source_if_exists() {
+	[ -r $1 ] && source $1 >/dev/null 2>/dev/null
+}
 has() {
 	command -v $1 >/dev/null
 }
 
+source_if_exists $HOME/.cargo/env               # cargo (rust)
+source_if_exists $HOME/.opam/opam-init/init.zsh # opam (OCaml)
+
 # special directories
-export UNI=$HOME/uni REPOS=$HOME/repos
-export DOTS=$HOME/dots
+export UNI=$HOME/uni REPOS=$HOME/repos DOTS=$HOME/dots
 
 export PYTHONPYCACHEPREFIX=/tmp/pycache        # bye __pycache__
 export LANGUAGE=en_US.UTF-8 LC_ALL=en_US.UTF-8 # locale standardize
@@ -22,10 +21,14 @@ export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='
 export EDITOR=nvim
 [ "$EDITOR" = "nvim" ] && export MANPAGER="nvim +Man!" # use neovim as manpager
 
+export N_PREFIX="$HOME/.local/n"
+
+#  Setting $PATH
 PATH=/usr/local/go/bin:$PATH
 PATH=$HOME/.local/bin/luals/bin:$PATH
 PATH=$HOME/go/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
+[[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 export PATH
 
 unsetopt BEEP       # prevents beeps in general
@@ -45,6 +48,9 @@ prompt_git() {
 }
 PROMPT_ARROW='>'
 PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}${PROMPT_ARROW} %f.%F{red}${PROMPT_ARROW} %f)'
+
+bindkey "^[[3~" delete-char
+bindkey '^[[Z' reverse-menu-complete
 
 # {{{ Git shenanigans
 has git-nu && GIT=git-nu || GIT=git
@@ -84,9 +90,7 @@ gmb() {
 
 # git preview (quickly open files by number)
 gp() {
-	if [ ! -z $1 ]; then
-		$EDITOR $($GIT ls-files $@)
-	fi
+	[ $1 ] && $EDITOR $($GIT ls-files $@)
 }
 
 # if it's already checked out somewhere, go there, else:
@@ -143,20 +147,18 @@ gcl() {
 	[ -z $url ] && echo "Unable to parse requested repo." && return 1
 	git clone $url $@
 }
-
-# git clone --bare
-#
-# USAGE:
-# see gcl() USAGE
-gcb() {
-	gcl --bare $1
+gcb() { # git clone --bare
+	gcl $@ --bare
 }
 
 # git logs
-alias gl='git log -n 12 --graph --pretty=k'
-alias gla='git log -n 12 --graph --pretty=k --all'
-alias gll='git log --graph --pretty=k'
-alias glal='git log --graph --pretty=k --all'
+alias gll='git log --graph --pretty=k' glal='gll --all'
+gl() {
+	gll -n ${1-$(($LINES * 0.6 > 10 ? $LINES * 0.6 : 10))} $@
+}
+gla() {
+	gll --all -n ${1-$(($LINES * 0.6 > 10 ? $LINES * 0.6 : 10))} $@
+}
 
 mongl() {
 	for j in {1..120}; do
@@ -262,8 +264,35 @@ alias 2z="cd $DOTS/zsh"
 alias o="cd .." # out
 alias b="cd -"  # back
 
-alias fd="fd --hidden"
-alias rg="rg --hidden"
+# g for jump (requires fd and fzf)
+__g() {
+	[[ ! $(command ls -Ap) = *"/"* ]] && return # end if no child dir
+	local FZF=(--height=7 +m --no-mouse --reverse --no-info
+		--prompt='  ' --header=${PWD/$HOME/'~'} --expect 'esc,left,enter,right')
+	[[ $(fd $@ | fzf $FZF) =~ '^(.*)'$'\n''(.*)$' ]]
+	case ${match[1]} in
+	left) cd .. && g ;;
+	enter) [ ${match[2]} ] && cd ${match[2]} ;;
+	right) [ ${match[2]} ] && cd ${match[2]} && g ;;
+	esac
+}
+
+# g for jump (requires fd and fzf)
+g() {
+	__g -HI -d ${1-4} -t d -E '.git' -E 'node_modules' -E 'target'
+}
+
+# pdfgrep with nice setup
+pd() {
+	pdfgrep --with-filename --page-number $@ -- **/*.pdf
+}
+
+# run a command in a loop
+mon() {
+	while; do
+		sleep 1 && clear && echo "-> $PWD" && $@
+	done
+}
 
 if has exa; then
 	EXA_OPTS=(--group-directories-first -s Name -I '.DS_Store')
@@ -275,76 +304,29 @@ else
 	alias ls='ls -A --color=auto'
 	alias ll='ls -lAg --color=auto'
 fi
-
-# g for jump (requires fd and fzf)
-__g() {
-	[[ ! $(command ls -Ap) = *"/"* ]] && return # end if no child dir
-	local FZF=(--height=7 +m --no-mouse --reverse --no-info
-		--prompt='  ' --header=${PWD/$HOME/'~'} --expect 'esc,left,enter,right')
-	[[ $(fd $FD_ARGS | fzf $FZF) =~ '^(.*)'$'\n''(.*)$' ]]
-	case ${match[1]} in
-	left) cd .. && g ;;
-	enter) [ ${match[2]} ] && cd ${match[2]} ;;
-	right) [ ${match[2]} ] && cd ${match[2]} && g ;;
-	esac
-}
-
-# g for jump (requires fd and fzf)
-G() {
-	local FD_ARGS=(-HI -d ${1-4} -t d -E '.git')
-	__g
-}
-
-# g for jump (requires fd and fzf)
-g() {
-	local FD_ARGS=(-HI -d ${1-4} -t d -E '.git' -E 'node_modules' -E 'target')
-	__g
-}
-
-# pdfgrep with nice setup
-pd() {
-	pdfgrep --with-filename --page-number $@ -- **/*.pdf
-}
-
-# run a command in a loop
-mon() {
-	while; do
-		clear
-		echo "-> $PWD" && $@
-		sleep 1
-	done
-}
-
+alias fd='fd --hidden'
+alias rg='rg --hidden'
 alias ct="printf '\033[2J\033[3J\033[1;1H'" # clear terminal
 alias zr="exec $SHELL -l"                   # reloads shell
-alias ka="killall"
-alias py=python3
-alias si="$EDITOR .stow-local-ignore"
-alias mk="make"
-alias vim="$EDITOR"
-alias vi="$EDITOR"
+alias py='python3' mk='make'
+alias vim="$EDITOR" vi="$EDITOR"
 alias clangf="cp $DOTS/zsh/.clang-format ."
-alias jup="jupyter lab --app-dir $HOMEBREW_PREFIX/share/jupyter/lab"
-
-# binds
-bindkey "^[[3~" delete-char
-bindkey '^[[Z' reverse-menu-complete
+alias pulse='open "/Applications/Pulse Secure.app/Contents/Plugins/JamUI/PulseTray.app"'
+alias ca='micromamba activate ml'
 
 # t: run the obvious thing
 t() {
-	if [ -f run ]; then
-		bash run $@
-	elif [ -f build.sh ]; then
-		bash build.sh $@
-	elif [ -f Makefile ]; then
-		make $@
-	elif [ -f run.py ]; then
-		python3 run.py $@
-	elif [ -f Cargo.toml ]; then
-		cargo run $@
-	elif [ -f package.json ]; then
-		yarn dev
-	fi
+	_() {
+		[ -r $1 ] && shift && $@
+	}
+	_ Makefile make $@
+	_ run bash run $@
+	_ build.sh bash build.sh $@
+	_ run.py python3 run.py $@
+	_ Cargo.toml cargo run $@
+	_ package.json npm run dev $@
+	unset _
+	return 0
 }
 
 # clears jdtls (nvim) cache
@@ -376,11 +358,6 @@ chpy() {
 	$HOMEBREW_PREFIX/lib/ruby/gems/3.3.0/bin/ch2py --tonemarks $@
 }
 
-alias pulse='open "/Applications/Pulse Secure.app/Contents/Plugins/JamUI/PulseTray.app"'
-
-export N_PREFIX="$HOME/.local/n"
-[[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin" # Added by n-install (see http://git.io/n-install-repo).
-
 # >>> mamba initialize >>>
 # !! Contents within this block are managed by 'mamba init' !!
 export MAMBA_EXE='/home/khang/.local/bin/micromamba'
@@ -393,4 +370,3 @@ else
 fi
 unset __mamba_setup
 # <<< mamba initialize <<<
-alias ca='micromamba activate ml'
