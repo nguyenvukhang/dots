@@ -1,9 +1,3 @@
-[ -z $FD_BIN ] && FD_BIN=fd
-alias fd="$FD_BIN --hidden"
-alias rg="rg --hidden"
-
-# ////////////////////////////////////////////////////////////////////
-
 # cargo (rust)
 [ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
 
@@ -184,31 +178,22 @@ gl() {
 gla() {
 	_gl --all -n ${1-$LINES} $@
 }
-gll() {
-	git log --graph --pretty=k $@
-}
-glal() {
-	git log --graph --pretty=k --all $@
-}
+alias gll='git log --graph --pretty=k'
+alias glal='git log --graph --pretty=k --all'
 mongl() {
 	for j in {1..120}; do
 		clear && gla ${1-$LINES} && sleep 1
 	done
 }
-
 # git search log
 gsl() {
 	git log --all --pretty=s --color=always |
 		fzf --height=${1-7} --ansi -m --bind 'enter:select-all+accept'
 }
-
-# git search log (with filenames) and open in editor
-gslf() {
+gslf() { # git search log (with filenames) and open in editor
 	git log --all --pretty=s --compact-summary | $EDITOR -
 }
-
-# git commit
-gcm() {
+gcm() { # git commit
 	if [ $1 ]; then
 		git commit -m $1
 	else
@@ -216,8 +201,7 @@ gcm() {
 	fi
 }
 
-# git commit --amend
-gca() {
+gca() { # git commit --amend
 	if [ $1 ]; then
 		git commit --amend -m $1
 	else
@@ -241,6 +225,10 @@ yeet() {
 	else
 		git push $@
 	fi
+}
+
+2r() { # go to git root
+	cd $(git rev-parse --show-toplevel)
 }
 # }}}
 
@@ -296,9 +284,8 @@ alias 2z="cd $DOTS/zsh"
 alias o="cd .." # out
 alias b="cd -"  # back
 
-2r() { # go to git root
-	cd $(git rev-parse --show-toplevel)
-}
+alias fd="fd --hidden"
+alias rg="rg --hidden"
 
 if has exa; then
 	EXA_OPTS=(--group-directories-first -s Name -I '.DS_Store')
