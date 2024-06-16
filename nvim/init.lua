@@ -62,6 +62,7 @@ require('brew.lazy').setup {
       local nt = require('nvim-toggler')
       local inverses = {
         ['- [ ]'] = '- [x]',
+        ['shift'] = 'unshift',
         ['row'] = 'column',
         ['positive'] = 'negative',
         ['horizontal'] = 'vertical',
@@ -77,7 +78,11 @@ require('brew.lazy').setup {
         ['Yes'] = 'No',
         ['and'] = 'or',
       }
-      nt.setup { inverses = inverses, remove_default_keybinds = true }
+      nt.setup {
+        inverses = inverses,
+        remove_default_keybinds = true,
+        autoselect_longest_match = true,
+      }
       vim.keymap.set({ 'n', 'v' }, '<leader>i', nt.toggle, { silent = true })
     end,
   },
