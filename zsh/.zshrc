@@ -316,8 +316,9 @@ alias ca='micromamba activate ml'
 
 # t: run the obvious thing
 t() {
+	local DONE=0
 	_() {
-		[ -r $1 ] && shift && $@
+		[ $DONE = 0 ] && [ -r $1 ] && DONE=1 && shift && $@
 	}
 	_ Makefile make $@
 	_ run bash run $@
@@ -325,7 +326,7 @@ t() {
 	_ run.py python3 run.py $@
 	_ Cargo.toml cargo run $@
 	_ package.json npm run dev $@
-	unset _
+	unset _ DONE
 	return 0
 }
 
