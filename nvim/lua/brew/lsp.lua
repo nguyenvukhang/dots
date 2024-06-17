@@ -21,7 +21,6 @@ local base = function(opts)
   return opts
 end
 
-M.mylsp = function() lsp.mylsp.setup(base()) end
 M.matlab_ls = function()
   lsp.matlab_ls.setup {
     -- single_file_support = true,

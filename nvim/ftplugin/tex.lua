@@ -1,9 +1,7 @@
 --[[
-local base = require('brew.lsp').base
-
-vim.lsp.start(base {
+vim.lsp.start(require('brew.lsp').base {
   name = 'mylsp',
-  cmd = { '/Users/khang/repos/lsp/pygls/mylsp' },
+  cmd = { '/home/khang/repos/mylsp/target/debug/mylsp' },
   filetypes = { 'tex' },
   autostart = true,
   root_dir = vim.fs.dirname(
