@@ -110,6 +110,10 @@ gco() {
 		printf "\e[30m* \e[32m${1}\e[30m (Already checked out)\e[0m\n"
 		cd ${match[1]}
 		return
+	elif [[ $X =~ ^fatal:.*is\ already\ used\ by\ worktree\ at\ \'(.*)\'$ ]]; then
+		printf "\e[30m* \e[32m${1}\e[30m (Already checked out)\e[0m\n"
+		cd ${match[1]}
+		return
 	fi
 
 	local TARGET_DIR= TARGET_BRANCH= LINE_DIR= LINE_BRANCH=
