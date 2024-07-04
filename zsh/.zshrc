@@ -84,7 +84,7 @@ alias gsn="$GIT show --name-status"
 
 gmb() {
 	local PREV=$(git rev-parse HEAD)
-	git checkout $1
+	gco $1
 	git reset --hard $PREV
 }
 
