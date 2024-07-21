@@ -299,6 +299,7 @@ mon() {
 }
 
 if has eza; then
+  export EZA_COLORS='reset:Makefile=4;33:CMake*=4;33:*.lock=37:*ignore=37:.gitmodules=37'
 	EZA_OPTS=(--group-directories-first -s Name -I '.DS_Store')
 	alias ls="eza -a $EZA_OPTS"
 	alias lss="eza -a --tree -L 2 $EZA_OPTS"
