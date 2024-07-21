@@ -298,12 +298,12 @@ mon() {
 	done
 }
 
-if has exa; then
-	EXA_OPTS=(--group-directories-first -s Name -I '.DS_Store')
-	alias ls="exa -a $EXA_OPTS"
-	alias lss="exa -a --tree -L 2 $EXA_OPTS"
-	alias lsss="exa -a --tree -L 3 $EXA_OPTS"
-	alias ll="exa -lag $EXA_OPTS"
+if has eza; then
+	EZA_OPTS=(--group-directories-first -s Name -I '.DS_Store')
+	alias ls="eza -a $EZA_OPTS"
+	alias lss="eza -a --tree -L 2 $EZA_OPTS"
+	alias lsss="eza -a --tree -L 3 $EZA_OPTS"
+	alias ll="eza -lag $EZA_OPTS"
 else
 	alias ls='ls -A --color=auto'
 	alias ll='ls -lAg --color=auto'
