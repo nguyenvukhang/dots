@@ -156,13 +156,31 @@ gcb() { # git clone --bare
 }
 
 # git logs
-alias gll='git log --graph --pretty=k' glal='gll --all'
-gl() {
-	gll -n ${1-$(($LINES * 0.6 > 10 ? $LINES * 0.6 : 10))} $@
-}
-gla() {
-	gll --all -n ${1-$(($LINES * 0.6 > 10 ? $LINES * 0.6 : 10))} $@
-}
+if has git-ln; then
+	alias gll='git ln | less -RF' glal='git ln --all | less -RF'
+	gl() {
+		local n=${1-$(($LINES * 0.6 > 10 ? $LINES * 0.6 : 10))}
+		[ $1 ] && shift
+		git ln -n $n $@ | less -RF
+	}
+	gla() {
+		local n=${1-$(($LINES * 0.6 > 10 ? $LINES * 0.6 : 10))}
+		[ $1 ] && shift
+		git ln --all -n $n $@ | less -RF
+	}
+else
+	alias gll='git log --graph --pretty=k' glal='gll --all'
+	gl() {
+		local n=${1-$(($LINES * 0.6 > 10 ? $LINES * 0.6 : 10))}
+		[ $1 ] && shift
+		git log --graph --pretty=k -n $n $@
+	}
+	gla() {
+		local n=${1-$(($LINES * 0.6 > 10 ? $LINES * 0.6 : 10))}
+		[ $1 ] && shift
+		git log --graph --pretty=k --all -n $n $@
+	}
+fi
 
 mongl() {
 	for j in {1..120}; do
@@ -299,7 +317,7 @@ mon() {
 }
 
 if has eza; then
-  export EZA_COLORS='reset:Makefile=4;33:CMake*=4;33:*.lock=37:*ignore=37:.gitmodules=37'
+	export EZA_COLORS='reset:Makefile=4;33:CMake*=4;33:*.lock=37:*ignore=37:.gitmodules=37'
 	EZA_OPTS=(--group-directories-first -s Name -I '.DS_Store')
 	alias ls="eza -a $EZA_OPTS"
 	alias lss="eza -a --tree -L 2 $EZA_OPTS"
