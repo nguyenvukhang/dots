@@ -4,7 +4,7 @@ local conf = require('telescope.config').values
 local actions_state = require('telescope.actions.state')
 local actions = require('telescope.actions')
 local topic = require('brew.telescope.math.topics')
-local sil = { silent = true }
+local sil = { silent = true, buffer = true }
 local M = {}
 
 local marks = table.concat({
