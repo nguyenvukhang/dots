@@ -134,6 +134,7 @@ require('brew.lazy').setup {
   },
   {
     'stevearc/conform.nvim',
+    tag = "v7.1.0",
     config = function()
       local conform = require('conform')
       conform.setup {
