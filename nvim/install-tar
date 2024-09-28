@@ -1,0 +1,18 @@
+#!/bin/sh
+
+S=/Users/khang/Downloads/nvim-macos
+
+IDIR=/usr/local
+
+sudo rm -rf /usr/local/share/icons/hicolor/128x128/apps/nvim.png
+sudo rm -rf /usr/local/bin/nvim
+sudo rm -rf /usr/local/lib/nvim
+sudo rm -rf /usr/local/share/nvim
+sudo rm -rf /usr/local/share/man/man1/nvim.1
+
+sudo cp -r $S/bin/nvim /usr/local/bin/nvim
+sudo cp -r $S/lib/nvim /usr/local/lib/nvim
+sudo cp -r $S/share/nvim /usr/local/share/nvim
+sudo cp -r $S/share/man/man1/nvim.1 /usr/local/share/man/man1/nvim.1
+
+sudo xattr -c /usr/local/bin/nvim

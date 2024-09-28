@@ -28,7 +28,7 @@ M.matlab_ls = function()
 end
 M.clangd = function() lsp.clangd.setup(base { filetypes = { 'c', 'cpp' } }) end
 M.ocamllsp = function() lsp.ocamllsp.setup(base()) end
-M.typescript = function() lsp.tsserver.setup(base()) end
+M.typescript = function() lsp.ts_ls.setup(base()) end
 M.astro = function() lsp.astro.setup(base()) end
 M.python = function()
   lsp.pyright.setup(base {
