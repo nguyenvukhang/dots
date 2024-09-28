@@ -117,17 +117,9 @@ require('brew.lazy').setup {
   },
   {
     'iamcco/markdown-preview.nvim',
+    -- just run `:call mkdp#util#install()` at some point. wgt.
     build = function() vim.fn['mkdp#util#install']() end,
     config = function()
-      vim.g.mkdp_preview_options = {
-        ['katex'] = {
-          ['macros'] = {
-            ['\\R'] = '\\mathbb{R}',
-            ['\\C'] = '\\mathbb{C}',
-            ['\\norm'] = '\\left\\lVert{#1}\\right\\rVert',
-          },
-        },
-      }
       vim.cmd('cnoreabbrev MP MarkdownPreview')
       vim.cmd('cnoreabbrev MS MarkdownPreviewStop')
     end,

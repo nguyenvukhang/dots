@@ -15,9 +15,6 @@ local base = function(opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, x)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, x)
   end
-  opts.capabilities = require('cmp_nvim_lsp').default_capabilities(
-    vim.lsp.protocol.make_client_capabilities()
-  )
   return opts
 end
 

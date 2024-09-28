@@ -359,6 +359,7 @@ alias ct="printf '\033[2J\033[3J\033[1;1H'" # clear terminal
 alias zr="exec $SHELL -l"                   # reloads shell
 alias py='python3' mk='make'
 alias vim="$EDITOR" vi="$EDITOR"
+alias nv="~/.local/memes/bin/nvim"
 alias clangf="cp $DOTS/zsh/.clang-format ."
 alias pulse='open "/Applications/Pulse Secure.app/Contents/Plugins/JamUI/PulseTray.app"'
 alias ca='micromamba activate ml'
