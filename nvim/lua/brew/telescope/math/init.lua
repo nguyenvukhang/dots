@@ -185,6 +185,24 @@ M.overriding_remaps = function()
   k('n', '<leader>bc', 'cc\\begin{cases}<CR>\\end{cases}<esc>k')
   k('n', '<leader>bg', 'cc\\begin{gather*}<CR>\\end{gather*}<esc>k')
   k('n', '<leader>bp', 'o<CR>\\begin{proof}<CR>\\end{proof}<esc>k')
+  k('n', 'K', function()
+    --[[
+    local pos = vim.api.nvim_win_get_cursor(0)
+    local row, col = pos[1], pos[2]
+    local buf = vim.api.nvim_create_buf(false, true)
+    print("BUFFER", buf)
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, { 'This is a popup!' })
+    local opts = {
+      relative = 'cursor', -- Position relative to the cursor
+      row = -1, -- One line below the cursor
+      col = 0, -- Same column as the cursor
+      width = 20, -- Width of the popup window
+      height = 1, -- Height of the popup window
+      style = 'minimal', -- Minimal style (no borders, no title)
+    }
+    vim.api.nvim_open_win(buf, true, opts)
+    --]]
+  end)
 end
 
 M.remaps = function()
