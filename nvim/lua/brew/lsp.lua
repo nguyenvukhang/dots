@@ -15,9 +15,6 @@ local base = function(opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, x)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, x)
   end
-  opts.capabilities = require('cmp_nvim_lsp').default_capabilities(
-    vim.lsp.protocol.make_client_capabilities()
-  )
   return opts
 end
 
@@ -28,7 +25,7 @@ M.matlab_ls = function()
 end
 M.clangd = function() lsp.clangd.setup(base { filetypes = { 'c', 'cpp' } }) end
 M.ocamllsp = function() lsp.ocamllsp.setup(base()) end
-M.typescript = function() lsp.tsserver.setup(base()) end
+M.typescript = function() lsp.ts_ls.setup(base()) end
 M.astro = function() lsp.astro.setup(base()) end
 M.python = function()
   lsp.pyright.setup(base {

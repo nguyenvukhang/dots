@@ -31,7 +31,7 @@ v.grepprg = 'rg --vimgrep --hidden --smart-case'
 v.grepformat = '%f:%l:%c:%m,%f:%l:%m'
 v.termguicolors = true
 v.wildignore = '*/node_modules/*'
-v.mouse = nil
+v.mouse = ''
 v.cinoptions:append('L0') -- so that typing `std::` in cpp doesn't de-dent it halfway
 v.formatoptions = 'jcroql' -- see :h fo-table too
 v.colorcolumn = '81'

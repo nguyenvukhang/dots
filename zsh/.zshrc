@@ -161,24 +161,24 @@ if has git-ln; then
 	gl() {
 		local n=${1-$(($LINES < 16 ? 10 : $LINES * 0.6))}
 		[ $1 ] && shift
-		git ln -n $n $@
+		git ln -n "$n" $@
 	}
 	gla() {
 		local n=${1-$(($LINES < 16 ? 10 : $LINES * 0.6))}
 		[ $1 ] && shift
-		git ln -n $n --all $@
+		git ln -n "$n" --all $@
 	}
 else
 	alias gll='git log --graph --pretty=k' glal='gll --all'
 	gl() {
 		local n=${1-$(($LINES < 16 ? 10 : $LINES * 0.6))}
 		[ $1 ] && shift
-		git log --graph --pretty=k -n $n $@
+		git log --graph --pretty=k -n "$n" $@
 	}
 	gla() {
 		local n=${1-$(($LINES < 16 ? 10 : $LINES * 0.6))}
 		[ $1 ] && shift
-		git log --graph --pretty=k --all -n $n $@
+		git log --graph --pretty=k --all -n "$n" $@
 	}
 fi
 
@@ -333,6 +333,7 @@ alias ct="printf '\033[2J\033[3J\033[1;1H'" # clear terminal
 alias zr="exec $SHELL -l"                   # reloads shell
 alias py='python3' mk='make'
 alias vim="$EDITOR" vi="$EDITOR"
+alias nv="~/.local/memes/bin/nvim"
 alias clangf="cp $DOTS/zsh/.clang-format ."
 alias pulse='open "/Applications/Pulse Secure.app/Contents/Plugins/JamUI/PulseTray.app"'
 alias ca='micromamba activate ml'
