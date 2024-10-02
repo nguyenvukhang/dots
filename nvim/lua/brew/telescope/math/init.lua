@@ -132,9 +132,9 @@ local theorem_search = function(nav, insert, link_type, is_local)
 
   local command
   if is_local then
-    command = { 'minimath-lsp', vim.fn.expand('%') }
+    command = { 'minimath-rg', vim.fn.expand('%') }
   else
-    command = { 'minimath-lsp' }
+    command = { 'minimath-rg' }
   end
 
   pickers
@@ -155,6 +155,7 @@ M.overriding_remaps = function()
   k('n', ']]', '^j/\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
   k('v', '[[', '^k?\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
   k('v', ']]', '^j/\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
+  -- jump to next/prev subsection
   k('n', '[{', '^k?\\v^\\\\subsection<cr>f{lzz', sil)
   k('n', ']}', '^j/\\v^\\\\subsection<cr>f{lzz', sil)
   k('v', '[{', '^k?\\v^\\\\subsection<cr>f{lzz', sil)
@@ -174,8 +175,6 @@ M.overriding_remaps = function()
     if not sha then return end
     v("sil gr --no-column -ttex '\\\\(auto\\|h\\|name)ref\\{" .. sha .. "\\}'")
     v('silent bel copen')
-    -- v('silent! vim /\\v\\\\(autoref|href)\\{' .. cword .. '\\}/g **/*.tex')
-    -- v('silent! bel copen')
   end)
 
   -- environment wrappers
