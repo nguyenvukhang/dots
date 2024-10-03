@@ -83,8 +83,8 @@ local function gen_from_vimgrep_for_math_notes()
   return function(line) return setmetatable({ line }, mt_vimgrep_entry) end
 end
 
----@param link_type 'h' | 'a' type of ref (href/autoref)
-local handle_sha = function(insert, ref, left, right, link_type)
+---@param action string (length: 1) type of action
+local handle_sha = function(ref, left, right, action)
   local function inner(_, map)
     map('i', '<CR>', function(bufnr)
       local entry = actions_state.get_selected_entry()
@@ -92,13 +92,14 @@ local handle_sha = function(insert, ref, left, right, link_type)
       vim.fn.setreg('', sha)
       actions.close(bufnr)
 
-      if entry and insert then
-        local line = vim.api.nvim_set_current_line
-        if link_type == 'h' then
-          line(('%s\\href{%s}{%s}%s'):format(left, sha, ref, right))
-        elseif link_type == 'a' then
-          line(('%s\\autoref{%s}%s'):format(left, sha, right))
-        end
+      if not entry or action == 'y' then return end
+
+      local line = vim.api.nvim_set_current_line
+
+      if action == 'h' then
+        line(('%s\\href{%s}{%s}%s'):format(left, sha, ref, right))
+      elseif action == 'a' then
+        line(('%s\\autoref{%s}%s'):format(left, sha, right))
       end
     end)
     return true
@@ -114,20 +115,24 @@ local split_visual_line = function()
   return line:sub(l, r), line:sub(0, l - 1), line:sub(r + 1)
 end
 
+---Action
+-- 'h': surround the text with \href{...}{<text>}
+-- 'a': replace the text with \autoref{...}
+-- 'j': jump to the location
+-- 'y': yank the ID to clipboard
+
 -- completely custom search only for nguyenvukhang/math
----@param insert boolean whether or not to insert SHA at line
----@param link_type? 'h' | 'a' type of ref (href/autoref) leave as nil to jump.
----@param is_local? boolean whether or not to search locally
-local theorem_search = function(insert, link_type, is_local)
-  is_local = is_local or false
+---@param action 'a' | 'h' | 'j' | 'y' type of action
+local theorem_search = function(action)
   local opts = { entry_maker = gen_from_vimgrep_for_math_notes() }
 
+  -- leaving `attach_mappings` as nil will make it a jump.
   local attach_mappings = nil
   -- sends the SHA to the unnamed register. comment out this key to revert
   -- to the default behavior of navigating to the header.
-  if link_type ~= nil then
+  if action ~= nil and action ~= 'j' then
     local ref, left, right = split_visual_line()
-    attach_mappings = handle_sha(insert, ref, left, right, link_type)
+    attach_mappings = handle_sha(ref, left, right, action)
   end
 
   pickers
@@ -199,15 +204,15 @@ end
 
 M.remaps = function()
   local k = vim.keymap.set
+  ---@param action 'a' | 'h' | 'j' | 'y' type of action
+  local ts = function(action)
+    return function() theorem_search(action) end
+  end
   -- completely custom search only for nguyenvukhang/math
-  k('n', '<leader>pm', function() theorem_search(false) end)
-  k('n', '<leader>pM', function() theorem_search(false, nil, true) end)
-  k('n', '<leader>pt', function() theorem_search(false) end)
-  k('n', '<leader>pT', function() theorem_search(false, nil, true) end)
-  k('v', '<leader>h', function() theorem_search(true, 'h') end)
-  k('v', '<leader>H', function() theorem_search(true, 'h', true) end)
-  k('v', '<leader>a', function() theorem_search(true, 'a') end)
-  k('v', '<leader>A', function() theorem_search(true, 'a', true) end)
+  k('n', '<leader>pm', ts('j'))
+  k('n', '<leader>pt', ts('y'))
+  k('v', '<leader>h', ts('h'))
+  k('v', '<leader>a', ts('a'))
 end
 
 return M
