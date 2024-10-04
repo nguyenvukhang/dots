@@ -6,6 +6,8 @@ local actions = require('telescope.actions')
 local topics = require('brew.telescope.math.topics')
 local abbrev_cache = {}
 local sil = { silent = true, buffer = true }
+local set_line = vim.api.nvim_set_current_line
+
 local M = {}
 
 local marks = table.concat({
@@ -34,16 +36,12 @@ local find_command = { 'rg', '--vimgrep', '-ttex', find_query }
 
 -- Gets called only once to parse everything out for the vimgrep, after that looks up directly.
 local parse = function(t)
-  local i1 = t.value:find(':')
-  local i2 = t.value:find(':', i1 + 1)
-  local i3 = t.value:find(':', i2 + 1)
-  local filename = t.value:sub(1, i1 - 1)
-  local lnum = tonumber(t.value:sub(i1 + 1, i2 - 1))
-  local mark = t.value:sub(i2 + 1, i3 - 1)
-  local title = t.value:sub(i3 + 1, -9)
-  local text = mark .. ': ' .. title
-  t.filename, t.lnum, t.text = filename, lnum, text
-  return { filename, lnum, text }
+  local _, _, filename, lnum, text, sha = t.value:find('(.*):(%d+):(.*):(.*)')
+  t.filename = filename
+  t.lnum = tonumber(lnum)
+  t.text = text:gsub(':', ': ', 1)
+  t.sha = sha
+  return { t.filename, t.lnum, t.text }
 end
 
 ---@param filename string
@@ -51,7 +49,8 @@ end
 local get_abbrev = function(filename)
   local res = abbrev_cache[filename]
   if res ~= nil then return res end
-  local topic = filename:sub(1, filename:find('/', filename:find('/') + 1) - 1)
+  local _, _, topic = filename:find('(.*)/.*')
+  if topic == nil then return '[ • ]' end
   local abbrev = topics[topic] or '[ • ]'
   abbrev_cache[filename] = abbrev
   return abbrev
@@ -88,18 +87,14 @@ local handle_sha = function(ref, left, right, action)
   local function inner(_, map)
     map('i', '<CR>', function(bufnr)
       local entry = actions_state.get_selected_entry()
-      local _, _, sha = string.find(entry[1], '.*:(.*)')
-      vim.fn.setreg('', sha)
+      if not entry then return end
+      vim.fn.setreg('', entry.sha)
       actions.close(bufnr)
 
-      if not entry or action == 'y' then return end
-
-      local line = vim.api.nvim_set_current_line
-
       if action == 'h' then
-        line(('%s\\href{%s}{%s}%s'):format(left, sha, ref, right))
+        set_line(('%s\\href{%s}{%s}%s'):format(left, entry.sha, ref, right))
       elseif action == 'a' then
-        line(('%s\\autoref{%s}%s'):format(left, sha, right))
+        set_line(('%s\\autoref{%s}%s'):format(left, entry.sha, right))
       end
     end)
     return true
