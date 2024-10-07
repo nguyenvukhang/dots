@@ -134,7 +134,7 @@ require('brew.lazy').setup {
   },
   {
     'stevearc/conform.nvim',
-    tag = "v7.1.0",
+    tag = 'v7.1.0',
     config = function()
       local conform = require('conform')
       conform.setup {
@@ -152,6 +152,8 @@ require('brew.lazy').setup {
         formatters_by_ft = {
           java = { 'clang_format' },
           markdown = { 'prettier' },
+          css = { 'prettier' },
+          astro = { 'prettier' },
           c = { 'clang_format' },
           cpp = { 'clang_format' },
           bash = { 'shfmt' },
@@ -166,6 +168,7 @@ require('brew.lazy').setup {
           tex = { 'latexindent' },
           rust = { 'rustfmt' },
           swift = { 'swiftformat' },
+          typescriptreact = { 'prettier' },
         },
       }
     end,
