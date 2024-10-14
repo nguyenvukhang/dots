@@ -18,6 +18,7 @@ return {
   ['core/measure_theory'] = '[c/MST]',
   ['core/polynomials'] = '[c/POL]',
   ['core/real_analysis'] = '[c/REA]',
+  ['core/ring_theory'] = '[c/RING]',
   ['core/set_theory'] = '[c/SET]',
   ['core/topology'] = '[c/TOP]',
   ['lib/algorithm_design'] = '[l/ALD]',
