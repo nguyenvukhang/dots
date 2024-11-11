@@ -70,6 +70,19 @@ M.go = function()
   lsp.gopls.setup(base { root_dir = lsp.util.root_pattern('go.mod', '.git') })
 end
 
+-- TODO: don't open Location List with this. Ideally, send all diagnostics to
+-- global list, or just don't open any lists.
+M.zls = function()
+  lsp.zls.setup(base {
+    handlers = {
+      ['textDocument/publishDiagnostics'] = vim.lsp.with(
+        vim.lsp.diagnostic.on_publish_diagnostics,
+        { virtual_text = true }
+      ),
+    },
+  })
+end
+
 -- lua
 M.lua = function()
   pcall(function() require('neodev').setup {} end, 'neodev')

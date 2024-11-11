@@ -105,11 +105,12 @@ require('brew.lazy').setup {
       local lsp = require('brew.lsp')
       lsp.rust()
       lsp.clangd()
-      lsp.ocamllsp()
+      lsp.zls()
       lsp.lua()
       lsp.typescript()
       lsp.python()
-      lsp.swift()
+      -- lsp.swift()
+      -- lsp.ocamllsp()
       -- lsp.matlab_ls()
       -- lsp.astro()
       lsp.go()
@@ -151,6 +152,7 @@ require('brew.lazy').setup {
         async = true,
         formatters_by_ft = {
           java = { 'clang_format' },
+          zig = { 'zigfmt' },
           markdown = { 'prettier' },
           css = { 'prettier' },
           astro = { 'prettier' },
