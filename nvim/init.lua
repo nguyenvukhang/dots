@@ -72,6 +72,7 @@ require('brew.lazy').setup {
         ['sin'] = 'cos',
         ['begin'] = 'end',
         ['True'] = 'False',
+        ['TRUE'] = 'FALSE',
         ['cot'] = 'tan',
         ['sec'] = 'csc',
         ['good'] = 'bad',
