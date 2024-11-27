@@ -361,6 +361,8 @@ jclear() {
 	mkdir -p $HOME/.cache/nvim/jdtls
 }
 
+
+
 if [[ $(cat /etc/os-release 2>/dev/null) == *'ubuntu'* ]]; then
 	open() {
 		nohup xdg-open $@ 2>/dev/null 2>&1 &
@@ -382,6 +384,33 @@ kgn() {
 # chinese pinyin!
 chpy() {
 	$HOMEBREW_PREFIX/lib/ruby/gems/3.3.0/bin/ch2py --tonemarks $@
+}
+
+# tmux launcher
+tm() {
+	[ $TMUX ] && local a=switch || local a=a
+	case $1 in
+	ls) tmux $@ ;;
+	-d) tmux detach ;;
+	-k)
+		shift
+		[ $1 ] || set -- $(tmux ls | fzf -0 $FZF_OPTS)
+		[ $1 ] && tmux kill-session -t $1
+		;;
+	'')
+    local S=$(tmux ls -F '#{session_name}: #{session_windows} windows #{?session_attached,(attached),}' 2>/dev/null)
+		if [ -z $S ]; then
+			tmux new -s 0
+		else
+			S=$(printf $S | fzf $FZF_OPTS)
+			[ $S ] && tmux $a -t ${S%%:*}
+		fi
+		;;
+	*)
+		tmux has -t $1 2>/dev/null || tmux new -ds $1
+		tmux $a -t $1
+		;;
+	esac
 }
 
 # >>> mamba initialize >>>
