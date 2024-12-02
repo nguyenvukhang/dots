@@ -318,7 +318,7 @@ mon() {
 
 if has eza; then
   X="Makefile=4;33:CMake*=4;33:*.lock=37:*ignore=37:.gitmodules=37"
-  X+=":README*=33:LICENSE*=37:*.pdf=38;5;105:*.toml=4;33"
+  X+=":README*=33:LICENSE*=37:*.pdf=38;5;105:Cargo.toml=4;33"
 	export EZA_COLORS="reset:$X"
 	EZA_OPTS=(--group-directories-first -s Name -I '.DS_Store')
 	alias ls="eza -a $EZA_OPTS"
