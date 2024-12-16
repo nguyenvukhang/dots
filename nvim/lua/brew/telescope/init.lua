@@ -3,8 +3,6 @@ local search = require('brew.telescope.search')
 local k = vim.keymap.set
 local qf_and_jump = require('brew.telescope.qfnjump').qf_and_jump
 
-require('brew.telescope.math').remaps()
-
 k('n', '<c-p>', search.files.repo)
 k('n', '<c-f>', search.files.cwd)
 

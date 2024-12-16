@@ -3,7 +3,7 @@ local finders = require('telescope.finders')
 local conf = require('telescope.config').values
 local actions_state = require('telescope.actions.state')
 local actions = require('telescope.actions')
-local topics = require('brew.telescope.math.topics')
+local topics = require('minimath.topics')
 local abbrev_cache = {}
 local sil = { silent = true, buffer = true }
 local set_line = vim.api.nvim_set_current_line

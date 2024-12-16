@@ -210,6 +210,7 @@ require('brew.remaps')
 require('brew.commands')
 require('brew.statusline')
 require('brew.autocmd')
+require('minimath').remaps()
 
 vim.cmd('colo gruvbox8')
 -- require('gruvbox').load()
