@@ -20,7 +20,7 @@ local cfg = {
     vim.opt.formatoptions = vim.opt.formatoptions + 't'
     vim.bo.filetype = 'tex'
     dollarDollar()
-    require('brew.telescope.math').overriding_remaps()
+    require('minimath').overriding_remaps()
   end,
   markdown = function()
     vim.opt.textwidth = 80

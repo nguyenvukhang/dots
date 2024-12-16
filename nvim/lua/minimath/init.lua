@@ -3,29 +3,13 @@ local finders = require('telescope.finders')
 local conf = require('telescope.config').values
 local actions_state = require('telescope.actions.state')
 local actions = require('telescope.actions')
-local topics = require('minimath.topics')
-local abbrev_cache = {}
+local gen = require('minimath.generated')
 local sil = { silent = true, buffer = true }
 local set_line = vim.api.nvim_set_current_line
 
 local M = {}
 
-local marks = table.concat({
-  'Algorithm',
-  'Axiom',
-  'Corollary',
-  'Definition',
-  'Example',
-  'Exercise',
-  'Lemma',
-  'Notation',
-  'Principle',
-  'Problem',
-  'Proposition',
-  'Remark',
-  'Result',
-  'Theorem',
-}, '|')
+local marks = table.concat(gen.marks, '|')
 -- The regex [^}]
 -- matches anything but a closing } brace. This means we're looking for
 -- non-empty titles.
@@ -34,7 +18,22 @@ local find_query = '^\\\\(' .. marks .. ')\\{[^}].*\\\\label'
 local find_command = { 'rg', '--vimgrep', '-ttex', find_query }
 --]]
 
--- Gets called only once to parse everything out for the vimgrep, after that looks up directly.
+local _abbrev_cache = {}
+
+---@param filename string
+---@return string abbreviation
+local get_abbrev = function(filename)
+  local res = _abbrev_cache[filename]
+  if res ~= nil then return res end
+  local _, _, topic = filename:find('(.*)/.*')
+  if topic == nil then return '[ • ]' end
+  local abbrev = gen.topics[topic] or '[ • ]'
+  _abbrev_cache[filename] = abbrev
+  return abbrev
+end
+
+-- Gets called only once to parse everything out for the vimgrep,
+-- after that looks up directly.
 local parse = function(t)
   local _, _, filename, lnum, text, sha = t.value:find('(.*):(%d+):(.*):(.*)')
   t.filename = filename
@@ -42,18 +41,6 @@ local parse = function(t)
   t.text = text:gsub(':', ': ', 1)
   t.sha = sha
   return { t.filename, t.lnum, t.text }
-end
-
----@param filename string
----@return string
-local get_abbrev = function(filename)
-  local res = abbrev_cache[filename]
-  if res ~= nil then return res end
-  local _, _, topic = filename:find('(.*)/.*')
-  if topic == nil then return '[ • ]' end
-  local abbrev = topics[topic] or '[ • ]'
-  abbrev_cache[filename] = abbrev
-  return abbrev
 end
 
 local function gen_from_vimgrep_for_math_notes()
@@ -141,13 +128,21 @@ local theorem_search = function(action)
     :find()
 end
 
+-- Get path to the root of the git workspace
+local git_workspace_root = function()
+  local stdout = vim.fn.systemlist('git rev-parse --show-toplevel')
+  return vim.v.shell_error == 0 and stdout[1] or vim.notify('not in a git repo')
+end
+
 M.overriding_remaps = function()
   local k, v = vim.keymap.set, vim.cmd
+
   -- jump to next/prev mark
   k('n', '[[', '^k?\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
   k('n', ']]', '^j/\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
   k('v', '[[', '^k?\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
   k('v', ']]', '^j/\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
+
   -- jump to next/prev subsection
   k('n', '[{', '^k?\\v^\\\\subsection<cr>f{lzz', sil)
   k('n', ']}', '^j/\\v^\\\\subsection<cr>f{lzz', sil)
@@ -156,18 +151,22 @@ M.overriding_remaps = function()
 
   -- go to definition (looks for `\label{<cword>}`)
   k('n', 'gd', function()
-    local cword = vim.fn.expand('<cword>')
-    if not cword then return end
-    v('sil lgr --no-column -ttex \\label\\\\{' .. cword .. '}$')
-    -- v('silent! lgr /\\v\\\\label\\{' .. cword .. '\\}$/ **/*.tex')
+    local cword, root = vim.fn.expand('<cword>'), git_workspace_root()
+    if not cword or not root then return end
+    v('silent lgrep --no-column -ttex \\label\\\\{' .. cword .. '} ' .. root)
   end)
 
   -- go to references (looks for `\autoref{<cword>}` or `\href{<cword>}`)
   k('n', 'gr', function()
-    local sha = vim.fn.expand('<cword>')
-    if not sha then return end
-    v("sil gr --no-column -ttex '\\\\(auto\\|h\\|name)ref\\{" .. sha .. "\\}'")
-    v('silent bel copen')
+    local cword, root = vim.fn.expand('<cword>'), git_workspace_root()
+    if not cword or not root then return end
+    local ref = "'\\\\(auto\\|h\\|name)ref\\{" .. cword .. "\\}'"
+    v('silent grep -ttex ' .. ref .. ' ' .. root)
+    if #vim.fn.getqflist() == 0 then
+      vim.notify('No references found.')
+    else
+      v('silent bel copen')
+    end
   end)
 
   -- environment wrappers

@@ -1,4 +1,4 @@
-return {
+local topics = {
   ['defs/notation'] = '[d/*]',
   ['defs/set_theory'] = '[d/SET]',
   ['defs/ring_theory'] = '[d/RING]',
@@ -40,3 +40,21 @@ return {
   ['lib/uatfo'] = '[l/UAT]',
   ['lib/errors'] = '[l/ERR]',
 }
+local marks = {
+  'Definition',
+  'Proposition',
+  'Theorem',
+  'Lemma',
+  'Remark',
+  'Result',
+  'Corollary',
+  'Algorithm',
+  'Example',
+  'Notation',
+  'Problem',
+  'Exercise',
+  'Axiom',
+  'Principle',
+  'Scope',
+}
+return { topics = topics, marks = marks }
