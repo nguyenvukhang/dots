@@ -5,18 +5,8 @@ local actions_state = require('telescope.actions.state')
 local actions = require('telescope.actions')
 local gen = require('minimath.generated')
 local sil = { silent = true, buffer = true }
-local set_line = vim.api.nvim_set_current_line
 
 local M = {}
-
-local marks = table.concat(gen.marks, '|')
--- The regex [^}]
--- matches anything but a closing } brace. This means we're looking for
--- non-empty titles.
---[[
-local find_query = '^\\\\(' .. marks .. ')\\{[^}].*\\\\label'
-local find_command = { 'rg', '--vimgrep', '-ttex', find_query }
---]]
 
 local _abbrev_cache = {}
 
@@ -69,61 +59,70 @@ local function gen_from_vimgrep_for_math_notes()
   return function(line) return setmetatable({ line }, mt_vimgrep_entry) end
 end
 
----@param action string (length: 1) type of action
-local handle_sha = function(ref, left, right, action)
+-- Requires that the user is currently in visual mode (not visual line mode),
+-- and also assume that the visual mode spans only one line.
+--
+-- Splits the line into `left`, `selection`, and `right`.
+local split_visual_line = function()
+  local r, l, line = vim.fn.col('.'), vim.fn.col('v'), vim.fn.getline('.')
+  if r < l then
+    l, r = r, l
+  end
+  return line:sub(0, l - 1), line:sub(l, r), line:sub(r + 1)
+end
+
+---@param action 'a' | 'h' | 'j' | 'y' type of action
+local get_attach_mappings_callback = function(action)
+  if action == 'j' then return nil end
+  if action == 'y' then return function(sha) vim.fn.setreg('', sha) end end
+  if action == 'h' then
+    local left, selection, right = split_visual_line()
+    return function(sha)
+      local x = ('%s\\href{%s}{%s}%s'):format(left, sha, selection, right)
+      vim.api.nvim_set_current_line(x)
+    end
+  end
+  if action == 'a' then
+    local left, _, right = split_visual_line()
+    return function(sha)
+      local x = ('%s\\autoref{%s}%s'):format(left, sha, right)
+      vim.api.nvim_set_current_line(x)
+    end
+  end
+end
+
+local get_attach_mappings = function(action)
+  local callback = get_attach_mappings_callback(action)
+  if callback == nil then return end
   local function inner(_, map)
     map('i', '<CR>', function(bufnr)
       local entry = actions_state.get_selected_entry()
       if not entry then return end
-      vim.fn.setreg('', entry.sha)
       actions.close(bufnr)
-
-      if action == 'h' then
-        set_line(('%s\\href{%s}{%s}%s'):format(left, entry.sha, ref, right))
-      elseif action == 'a' then
-        set_line(('%s\\autoref{%s}%s'):format(left, entry.sha, right))
-      end
+      callback(entry.sha)
     end)
     return true
   end
   return inner
 end
 
-local split_visual_line = function()
-  local r, l, line = vim.fn.col('.'), vim.fn.col('v'), vim.fn.getline('.')
-  if r < l then
-    l, r = r, l
-  end
-  return line:sub(l, r), line:sub(0, l - 1), line:sub(r + 1)
-end
-
----Action
--- 'h': surround the text with \href{...}{<text>}
--- 'a': replace the text with \autoref{...}
+-- [Action]
 -- 'j': jump to the location
--- 'y': yank the ID to clipboard
+-- 'y': yank the SHA to clipboard
+-- 'h': replace `<text>` with `\href{<sha>}{<text>}`
+-- 'a': replace `<text>` with `\autoref{<sha>}`
 
 -- completely custom search only for nguyenvukhang/math
 ---@param action 'a' | 'h' | 'j' | 'y' type of action
 local theorem_search = function(action)
   local opts = { entry_maker = gen_from_vimgrep_for_math_notes() }
-
-  -- leaving `attach_mappings` as nil will make it a jump.
-  local attach_mappings = nil
-  -- sends the SHA to the unnamed register. comment out this key to revert
-  -- to the default behavior of navigating to the header.
-  if action ~= nil and action ~= 'j' then
-    local ref, left, right = split_visual_line()
-    attach_mappings = handle_sha(ref, left, right, action)
-  end
-
   pickers
     .new(opts, {
       prompt_title = 'Theorems',
       finder = finders.new_oneshot_job({ 'minimath-rg' }, opts),
       previewer = conf.grep_previewer(opts),
       sorter = conf.generic_sorter(opts),
-      attach_mappings = attach_mappings,
+      attach_mappings = get_attach_mappings(action),
     })
     :find()
 end
@@ -138,6 +137,7 @@ M.overriding_remaps = function()
   local k, v = vim.keymap.set, vim.cmd
 
   -- jump to next/prev mark
+  local marks = table.concat(gen.marks, '|')
   k('n', '[[', '^k?\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
   k('n', ']]', '^j/\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
   k('v', '[[', '^k?\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
@@ -197,16 +197,10 @@ M.overriding_remaps = function()
 end
 
 M.remaps = function()
-  local k = vim.keymap.set
-  ---@param action 'a' | 'h' | 'j' | 'y' type of action
-  local ts = function(action)
-    return function() theorem_search(action) end
-  end
-  -- completely custom search only for nguyenvukhang/math
-  k('n', '<leader>pm', ts('j'))
-  k('n', '<leader>pt', ts('y'))
-  k('v', '<leader>h', ts('h'))
-  k('v', '<leader>a', ts('a'))
+  vim.keymap.set('n', '<leader>pm', function() theorem_search('j') end)
+  vim.keymap.set('n', '<leader>pt', function() theorem_search('y') end)
+  vim.keymap.set('v', '<leader>h', function() theorem_search('h') end)
+  vim.keymap.set('v', '<leader>a', function() theorem_search('a') end)
 end
 
 return M
