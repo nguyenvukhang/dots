@@ -15,8 +15,9 @@ local _abbrev_cache = {}
 local get_abbrev = function(filename)
   local res = _abbrev_cache[filename]
   if res ~= nil then return res end
-  local _, _, topic = filename:find('(.*)/.*')
-  if topic == nil then return '[ • ]' end
+  local components = vim.fn.split(filename, "/")
+  if #components < 3 then return '[ • ]' end
+  local topic = components[#components-2] .. "/" .. components[#components-1]
   local abbrev = gen.topics[topic] or '[ • ]'
   _abbrev_cache[filename] = abbrev
   return abbrev
@@ -28,7 +29,7 @@ local parse = function(t)
   local _, _, filename, lnum, text, sha = t.value:find('(.*):(%d+):(.*):(.*)')
   t.filename = filename
   t.lnum = tonumber(lnum)
-  t.text = text:gsub(':', ': ', 1)
+  t.text = text
   t.sha = sha
   return { t.filename, t.lnum, t.text }
 end
