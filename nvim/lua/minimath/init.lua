@@ -37,7 +37,7 @@ end
 local function gen_from_vimgrep_for_math_notes()
   local mt_vimgrep_entry
   local execute_keys = {
-    path = function(t) return t.filename end,
+    path = function(t) return vim.fn.fnamemodify(t.filename, ":p") end,
     filename = function(t) return parse(t)[1], true end,
     lnum = function(t) return parse(t)[2], true end,
     text = function(t) return parse(t)[3], true end,
