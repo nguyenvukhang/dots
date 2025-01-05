@@ -159,24 +159,24 @@ gcb() { # git clone --bare
 if has git-ln; then
 	alias gll='git ln' glal='git ln --all'
 	gl() {
-		local n=${1-$(($LINES < 16 ? 10 : $LINES * 0.6))}
+		local n=${1-$(($LINES < 16 ? 10 : $LINES * 3 / 5))}
 		[ $1 ] && shift
 		git ln -n $n $@
 	}
 	gla() {
-		local n=${1-$(($LINES < 16 ? 10 : $LINES * 0.6))}
+		local n=${1-$(($LINES < 16 ? 10 : $LINES * 3 / 5))}
 		[ $1 ] && shift
 		git ln -n $n --all $@
 	}
 else
 	alias gll='git log --graph --pretty=k' glal='gll --all'
 	gl() {
-		local n=${1-$(($LINES < 16 ? 10 : $LINES * 0.6))}
+		local n=${1-$(($LINES < 16 ? 10 : $LINES * 3 / 5))}
 		[ $1 ] && shift
 		git log --graph --pretty=k -n $n $@
 	}
 	gla() {
-		local n=${1-$(($LINES < 16 ? 10 : $LINES * 0.6))}
+		local n=${1-$(($LINES < 16 ? 10 : $LINES * 3 / 5))}
 		[ $1 ] && shift
 		git log --graph --pretty=k --all -n $n $@
 	}
