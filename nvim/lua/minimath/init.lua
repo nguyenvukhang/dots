@@ -15,9 +15,11 @@ local _abbrev_cache = {}
 local get_abbrev = function(filename)
   local res = _abbrev_cache[filename]
   if res ~= nil then return res end
-  local components = vim.fn.split(filename, "/")
+  local components = vim.fn.split(filename, '/')
   if #components < 3 then return '[ • ]' end
-  local topic = components[#components-2] .. "/" .. components[#components-1]
+  local topic = components[#components - 2]
+    .. '/'
+    .. components[#components - 1]
   local abbrev = gen.topics[topic] or '[ • ]'
   _abbrev_cache[filename] = abbrev
   return abbrev
@@ -37,7 +39,7 @@ end
 local function gen_from_vimgrep_for_math_notes()
   local mt_vimgrep_entry
   local execute_keys = {
-    path = function(t) return vim.fn.fnamemodify(t.filename, ":p") end,
+    path = function(t) return vim.fn.fnamemodify(t.filename, ':p') end,
     filename = function(t) return parse(t)[1], true end,
     lnum = function(t) return parse(t)[2], true end,
     text = function(t) return parse(t)[3], true end,
@@ -75,7 +77,9 @@ end
 ---@param action 'a' | 'h' | 'j' | 'y' type of action
 local get_attach_mappings_callback = function(action)
   if action == 'j' then return nil end
-  if action == 'y' then return function(sha) vim.fn.setreg('', sha) end end
+  if action == 'y' then
+    return function(sha) vim.fn.setreg('', sha) end
+  end
   if action == 'h' then
     local left, selection, right = split_visual_line()
     return function(sha)
@@ -202,6 +206,10 @@ M.remaps = function()
   vim.keymap.set('n', '<leader>pt', function() theorem_search('y') end)
   vim.keymap.set('v', '<leader>h', function() theorem_search('h') end)
   vim.keymap.set('v', '<leader>a', function() theorem_search('a') end)
+  vim.keymap.set('n', '<leader>v', function()
+    local line = vim.api.nvim_get_current_line()
+    vim.api.nvim_set_current_line(line .. ' % ' .. os.date('%Y-%m-%d'))
+  end)
 end
 
 return M
