@@ -28,7 +28,7 @@ local get_abbrev = function(filename)
   local topic = components[#components - 1]
   local topic_abbrev = gen.topics[topic] or '???'
 
-  local abbrev = '[' .. category_abbrev .. '/' .. topic_abbrev .. ']'
+  local abbrev = category_abbrev .. '/' .. topic_abbrev .. ' |'
 
   -- Add to cache
   _abbrev_cache[filename] = abbrev

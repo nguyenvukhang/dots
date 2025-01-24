@@ -200,6 +200,8 @@ require('brew.lazy').setup {
         },
         ensure_installed = languages,
       }
+      -- local p_config = require("nvim-treesitter.parsers").get_parser_config()
+      -- print(vim.inspect(require("nvim-treesitter.parsers")))
     end,
   },
 }
