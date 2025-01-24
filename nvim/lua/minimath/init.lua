@@ -28,7 +28,7 @@ local get_abbrev = function(filename)
   local topic = components[#components - 1]
   local topic_abbrev = gen.topics[topic] or '???'
 
-  local abbrev = category_abbrev .. '/' .. topic_abbrev .. ' |'
+  local abbrev = category_abbrev .. '/' .. topic_abbrev
 
   -- Add to cache
   _abbrev_cache[filename] = abbrev
@@ -56,7 +56,7 @@ local function gen_from_vimgrep_for_math_notes()
     ordinal = function(t) return t.text end,
   }
   mt_vimgrep_entry = {
-    display = function(e) return get_abbrev(e.filename) .. ' ' .. e.text end,
+    display = function(e) return get_abbrev(e.filename) .. ' | ' .. e.text end,
     __index = function(t, k)
       local raw = rawget(mt_vimgrep_entry, k)
       if raw then return raw end
