@@ -219,7 +219,7 @@ hi Search guifg=#fabd2f guibg=#282828 guisp=NONE gui=reverse
 hi SignColumn guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
 hi Special guifg=#fe8019 guibg=NONE guisp=NONE
 hi SpecialChar guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
-hi SpecialComment guifg=#fb4934 guibg=NONE guisp=NONE gui=NONE
+hi SpecialComment guifg=#a89984 guibg=NONE guisp=NONE
 hi SpecialKey guifg=#928374 guibg=NONE guisp=NONE gui=NONE
 hi SpellBad guifg=#fb4934 guibg=NONE guisp=#fb4934 gui=undercurl
 hi SpellCap guifg=#83a598 guibg=NONE guisp=#83a598 gui=undercurl
