@@ -1,12 +1,24 @@
+# Khang's zshrc
+#
+# zsh docs on conditionals: https://zsh.sourceforge.io/Doc/Release/Conditional-Expressions.html
+
+# Sources $1 if it exists.
 source_if_exists() {
-  [ -r $1 ] && source $1 >/dev/null 2>/dev/null
+  if [ -r $1 ]; then # `-r` flag checks if file exists and is readable by current process.
+    source $1 >/dev/null 2>/dev/null
+  fi
 }
-has() {
+
+# Checks if a binary exists, while printing nothing to stdout.
+binary_exists() {
   command -v $1 >/dev/null
 }
 
 source_if_exists $HOME/.cargo/env               # cargo (rust)
 source_if_exists $HOME/.opam/opam-init/init.zsh # opam (OCaml)
+
+#  ///////////////////////////////////////////////////////////////////
+# // Shell environment variables.
 
 # special directories
 export UNI=$HOME/uni REPOS=$HOME/repos DOTS=$HOME/dots
@@ -32,29 +44,37 @@ PATH=$HOMEBREW_PREFIX/opt/ruby/bin:$PATH
 [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 export PATH
 
+#  ///////////////////////////////////////////////////////////////////
+# // Shell options.
+
 unsetopt BEEP       # prevents beeps in general
 setopt IGNOREEOF    # prevents <C-d> from quitting the shell
 setopt GLOBDOTS     # include hidden dir tab complete
 setopt PROMPT_SUBST # enable scriptig in the prompt
 
-# ZSH shell prompt settings (+git)
+bindkey "^[[3~" delete-char          # binds delete to delete
+bindkey '^[[Z' reverse-menu-complete # binds shift+tab to going to the previous tab-complete suggestion
+
+#  ///////////////////////////////////////////////////////////////////
+# // Shell prompt.
+
+# Show a pretty summary of the git situation in CWD.
 prompt_git() {
   local B=$(git branch --show-current 2>/dev/null)
   [ -z $B ] && return
   local R=$(git config --get remote.origin.url 2>/dev/null)
-  R=${R##*/}
-  [[ $R =~ '^(.*)\.git$' ]] &&
+  [[ ${R##*/} =~ '^(.*)\.git$' ]] &&
     echo "%F{241}(%F{246}${match[1]}%F{241}/$B)" ||
     echo "%F{241}($B)"
 }
 PROMPT_ARROW='>'
 PROMPT=$'%F{blue}%~ $(prompt_git)%f\n%(?.%F{green}${PROMPT_ARROW} %f.%F{red}${PROMPT_ARROW} %f)'
 
-bindkey "^[[3~" delete-char
-bindkey '^[[Z' reverse-menu-complete
+#  ///////////////////////////////////////////////////////////////////
+# // Git aliases.
 
 # {{{ Git shenanigans
-has git-nu && GIT=git-nu || GIT=git
+binary_exists git-nu && GIT=git-nu || GIT=git
 
 alias gs="$GIT status"
 alias ga="$GIT add"
@@ -83,6 +103,7 @@ alias gsn="$GIT show --name-status"
 # to get remote branches on bare checkouts, run
 # git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
 
+# "git move branch". Moves $1 to HEAD.
 gmb() {
   local PREV=$(git rev-parse HEAD)
   gco $1
@@ -135,29 +156,8 @@ gco() {
   echo $X
 }
 
-# git clone
-#
-# USAGE:
-# gcl git@github.com:neovim/neovim.git
-# gcl https://github.com/neovim/neovim.git
-# gcl neovim/neovim
-gcl() {
-  local repo="$1" url
-  shift
-  if [[ $repo =~ '^(https://.*/.*|git@.*:.*)/' ]]; then
-    url=$repo # url starts with 'https://' or 'git@' and has another '/' after.
-  elif [[ $repo =~ '^(.*)/(.*)$' ]]; then
-    url=git@github.com:${match[1]}/${match[2]}.git # default to github.
-  fi
-  [ -z $url ] && echo "Unable to parse requested repo." && return 1
-  git clone $url $@
-}
-gcb() { # git clone --bare
-  gcl $@ --bare
-}
-
 # git logs
-if has git-ln; then
+if binary_exists git-ln; then
   alias gll='git ln' glal='git ln --all'
   gl() {
     local n=${1-$(($LINES < 16 ? 10 : $LINES * 3 / 5))}
@@ -188,14 +188,13 @@ mongl() {
     clear && gla ${1-$LINES} && sleep 1
   done
 }
+
 # git search log
 gsl() {
-  git log --all --pretty=s --color=always |
+  git log --all --pretty='%C(yellow)%h %Creset%s' --color=always |
     fzf --height=${1-7} --ansi -m --bind 'enter:select-all+accept'
 }
-gslf() { # git search log (with filenames) and open in editor
-  git log --all --pretty=s --compact-summary | $EDITOR -
-}
+
 gcm() { # git commit
   if [ $1 ]; then
     git commit -m $1
@@ -305,19 +304,7 @@ g() {
   __g -HI -d ${1-4} -t d -E '.git' -E 'node_modules' -E 'target'
 }
 
-# pdfgrep with nice setup
-pd() {
-  pdfgrep --with-filename --page-number $@ -- **/*.pdf
-}
-
-# run a command in a loop
-mon() {
-  while; do
-    sleep 1 && clear && echo "-> $PWD" && $@
-  done
-}
-
-if has eza; then
+if binary_exists eza; then
   X="Makefile=4;33:CMake*=4;33:*.lock=37:*ignore=37:.gitmodules=37"
   X+=":README*=33:LICENSE*=37:*.pdf=38;5;105:Cargo.toml=4;33"
   export EZA_COLORS="reset:$X"
@@ -330,6 +317,7 @@ else
   alias ls='ls -A --color=auto'
   alias ll='ls -lAg --color=auto'
 fi
+
 alias fd='fd --hidden'
 alias rg='rg --hidden'
 alias ct="printf '\033[2J\033[3J\033[1;1H'" # clear terminal
@@ -340,7 +328,7 @@ alias clangf="cp $DOTS/zsh/.clang-format ."
 alias pulse='open "/Applications/Pulse Secure.app/Contents/Plugins/JamUI/PulseTray.app"'
 alias ca='micromamba activate ml'
 
-# t: run the obvious thing
+# Run the obvious thing
 t() {
   local DONE=0
   _() {
@@ -356,7 +344,7 @@ t() {
   return 0
 }
 
-# clears jdtls (nvim) cache
+# Clears jdtls (nvim's Java LSP) cache.
 jclear() {
   rm -rf $HOME/.cache/nvim/jdtls
   mkdir -p $HOME/.cache/nvim/jdtls
@@ -378,11 +366,6 @@ kgn() {
   else
     echo "No matching process found"
   fi
-}
-
-# chinese pinyin!
-chpy() {
-  $HOMEBREW_PREFIX/lib/ruby/gems/3.3.0/bin/ch2py --tonemarks $@
 }
 
 # tmux launcher
