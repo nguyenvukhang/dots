@@ -33,15 +33,12 @@ export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='
 export EDITOR=nvim
 [ "$EDITOR" = "nvim" ] && export MANPAGER="nvim +Man!" # use neovim as manpager
 
-export N_PREFIX="$HOME/.local/n"
-
 #  Setting $PATH
 PATH=/usr/local/go/bin:$PATH
-PATH=$HOME/.local/bin/luals/bin:$PATH
 PATH=$HOME/go/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
 PATH=$HOMEBREW_PREFIX/opt/ruby/bin:$PATH
-[[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
+PATH=$HOME/.jenv/bin:$PATH
 export PATH
 
 #  ///////////////////////////////////////////////////////////////////
@@ -350,6 +347,11 @@ jclear() {
   mkdir -p $HOME/.cache/nvim/jdtls
 }
 
+# List all Java installations.
+jlist() {
+  /usr/libexec/java_home -V
+}
+
 if [[ $(cat /etc/os-release 2>/dev/null) == *'ubuntu'* ]]; then
   open() {
     nohup xdg-open $@ 2>/dev/null 2>&1 &
@@ -407,3 +409,10 @@ else
 fi
 unset __mamba_setup
 # <<< mamba initialize <<<
+
+JENV=false
+if [ "$JENV" = true ] && binary_exists jenv; then
+  # jenv initialize
+  eval "$(jenv init -)"
+  jenv enable-plugin export
+fi
