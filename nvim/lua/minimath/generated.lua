@@ -25,6 +25,7 @@ local topics = {
   ['statistics_examples'] = 'STX',
   ['topology'] = 'TOP',
   ['fourier_analysis'] = 'FRA',
+  ['representation_theory'] = 'RPT',
   ['uatfo'] = 'UAT',
   ['errors'] = 'ERR',
 }
