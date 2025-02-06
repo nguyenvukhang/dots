@@ -9,6 +9,7 @@ local topics = {
   ['linear_algebra'] = 'LNA',
   ['linear_algebra2'] = 'LA2',
   ['calculus'] = 'CAL',
+  ['analysis'] = 'ALS',
   ['plenary'] = 'PLN',
   ['algorithm_design'] = 'ALD',
   ['complex_analysis'] = 'CPA',
