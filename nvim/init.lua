@@ -51,12 +51,6 @@ require('brew.lazy').setup {
     config = function() require('brew.telescope') end,
   },
   {
-    'harpoon',
-    dev = true,
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function() require('harpoon').my_setup() end,
-  },
-  {
     'nguyenvukhang/nvim-toggler',
     config = function()
       local nt = require('nvim-toggler')
@@ -213,6 +207,7 @@ require('brew.commands')
 require('brew.statusline')
 require('brew.autocmd')
 require('minimath').remaps()
+require('harpoon').my_setup()
 
 vim.cmd('colo gruvbox8')
 -- require('gruvbox').load()
