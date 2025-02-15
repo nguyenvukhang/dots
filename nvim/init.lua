@@ -143,6 +143,9 @@ require('brew.lazy').setup {
             return { prepend_args = { '-l', '-g=/dev/null' } }
             -- return { prepend_args = { '-l' } }
           end,
+          tex_fmt = function()
+            return { command = 'tex-fmt', args = { '--stdin' } }
+          end,
         },
         async = true,
         formatters_by_ft = {
@@ -162,7 +165,7 @@ require('brew.lazy').setup {
           javascript = { 'prettier' },
           json = { 'prettier' },
           yaml = { 'prettier' },
-          tex = { 'latexindent' },
+          tex = { 'tex_fmt' },
           rust = { 'rustfmt' },
           swift = { 'swiftformat' },
           typescriptreact = { 'prettier' },
