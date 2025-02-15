@@ -165,7 +165,7 @@ require('brew.lazy').setup {
           javascript = { 'prettier' },
           json = { 'prettier' },
           yaml = { 'prettier' },
-          tex = { 'tex_fmt' },
+          tex = { 'latexindent' },
           rust = { 'rustfmt' },
           swift = { 'swiftformat' },
           typescriptreact = { 'prettier' },
