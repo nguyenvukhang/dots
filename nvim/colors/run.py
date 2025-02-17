@@ -3,14 +3,14 @@ def read_file(f):
         return f.read()
 
 
-def write_file(f, buffer):
+def write_file(f, buffer: str):
     with open(f, "w") as f:
         f.write(buffer)
 
 
-def load(buf, prev, next):
-    for k, v in prev.items():
-        buf = buf.replace(v, next[k])
+def load(buf: str, h0: dict[str, str], h1: dict[str, str]):
+    for k, v in h0.items():
+        buf = buf.replace(v, h1[k])
     return buf
 
 
@@ -57,6 +57,26 @@ material = {
     "gray": "#928374",
 }
 
+nord = {
+    "bg0": "#282828",
+    "bg1": "#3c3836",
+    "bg2": "#504945",
+    "bg3": "#665c54",
+    "bg4": "#7c6f64",
+    "fg0": "#fbf1c7",
+    "fg1": "#ebdbb2",
+    "fg2": "#d5c4a1",
+    "fg3": "#bdae93",
+    "fg4": "#a89984",
+    "red": "#BF616A",
+    "green": "#A3BE8C",
+    "yellow": "#EBCB8B",
+    "blue": "#81A1C1",
+    "purple": "#B48EAD",
+    "aqua": "#8FBCBB",
+    "orange": "#D08770",
+    "gray": "#928374",
+}
 
 SRC_FILE = "gruvbox.vim.bak"
 OUT_FILE = "gruvbox8.vim"

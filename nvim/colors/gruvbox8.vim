@@ -169,7 +169,6 @@ hi GruvboxOrangeUnderline guifg=#e78a4e guisp=#e78a4e guibg=NONE gui=underline
 " standard colors
 
 hi Normal guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
-hi NormalFloat guifg=#ebdbb2 guibg=#504945 guisp=NONE gui=NONE
 hi Boolean guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
 hi Character guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
 hi ColorColumn guifg=NONE guibg=#3c3836 guisp=NONE gui=NONE
