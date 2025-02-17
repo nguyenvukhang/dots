@@ -218,7 +218,9 @@ M.remaps = function()
   vim.keymap.set('v', '<leader>a', function() theorem_search('a') end)
   vim.keymap.set('n', '<leader>v', function()
     local line = vim.api.nvim_get_current_line()
-    vim.api.nvim_set_current_line(line .. ' % ' .. os.date('%Y-%m-%d'))
+    local parts = vim.split(line, ' %% ')
+    print(vim.inspect(parts))
+    vim.api.nvim_set_current_line(parts[1] .. ' % ' .. os.date('%Y-%m-%d'))
   end)
 end
 
