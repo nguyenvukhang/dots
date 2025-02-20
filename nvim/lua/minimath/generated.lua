@@ -12,6 +12,7 @@ local topics = {
   ['analysis'] = 'ALS',
   ['plenary'] = 'PLN',
   ['algorithm_design'] = 'ALD',
+  ['parallel_programming'] = 'PAR',
   ['complex_analysis'] = 'CPA',
   ['functional_analysis'] = 'FNA',
   ['machine_learning'] = 'ML*',
