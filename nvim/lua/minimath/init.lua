@@ -133,6 +133,8 @@ local theorem_search = function(action)
   local opts = { entry_maker = gen_from_vimgrep_for_math_notes() }
   pickers
     .new(opts, {
+      layout_strategy = 'vertical',
+      layout_config = { width = function(_, c, _) return math.min(c, 88) end },
       prompt_title = 'Theorems',
       finder = finders.new_oneshot_job({ 'minimath-rg' }, opts),
       previewer = conf.grep_previewer(opts),
