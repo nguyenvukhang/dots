@@ -30,6 +30,7 @@ local topics = {
   ['representation_theory'] = 'RPT',
   ['uatfo'] = 'UAT',
   ['errors'] = 'ERR',
+  ['exercise'] = 'EXR',
 }
 local marks = {
   'Definition',
