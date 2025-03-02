@@ -109,7 +109,7 @@ gmb() {
 
 # git preview (quickly open files by number)
 gp() {
-  [ $1 ] && $EDITOR $($GIT ls-files $@)
+  [ $1 ] && $EDITOR $($GIT ls-files --deduplicate $@)
 }
 
 # if it's already checked out somewhere, go there, else:
@@ -162,7 +162,7 @@ if binary_exists git-ln; then
     git ln -n $n $@
   }
   gla() {
-    local n=${1-$(($LINES < 16 ? 10 : $LINES * 3 / 5))}
+    local n=${1-$(($LINES < 16 ? 10 : $LINES * 1 / 2))}
     [ $1 ] && shift
     git ln -n $n --all $@
   }
