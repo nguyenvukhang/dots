@@ -96,6 +96,7 @@ alias gt="$GIT tag"
 alias giti="$EDITOR .gitignore"
 alias gitm="$EDITOR .gitmodules"
 alias gsn="$GIT show --name-status"
+alias yoink='git fetch --all'
 
 # to get remote branches on bare checkouts, run
 # git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
