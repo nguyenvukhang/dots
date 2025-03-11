@@ -41,7 +41,10 @@ c.autocmd { pattern = '*.asm', callback = cfg.asm }
 c.autocmd { pattern = { '*.swift' }, callback = cfg.swift }
 c.autocmd { pattern = { '*.mdx', '*.md' }, callback = cfg.markdown }
 c.autocmd { pattern = { '*.java' }, callback = cfg.java }
-c.autocmd { pattern = { '*.cpp', '*.h', '*.c', '*.cc' }, callback = cfg.cpp }
+c.autocmd {
+  pattern = { '*.cpp', '*.hpp', '*.h', '*.c', '*.cc' },
+  callback = cfg.cpp,
+}
 c.autocmd { pattern = { '*.astro' }, callback = cfg.astro }
 
 -- automatically redistribute splits when vim is resized

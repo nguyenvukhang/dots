@@ -156,17 +156,15 @@ gco() {
 
 # git logs
 if binary_exists git-ln; then
+  # unbounded lists
   alias gll='git ln' glal='git ln --all'
-  gl() {
-    local n=${1-$(($LINES < 16 ? 10 : $LINES * 3 / 5))}
-    [ $1 ] && shift
-    git ln -n $n $@
-  }
-  gla() {
-    local n=${1-$(($LINES < 16 ? 10 : $LINES * 1 / 2))}
-    [ $1 ] && shift
-    git ln -n $n --all $@
-  }
+  alias gl='git ln --bound'
+  alias gla='git ln --all --bound'
+  # gl() { # for the memories
+  #   local n=${1-$(($LINES < 16 ? 10 : $LINES * 3 / 5))}
+  #   [ $1 ] && shift
+  #   git ln -n $n $@
+  # }
 else
   alias gll='git log --graph --pretty=k' glal='gll --all'
   gl() {
