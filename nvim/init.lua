@@ -161,6 +161,7 @@ require('brew.lazy').setup {
           zsh = { 'shfmt' },
           lua = { 'stylua' },
           python = { 'black' },
+          go = { 'gofmt' },
           ocaml = { 'ocamlformat' },
           javascript = { 'prettier' },
           json = { 'prettier' },

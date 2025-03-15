@@ -37,8 +37,8 @@ export EDITOR=nvim
 PATH=/usr/local/go/bin:$PATH
 PATH=$HOME/go/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
-PATH=$HOMEBREW_PREFIX/opt/ruby/bin:$PATH
 PATH=$HOME/.jenv/bin:$PATH
+PATH=$HOMEBREW_PREFIX/Cellar/ruby/3.4.2/bin:$PATH
 export PATH
 
 #  ///////////////////////////////////////////////////////////////////
