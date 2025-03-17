@@ -25,6 +25,7 @@
 	implicitIdentity = true
 	amWorkDir = true
 	rmHints = true
+  skippedCherryPicks = false
 	; personal falses
 	detachedHead = false
 	statusHints = false

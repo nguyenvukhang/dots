@@ -38,7 +38,7 @@ PATH=/usr/local/go/bin:$PATH
 PATH=$HOME/go/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
 PATH=$HOME/.jenv/bin:$PATH
-PATH=$HOMEBREW_PREFIX/Cellar/ruby/3.4.2/bin:$PATH
+PATH=$HOMEBREW_PREFIX/opt/ruby/bin:$PATH
 export PATH
 
 #  ///////////////////////////////////////////////////////////////////
@@ -415,3 +415,9 @@ if [ "$JENV" = true ] && binary_exists jenv; then
   eval "$(jenv init -)"
   jenv enable-plugin export
 fi
+
+# RBENV=false
+# if [ "$RBENV" = true ] && binary_exists rbenv; then
+#   # rbenv initialize
+#   eval "$(rbenv init - --no-rehash zsh)"
+# fi
