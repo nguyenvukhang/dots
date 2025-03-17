@@ -9,26 +9,60 @@ OPTS = get_options()
 CLOCK_FG = as_rgb(color_as_int(OPTS.color3))
 DATE_FG = as_rgb(color_as_int(OPTS.color5))
 BDAE_FG = as_rgb(color_as_int(OPTS.color2))
-NOW = lambda: datetime.datetime.now()
+NWEEKS_FG = as_rgb(color_as_int(OPTS.color8))
+NOW = datetime.datetime.now
+
+
+WEEKS = (
+    "W1",
+    "W2",
+    "W3",
+    "W4",
+    "W5",
+    "W6",
+    "RC",
+    "W7",
+    "W8",
+    "W9",
+    "W10",
+    "W11",
+    "W12",
+    "W13",
+    "RD",
+    "E1",
+    "E2",
+)
 
 BIRTHDAY_FILE = "/Users/khang/dots/personal/birthdays/db.json"
 BIRTHDAYS = {}
 if os.path.isfile(BIRTHDAY_FILE):
     with open(BIRTHDAY_FILE, "r") as f:
         BIRTHDAYS = json.load(f)
-# FIXED_TAB_NAMES = ("editor", "server")
-FIXED_TAB_NAMES = []
 
 
-def birthday():
-    p = BIRTHDAYS.get(NOW().strftime("%d-%b"), None)
+def birthday(now):
+    p = BIRTHDAYS.get(now.strftime("%d-%b"), None)
     return "↑" if not p else f"{', '.join(p)} lvl up ↑"
 
 
-def _draw_left_status(dd, sc, tab, before, mtl, index, is_last):
-    if 1 <= index and index <= len(FIXED_TAB_NAMES):
-        tab = tab._replace(title=FIXED_TAB_NAMES[index - 1])
+def week(now: datetime.datetime):
+    w0 = datetime.datetime(2024, 1, 8)
+    idx = int((now - w0).days / 7) - 1
+    return WEEKS[idx] if idx < len(WEEKS) else "<>"
 
+
+def right_cells(now: datetime.datetime):
+    b = birthday(now)
+    w = week(now)
+    return [
+        (NWEEKS_FG, w + "  "),
+        (BDAE_FG, b if b else "x"),
+        (DATE_FG, now.strftime("  %d %b ")),
+        (CLOCK_FG, now.strftime(" %H:%M  ")),
+    ]
+
+
+def _draw_left_status(dd, sc, tab, before, mtl, index, is_last):
     if dd.leading_spaces:
         sc.draw(" " * dd.leading_spaces)
 
@@ -44,7 +78,6 @@ def _draw_left_status(dd, sc, tab, before, mtl, index, is_last):
     if trailing_spaces:
         sc.draw(" " * trailing_spaces)
 
-    sc.cursor.bold = sc.cursor.italic = False
     sc.cursor.fg = 0
     if not is_last:
         sc.cursor.bg = as_rgb(color_as_int(dd.inactive_bg))
@@ -57,20 +90,15 @@ def _draw_right_status(sc, is_last):
     if not is_last:
         return sc.cursor.x
 
-    now, b = NOW(), birthday()
-    cells = [
-        (BDAE_FG, 0, b if b else "x"),
-        (DATE_FG, 0, now.strftime("  %d %b ")),
-        (CLOCK_FG, 0, now.strftime(" %H:%M  ")),
-    ]
+    cells = right_cells(NOW())
 
-    rlen = sum([len(c) for _, _, c in cells])
+    rlen = sum([len(c) for _, c in cells])
     s = sc.columns - sc.cursor.x - rlen
     if s > 0:
         sc.draw(" " * s)
 
-    for fg, bg, cell in cells:
-        sc.cursor.fg, sc.cursor.bg = fg, bg
+    for fg, cell in cells:
+        sc.cursor.fg, sc.cursor.bg = fg, 0
         sc.draw(cell)
     sc.cursor.fg, sc.cursor.bg = 0, 0
     sc.cursor.x = max(sc.cursor.x, sc.columns - rlen)
