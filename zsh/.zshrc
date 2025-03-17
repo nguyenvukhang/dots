@@ -39,6 +39,7 @@ PATH=$HOME/go/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
 PATH=$HOME/.jenv/bin:$PATH
 PATH=$HOMEBREW_PREFIX/opt/ruby/bin:$PATH
+PATH=$HOMEBREW_PREFIX/bin:$PATH
 export PATH
 
 #  ///////////////////////////////////////////////////////////////////
