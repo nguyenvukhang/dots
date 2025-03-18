@@ -40,6 +40,7 @@ PATH=$HOME/.local/bin:$PATH
 PATH=$HOME/.jenv/bin:$PATH
 PATH=$HOMEBREW_PREFIX/opt/ruby/bin:$PATH
 PATH=$HOMEBREW_PREFIX/bin:$PATH
+PATH=$HOME/.zvm/bin:$PATH
 export PATH
 
 #  ///////////////////////////////////////////////////////////////////

@@ -13,7 +13,26 @@ font-style-bold-italic = false
 
 adjust-cell-width = -5%
 
+# Various behavior
+
+copy-on-select = clipboard
+shell-integration = none
+macos-option-as-alt = false
+macos-titlebar-style = transparent
+window-inherit-working-directory = true
+
+# Various visuals
+
+unfocused-split-opacity = 0.9
+split-divider-color = #8A9948
+background-opacity = 0.95
+background-blur = 6
+title = Ghostty
+window-padding-x = 6,6
+window-padding-y = 0,6
+
 # Gruvbox
+
 palette = 0=#282828
 palette = 1=#ea6962
 palette = 2=#a9b665
@@ -62,3 +81,10 @@ keybind = super+shift+l=next_tab
 
 keybind = ctrl+space>h=move_tab:-1
 keybind = ctrl+space>l=move_tab:1
+keybind = ctrl+space>x=close_window
+
+keybind = super+equal=increase_font_size:0.5
+keybind = super+minus=decrease_font_size:0.5
+keybind = super+0=reset_font_size
+
+keybind = super+q=quit
