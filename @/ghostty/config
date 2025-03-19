@@ -19,7 +19,6 @@ copy-on-select = clipboard
 shell-integration = none
 macos-option-as-alt = false
 macos-titlebar-style = transparent
-window-inherit-working-directory = true
 
 # Various visuals
 
@@ -67,7 +66,7 @@ selection-foreground = #928374
 
 keybind = clear
 keybind = super+v=paste_from_clipboard
-keybind = super+r=reload_config
+keybind = super+shift+r=reload_config
 keybind = super+d=new_split:right
 keybind = super+shift+d=new_split:down
 keybind = super+n=new_tab
