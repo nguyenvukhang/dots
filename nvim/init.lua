@@ -57,6 +57,7 @@ require('brew.lazy').setup {
       local inverses = {
         ['- [ ]'] = '- [x]',
         ['shift'] = 'unshift',
+        ['next'] = 'prev',
         ['odd'] = 'even',
         ['forall'] = 'exists',
         ['row'] = 'column',
