@@ -30,8 +30,12 @@ export SHELL_SESSIONS_DISABLE=1                # remove ~/.zsh_sessions
 
 export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='  ' --no-separator"
 
-export EDITOR=nvim
-[ "$EDITOR" = "nvim" ] && export MANPAGER="nvim +Man!" # use neovim as manpager
+if binary_exists nvim; then
+  export EDITOR=nvim
+  export MANPAGER="nvim +Man!" # use neovim as manpager
+else
+  export MANPAGER=
+fi
 
 #  Setting $PATH
 PATH=/usr/local/go/bin:$PATH
