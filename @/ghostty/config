@@ -10,6 +10,8 @@ font-synthetic-style   = false
 font-style-bold        = false
 font-style-italic      = false
 font-style-bold-italic = false
+# working-directory = inherit
+window-inherit-working-directory = true
 
 adjust-cell-width = -5%
 

@@ -109,9 +109,7 @@ alias yoink='git fetch --all'
 
 # "git move branch". Moves $1 to HEAD.
 gmb() {
-  local PREV=$(git rev-parse HEAD)
-  gco $1
-  git reset --hard $PREV
+  git branch -f $1 HEAD && git checkout $1
 }
 
 # git preview (quickly open files by number)
@@ -217,6 +215,18 @@ gca() { # git commit --amend
 # squashes all changes into the target commit
 grv() {
   git reset --soft $1 && git commit --amend --no-edit
+}
+
+# git join
+gj() {
+  local BRANCH=$(git rev-parse --abbrev-ref HEAD)
+  if [ $BRANCH = 'HEAD' ]; then
+    printf "\e[33mCurrently in detached head. Aborting.\e[m\n"
+    return
+  fi
+  git checkout $1
+  git merge --no-ff $BRANCH
+  git branch -f $BRANCH HEAD
 }
 
 yeet() {
