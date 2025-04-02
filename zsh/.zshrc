@@ -227,6 +227,7 @@ gj() {
   git checkout $1
   git merge --no-ff $BRANCH
   git branch -f $BRANCH HEAD
+  git checkout $BRANCH
 }
 
 yeet() {
