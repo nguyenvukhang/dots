@@ -148,10 +148,21 @@ require('brew.lazy').setup {
           tex_fmt = function()
             return { command = 'tex-fmt', args = { '--stdin' } }
           end,
+          java_custom = function()
+            local cwd = vim.fn.getcwd()
+            local has = function(x) return string.find(cwd, x) end
+            if has('repos/tp') and has('/src/') and has('/java/') then
+              local gradle = vim.fs.find('gradlew', { upward = true })[1]
+              local root = vim.fs.dirname(gradle)
+              vim.cmd('silent!cd ' .. root .. '; ./gradlew spotlessApply')
+              return nil
+            end
+            return { command = 'clang-format' }
+          end,
         },
         async = true,
         formatters_by_ft = {
-          java = { 'clang_format' },
+          java = { 'java_custom' },
           zig = { 'zigfmt' },
           markdown = { 'prettier' },
           css = { 'prettier' },
