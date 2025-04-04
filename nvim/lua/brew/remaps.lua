@@ -22,7 +22,7 @@ k('v', 'H', '^')
 k('v', 'L', '$')
 
 -- open file under cursor in a split
-k('n', 'gF', ':vs <cfile><cr>', s)
+-- k('n', 'gF', ':vs <cfile><cr>', s)
 
 -- open file under cursor with `open` (macOS)
 k('n', 'go', ':!open <cfile><cr>', s)
@@ -122,3 +122,17 @@ vim.keymap.set('n', '*', function()
   end
 end)
 --]]
+
+-- Load current buffer into quickfix list.
+k('n', '<leader>Q', function()
+  local tbl = {}
+  local buf = vim.api.nvim_get_current_buf()
+  for _, line in ipairs(vim.api.nvim_buf_get_lines(buf, 0, -1, false)) do
+    local _, _, filename, lnum, text = line:find('(.*):(%d+):(.*)')
+    table.insert(
+      tbl,
+      { filename = filename, lnum = tonumber(lnum), text = text }
+    )
+  end
+  vim.fn.setqflist(tbl)
+end, s)

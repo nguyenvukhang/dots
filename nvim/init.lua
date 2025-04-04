@@ -154,7 +154,8 @@ require('brew.lazy').setup {
             if has('repos/tp') and has('/src/') and has('/java/') then
               local gradle = vim.fs.find('gradlew', { upward = true })[1]
               local root = vim.fs.dirname(gradle)
-              vim.cmd('silent!cd ' .. root .. '; ./gradlew spotlessApply')
+              vim.cmd('!cd ' .. root .. '; ./gradlew spotlessApply')
+              print("Formatted with gradle spotless!")
               return nil
             end
             return { command = 'clang-format' }
