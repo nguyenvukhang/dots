@@ -338,8 +338,6 @@ else
   alias ll='ls -lAg --color=auto'
 fi
 
-alias fd='fd --hidden'
-alias rg='rg --hidden'
 alias ct="printf '\033[2J\033[3J\033[1;1H'" # clear terminal
 alias zr="exec $SHELL -l"                   # reloads shell
 alias py='python3' mk='make'
