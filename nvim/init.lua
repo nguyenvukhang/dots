@@ -135,6 +135,7 @@ require('brew.lazy').setup {
     tag = 'v7.1.0',
     config = function()
       local conform = require('conform')
+      conform.formatters.rustfmt = { options = { default_edition = '2024' } }
       conform.setup {
         notify_on_error = true,
         formatters = {
