@@ -48,5 +48,6 @@ local marks = {
   'Axiom',
   'Principle',
   'Scope',
+  'Ansatz',
 }
 return { topics = topics, marks = marks }
