@@ -98,6 +98,7 @@ require('brew.lazy').setup {
   },
   {
     'neovim/nvim-lspconfig',
+    tag = 'v1.8.0',
     config = function()
       local lsp = require('brew.lsp')
       lsp.rust()
