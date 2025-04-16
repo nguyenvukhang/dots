@@ -155,16 +155,19 @@ M.overriding_remaps = function()
 
   -- jump to next/prev mark
   local marks = table.concat(gen.marks, '|')
-  k('n', '[[', '^k?\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
-  k('n', ']]', '^j/\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
-  k('v', '[[', '^k?\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
-  k('v', ']]', '^j/\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
+  k('n', '[[', '?\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
+  k('n', ']]', '/\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
+  k('v', '[[', '?\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
+  k('v', ']]', '/\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
 
   -- jump to next/prev subsection
-  k('n', '[{', '^k?\\v^\\\\subsection<cr>f{lzz', sil)
-  k('n', ']}', '^j/\\v^\\\\subsection<cr>f{lzz', sil)
-  k('v', '[{', '^k?\\v^\\\\subsection<cr>f{lzz', sil)
-  k('v', ']}', '^j/\\v^\\\\subsection<cr>f{lzz', sil)
+  k('n', '[{', '?\\v^\\\\subsection<cr>f{lzz', sil)
+  k('n', ']}', '/\\v^\\\\subsection<cr>f{lzz', sil)
+  k('v', '[{', '?\\v^\\\\subsection<cr>f{lzz', sil)
+  k('v', ']}', '/\\v^\\\\subsection<cr>f{lzz', sil)
+
+  -- yank the current mark's SHA into system clipboard
+  k('n', '[y', 'mK?\\v^\\\\(' .. marks .. ')<cr>/\\\\label<cr>f{"+yi{`K', sil)
 
   -- go to definition (looks for `\label{<cword>}`)
   k('n', 'gd', function()
