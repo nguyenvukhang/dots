@@ -45,9 +45,21 @@ M.python = function()
 end
 M.swift = function()
   lsp.sourcekit.setup(base {
+    -- cmd = { '/opt/homebrew/opt/swift/bin/sourcekit-lsp' },
+    -- cmd = { '/opt/homebrew/opt/swift/Swift-6.0.xctoolchain/usr/bin/sourcekit-lsp' },
     filetypes = { 'objc', 'swift' },
     root_dir = lsp.util.root_pattern('Package.swift', '.git'),
   })
+  -- print('GOT HERE')
+  -- vim.keymap.set('n', '<leader>n', function()
+  --   local bufnr = vim.api.nvim_get_current_buf()
+  --   print('Buffer:', bufnr)
+  --   local client = vim.lsp.get_active_clients({ name = 'sourcekit' })[1]
+  --   if client then
+  --     print('Attaching...')
+  --     vim.lsp.buf_attach_client(bufnr, client.id)
+  --   end
+  -- end)
 end
 
 M.rust = function()

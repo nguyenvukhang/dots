@@ -37,12 +37,16 @@ else
   export MANPAGER=
 fi
 
+export N_PREFIX="$HOME/.local/n"
+[[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
+
 #  Setting $PATH
 PATH=/usr/local/go/bin:$PATH
 PATH=$HOME/go/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
 PATH=$HOME/.jenv/bin:$PATH
 PATH=$HOMEBREW_PREFIX/opt/ruby/bin:$PATH
+PATH=$HOMEBREW_PREFIX/opt/swift/bin:$PATH
 PATH=$HOMEBREW_PREFIX/bin:$PATH
 PATH=$HOME/.zvm/bin:$PATH
 export PATH

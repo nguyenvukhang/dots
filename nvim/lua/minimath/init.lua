@@ -155,19 +155,13 @@ M.overriding_remaps = function()
 
   -- jump to next/prev mark
   local marks = table.concat(gen.marks, '|')
-  k('n', '[[', '?\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
-  k('n', ']]', '/\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
-  k('v', '[[', '?\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
-  k('v', ']]', '/\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
-
-  -- jump to next/prev subsection
-  k('n', '[{', '?\\v^\\\\subsection<cr>f{lzz', sil)
-  k('n', ']}', '/\\v^\\\\subsection<cr>f{lzz', sil)
-  k('v', '[{', '?\\v^\\\\subsection<cr>f{lzz', sil)
-  k('v', ']}', '/\\v^\\\\subsection<cr>f{lzz', sil)
+  k('n', '[[', 'k?\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
+  k('n', ']]', 'j/\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
+  k('v', '[[', 'k?\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
+  k('v', ']]', 'j/\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
 
   -- yank the current mark's SHA into system clipboard
-  k('n', '[y', 'mK?\\v^\\\\(' .. marks .. ')<cr>/\\\\label<cr>f{"+yi{`K', sil)
+  k('n', '[y', 'mK?\\v^\\\\(' .. marks .. ')<cr>/\\\\label<cr>f{"+yi{0`K', sil)
 
   -- go to definition (looks for `\label{<cword>}`)
   k('n', 'gd', function()
@@ -188,6 +182,12 @@ M.overriding_remaps = function()
       v('silent bel copen')
     end
   end)
+
+  -- bigg wrappers
+  k('n', '<leader>b(', 'i\\biggl(\\biggr)<esc>T(')
+  k('n', '<leader>b[', 'i\\biggl[\\biggr]<esc>T[')
+  k('v', '<leader>(', 'c\\biggl(\\biggr)<esc>T(P')
+  k('v', '<leader>[', 'c\\biggl[\\biggr]<esc>T[P')
 
   -- environment wrappers
   k('n', '<leader>be', 'cc\\begin{equation*}<CR>\\end{equation*}<esc>k')

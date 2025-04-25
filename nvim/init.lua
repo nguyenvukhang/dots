@@ -108,7 +108,7 @@ require('brew.lazy').setup {
       lsp.typescript()
       lsp.python()
       lsp.swift()
-      -- lsp.ocamllsp()
+      lsp.ocamllsp()
       -- lsp.matlab_ls()
       -- lsp.astro()
       lsp.go()
