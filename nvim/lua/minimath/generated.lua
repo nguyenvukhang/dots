@@ -27,10 +27,12 @@ local topics = {
   ['statistics_examples'] = 'STX',
   ['topology'] = 'TOP',
   ['fourier_analysis'] = 'FRA',
+  ['sturm_liouville_theory'] = 'SLT',
   ['representation_theory'] = 'RPT',
   ['uatfo'] = 'UAT',
   ['errors'] = 'ERR',
   ['exercise'] = 'EXR',
+  ['cheatsheet'] = 'CHT',
 }
 local marks = {
   'Definition',
