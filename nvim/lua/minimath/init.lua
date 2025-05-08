@@ -4,7 +4,6 @@ local conf = require('telescope.config').values
 local actions_state = require('telescope.actions.state')
 local actions = require('telescope.actions')
 local gen = require('minimath.generated')
-local sil = { silent = true, buffer = true }
 
 local M = {}
 
@@ -38,35 +37,34 @@ end
 -- Gets called only once to parse everything out for the vimgrep,
 -- after that looks up directly.
 local parse = function(t)
-  local _, _, filename, lnum, text, sha = t.value:find('(.*):(%d+):(.*):(.*)')
-  t.filename = filename
-  t.lnum = tonumber(lnum)
-  t.text = text
-  t.sha = sha
-  return { t.filename, t.lnum, t.text }
+  _, _, t.filename, t.lnum, t.text, t.sha = t.value:find('(.*):(%d+):(.*):(.*)')
+  t.lnum = tonumber(t.lnum)
+  return t
 end
 
 local function gen_from_vimgrep_for_math_notes()
   local mt_vimgrep_entry
   local execute_keys = {
     path = function(t) return vim.fn.fnamemodify(t.filename, ':p') end,
-    filename = function(t) return parse(t)[1], true end,
-    lnum = function(t) return parse(t)[2], true end,
-    text = function(t) return parse(t)[3], true end,
+    filename = function(t) return rawget(parse(t), 'filename') end,
+    lnum = function(t) return rawget(parse(t), 'lnum') end,
+    text = function(t) return rawget(parse(t), 'text') end,
     ordinal = function(t) return t.text end,
   }
   mt_vimgrep_entry = {
-    display = function(e) return get_abbrev(e.filename) .. ' | ' .. e.text end,
+    display = function(t) return get_abbrev(t.filename) .. ' | ' .. t.text end,
     __index = function(t, k)
-      local raw = rawget(mt_vimgrep_entry, k)
-      if raw then return raw end
-      local executor = rawget(execute_keys, k)
-      if executor then
-        local v, save = executor(t)
-        if save then rawset(t, k, v) end
-        return v
+      local z = rawget(mt_vimgrep_entry, k) -- try to get raw value first.
+      if z then return z end
+      z = rawget(execute_keys, k) -- use the executor.
+      if z then
+        z = z(t)
+        -- Insert filters here, for instance:
+        -- if string.find(z, 'Bolzano') then return nil end
+        rawset(t, k, z) -- cache the value
+        return z
       end
-      return rawget(t, rawget({ display = 1, ordinal = 1, value = 1 }, k))
+      if k == 'ordinal' or k == 'value' then return rawget(t, 1) end
     end,
   }
   return function(line) return setmetatable({ line }, mt_vimgrep_entry) end
@@ -151,7 +149,7 @@ local git_workspace_root = function()
 end
 
 M.overriding_remaps = function()
-  local k, v = vim.keymap.set, vim.cmd
+  local k, v, sil = vim.keymap.set, vim.cmd, { silent = true, buffer = true }
 
   -- jump to next/prev mark
   local marks = table.concat(gen.marks, '|')
