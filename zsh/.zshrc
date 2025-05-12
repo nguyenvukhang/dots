@@ -37,8 +37,15 @@ else
   export MANPAGER=
 fi
 
-export N_PREFIX="$HOME/.local/n"
-[[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
+if [ -d "$HOME/.local/n" ]; then
+  export N_PREFIX="$HOME/.local/n"
+  [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
+fi
+
+if [ -d "$HOME/.elan" ]; then
+  PATH=$HOME/.elan/bin:$PATH
+  export PATH
+fi
 
 #  Setting $PATH
 PATH=/usr/local/go/bin:$PATH
