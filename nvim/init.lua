@@ -105,6 +105,7 @@ require('brew.lazy').setup {
       lsp.clangd()
       lsp.zls()
       lsp.lua()
+      -- lsp.lean()
       lsp.typescript()
       lsp.python()
       lsp.swift()
@@ -216,6 +217,30 @@ require('brew.lazy').setup {
       }
       -- local p_config = require("nvim-treesitter.parsers").get_parser_config()
       -- print(vim.inspect(require("nvim-treesitter.parsers")))
+    end,
+  },
+  {
+    'Julian/lean.nvim',
+    tag = 'nvim-0.9',
+    dependencies = {
+      'neovim/nvim-lspconfig',
+      'nvim-lua/plenary.nvim',
+    },
+    config = function()
+      local lean = require('lean')
+      local lsp = require('lspconfig')
+      local base = require('brew.lsp').base
+      lean.setup {
+        mappings = false,
+        lsp = base { root_dir = lsp.util.root_pattern('lakefile.toml') },
+      }
+      -- lean.setup()
+      vim.keymap.set(
+        'n',
+        '<leader>u',
+        ':LeanInfoviewToggle<cr>',
+        { silent = true }
+      )
     end,
   },
 }

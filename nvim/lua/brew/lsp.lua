@@ -78,6 +78,10 @@ M.rust = function()
   })
 end
 
+M.lean = function()
+  lsp.leanls.setup(base { root_dir = lsp.util.root_pattern('lakefile.toml') })
+end
+
 M.go = function()
   lsp.gopls.setup(base { root_dir = lsp.util.root_pattern('go.mod', '.git') })
 end

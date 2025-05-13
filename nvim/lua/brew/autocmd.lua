@@ -34,6 +34,21 @@ local cfg = {
   swift = function() c.comment_string('// %s') end,
   astro = function() c.comment_string('// %s') end,
   asm = function() c.comment_string('# %s') end,
+  lean = function()
+    local snip = function(a, b) vim.cmd('inoreabbrev ' .. a .. ' ' .. b) end
+    snip('eps', 'ε')
+    snip('forall', '∀')
+    snip('exists', '∃')
+    snip('\\R', 'ℝ')
+    snip('\\N', 'ℕ')
+    snip('!=', '≠')
+    snip('->', '→')
+    snip('times', '×')
+    snip('\\a', '∧') -- and
+    snip('\\o', '∨') -- or
+    snip('<>', '⟨⟩')
+    c.comment_string('/- %s -/')
+  end,
 }
 
 c.autocmd { pattern = '*.tex', callback = cfg.latex }
@@ -41,6 +56,7 @@ c.autocmd { pattern = '*.asm', callback = cfg.asm }
 c.autocmd { pattern = { '*.swift' }, callback = cfg.swift }
 c.autocmd { pattern = { '*.mdx', '*.md' }, callback = cfg.markdown }
 c.autocmd { pattern = { '*.java' }, callback = cfg.java }
+c.autocmd { pattern = { '*.lean' }, callback = cfg.lean }
 c.autocmd {
   pattern = { '*.cpp', '*.hpp', '*.h', '*.c', '*.cc' },
   callback = cfg.cpp,
