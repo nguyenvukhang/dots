@@ -231,10 +231,8 @@ require('brew.lazy').setup {
       local lsp = require('lspconfig')
       local base = require('brew.lsp').base
       lean.setup {
-        mappings = false,
         lsp = base { root_dir = lsp.util.root_pattern('lakefile.toml') },
       }
-      -- lean.setup()
       vim.keymap.set(
         'n',
         '<leader>u',
