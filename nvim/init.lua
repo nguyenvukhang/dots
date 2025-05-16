@@ -105,7 +105,6 @@ require('brew.lazy').setup {
       lsp.clangd()
       lsp.zls()
       lsp.lua()
-      -- lsp.lean()
       lsp.typescript()
       lsp.python()
       lsp.swift()
@@ -219,10 +218,20 @@ require('brew.lazy').setup {
     },
     config = function()
       local lean = require('lean')
-      local lsp = require('lspconfig')
-      local base = require('brew.lsp').base
       lean.setup {
-        lsp = base { root_dir = lsp.util.root_pattern('lakefile.toml') },
+        lsp = {
+          init_options = {
+            editDelay = 100000,
+          },
+        },
+        infoview = {
+          autoopen = false,
+        },
+        progress_bars = { enable = false },
+        goal_markers = {
+          accomplished = ' o ',
+          unsolved = ' ! ',
+        },
       }
       vim.keymap.set(
         'n',
