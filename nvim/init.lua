@@ -85,18 +85,6 @@ require('brew.lazy').setup {
     end,
   },
   {
-    'windwp/nvim-autopairs',
-    config = function()
-      local np, Rule = require('nvim-autopairs'), require('nvim-autopairs.rule')
-      np.setup { ignored_next_char = [=[[%w%%%'%[%"%.%`]]=] }
-      np.add_rules {
-        Rule('$', '$', { 'tex', 'markdown' }):with_move(
-          function(o) return o.next_char == o.char end
-        ),
-      }
-    end,
-  },
-  {
     'neovim/nvim-lspconfig',
     tag = 'v1.8.0',
     config = function()
@@ -218,8 +206,9 @@ require('brew.lazy').setup {
     },
     config = function()
       local lean = require('lean')
+      local base = require('brew.lsp').base
       lean.setup {
-        lsp = {
+        lsp = base {
           init_options = {
             editDelay = 100000,
           },
@@ -229,8 +218,8 @@ require('brew.lazy').setup {
         },
         progress_bars = { enable = false },
         goal_markers = {
-          accomplished = ' o ',
-          unsolved = ' ! ',
+          accomplished = '',
+          unsolved = '',
         },
       }
       vim.keymap.set(
@@ -239,6 +228,20 @@ require('brew.lazy').setup {
         ':LeanInfoviewToggle<cr>',
         { silent = true }
       )
+    end,
+  },
+  {
+    'windwp/nvim-autopairs',
+    config = function()
+      local np, Rule = require('nvim-autopairs'), require('nvim-autopairs.rule')
+      np.setup { ignored_next_char = [=[[%w%%%'%[%"%.%`]]=] }
+      np.add_rules {
+        Rule('$', '$', { 'tex', 'markdown' }):with_move(
+          function(o) return o.next_char == o.char end
+        ),
+      }
+      -- Disable '' pair on LEAN files because it means "prime".
+      np.get_rules("'")[1].not_filetypes = { 'lean' }
     end,
   },
 }

@@ -48,6 +48,7 @@ hi! link @markup.math.latex Normal
 hi! link @label.latex Normal
 hi! link @operator.latex GBOrange
 hi! link @markup.link.url.latex Normal
+hi! link @markup.raw.block.markdown Normal
  
 " treesitter[lua]
 hi! link @variable Normal
