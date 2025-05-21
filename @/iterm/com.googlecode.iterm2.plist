@@ -1248,13 +1248,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.15686274509803921</real>
+				<real>0.094117647058823528</real>
 				<key>Color Space</key>
-				<string>sRGB</string>
+				<string>P3</string>
 				<key>Green Component</key>
-				<real>0.15686274509803921</real>
+				<real>0.094117647058823528</real>
 				<key>Red Component</key>
-				<real>0.15686274509803921</real>
+				<real>0.094117647058823528</real>
 			</dict>
 			<key>Background Image Mode</key>
 			<integer>2</integer>
@@ -1375,7 +1375,7 @@
 			<key>Has Hotkey</key>
 			<false/>
 			<key>Horizontal Spacing</key>
-			<real>1</real>
+			<real>0.94999999999999996</real>
 			<key>Icon</key>
 			<integer>0</integer>
 			<key>Idle Code</key>
@@ -1418,7 +1418,7 @@
 			<key>Non-ASCII Ligatures</key>
 			<false/>
 			<key>Normal Font</key>
-			<string>JetBrainsOneV2-Regular 14</string>
+			<string>JetBrainsMonoNL-Regular 14</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<false/>
 			<key>Option Key Sends</key>
@@ -1524,6 +1524,8 @@
 	<key>OpenTmuxWindowsIn</key>
 	<integer>0</integer>
 	<key>OptionClickMovesCursor</key>
+	<false/>
+	<key>P3</key>
 	<false/>
 	<key>PMPrintingExpandedStateForPrint2</key>
 	<false/>
