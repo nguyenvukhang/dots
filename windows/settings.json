@@ -21,6 +21,26 @@
         {
             "command": "openTabRenamer",
             "id": "User.openTabRenamer"
+        },
+        {
+            "command": 
+            {
+                "action": "adjustFontSize",
+                "delta": 1
+            },
+            "id": "User.adjustFontSize.E04D5229"
+        },
+        {
+            "command": "resetFontSize",
+            "id": "User.resetFontSize"
+        },
+        {
+            "command": 
+            {
+                "action": "adjustFontSize",
+                "delta": -1
+            },
+            "id": "User.adjustFontSize.E2698FAA"
         }
     ],
     "copyFormatting": "none",
@@ -58,8 +78,16 @@
             "keys": "ctrl+plus"
         },
         {
+            "id": null,
+            "keys": "ctrl+minus"
+        },
+        {
             "id": "Terminal.NextTab",
             "keys": "alt+shift+l"
+        },
+        {
+            "id": "User.resetFontSize",
+            "keys": "alt+0"
         },
         {
             "id": null,
@@ -132,6 +160,10 @@
         {
             "id": null,
             "keys": "ctrl+alt+4"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+c"
         },
         {
             "id": null,
@@ -275,11 +307,15 @@
         },
         {
             "id": null,
+            "keys": "alt+down"
+        },
+        {
+            "id": null,
             "keys": "ctrl+shift+t"
         },
         {
             "id": null,
-            "keys": "alt+down"
+            "keys": "ctrl+shift+4"
         },
         {
             "id": "User.openTabRenamer",
@@ -303,10 +339,6 @@
         },
         {
             "id": null,
-            "keys": "ctrl+shift+4"
-        },
-        {
-            "id": null,
             "keys": "ctrl+shift+6"
         },
         {
@@ -322,12 +354,24 @@
             "keys": "ctrl+shift+9"
         },
         {
+            "id": "User.adjustFontSize.E2698FAA",
+            "keys": "alt+minus"
+        },
+        {
             "id": null,
             "keys": "ctrl+shift+n"
         },
         {
+            "id": "Terminal.PasteFromClipboard",
+            "keys": "alt+v"
+        },
+        {
             "id": null,
-            "keys": "ctrl+minus"
+            "keys": "ctrl+shift+v"
+        },
+        {
+            "id": "User.adjustFontSize.E04D5229",
+            "keys": "alt+plus"
         }
     ],
     "language": "en-US",
