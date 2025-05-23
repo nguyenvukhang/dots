@@ -242,7 +242,7 @@ require('brew.lazy').setup {
         ),
       }
       -- Disable '' pair on LEAN files because it means "prime".
-      np.get_rules("'")[1].not_filetypes = { 'lean' }
+      np.get_rules("'")[1].not_filetypes = { 'lean', 'rust' }
     end,
   },
 }
