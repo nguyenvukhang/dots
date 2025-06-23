@@ -48,7 +48,7 @@ local cfg = {
     -- snip('\\o', '∨') -- or
     -- snip('\\n', '¬')
     snip('<>', '⟨⟩')
-    c.comment_string('/- %s -/')
+    c.comment_string('-- %s')
   end,
 }
 
