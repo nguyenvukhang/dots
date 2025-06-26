@@ -42,6 +42,11 @@ if [ -d "$HOME/.local/n" ]; then
   [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 fi
 
+if [ -d "/usr/lib/wsl/lib" ]; then
+  PATH=/usr/lib/wsl/lib:$PATH
+  export PATH
+fi
+
 if [ -d "$HOME/.local/memes" ]; then
   PATH=$HOME/.local/memes/bin:$PATH
   export PATH
