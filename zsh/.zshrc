@@ -42,21 +42,16 @@ if [ -d "$HOME/.local/n" ]; then
   [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 fi
 
-if [ -d "/usr/lib/wsl/lib" ]; then
-  PATH=/usr/lib/wsl/lib:$PATH
-  export PATH
-fi
+prepend_to_path_if_exists() {
+  if [ -d "$1" ]; then
+    PATH="$1":$PATH
+    export PATH
+  fi
+}
 
-if [ -d "$HOME/.local/memes" ]; then
-  PATH=$HOME/.local/memes/bin:$PATH
-  export PATH
-fi
-
-
-if [ -d "$HOME/.elan" ]; then
-  PATH=$HOME/.elan/bin:$PATH
-  export PATH
-fi
+prepend_to_path_if_exists "/usr/lib/wsl/lib"
+prepend_to_path_if_exists "/usr/local/cuda/bin"
+prepend_to_path_if_exists "$HOME/.elan/bin"
 
 #  Setting $PATH
 PATH=/usr/local/go/bin:$PATH
