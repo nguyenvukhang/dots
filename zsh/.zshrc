@@ -27,6 +27,7 @@ export PYTHONPYCACHEPREFIX=/tmp/pycache        # bye __pycache__
 export LANGUAGE=en_US.UTF-8 LC_ALL=en_US.UTF-8 # locale standardize
 export LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8   # locale standardize
 export SHELL_SESSIONS_DISABLE=1                # remove ~/.zsh_sessions
+export LESSCHARSET=utf-8                       # `less` to show unicode chars
 
 export FZF_DEFAULT_OPTS="--height=7 +m --no-mouse --reverse --no-info --prompt='  ' --no-separator"
 
@@ -309,13 +310,13 @@ alias 2k="cd $DOTS/@/kitty"
 alias 2l="cd $HOME/.local"
 alias 2lb="cd $HOME/.local/bin"
 alias 2ls="cd $HOME/.local/src"
-alias 2m="cd $REPOS/math"
+alias 2m="cd $REPOS/shuffle/rust/seagate"
 alias 2mc="cd '$HOME/Library/Application Support/PrismLauncher/instances'"
 alias 2n="cd $REPOS/notes"
 alias 2o="cd $HOME/repos"
 alias 2or="cd $HOME/other-repos"
 alias 2p="cd $DOTS/personal"
-alias 2s="cd $HOME/seagate"
+alias 2s="cd $HOME/repos/runner/rust/seagate"
 alias 2u="cd $UNI"
 alias 2v="cd $DOTS/nvim"
 alias 2z="cd $DOTS/zsh"

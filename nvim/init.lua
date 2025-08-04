@@ -235,7 +235,7 @@ require('brew.lazy').setup {
     'windwp/nvim-autopairs',
     config = function()
       local np, Rule = require('nvim-autopairs'), require('nvim-autopairs.rule')
-      np.setup { ignored_next_char = [=[[%w%%%'%[%"%.%`]]=] }
+      np.setup()
       np.add_rules {
         Rule('$', '$', { 'tex', 'markdown' }):with_move(
           function(o) return o.next_char == o.char end
@@ -243,7 +243,7 @@ require('brew.lazy').setup {
       }
       -- Disable '' pair on LEAN files because it means "prime".
       np.get_rules("'")[1].not_filetypes = { 'lean', 'rust' }
-    end,
+    end
   },
 }
 
