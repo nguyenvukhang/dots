@@ -310,13 +310,12 @@ alias 2k="cd $DOTS/@/kitty"
 alias 2l="cd $HOME/.local"
 alias 2lb="cd $HOME/.local/bin"
 alias 2ls="cd $HOME/.local/src"
-alias 2m="cd $REPOS/shuffle/rust/seagate"
+alias 2m="cd $REPOS/math"
 alias 2mc="cd '$HOME/Library/Application Support/PrismLauncher/instances'"
 alias 2n="cd $REPOS/notes"
 alias 2o="cd $HOME/repos"
 alias 2or="cd $HOME/other-repos"
 alias 2p="cd $DOTS/personal"
-alias 2s="cd $HOME/repos/runner/rust/seagate"
 alias 2u="cd $UNI"
 alias 2v="cd $DOTS/nvim"
 alias 2z="cd $DOTS/zsh"
@@ -408,33 +407,6 @@ kgn() {
   else
     echo "No matching process found"
   fi
-}
-
-# tmux launcher
-tm() {
-  [ $TMUX ] && local a=switch || local a=a
-  case $1 in
-  ls) tmux $@ ;;
-  -d) tmux detach ;;
-  -k)
-    shift
-    [ $1 ] || set -- $(tmux ls | fzf -0 $FZF_OPTS)
-    [ $1 ] && tmux kill-session -t $1
-    ;;
-  '')
-    local S=$(tmux ls -F '#{session_name}: #{session_windows} windows #{?session_attached,(attached),}' 2>/dev/null)
-    if [ -z $S ]; then
-      tmux new -s 0
-    else
-      S=$(printf $S | fzf $FZF_OPTS)
-      [ $S ] && tmux $a -t ${S%%:*}
-    fi
-    ;;
-  *)
-    tmux has -t $1 2>/dev/null || tmux new -ds $1
-    tmux $a -t $1
-    ;;
-  esac
 }
 
 # >>> mamba initialize >>>
