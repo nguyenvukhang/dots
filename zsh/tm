@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 # tmux launcher
 tm() {
   [ $TMUX ] && local a=switch || local a=a
@@ -24,3 +26,14 @@ tm() {
     ;;
   esac
 }
+
+# Use tmux session as a shell wrapper.
+# Only quitting the base session will exit the terminal emulator.
+tmux_loop() {
+  ([[ $START_TMUX != true ]] || [ $TMUX ] || ! command -v tmux 2>/dev/null) && return
+  while; do
+    [[ $(tmux new -As z -n editor) == '[detached (from session z)]' ]] && exit
+    tmux has -t z && continue || exit
+  done
+}
+# tmux_loop
