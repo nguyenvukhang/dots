@@ -127,11 +127,11 @@ alias yoink='git fetch --all'
 
 # "git move branch". Moves $1 to HEAD.
 gmb() {
-  local X=$(git branch -f $1 HEAD 2>&1 >/dev/null)
-  if [[ $X == *'used by worktree'* ]]; then
-    local CURRENT=$(git rev-parse HEAD)
+  local OUTPUT=$(git branch -f $1 HEAD 2>&1 >/dev/null)
+  if [[ $OUTPUT == *'used by worktree'* ]]; then
+    OUTPUT=$(git rev-parse HEAD)
     gco $1
-    git reset --hard $CURRENT
+    git reset --hard $OUTPUT
   else
     git checkout $1
   fi
