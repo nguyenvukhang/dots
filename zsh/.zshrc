@@ -364,22 +364,6 @@ alias clangf="cp $DOTS/zsh/.clang-format ."
 alias pulse='open "/Applications/Pulse Secure.app/Contents/Plugins/JamUI/PulseTray.app"'
 alias ca='micromamba activate ml'
 
-# Run the obvious thing
-t() {
-  local DONE=0
-  _() {
-    [ $DONE = 0 ] && [ -r $1 ] && DONE=1 && shift && $@
-  }
-  _ Makefile make $@
-  _ run bash run $@
-  _ build.sh bash build.sh $@
-  _ run.py python3 run.py $@
-  _ Cargo.toml cargo run $@
-  _ package.json npm run dev $@
-  unset _ DONE
-  return 0
-}
-
 # Clears jdtls (nvim's Java LSP) cache.
 jclear() {
   rm -rf $HOME/.cache/nvim/jdtls

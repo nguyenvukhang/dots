@@ -37,3 +37,20 @@ tmux_loop() {
   done
 }
 # tmux_loop
+
+# Run the obvious thing
+t() {
+  local DONE=0
+  _() {
+    [ $DONE = 0 ] && [ -r $1 ] && DONE=1 && shift && $@
+  }
+  _ Makefile make $@
+  _ run bash run $@
+  _ build.sh bash build.sh $@
+  _ run.py python3 run.py $@
+  _ Cargo.toml cargo run $@
+  _ package.json npm run dev $@
+  unset _ DONE
+  return 0
+}
+
