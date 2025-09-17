@@ -2,7 +2,7 @@ background = #282c34
 font-size = 14
 font-feature = -calt, -liga, -dlig
 font-thicken = true
-font-thicken-strength = 100
+font-thicken-strength = 200
 quit-after-last-window-closed = true
 
 # Disable all the other nonsense
@@ -10,10 +10,11 @@ font-synthetic-style   = false
 font-style-bold        = false
 font-style-italic      = false
 font-style-bold-italic = false
-# working-directory = inherit
 window-inherit-working-directory = true
+working-directory = home
+window-save-state = never
 
-adjust-cell-width = -5%
+adjust-cell-width = -6%
 
 # Various behavior
 

@@ -316,6 +316,7 @@ alias 2n="cd $REPOS/notes"
 alias 2o="cd $HOME/repos"
 alias 2or="cd $HOME/other-repos"
 alias 2p="cd $DOTS/personal"
+alias 2t="cd $HOME/repos/tex"
 alias 2u="cd $UNI"
 alias 2v="cd $DOTS/nvim"
 alias 2z="cd $DOTS/zsh"
@@ -391,6 +392,10 @@ kgn() {
   else
     echo "No matching process found"
   fi
+}
+# kills notification center
+knc() {
+  killall NotificationCenter
 }
 
 # >>> mamba initialize >>>

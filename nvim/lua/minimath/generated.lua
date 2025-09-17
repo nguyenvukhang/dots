@@ -33,6 +33,7 @@ local topics = {
   ['errors'] = 'ERR',
   ['exercise'] = 'EXR',
   ['cheatsheet'] = 'CHT',
+  ['ma3201'] = 'MA₁',
 }
 local marks = {
   'Definition',
