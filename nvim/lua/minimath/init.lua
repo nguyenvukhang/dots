@@ -42,6 +42,12 @@ local parse = function(t)
   return t
 end
 
+local parse_lean = function(t)
+  _, _, t.filename, t.lnum, t.text = t.value:find('(.*):(%d+):(.*)')
+  t.lnum = tonumber(t.lnum)
+  return t
+end
+
 local function gen_from_vimgrep_for_math_notes()
   local mt_vimgrep_entry
   local execute_keys = {
@@ -84,18 +90,17 @@ end
 
 ---@param action 'a' | 'h' | 'j' | 'y' type of action
 local get_attach_mappings_callback = function(action)
-  if action == 'j' then return nil end
-  if action == 'y' then
+  if action == 'j' then
+    return nil
+  elseif action == 'y' then
     return function(sha) vim.fn.setreg('', sha) end
-  end
-  if action == 'h' then
+  elseif action == 'h' then
     local left, selection, right = split_visual_line()
     return function(sha)
       local x = ('%s\\href{%s}{%s}%s'):format(left, sha, selection, right)
       vim.api.nvim_set_current_line(x)
     end
-  end
-  if action == 'a' then
+  elseif action == 'a' then
     local left, _, right = split_visual_line()
     return function(sha)
       local x = ('%s\\autoref{%s}%s'):format(left, sha, right)
@@ -214,7 +219,49 @@ M.overriding_remaps = function()
   end)
 end
 
+local function gen_from_vimgrep_for_lean()
+  local mt_vimgrep_entry
+  local execute_keys = {
+    path = function(t) return vim.fn.fnamemodify(t.filename, ':p') end,
+    filename = function(t) return rawget(parse_lean(t), 'filename') end,
+    lnum = function(t) return rawget(parse_lean(t), 'lnum') end,
+    text = function(t) return rawget(parse_lean(t), 'text') end,
+    ordinal = function(t) return t.text end,
+  }
+  mt_vimgrep_entry = {
+    display = function(t) return t.text end,
+    __index = function(t, k)
+      local z = rawget(mt_vimgrep_entry, k) -- try to get raw value first.
+      if z then return z end
+      z = rawget(execute_keys, k) -- use the executor.
+      if z then
+        z = z(t)
+        -- Insert filters here, for instance:
+        -- if string.find(z, 'Bolzano') then return nil end
+        rawset(t, k, z) -- cache the value
+        return z
+      end
+      if k == 'ordinal' or k == 'value' then return rawget(t, 1) end
+    end,
+  }
+  return function(line) return setmetatable({ line }, mt_vimgrep_entry) end
+end
+
 M.remaps = function()
+  vim.keymap.set('n', '<leader>pl', function()
+    local opts = { entry_maker = gen_from_vimgrep_for_lean() }
+    pickers
+      .new(opts, {
+        layout_strategy = 'vertical',
+        layout_config = { width = function(_, c, _) return math.min(c, 88) end },
+        prompt_title = 'Lean Theorems',
+        finder = finders.new_oneshot_job({ 'lake-dino', 'rg' }, opts),
+        previewer = conf.grep_previewer(opts),
+        sorter = conf.generic_sorter(opts),
+        attach_mappings = get_attach_mappings('j'),
+      })
+      :find()
+  end)
   vim.keymap.set('n', '<leader>pm', function() theorem_search('j') end)
   vim.keymap.set('n', '<leader>pt', function() theorem_search('y') end)
   vim.keymap.set('v', '<leader>h', function() theorem_search('h') end)
