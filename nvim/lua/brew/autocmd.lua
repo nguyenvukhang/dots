@@ -36,17 +36,8 @@ local cfg = {
   asm = function() c.comment_string('# %s') end,
   lean = function()
     local snip = function(a, b) vim.cmd('inoreabbrev ' .. a .. ' ' .. b) end
-    -- snip('eps', 'ε')
-    -- snip('forall', '∀')
-    -- snip('exists', '∃')
-    -- snip('\\R', 'ℝ')
-    -- snip('\\N', 'ℕ')
-    -- snip('!=', '≠')
-    -- snip('->', '→')
-    -- snip('times', '×')
-    -- snip('\\a', '∧') -- and
-    -- snip('\\o', '∨') -- or
-    -- snip('\\n', '¬')
+    vim.opt.formatoptions:remove('r')
+    vim.opt.formatoptions:remove('o')
     snip('<>', '⟨⟩')
     c.comment_string('-- %s')
   end,

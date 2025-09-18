@@ -90,6 +90,7 @@ require('brew.lazy').setup {
     config = function()
       local lsp = require('brew.lsp')
       lsp.rust()
+      lsp.lean()
       lsp.clangd()
       lsp.zls()
       lsp.lua()
