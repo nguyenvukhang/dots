@@ -36,8 +36,13 @@ local cfg = {
   asm = function() c.comment_string('# %s') end,
   lean = function()
     local snip = function(a, b) vim.cmd('inoreabbrev ' .. a .. ' ' .. b) end
-    vim.opt.formatoptions:remove('r')
-    vim.opt.formatoptions:remove('o')
+    local mark = '{{' .. '{'
+    local lean = ' : 1 = 0 :=<CR>  by -- ' .. mark .. '<CR>sorry'
+    vim.keymap.set('n', '<leader>be', '0Cexample' .. lean)
+    vim.keymap.set('n', '<leader>bt', '0Ctheorem THEOREM' .. lean)
+    vim.keymap.set('n', '<leader>bl', '0Clemma LEMMA' .. lean)
+    -- vim.opt.formatoptions:remove('r')
+    -- vim.opt.formatoptions:remove('o')
     snip('<>', '⟨⟩')
     c.comment_string('-- %s')
   end,
