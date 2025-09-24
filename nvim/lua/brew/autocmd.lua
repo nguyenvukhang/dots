@@ -35,6 +35,7 @@ local cfg = {
   astro = function() c.comment_string('// %s') end,
   asm = function() c.comment_string('# %s') end,
   lean = function()
+    vim.opt_local.comments = 's0:/-,mb: ,ex:-/,:--' -- see `h: comments`
     local snip = function(a, b) vim.cmd('inoreabbrev ' .. a .. ' ' .. b) end
     local mark = '{{' .. '{'
     local lean = ' : 1 = 0 :=<CR>  by -- ' .. mark .. '<CR>sorry'
