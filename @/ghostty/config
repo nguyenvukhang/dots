@@ -20,6 +20,7 @@ adjust-cell-width = -6%
 
 copy-on-select = clipboard
 shell-integration = zsh
+shell-integration-features = no-cursor
 macos-option-as-alt = false
 macos-titlebar-style = transparent
 
@@ -32,6 +33,7 @@ background-blur = 6
 title = Ghostty
 window-padding-x = 6,6
 window-padding-y = 0,6
+cursor-style = block
 
 # Gruvbox
 

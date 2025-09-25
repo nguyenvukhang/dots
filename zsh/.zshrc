@@ -282,6 +282,7 @@ ed() {
   case $1 in
   a) t="$DOTS/@/alacritty/alacritty.yml" ;;
   g) t="$DOTS/@/git/config" ;;
+  gh) t="$DOTS/@/ghostty/config" ;;
   k) t="$DOTS/@/alatty/alatty.conf" ;;
   s) t="$HOME/.ssh/config" ;;
   t) t="$DOTS/tmux/tmux.conf" ;;
