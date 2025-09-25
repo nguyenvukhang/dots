@@ -67,6 +67,7 @@ function M.toggle_quick_menu()
   end
 
   vim.api.nvim_win_set_option(Harpoon_win_id, 'number', true)
+  vim.api.nvim_win_set_option(Harpoon_win_id, 'wrap', false)
   vim.api.nvim_buf_set_name(Harpoon_bufh, 'harpoon-menu')
   vim.api.nvim_buf_set_lines(Harpoon_bufh, 0, #contents, false, contents)
   vim.api.nvim_buf_set_option(Harpoon_bufh, 'filetype', 'harpoon')

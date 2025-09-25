@@ -19,7 +19,7 @@ adjust-cell-width = -6%
 # Various behavior
 
 copy-on-select = clipboard
-shell-integration = none
+shell-integration = zsh
 macos-option-as-alt = false
 macos-titlebar-style = transparent
 

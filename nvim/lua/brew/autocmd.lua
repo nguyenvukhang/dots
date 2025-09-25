@@ -38,7 +38,7 @@ local cfg = {
     vim.opt_local.comments = 's0:/-,mb: ,ex:-/,:--' -- see `h: comments`
     local snip = function(a, b) vim.cmd('inoreabbrev ' .. a .. ' ' .. b) end
     local mark = '{{' .. '{'
-    local lean = ' : 1 = 0 :=<CR>  by -- ' .. mark .. '<CR>sorry'
+    local lean = ' : 1 = 0 :=<CR>  by -- ' .. mark .. '<CR>sorry<esc>'
     vim.keymap.set('n', '<leader>be', '0Cexample' .. lean)
     vim.keymap.set('n', '<leader>bt', '0Ctheorem THEOREM' .. lean)
     vim.keymap.set('n', '<leader>bl', '0Clemma LEMMA' .. lean)
