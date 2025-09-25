@@ -21,6 +21,7 @@ local cfg = {
     vim.bo.filetype = 'tex'
     dollarDollar()
     require('minimath').overriding_remaps()
+    require('minimath').remaps()
   end,
   markdown = function()
     vim.opt.textwidth = 80

@@ -13,7 +13,8 @@ require('brew.lazy').setup {
   {
     'hrsh7th/nvim-cmp',
     config = function()
-      local cmp, ct = require('cmp'), require('cmp.types')
+      local cmp = require('cmp')
+      local ct = require('cmp.types')
       cmp.setup {
         formatting = {
           expandable_indicator = false,
@@ -34,7 +35,10 @@ require('brew.lazy').setup {
               return ct.lsp.CompletionItemKind[e:get_kind()] ~= 'Snippet'
             end,
           },
-        }, { { name = 'buffer' }, { name = 'path' } }),
+        }, {
+          { name = 'buffer' },
+          { name = 'path' },
+        }),
         preselect = cmp.PreselectMode.None,
         snippet = { expand = function(x) vim.fn['vsnip#anonymous'](x.body) end },
       }
@@ -101,15 +105,6 @@ require('brew.lazy').setup {
       -- lsp.matlab_ls()
       -- lsp.astro()
       lsp.go()
-    end,
-  },
-  {
-    'iamcco/markdown-preview.nvim',
-    -- just run `:call mkdp#util#install()` at some point. wgt.
-    build = function() vim.fn['mkdp#util#install']() end,
-    config = function()
-      vim.cmd('cnoreabbrev MP MarkdownPreview')
-      vim.cmd('cnoreabbrev MS MarkdownPreviewStop')
     end,
   },
   {
@@ -254,7 +249,6 @@ require('brew.remaps')
 require('brew.commands')
 require('brew.statusline')
 require('brew.autocmd')
-require('minimath').remaps()
 require('harpoon').my_setup()
 
 vim.cmd('colo gruvbox8')

@@ -154,69 +154,6 @@ local git_workspace_root = function()
 end
 
 M.overriding_remaps = function()
-  local k, v, sil = vim.keymap.set, vim.cmd, { silent = true, buffer = true }
-
-  -- jump to next/prev mark
-  local marks = table.concat(gen.marks, '|')
-  k('n', '[[', 'k?\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
-  k('n', ']]', 'j/\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
-  k('v', '[[', 'k?\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
-  k('v', ']]', 'j/\\v^\\\\(' .. marks .. ')<cr>f{lzz', sil)
-
-  -- yank the current mark's SHA into system clipboard
-  k('n', '[y', 'mK?\\v^\\\\(' .. marks .. ')<cr>/\\\\label<cr>f{"+yi{0`K', sil)
-
-  -- go to definition (looks for `\label{<cword>}`)
-  k('n', 'gd', function()
-    local cword, root = vim.fn.expand('<cword>'), git_workspace_root()
-    if not cword or not root then return end
-    v('silent lgrep --no-column -ttex \\label\\\\{' .. cword .. '} ' .. root)
-  end)
-
-  -- go to references (looks for `\autoref{<cword>}` or `\href{<cword>}`)
-  k('n', 'gr', function()
-    local cword, root = vim.fn.expand('<cword>'), git_workspace_root()
-    if not cword or not root then return end
-    local ref = "'\\\\(auto\\|h\\|name)ref\\{" .. cword .. "\\}'"
-    v('silent grep -ttex ' .. ref .. ' ' .. root)
-    if #vim.fn.getqflist() == 0 then
-      vim.notify('No references found.')
-    else
-      v('silent bel copen')
-    end
-  end)
-
-  -- bigg wrappers
-  k('n', '<leader>b(', 'i\\biggl(\\biggr)<esc>T(')
-  k('n', '<leader>b[', 'i\\biggl[\\biggr]<esc>T[')
-  k('v', '<leader>(', 'c\\biggl(\\biggr)<esc>T(P')
-  k('v', '<leader>[', 'c\\biggl[\\biggr]<esc>T[P')
-
-  -- environment wrappers
-  k('n', '<leader>be', 'cc\\begin{equation*}<CR>\\end{equation*}<esc>k')
-  k('n', '<leader>bi', 'cc\\begin{itemize}<CR>\\end{itemize}<esc>k')
-  k('n', '<leader>ba', 'cc\\begin{align*}<CR>\\end{align*}<esc>k')
-  k('n', '<leader>bc', 'cc\\begin{cases}<CR>\\end{cases}<esc>k')
-  k('n', '<leader>bg', 'cc\\begin{gather*}<CR>\\end{gather*}<esc>k')
-  k('n', '<leader>bp', 'o<CR>\\begin{proof}<CR>\\end{proof}<esc>k')
-  k('n', 'K', function()
-    --[[
-    local pos = vim.api.nvim_win_get_cursor(0)
-    local row, col = pos[1], pos[2]
-    local buf = vim.api.nvim_create_buf(false, true)
-    print("BUFFER", buf)
-    vim.api.nvim_buf_set_lines(buf, 0, -1, false, { 'This is a popup!' })
-    local opts = {
-      relative = 'cursor', -- Position relative to the cursor
-      row = -1, -- One line below the cursor
-      col = 0, -- Same column as the cursor
-      width = 20, -- Width of the popup window
-      height = 1, -- Height of the popup window
-      style = 'minimal', -- Minimal style (no borders, no title)
-    }
-    vim.api.nvim_open_win(buf, true, opts)
-    --]]
-  end)
 end
 
 local function gen_from_vimgrep_for_lean()
@@ -248,29 +185,96 @@ local function gen_from_vimgrep_for_lean()
 end
 
 M.remaps = function()
-  vim.keymap.set('n', '<leader>pl', function()
-    local opts = { entry_maker = gen_from_vimgrep_for_lean() }
+  local bufnr = vim.api.nvim_get_current_buf()
+  local k = vim.keymap.set
+  local v = vim.cmd
+  local opts = { silent = true, buffer = bufnr }
+
+  k('n', '<leader>pl', function()
+    local lopts = { entry_maker = gen_from_vimgrep_for_lean() }
     pickers
-      .new(opts, {
+      .new(lopts, {
         layout_strategy = 'vertical',
         layout_config = { width = function(_, c, _) return math.min(c, 88) end },
         prompt_title = 'Lean Theorems',
-        finder = finders.new_oneshot_job({ 'lake-dino', 'rg' }, opts),
-        previewer = conf.grep_previewer(opts),
-        sorter = conf.generic_sorter(opts),
+        finder = finders.new_oneshot_job({ 'lake-dino', 'rg' }, lopts),
+        previewer = conf.grep_previewer(lopts),
+        sorter = conf.generic_sorter(lopts),
         attach_mappings = get_attach_mappings('j'),
       })
       :find()
   end)
-  vim.keymap.set('n', '<leader>pm', function() theorem_search('j') end)
-  vim.keymap.set('n', '<leader>pt', function() theorem_search('y') end)
-  vim.keymap.set('v', '<leader>h', function() theorem_search('h') end)
-  vim.keymap.set('v', '<leader>a', function() theorem_search('a') end)
-  vim.keymap.set('n', '<leader>v', function()
+  k('n', '<leader>pm', function() theorem_search('j') end)
+  k('n', '<leader>pt', function() theorem_search('y') end)
+  k('v', '<leader>h', function() theorem_search('h') end)
+  k('v', '<leader>a', function() theorem_search('a') end)
+  k('n', '<leader>v', function()
     local line = vim.api.nvim_get_current_line()
     local parts = vim.split(line, ' %% ')
     print(vim.inspect(parts))
     vim.api.nvim_set_current_line(parts[1] .. ' % ' .. os.date('%Y-%m-%d'))
+  end)
+
+  -- jump to next/prev mark
+  local marks = table.concat(gen.marks, '|')
+  k('n', '[[', 'k?\\v^\\\\(' .. marks .. ')<cr>f{lzz', opts)
+  k('n', ']]', 'j/\\v^\\\\(' .. marks .. ')<cr>f{lzz', opts)
+  k('v', '[[', 'k?\\v^\\\\(' .. marks .. ')<cr>f{lzz', opts)
+  k('v', ']]', 'j/\\v^\\\\(' .. marks .. ')<cr>f{lzz', opts)
+
+  -- yank the current mark's SHA into system clipboard
+  k('n', '[y', 'mK?\\v^\\\\(' .. marks .. ')<cr>/\\\\label<cr>f{"+yi{0`K', opts)
+
+  -- go to definition (looks for `\label{<cword>}`)
+  k('n', 'gd', function()
+    local cword, root = vim.fn.expand('<cword>'), git_workspace_root()
+    if not cword or not root then return end
+    v('silent lgrep --no-column -ttex \\label\\\\{' .. cword .. '} ' .. root)
+  end)
+
+  -- go to references (looks for `\autoref{<cword>}` or `\href{<cword>}`)
+  k('n', 'gr', function()
+    local cword, root = vim.fn.expand('<cword>'), git_workspace_root()
+    if not cword or not root then return end
+    local ref = "'\\\\(auto\\|h\\|name)ref\\{" .. cword .. "\\}'"
+    v('silent grep -ttex ' .. ref .. ' ' .. root)
+    if #vim.fn.getqflist() == 0 then
+      vim.notify('No references found.')
+    else
+      v('silent bel copen')
+    end
+  end)
+
+  -- bigg wrappers
+  k('n', '<leader>b(', 'i\\biggl(\\biggr)<esc>T(', opts)
+  k('n', '<leader>b[', 'i\\biggl[\\biggr]<esc>T[', opts)
+  k('v', '<leader>(', 'c\\biggl(\\biggr)<esc>T(P', opts)
+  k('v', '<leader>[', 'c\\biggl[\\biggr]<esc>T[P', opts)
+
+  -- environment wrappers
+  k('n', '<leader>be', 'cc\\begin{equation*}<CR>\\end{equation*}<esc>k', opts)
+  k('n', '<leader>bi', 'cc\\begin{itemize}<CR>\\end{itemize}<esc>k', opts)
+  k('n', '<leader>ba', 'cc\\begin{align*}<CR>\\end{align*}<esc>k', opts)
+  k('n', '<leader>bc', 'cc\\begin{cases}<CR>\\end{cases}<esc>k', opts)
+  k('n', '<leader>bg', 'cc\\begin{gather*}<CR>\\end{gather*}<esc>k', opts)
+  k('n', '<leader>bp', 'o<CR>\\begin{proof}<CR>\\end{proof}<esc>k', opts)
+  k('n', 'K', function()
+    --[[
+    local pos = vim.api.nvim_win_get_cursor(0)
+    local row, col = pos[1], pos[2]
+    local buf = vim.api.nvim_create_buf(false, true)
+    print("BUFFER", buf)
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, { 'This is a popup!' })
+    local opts = {
+      relative = 'cursor', -- Position relative to the cursor
+      row = -1, -- One line below the cursor
+      col = 0, -- Same column as the cursor
+      width = 20, -- Width of the popup window
+      height = 1, -- Height of the popup window
+      style = 'minimal', -- Minimal style (no borders, no title)
+    }
+    vim.api.nvim_open_win(buf, true, opts)
+    --]]
   end)
 end
 

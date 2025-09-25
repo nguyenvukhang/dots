@@ -1,7 +1,6 @@
 new_tab editor
 cd ~/repos/math
 launch zsh
-launch --hold ls
 
 new_tab compiler
 cd ~/repos/math
