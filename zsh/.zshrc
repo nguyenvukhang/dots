@@ -9,13 +9,21 @@ source_if_exists() {
   fi
 }
 
-# Checks if a binary exists, while printing nothing to stdout.
+# Checks if $1 exists as a binary, while printing nothing to stdout.
 binary_exists() {
   command -v $1 >/dev/null
 }
 
+# If $1 exists as a directory, append it to $PATH (without exporting).
+prepend_to_path_if_exists() {
+  if [ -d "$1" ]; then
+    PATH="$1":$PATH
+  fi
+}
+
 source_if_exists $HOME/.cargo/env               # cargo (rust)
 source_if_exists $HOME/.opam/opam-init/init.zsh # opam (OCaml)
+[ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
 #  ///////////////////////////////////////////////////////////////////
 # // Shell environment variables.
@@ -43,26 +51,19 @@ if [ -d "$HOME/.local/n" ]; then
   [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 fi
 
-prepend_to_path_if_exists() {
-  if [ -d "$1" ]; then
-    PATH="$1":$PATH
-    export PATH
-  fi
-}
-
-prepend_to_path_if_exists "/usr/lib/wsl/lib"
-prepend_to_path_if_exists "/usr/local/cuda/bin"
-prepend_to_path_if_exists "$HOME/.elan/bin"
+prepend_to_path_if_exists /usr/lib/wsl/lib
+prepend_to_path_if_exists /usr/local/cuda/bin
+prepend_to_path_if_exists $HOME/.elan/bin
+prepend_to_path_if_exists /usr/local/go/bin
+prepend_to_path_if_exists $HOME/go/bin
+prepend_to_path_if_exists $HOME/.jenv/bin
+prepend_to_path_if_exists $HOMEBREW_PREFIX/opt/ruby/bin
+prepend_to_path_if_exists $HOMEBREW_PREFIX/opt/swift/bin
+prepend_to_path_if_exists $HOMEBREW_PREFIX/bin
+prepend_to_path_if_exists $HOME/.zvm/bin
 
 #  Setting $PATH
-PATH=/usr/local/go/bin:$PATH
-PATH=$HOME/go/bin:$PATH
-PATH=$HOME/.local/bin:$PATH
-PATH=$HOME/.jenv/bin:$PATH
-PATH=$HOMEBREW_PREFIX/opt/ruby/bin:$PATH
-PATH=$HOMEBREW_PREFIX/opt/swift/bin:$PATH
-PATH=$HOMEBREW_PREFIX/bin:$PATH
-PATH=$HOME/.zvm/bin:$PATH
+PATH=$HOME/.local/bin:/usr/local/bin:$PATH
 export PATH
 
 #  ///////////////////////////////////////////////////////////////////
@@ -116,11 +117,10 @@ alias gr="$GIT reset"
 alias grh="$GIT reset --hard"
 alias grs="$GIT reset --soft"
 alias grpo="$GIT remote prune origin"
-alias gt="$GIT tag"
 alias giti="$EDITOR .gitignore"
 alias gitm="$EDITOR .gitmodules"
-alias gsn="$GIT show --name-status"
-alias yoink='git fetch --all'
+# alias gt="$GIT tag"
+# alias gsn="$GIT show --name-status"
 
 # to get remote branches on bare checkouts, run
 # git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
@@ -189,22 +189,18 @@ if binary_exists git-ln; then
   alias gll='git ln' glal='git ln --all'
   alias gl='git ln --bound'
   alias gla='git ln --all --bound'
-  # gl() { # for the memories
-  #   local n=${1-$(($LINES < 16 ? 10 : $LINES * 3 / 5))}
-  #   [ $1 ] && shift
-  #   git ln -n $n $@
-  # }
 else
+  local fmt='%C(yellow)%h%C(auto)%d %Creset%s %C(241)(%C(246)%ar%C(241))'
   alias gll='git log --graph --pretty=k' glal='gll --all'
   gl() {
     local n=${1-$(($LINES < 16 ? 10 : $LINES * 3 / 5))}
     [ $1 ] && shift
-    git log --graph --pretty=k -n $n $@
+    git log --graph --pretty=$fmt -n $n $@
   }
   gla() {
     local n=${1-$(($LINES < 16 ? 10 : $LINES * 3 / 5))}
     [ $1 ] && shift
-    git log --graph --pretty=k --all -n $n $@
+    git log --graph --pretty=$fmt --all -n $n $@
   }
 fi
 
@@ -246,8 +242,7 @@ grv() {
 gj() {
   local BRANCH=$(git rev-parse --abbrev-ref HEAD)
   if [ $BRANCH = 'HEAD' ]; then
-    printf "\e[33mCurrently in detached head. Aborting.\e[m\n"
-    return
+    return printf "\e[33mCurrently in detached head. Aborting.\e[m\n"
   fi
   git checkout $1
   git merge --no-ff $BRANCH
@@ -294,7 +289,6 @@ ed() {
   v) t="$DOTS/nvim/init.lua" ;;
   w) t="$DOTS/@/wezterm/wezterm.lua" ;;
   z) t="$DOTS/zsh/.zshrc" ;;
-  ze) t="$ZSHENV_PATH" ;;
   esac
   [ $t ] && $EDITOR $t || echo "nothing happened."
 }
@@ -302,11 +296,8 @@ ed() {
 alias 2A="cd /Applications"
 alias 2c="cd $HOME/.config"
 alias 2d="cd $DOTS"
-alias 2f="cd $HOME/files"
-alias 2h="cd $HOMEBREW_PREFIX"
 alias 2i="cd $HOME/iCloud"
 alias 2j="cd $HOME/Downloads"
-alias 2k="cd $DOTS/@/kitty"
 alias 2l="cd $HOME/.local"
 alias 2lb="cd $HOME/.local/bin"
 alias 2ls="cd $HOME/.local/src"
@@ -314,8 +305,6 @@ alias 2m="cd $REPOS/math"
 alias 2mc="cd '$HOME/Library/Application Support/PrismLauncher/instances'"
 alias 2n="cd $REPOS/notes"
 alias 2o="cd $HOME/repos"
-alias 2or="cd $HOME/other-repos"
-alias 2p="cd $DOTS/personal"
 alias 2t="cd $HOME/repos/tex"
 alias 2u="cd $UNI"
 alias 2v="cd $DOTS/nvim"
