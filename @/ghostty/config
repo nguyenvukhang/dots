@@ -12,7 +12,7 @@ font-style-italic      = false
 font-style-bold-italic = false
 window-inherit-working-directory = true
 working-directory = home
-window-save-state = never
+window-save-state = always
 
 adjust-cell-width = -6%
 
@@ -34,6 +34,7 @@ background-blur = 6
 title = Ghostty
 window-padding-x = 6,6
 window-padding-y = 0,6
+window-new-tab-position = end
 cursor-style = block
 
 # Gruvbox

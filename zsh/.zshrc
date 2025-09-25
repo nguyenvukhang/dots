@@ -322,8 +322,8 @@ __g() {
   [[ $(fd $@ | fzf $FZF) =~ '^(.*)'$'\n''(.*)$' ]]
   case ${match[1]} in
   left) cd .. && g ;;
-  enter) [ ${match[2]} ] && cd ${match[2]} ;;
-  right) [ ${match[2]} ] && cd ${match[2]} && g ;;
+  enter) [ -d ${match[2]} ] && cd "${match[2]}" ;;
+  right) [ -d ${match[2]} ] && cd "${match[2]}" && g ;;
   esac
 }
 

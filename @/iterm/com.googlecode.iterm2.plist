@@ -1344,7 +1344,7 @@
 			<key>Custom Command</key>
 			<string>No</string>
 			<key>Custom Directory</key>
-			<string>Advanced</string>
+			<string>No</string>
 			<key>Custom Window Title</key>
 			<string>iTerm2</string>
 			<key>Default Bookmark</key>
