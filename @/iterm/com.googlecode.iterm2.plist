@@ -380,6 +380,8 @@
 	<false/>
 	<key>DoubleReportScrollWheel</key>
 	<false/>
+	<key>EnableAPIServer</key>
+	<true/>
 	<key>EnableDivisionView</key>
 	<false/>
 	<key>EnableProxyIcon</key>
@@ -1053,7 +1055,7 @@
 				<key>Blue Component</key>
 				<real>0.3843137254901961</real>
 				<key>Color Space</key>
-				<string>P3</string>
+				<string>sRGB</string>
 				<key>Green Component</key>
 				<real>0.41176470588235292</real>
 				<key>Red Component</key>
@@ -1066,7 +1068,7 @@
 				<key>Blue Component</key>
 				<real>0.396078431372549</real>
 				<key>Color Space</key>
-				<string>P3</string>
+				<string>sRGB</string>
 				<key>Green Component</key>
 				<real>0.71372549019607845</real>
 				<key>Red Component</key>
@@ -1079,7 +1081,7 @@
 				<key>Blue Component</key>
 				<real>0.3411764705882353</real>
 				<key>Color Space</key>
-				<string>P3</string>
+				<string>sRGB</string>
 				<key>Green Component</key>
 				<real>0.65098039215686276</real>
 				<key>Red Component</key>
@@ -1092,7 +1094,7 @@
 				<key>Blue Component</key>
 				<real>0.63921568627450975</real>
 				<key>Color Space</key>
-				<string>P3</string>
+				<string>sRGB</string>
 				<key>Green Component</key>
 				<real>0.68235294117647061</real>
 				<key>Red Component</key>
@@ -1105,7 +1107,7 @@
 				<key>Blue Component</key>
 				<real>0.60784313725490191</real>
 				<key>Color Space</key>
-				<string>P3</string>
+				<string>sRGB</string>
 				<key>Green Component</key>
 				<real>0.52549019607843139</real>
 				<key>Red Component</key>
@@ -1118,7 +1120,7 @@
 				<key>Blue Component</key>
 				<real>0.5490196078431373</real>
 				<key>Color Space</key>
-				<string>P3</string>
+				<string>sRGB</string>
 				<key>Green Component</key>
 				<real>0.70588235294117652</real>
 				<key>Red Component</key>
@@ -1129,13 +1131,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.69803921568627447</real>
+				<real>0.66666666666666663</real>
 				<key>Color Space</key>
-				<string>P3</string>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.85882352941176465</real>
+				<real>0.82352941176470584</real>
 				<key>Red Component</key>
-				<real>0.92156862745098034</real>
+				<real>0.89803921568627454</real>
 			</dict>
 			<key>Ansi 2 Color</key>
 			<dict>
@@ -1144,7 +1146,7 @@
 				<key>Blue Component</key>
 				<real>0.396078431372549</real>
 				<key>Color Space</key>
-				<string>P3</string>
+				<string>sRGB</string>
 				<key>Green Component</key>
 				<real>0.71372549019607845</real>
 				<key>Red Component</key>
@@ -1157,7 +1159,7 @@
 				<key>Blue Component</key>
 				<real>0.3411764705882353</real>
 				<key>Color Space</key>
-				<string>P3</string>
+				<string>sRGB</string>
 				<key>Green Component</key>
 				<real>0.65098039215686276</real>
 				<key>Red Component</key>
@@ -1170,7 +1172,7 @@
 				<key>Blue Component</key>
 				<real>0.63921568627450975</real>
 				<key>Color Space</key>
-				<string>P3</string>
+				<string>sRGB</string>
 				<key>Green Component</key>
 				<real>0.68235294117647061</real>
 				<key>Red Component</key>
@@ -1183,7 +1185,7 @@
 				<key>Blue Component</key>
 				<real>0.60784313725490191</real>
 				<key>Color Space</key>
-				<string>P3</string>
+				<string>sRGB</string>
 				<key>Green Component</key>
 				<real>0.52549019607843139</real>
 				<key>Red Component</key>
@@ -1196,7 +1198,7 @@
 				<key>Blue Component</key>
 				<real>0.5490196078431373</real>
 				<key>Color Space</key>
-				<string>P3</string>
+				<string>sRGB</string>
 				<key>Green Component</key>
 				<real>0.70588235294117652</real>
 				<key>Red Component</key>
@@ -1207,13 +1209,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.69803921568627447</real>
+				<real>0.66666666666666663</real>
 				<key>Color Space</key>
-				<string>P3</string>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.85882352941176465</real>
+				<real>0.82352941176470584</real>
 				<key>Red Component</key>
-				<real>0.92156862745098034</real>
+				<real>0.89803921568627454</real>
 			</dict>
 			<key>Ansi 8 Color</key>
 			<dict>
@@ -1235,7 +1237,7 @@
 				<key>Blue Component</key>
 				<real>0.3843137254901961</real>
 				<key>Color Space</key>
-				<string>P3</string>
+				<string>sRGB</string>
 				<key>Green Component</key>
 				<real>0.41176470588235292</real>
 				<key>Red Component</key>
@@ -1538,7 +1540,7 @@
 	<key>PreserveWindowSizeWhenTabBarVisibilityChanges</key>
 	<false/>
 	<key>PromptOnQuit</key>
-	<false/>
+	<true/>
 	<key>QuitWhenAllWindowsClosed</key>
 	<true/>
 	<key>RightCommand</key>
