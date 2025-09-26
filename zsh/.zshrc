@@ -61,6 +61,7 @@ prepend_to_path_if_exists $HOMEBREW_PREFIX/opt/ruby/bin
 prepend_to_path_if_exists $HOMEBREW_PREFIX/opt/swift/bin
 prepend_to_path_if_exists $HOMEBREW_PREFIX/bin
 prepend_to_path_if_exists $HOME/.zvm/bin
+prepend_to_path_if_exists $HOME/.local/src/zig/zig-aarch64-macos-0.14.1
 
 #  Setting $PATH
 PATH=$HOME/.local/bin:/usr/local/bin:$PATH
