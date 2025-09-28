@@ -12,7 +12,7 @@ font-style-italic      = false
 font-style-bold-italic = false
 window-inherit-working-directory = true
 working-directory = home
-window-save-state = always
+window-save-state = never
 
 adjust-cell-width = -6%
 
