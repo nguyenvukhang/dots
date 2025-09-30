@@ -285,6 +285,7 @@ ed() {
   g) t="$DOTS/@/git/config" ;;
   gh) t="$DOTS/@/ghostty/config" ;;
   k) t="$DOTS/@/alatty/alatty.conf" ;;
+  ki) t="$DOTS/@/kitty/kitty.conf" ;;
   s) t="$HOME/.ssh/config" ;;
   t) t="$DOTS/tmux/tmux.conf" ;;
   u) t="$UNI_LAUNCH" ;;

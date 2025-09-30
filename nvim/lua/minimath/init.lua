@@ -153,8 +153,7 @@ local git_workspace_root = function()
   return vim.v.shell_error == 0 and stdout[1] or vim.notify('not in a git repo')
 end
 
-M.overriding_remaps = function()
-end
+M.overriding_remaps = function() end
 
 local function gen_from_vimgrep_for_lean()
   local mt_vimgrep_entry
@@ -184,10 +183,9 @@ local function gen_from_vimgrep_for_lean()
   return function(line) return setmetatable({ line }, mt_vimgrep_entry) end
 end
 
-M.remaps = function()
+M.lean_remaps = function()
   local bufnr = vim.api.nvim_get_current_buf()
   local k = vim.keymap.set
-  local v = vim.cmd
   local opts = { silent = true, buffer = bufnr }
 
   k('n', '<leader>pl', function()
@@ -203,17 +201,25 @@ M.remaps = function()
         attach_mappings = get_attach_mappings('j'),
       })
       :find()
-  end)
-  k('n', '<leader>pm', function() theorem_search('j') end)
-  k('n', '<leader>pt', function() theorem_search('y') end)
-  k('v', '<leader>h', function() theorem_search('h') end)
-  k('v', '<leader>a', function() theorem_search('a') end)
+  end, opts)
+end
+
+M.remaps = function()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local k = vim.keymap.set
+  local v = vim.cmd
+  local opts = { silent = true, buffer = bufnr }
+
+  k('n', '<leader>pm', function() theorem_search('j') end, opts)
+  k('n', '<leader>pt', function() theorem_search('y') end, opts)
+  k('v', '<leader>h', function() theorem_search('h') end, opts)
+  k('v', '<leader>a', function() theorem_search('a') end, opts)
   k('n', '<leader>v', function()
     local line = vim.api.nvim_get_current_line()
     local parts = vim.split(line, ' %% ')
     print(vim.inspect(parts))
     vim.api.nvim_set_current_line(parts[1] .. ' % ' .. os.date('%Y-%m-%d'))
-  end)
+  end, opts)
 
   -- jump to next/prev mark
   local marks = table.concat(gen.marks, '|')

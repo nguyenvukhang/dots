@@ -29,13 +29,17 @@ local cfg = {
     dollarDollar()
   end,
   cpp = function()
-    c.comment_string('// %s')
+    vim.opt_local.commentstring = '// %s'
     set_tab(4)
   end,
-  swift = function() c.comment_string('// %s') end,
-  astro = function() c.comment_string('// %s') end,
-  asm = function() c.comment_string('# %s') end,
+  swift = function() vim.opt_local.commentstring = '// %s' end,
+  astro = function() vim.opt_local.commentstring = '// %s' end,
+  asm = function() vim.opt_local.commentstring = '# %s' end,
   lean = function()
+    require('minimath').lean_remaps()
+    vim.opt_local.foldmarker = ':= by --,-- ∎'
+    vim.opt_local.commentstring = '-- %s'
+
     vim.opt_local.comments = 's0:/-,mb: ,ex:-/,:--' -- see `h: comments`
     local snip = function(a, b) vim.cmd('inoreabbrev ' .. a .. ' ' .. b) end
     local mark = '{{' .. '{'
@@ -46,7 +50,6 @@ local cfg = {
     -- vim.opt.formatoptions:remove('r')
     -- vim.opt.formatoptions:remove('o')
     snip('<>', '⟨⟩')
-    c.comment_string('-- %s')
   end,
 }
 
