@@ -6,15 +6,7 @@ if w.config_builder then
 	config = w.config_builder()
 end
 
-local FONT = "JetBrainsOneV5"
-
--- load birthdays
--- local BIRTHDAY_DB_PATH = "/Users/khang/dots/personal/birthdays/db.json"
--- local BIRTHDAY_FILE = io.open(BIRTHDAY_DB_PATH, "r")
--- local BIRTHDAYS = {}
--- if BIRTHDAY_FILE then
--- 	BIRTHDAYS = w.json_parse(BIRTHDAY_FILE:read("*a"))
--- end
+local FONT = "JetBrains Mono NL"
 
 local function key(k, m, a)
 	return { key = k, mods = m, action = a }
@@ -33,9 +25,9 @@ config.window_decorations = "RESIZE"
 config.font = w.font({ family = FONT })
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 config.inactive_pane_hsb = { saturation = 1, brightness = 1 }
--- config.window_background_opacity = 0.97
+config.window_background_opacity = 0.97
 config.window_background_opacity = 1
--- config.macos_window_background_blur = 8
+config.macos_window_background_blur = 8
 
 config.tab_bar_at_bottom = true
 config.show_new_tab_button_in_tab_bar = false
@@ -74,20 +66,57 @@ config.keys = {
 	),
 }
 
--- w.on("update-right-status", function(window, pane)
--- 	local output = "↑"
--- 	if BIRTHDAYS then
--- 		local today = BIRTHDAYS[os.date("%d-%b")]
--- 		if today ~= nil then
--- 			output = table.concat(today, ", ") .. " lvl up ↑"
--- 		end
--- 	end
--- 	output = output .. " "
---
--- 	window:set_right_status(w.format({
--- 		{ Foreground = { AnsiColor = "Green" } },
--- 		{ Text = output },
--- 	}))
--- end)
+local gruvbox = {}
+gruvbox.bg = "#090909"
+gruvbox.fg = "#e5d2aa"
+gruvbox.c1 = "#ea6962"
+gruvbox.c2 = "#a9b665"
+gruvbox.c3 = "#d8a657"
+gruvbox.c4 = "#7daea3"
+gruvbox.c5 = "#d3869b"
+gruvbox.c6 = "#89b48c"
+gruvbox.c7 = "#a89984"
+gruvbox.c8 = "#928374"
+
+gruvbox.ansi = {
+	gruvbox.bg,
+	gruvbox.c1,
+	gruvbox.c2,
+	gruvbox.c3,
+	gruvbox.c4,
+	gruvbox.c5,
+	gruvbox.c6,
+	gruvbox.c7,
+}
+
+config.colors = {
+	background = gruvbox.bg,
+	foreground = gruvbox.fg,
+	cursor_bg = "#bdae93",
+	cursor_fg = gruvbox.bg,
+	selection_bg = gruvbox.c3,
+	selection_fg = gruvbox.bg,
+	split = "6D7B32",
+	ansi = {
+		gruvbox.bg,
+		gruvbox.c1,
+		gruvbox.c2,
+		gruvbox.c3,
+		gruvbox.c4,
+		gruvbox.c5,
+		gruvbox.c6,
+		gruvbox.c7,
+	},
+	brights = {
+		gruvbox.c8,
+		gruvbox.c1,
+		gruvbox.c2,
+		gruvbox.c3,
+		gruvbox.c4,
+		gruvbox.c5,
+		gruvbox.c6,
+		gruvbox.fg,
+	},
+}
 
 return config

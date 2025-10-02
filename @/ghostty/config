@@ -74,7 +74,7 @@ selection-foreground = #928374
 keybind = clear
 keybind = super+v=paste_from_clipboard
 keybind = super+shift+r=reload_config
-keybind = super+d=new_split:right
+keybind = super+d=new_split:left
 keybind = super+shift+d=new_split:down
 keybind = super+n=new_tab
 keybind = super+h=goto_split:left

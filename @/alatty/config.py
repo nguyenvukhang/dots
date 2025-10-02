@@ -57,7 +57,7 @@ styles = (
     Style(0.94, 6, None),
     Style(1, None, None),
 )
-styles[0].print()
+styles[1].print()
 
 # print("modify_font cell_width 100%")
 # print("modify_font cell_height +0px")
