@@ -32,6 +32,7 @@ local cfg = {
     vim.opt_local.commentstring = '// %s'
     set_tab(4)
   end,
+  prolog = function() vim.opt_local.commentstring = '% %s' end,
   swift = function() vim.opt_local.commentstring = '// %s' end,
   astro = function() vim.opt_local.commentstring = '// %s' end,
   asm = function() vim.opt_local.commentstring = '# %s' end,
@@ -64,6 +65,7 @@ c.autocmd {
   callback = cfg.cpp,
 }
 c.autocmd { pattern = { '*.astro' }, callback = cfg.astro }
+c.autocmd { pattern = { '*.pl' }, callback = cfg.prolog }
 
 -- automatically redistribute splits when vim is resized
 c.autocmd({ command = 'wincmd =' }, { 'VimResized' })

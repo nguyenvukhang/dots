@@ -51,6 +51,9 @@ if [ -d "$HOME/.local/n" ]; then
   [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 fi
 
+#  Setting $PATH
+
+PATH=$HOME/.local/bin:/usr/local/bin:$PATH
 prepend_to_path_if_exists /usr/lib/wsl/lib
 prepend_to_path_if_exists /usr/local/cuda/bin
 prepend_to_path_if_exists $HOME/.elan/bin
@@ -61,10 +64,8 @@ prepend_to_path_if_exists $HOMEBREW_PREFIX/opt/ruby/bin
 prepend_to_path_if_exists $HOMEBREW_PREFIX/opt/swift/bin
 prepend_to_path_if_exists $HOMEBREW_PREFIX/bin
 prepend_to_path_if_exists $HOME/.zvm/bin
+prepend_to_path_if_exists $HOME/.local/memes/bin
 prepend_to_path_if_exists $HOME/.local/src/zig/zig-aarch64-macos-0.14.1
-
-#  Setting $PATH
-PATH=$HOME/.local/bin:/usr/local/bin:$PATH
 export PATH
 
 #  ///////////////////////////////////////////////////////////////////
