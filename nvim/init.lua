@@ -195,7 +195,7 @@ require('brew.lazy').setup {
     end,
   },
   {
-    'Julian/lean.nvim',
+    'nguyenvukhang/lean.nvim',
     tag = 'nvim-0.9',
     dependencies = {
       'neovim/nvim-lspconfig',
