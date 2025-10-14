@@ -246,13 +246,13 @@ require('brew.lazy').setup {
   --   end,
   -- },
   {
-    'sainnhe/everforest',
+    'sainnhe/gruvbox-material',
     config = function()
       -- Optionally configure and load the colorscheme
       -- directly inside the plugin declaration.
-      vim.g.everforest_enable_italic = true
-      vim.g.everforest_transparent_background = true
-      vim.cmd.colorscheme('everforest')
+      -- vim.g.everforest_enable_italic = true
+      vim.g.gruvbox_material_transparent_background = true
+      -- vim.cmd.colorscheme('gruvbox-material')
     end,
   },
 }
@@ -265,5 +265,5 @@ require('brew.statusline')
 require('brew.autocmd')
 require('harpoon').my_setup()
 
--- vim.cmd('colo gruvbox8')
+vim.cmd('colo gruvbox8')
 -- require('gruvbox').load()
