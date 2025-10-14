@@ -231,6 +231,10 @@ require('brew.lazy').setup {
       )
     end,
   },
+  {
+    'nvim-mini/mini.pairs',
+    config = function() require('mini.pairs').setup() end,
+  },
   -- {
   --   'windwp/nvim-autopairs',
   --   config = function()
