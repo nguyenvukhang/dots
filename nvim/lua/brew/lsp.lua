@@ -1,6 +1,5 @@
 local hover = function()
   local USE_NATIVE = true
-  print('HOVER')
   if USE_NATIVE then
     local b = { '·', '─', '·', '│' }
     return vim.lsp.buf.hover { border = b }
@@ -24,7 +23,7 @@ local base = function(opts)
     vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, x)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, x)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, x)
-    vim.keymap.set('n', 'K', hover, x)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, x)
   end
   return opts
 end

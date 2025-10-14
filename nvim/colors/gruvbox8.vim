@@ -64,6 +64,9 @@ hi! link @punctuation.delimiter.lua Normal
 hi! link @constructor.lua GBBlue
 hi! link @constant.builtin.lua GBPurple
 
+" treesitter[markdown]
+hi! link @punctuation.special.markdown GBGray
+
 " others
 
 hi! link @javaDocComment GBGray
