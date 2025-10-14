@@ -5,8 +5,11 @@ require('brew.lsp')
 require('brew.lazy').setup {
   'nvim-lua/plenary.nvim',
   'tpope/vim-surround',
+  -- {
+  --   'nvim-treesitter/playground',
+  --   dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  -- },
   -- 'wuelnerdotexe/vim-astro',
-  -- 'nvim-treesitter/playground',
   -- 'mfussenegger/nvim-jdtls',
   'vimplug/nvim-colorizer.lua',
   'hrsh7th/vim-vsnip',
@@ -234,6 +237,24 @@ require('brew.lazy').setup {
   {
     'nvim-mini/mini.pairs',
     config = function() require('mini.pairs').setup() end,
+  },
+  {
+    'folke/noice.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require('noice').setup {
+        cmdline = { enabled = false },
+        messages = { enabled = false },
+        lsp = {
+          override = {
+            ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+            ['vim.lsp.util.stylize_markdown'] = true,
+            ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
+          },
+        },
+        presets = { lsp_doc_border = false },
+      }
+    end,
   },
   -- {
   --   'windwp/nvim-autopairs',

@@ -1,3 +1,14 @@
+local hover = function()
+  local USE_NATIVE = true
+  print('HOVER')
+  if USE_NATIVE then
+    local b = { '·', '─', '·', '│' }
+    return vim.lsp.buf.hover { border = b }
+  else
+    -- lewis6991/hover.nvim
+    require('hover').open()
+  end
+end
 -- base settings for lsp
 local base = function(opts)
   opts = opts or {}
@@ -8,13 +19,12 @@ local base = function(opts)
       vim.api.nvim_set_hl(0, group, {})
     end
     local x = { buffer = bufnr, noremap = true }
-    local b = { '·', '─', '·', '│' }
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, x)
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, x)
     vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, x)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, x)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, x)
-    vim.keymap.set('n', 'K', function() vim.lsp.buf.hover { border = b } end, x)
+    vim.keymap.set('n', 'K', hover, x)
   end
   return opts
 end
@@ -25,15 +35,37 @@ local lsp_add = setmetatable({}, {
     vim.lsp.enable(key)
   end,
 })
+local lazy_path = vim.fn.stdpath('data') .. '/lazy'
 
 lsp_add['rust_analyzer'] = {
   filetypes = { 'rust' },
   cmd = { 'rust-analyzer' },
   root_markers = { 'Cargo.toml', 'rust-project.json' },
   settings = {
-    ['rust-analyzer'] = {
-      cargo = { features = 'all' },
-      imports = { granularity = { group = 'item' } },
+    cargo = { features = 'all' },
+    imports = { granularity = { group = 'item' } },
+  },
+}
+
+lsp_add['lua'] = {
+  filetypes = { 'lua' },
+  cmd = { 'lua-language-server' },
+  settings = {
+    Lua = {
+      runtime = { version = 'LuaJIT', path = luapath },
+      diagnostics = { globals = { 'vim' } },
+      workspace = {
+        library = {
+          [vim.env.VIMRUNTIME .. '/lua'] = true,
+          [vim.env.VIMRUNTIME .. '/lua/vim/lsp'] = true,
+          [lazy_path .. '/lazy.nvim/lua/lazy'] = true,
+          [lazy_path .. '/telescope.nvim/lua/telescope'] = true,
+        },
+        maxPreload = 100000,
+        preloadFileSize = 10000,
+        checkThirdParty = false,
+      },
+      telemetry = { enable = false },
     },
   },
 }
