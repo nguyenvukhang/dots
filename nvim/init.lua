@@ -1,4 +1,7 @@
-require("brew.lsp")
+vim.deprecate = function() end
+vim.diagnostic.config { underline = false, virtual_text = true }
+
+require('brew.lsp')
 require('brew.lazy').setup {
   'nvim-lua/plenary.nvim',
   'tpope/vim-surround',
@@ -194,39 +197,40 @@ require('brew.lazy').setup {
   --     -- print(vim.inspect(require("nvim-treesitter.parsers")))
   --   end,
   -- },
-  -- {
-  --   'nguyenvukhang/lean.nvim',
-  --   tag = 'nvim-0.9',
-  --   dependencies = {
-  --     'neovim/nvim-lspconfig',
-  --     'nvim-lua/plenary.nvim',
-  --   },
-  --   config = function()
-  --     local lean = require('lean')
-  --     local base = require('brew.lsp').base
-  --     lean.setup {
-  --       lsp = base {
-  --         init_options = {
-  --           editDelay = 100000,
-  --         },
-  --       },
-  --       infoview = {
-  --         autoopen = false,
-  --       },
-  --       progress_bars = { enable = false },
-  --       goal_markers = {
-  --         accomplished = '',
-  --         unsolved = '',
-  --       },
-  --     }
-  --     vim.keymap.set(
-  --       'n',
-  --       '<leader>u',
-  --       ':LeanInfoviewToggle<cr>',
-  --       { silent = true }
-  --     )
-  --   end,
-  -- },
+  {
+    'Julian/lean.nvim',
+    -- tag = 'nvim-0.9',
+    dependencies = {
+      'neovim/nvim-lspconfig',
+      'nvim-lua/plenary.nvim',
+    },
+    config = function()
+      local lean = require('lean')
+      local base = require('brew.lsp').base
+      lean.setup {
+        lsp = base {
+          init_options = {
+            editDelay = 100000,
+          },
+        },
+        infoview = {
+          autoopen = false,
+          -- show_term_goals = false,
+        },
+        progress_bars = { enable = false },
+        goal_markers = {
+          accomplished = '',
+          unsolved = '',
+        },
+      }
+      vim.keymap.set(
+        'n',
+        '<leader>u',
+        ':LeanInfoviewToggle<cr>',
+        { silent = true }
+      )
+    end,
+  },
   -- {
   --   'windwp/nvim-autopairs',
   --   config = function()
@@ -241,14 +245,24 @@ require('brew.lazy').setup {
   --     np.get_rules("'")[1].not_filetypes = { 'lean', 'rust' }
   --   end,
   -- },
+  {
+    'sainnhe/everforest',
+    config = function()
+      -- Optionally configure and load the colorscheme
+      -- directly inside the plugin declaration.
+      vim.g.everforest_enable_italic = true
+      vim.g.everforest_transparent_background = true
+      vim.cmd.colorscheme('everforest')
+    end,
+  },
 }
 
 -- independent of plugins, server-friendly
 require('brew.sets')
 require('brew.remaps')
--- require('brew.commands')
--- require('brew.statusline')
--- require('brew.autocmd')
+require('brew.commands')
+require('brew.statusline')
+require('brew.autocmd')
 require('harpoon').my_setup()
 
 -- vim.cmd('colo gruvbox8')

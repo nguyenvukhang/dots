@@ -1,19 +1,20 @@
-local M = {}
-
 -- base settings for lsp
 local base = function(opts)
   opts = opts or {}
   opts.on_attach = function(_, bufnr)
-    -- for _, group in ipairs(vim.fn.getcompletion('@lsp', 'highlight')) do
-    --   vim.api.nvim_set_hl(0, group, {})
-    -- end
+    -- Disable LSP-based syntax highlighting. This introduces a color change
+    -- after LSP gets attached.
+    for _, group in ipairs(vim.fn.getcompletion('@lsp', 'highlight')) do
+      vim.api.nvim_set_hl(0, group, {})
+    end
     local x = { buffer = bufnr, noremap = true }
+    local b = { '·', '─', '·', '│' }
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, x)
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, x)
     vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, x)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, x)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, x)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, x)
+    vim.keymap.set('n', 'K', function() vim.lsp.buf.hover { border = b } end, x)
   end
   return opts
 end
@@ -37,7 +38,7 @@ lsp_add['rust_analyzer'] = {
   },
 }
 
-return M
+return { base = base }
 --[[
 
 M.matlab_ls = function()
