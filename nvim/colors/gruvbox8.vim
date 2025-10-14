@@ -1,7 +1,7 @@
 hi clear
 let g:colors_name = 'gruvbox8'
 
-let g:terminal_ansi_colors = ['#282828', '#ea6962', '#a9b665', '#d8a657', '#7daea3', '#d3869b', '#689d6a', '#a89984', '#928374', '#ea6962', '#a9b665', '#d8a657', '#7daea3', '#d3869b', '#89b48c', '#e5d2aa']
+let g:terminal_ansi_colors = ['#282828', '#ea6962', '#a9b665', '#d8a657', '#7daea3', '#d3869b', '#689d6a', '#a89984', '#928374', '#ea6962', '#a9b665', '#d8a657', '#7daea3', '#d3869b', '#89b48c', '#ebdbb2']
 
 if has('nvim')
   let g:terminal_color_0  = '#282828'
@@ -19,7 +19,7 @@ if has('nvim')
   let g:terminal_color_12 = '#7daea3'
   let g:terminal_color_13 = '#d3869b'
   let g:terminal_color_14 = '#89b48c'
-  let g:terminal_color_15 = '#e5d2aa'
+  let g:terminal_color_15 = '#ebdbb2'
 endif
 if get(g:, 'gruvbox_plugin_hi_groups', 0)
   " Vimshell
@@ -27,7 +27,7 @@ if get(g:, 'gruvbox_plugin_hi_groups', 0)
     \ '#7c6f64', '#ea6962', '#a9b665', '#d8a657',
     \ '#7daea3', '#d3869b', '#89b48c', '#a89984',
     \ '#282828', '#ea6962', '#a9b665', '#e78a4e',
-    \ '#7daea3', '#d3869b', '#89b48c', '#e5d2aa'
+    \ '#7daea3', '#d3869b', '#89b48c', '#fbf1c7'
     \ ]
 endif
 
@@ -35,31 +35,39 @@ endif
 
 " latex
 
-hi! link @text.strong Normal
-hi! link @text.emphasis Normal
-hi! link @text.reference Normal
-hi! link @text.uri Normal
-hi! link @text.math GruvboxOrange
-hi! link @function GruvboxRed
-hi! link @namespace GruvboxRed
-hi! link @text.title.1 Normal
-hi! link @text.title.2 Normal
-hi! link @text.title.3 Normal
-hi! link @text.title.4 Normal
-hi! link @text.title.5 Normal
-hi! link @text.title.6 Normal
-hi! link @text.environment.name Normal
-hi! link @text.environment GruvboxAqua
-hi! link @operator GruvboxOrange
-hi! link @punctuation.special GruvboxGray
-" hi! link @punctuation.bracket GruvboxGray
-hi! link @markup.environment GruvboxAqua
-hi! link @markup.environment.name Normal
-hi! link @module GruvboxAqua
-hi! link @label Normal
+hi! link @markup.heading.1.latex Normal
+hi! link @markup.heading.2.latex Normal
+hi! link @markup.heading.3.latex Normal
+hi! link @markup.heading.4.latex Normal
+hi! link @markup.heading.5.latex Normal
+hi! link @markup.heading.6.latex Normal
+hi! link @markup.link.latex Normal
+hi! link @function.macro.latex GBAqua
+hi! link @function.latex GBRed
+hi! link @markup.math.latex Normal
+hi! link @label.latex Normal
+hi! link @operator.latex GBOrange
+hi! link @markup.link.url.latex GBGray
+ 
+" treesitter[lua]
+hi! link @variable Normal
+hi! link @keyword.function.lua GBGreen
+hi! link @keyword.operator.lua GBBlue
+hi! link @keyword.vim String
+hi! link @function.builtin.lua GBBlue
+hi! link @function.call.lua Normal
+hi! link @function.lua Normal
+hi! link @function.method.call.lua GBBlue
+hi! link @property.lua Normal
+hi! link @punctuation.bracket.lua Normal
+hi! link @punctuation.delimiter.lua Normal
+hi! link @constructor.lua GBBlue
+hi! link @constant.builtin.lua GBPurple
 
-hi! link @javaDocComment GruvboxGray
-hi! link @spe GruvboxGray
+" others
+
+hi! link @javaDocComment GBGray
+hi! link @spe GBGray
 
 hi! link texDocZone Normal
 hi! link texSectionZone Normal
@@ -72,11 +80,11 @@ hi! link TelescopeNormal Normal
 hi! link TelescopeSelection Pmenu
 hi! link TelescopeSelectionCaret Error
 hi! link TelescopeMultiSelection Pmenu
-hi! link TelescopeBorder GruvboxFg1
+hi! link TelescopeBorder GBFg1
 hi! link TelescopeMatching Special
 hi! link TelescopePromptPrefix Identifier
 hi! link TelescopePrompt TelescopeNormal
-hi! link TelescopeCustomBorder GruvboxBg4
+hi! link TelescopeCustomBorder GBBg4
 hi! link TelescopeResultsBorder TelescopeCustomBorder
 hi! link TelescopePreviewBorder TelescopeCustomBorder
 hi! link TelescopePromptBorder TelescopeCustomBorder
@@ -84,34 +92,34 @@ hi! link TelescopePromptCounter TelescopeCustomBorder
 hi! link rustCommentLineDoc Comment
 
 hi! link HarpoonWindow Normal
-hi! link HarpoonBorder GruvboxBg4
+hi! link HarpoonBorder GBBg4
 
 " LSP Diagnostic
-hi! link DiagnosticError GruvboxRed
-hi! link DiagnosticSignError GruvboxRed
-hi! link DiagnosticUnderlineError GruvboxRedUnderline
-hi! link DiagnosticVirtualTextError GruvboxRed
-hi! link DiagnosticFloatingError GruvboxRed
+hi! link DiagnosticError GBRed
+hi! link DiagnosticSignError GBRed
+hi! link DiagnosticUnderlineError GBRedUnderline
+hi! link DiagnosticVirtualTextError GBRed
+hi! link DiagnosticFloatingError GBRed
 
-hi! link DiagnosticWarn GruvboxYellow
-hi! link DiagnosticSignWarn GruvboxYellow
-hi! link DiagnosticUnderlineWarn GruvboxYellowUnderline
-hi! link DiagnosticVirtualTextWarn GruvboxYellow
-hi! link DiagnosticFloatingWarn GruvboxYellow
+hi! link DiagnosticWarn GBYellow
+hi! link DiagnosticSignWarn GBYellow
+hi! link DiagnosticUnderlineWarn GBYellowUnderline
+hi! link DiagnosticVirtualTextWarn GBYellow
+hi! link DiagnosticFloatingWarn GBYellow
 
-hi! link DiagnosticInfo GruvboxBlue
-hi! link DiagnosticSignInfo GruvboxBlue
-hi! link DiagnosticUnderlineInfo GruvboxBlueUnderline
-hi! link DiagnosticVirtualTextInfo GruvboxBlue
-hi! link DiagnosticFloatingInfo GruvboxBlue
+hi! link DiagnosticInfo GBBlue
+hi! link DiagnosticSignInfo GBBlue
+hi! link DiagnosticUnderlineInfo GBBlueUnderline
+hi! link DiagnosticVirtualTextInfo GBBlue
+hi! link DiagnosticFloatingInfo GBBlue
 
-hi! link DiagnosticHint GruvboxOrange
-hi! link DiagnosticSignHint GruvboxOrange
-hi! link DiagnosticUnderlineHint GruvboxOrangeUnderline
-hi! link DiagnosticVirtualTextHint GruvboxOrange
-hi! link DiagnosticFloatingHint GruvboxOrange
+hi! link DiagnosticHint GBOrange
+hi! link DiagnosticSignHint GBOrange
+hi! link DiagnosticUnderlineHint GBOrangeUnderline
+hi! link DiagnosticVirtualTextHint GBOrange
+hi! link DiagnosticFloatingHint GBOrange
 
-hi! link DiagnosticUnnecessary GruvboxFg1Underline
+hi! link DiagnosticUnnecessary GBFg1Underline
 
 " standard links
 
@@ -137,38 +145,40 @@ hi! link vCursor Cursor
 
 " gruvbox additions
 
-hi GruvboxFg0 guifg=#e5d2aa guibg=NONE
-hi GruvboxFg1 guifg=#e5d2aa guibg=NONE
-hi GruvboxFg2 guifg=#d5c4a1 guibg=NONE
-hi GruvboxFg3 guifg=#bdae93 guibg=NONE
-hi GruvboxFg4 guifg=#a89984 guibg=NONE
-hi GruvboxGray guifg=#928374 guibg=NONE
-hi GruvboxBg0 guifg=#282828 guibg=NONE
-hi GruvboxBg1 guifg=#3c3836 guibg=NONE
-hi GruvboxBg2 guifg=#504945 guibg=NONE
-hi GruvboxBg3 guifg=#665c54 guibg=NONE
-hi GruvboxBg4 guifg=#7c6f64 guibg=NONE
+hi GBFg0 guifg=#fbf1c7 guibg=NONE
+hi GBFg1 guifg=#ebdbb2 guibg=NONE
+hi GBFg2 guifg=#d5c4a1 guibg=NONE
+hi GBFg3 guifg=#bdae93 guibg=NONE
+hi GBFg4 guifg=#a89984 guibg=NONE
+hi GBGray guifg=#928374 guibg=NONE
+hi GBBg0 guifg=#282828 guibg=NONE
+hi GBBg1 guifg=#3c3836 guibg=NONE
+hi GBBg2 guifg=#504945 guibg=NONE
+hi GBBg3 guifg=#665c54 guibg=NONE
+hi GBBg4 guifg=#7c6f64 guibg=NONE
 
-hi GruvboxRed guifg=#ea6962 guibg=NONE
-hi GruvboxGreen guifg=#a9b665 guibg=NONE
-hi GruvboxYellow guifg=#d8a657 guibg=NONE
-hi GruvboxBlue guifg=#7daea3 guibg=NONE
-hi GruvboxPurple guifg=#d3869b guibg=NONE
-hi GruvboxAqua guifg=#89b48c guibg=NONE
-hi GruvboxOrange guifg=#e78a4e guibg=NONE
+hi GBRed guifg=#ea6962 guibg=NONE
+hi GBGreen guifg=#a9b665 guibg=NONE
+hi GBYellow guifg=#d8a657 guibg=NONE
+hi GBBlue guifg=#7daea3 guibg=NONE
+hi GBPurple guifg=#d3869b guibg=NONE
+hi GBAqua guifg=#89b48c guibg=NONE
+hi GBOrange guifg=#e78a4e guibg=NONE
 
-hi GruvboxFg1Underline guifg=#e5d2aa guisp=#e5d2aa guibg=NONE gui=underline
-hi GruvboxRedUnderline guifg=#ea6962 guisp=#ea6962 guibg=NONE gui=underline
-hi GruvboxGreenUnderline guifg=#a9b665 guisp=#a9b665 guibg=NONE gui=underline
-hi GruvboxYellowUnderline guifg=#d8a657 guisp=#d8a657 guibg=NONE gui=underline
-hi GruvboxBlueUnderline guifg=#7daea3 guisp=#7daea3 guibg=NONE gui=underline
-hi GruvboxPurpleUnderline guifg=#d3869b guisp=#d3869b guibg=NONE gui=underline
-hi GruvboxAquaUnderline guifg=#89b48c guisp=#89b48c guibg=NONE gui=underline
-hi GruvboxOrangeUnderline guifg=#e78a4e guisp=#e78a4e guibg=NONE gui=underline
+hi GBFg1Underline guifg=#ebdbb2 guisp=#ebdbb2 guibg=NONE gui=underline
+hi GBRedUnderline guifg=#ea6962 guisp=#ea6962 guibg=NONE gui=underline
+hi GBGreenUnderline guifg=#a9b665 guisp=#a9b665 guibg=NONE gui=underline
+hi GBYellowUnderline guifg=#d8a657 guisp=#d8a657 guibg=NONE gui=underline
+hi GBBlueUnderline guifg=#7daea3 guisp=#7daea3 guibg=NONE gui=underline
+hi GBPurpleUnderline guifg=#d3869b guisp=#d3869b guibg=NONE gui=underline
+hi GBAquaUnderline guifg=#89b48c guisp=#89b48c guibg=NONE gui=underline
+hi GBOrangeUnderline guifg=#e78a4e guisp=#e78a4e guibg=NONE gui=underline
 
 " standard colors
 
-hi Normal guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+hi Normal guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+hi NormalFloat guifg=#ebdbb2 guibg=#504945 guisp=NONE gui=NONE
+hi FloatBorder guifg=#ebdbb2 guibg=#504945 guisp=NONE gui=NONE
 hi Boolean guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
 hi Character guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
 hi ColorColumn guifg=NONE guibg=#3c3836 guisp=NONE gui=NONE
@@ -213,7 +223,7 @@ hi NonText guifg=#504945 guibg=NONE guisp=NONE gui=NONE
 hi NormalMode guifg=#a89984 guibg=#282828 guisp=NONE gui=reverse
 hi Number guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
 hi Operator guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
-hi Pmenu guifg=#e5d2aa guibg=#504945 guisp=NONE gui=NONE
+hi Pmenu guifg=#ebdbb2 guibg=#504945 guisp=NONE gui=NONE
 hi PmenuSbar guifg=NONE guibg=#504945 guisp=NONE gui=NONE
 hi PmenuSel guifg=#504945 guibg=#7daea3 guisp=NONE gui=bold
 hi PmenuThumb guifg=NONE guibg=#7c6f64 guisp=NONE gui=NONE
@@ -223,17 +233,18 @@ hi Question guifg=#e78a4e guibg=NONE guisp=NONE gui=bold
 hi Repeat guifg=#ea6962 guibg=NONE guisp=NONE gui=NONE
 hi ReplaceMode guifg=#89b48c guibg=#282828 guisp=NONE gui=reverse
 hi Search guifg=#d8a657 guibg=#282828 guisp=NONE gui=reverse
-hi SignColumn guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+hi SignColumn guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
 hi Special guifg=#e78a4e guibg=NONE guisp=NONE
 hi SpecialChar guifg=#ea6962 guibg=NONE guisp=NONE gui=NONE
-hi SpecialComment guifg=#a89984 guibg=NONE guisp=NONE
+hi SpecialComment guifg=#e78a4e guibg=NONE guisp=NONE gui=NONE
 hi SpecialKey guifg=#928374 guibg=NONE guisp=NONE gui=NONE
 hi SpellBad guifg=#ea6962 guibg=NONE guisp=#ea6962 gui=undercurl
 hi SpellCap guifg=#7daea3 guibg=NONE guisp=#7daea3 gui=undercurl
 hi SpellLocal guifg=#89b48c guibg=NONE guisp=#89b48c gui=undercurl
 hi SpellRare guifg=#d3869b guibg=NONE guisp=#d3869b gui=undercurl
 hi Statement guifg=#ea6962 guibg=NONE guisp=NONE gui=NONE
-hi StatusLine guifg=#504945 guibg=#e5d2aa guisp=NONE gui=reverse
+hi WinSeparator guifg=#504945 guibg=NONE guisp=NONE gui=NONE
+hi StatusLine guifg=#504945 guibg=#ebdbb2 guisp=NONE gui=reverse
 hi StatusLineBranch guifg=#504945 guibg=#a89984 guisp=NONE gui=reverse
 hi StatusLineNC guifg=#504945 guibg=#a89984 guisp=NONE gui=reverse
 hi StorageClass guifg=#e78a4e guibg=NONE guisp=NONE gui=NONE
@@ -242,11 +253,11 @@ hi Structure guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
 hi TabLine guifg=#7c6f64 guibg=#3c3836 guisp=NONE gui=NONE
 hi TabLineFill guifg=#7c6f64 guibg=#3c3836 guisp=NONE gui=NONE
 hi TabLineSel guifg=#a9b665 guibg=#3c3836 guisp=NONE gui=NONE
-hi TermCursorNC guifg=#3c3836 guibg=#e5d2aa guisp=NONE gui=NONE
-hi Terminal guifg=#e5d2aa guibg=#282828 guisp=NONE gui=NONE
+hi TermCursorNC guifg=#3c3836 guibg=#ebdbb2 guisp=NONE gui=NONE
+hi Terminal guifg=#ebdbb2 guibg=#282828 guisp=NONE gui=NONE
 hi Title guifg=#a9b665 guibg=NONE guisp=NONE gui=bold
 hi Todo guifg=fg guibg=#282828 guisp=NONE gui=bold
-hi ToolbarButton guifg=#e5d2aa guibg=#665c54 guisp=NONE gui=bold
+hi ToolbarButton guifg=#fbf1c7 guibg=#665c54 guisp=NONE gui=bold
 hi ToolbarLine guifg=NONE guibg=#665c54 guisp=NONE gui=NONE
 hi Type guifg=#d8a657 guibg=NONE guisp=NONE gui=NONE
 hi Typedef guifg=#d8a657 guibg=NONE guisp=NONE gui=NONE
@@ -330,7 +341,7 @@ if has('gui_running')
   hi cssTransformProp guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi cssTransitionProp guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi cssUIProp guifg=#d8a657 guibg=NONE guisp=NONE gui=NONE
-  hi cssVendor guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi cssVendor guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi diffAdded guifg=#a9b665 guibg=NONE guisp=NONE gui=NONE
   hi diffChanged guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi diffFile guifg=#e78a4e guibg=NONE guisp=NONE gui=NONE
@@ -360,16 +371,16 @@ if has('gui_running')
   hi haskellDefault guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi haskellDelimiter guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
   hi haskellDeriving guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
-  hi haskellIdentifier guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi haskellIdentifier guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi haskellImportKeywords guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi haskellLet guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi haskellNumber guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
   hi haskellOperators guifg=#7daea3 guibg=NONE guisp=NONE gui=NONE
   hi haskellPragma guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
-  hi haskellSeparator guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi haskellSeparator guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi haskellStatement guifg=#e78a4e guibg=NONE guisp=NONE gui=NONE
   hi haskellString guifg=#a9b665 guibg=NONE guisp=NONE gui=NONE
-  hi haskellType guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi haskellType guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi haskellWhere guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi htmlArg guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi htmlEndTag guifg=#7daea3 guibg=NONE guisp=NONE gui=NONE
@@ -378,8 +389,8 @@ if has('gui_running')
   hi htmlScriptTag guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
   hi htmlSpecialChar guifg=#e78a4e guibg=NONE guisp=NONE gui=NONE
   hi htmlTag guifg=#7daea3 guibg=NONE guisp=NONE gui=NONE
-  hi htmlTagN guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi htmlTagName guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi htmlTagN guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi htmlTagName guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi htmlUnderline guifg=fg guibg=#282828 guisp=NONE gui=underline
   hi htmlUnderlineItalic guifg=fg guibg=#282828 guisp=NONE gui=underline
   hi javaAnnotation guifg=#7daea3 guibg=NONE guisp=NONE gui=NONE
@@ -392,7 +403,7 @@ if has('gui_running')
   hi javaParen3 guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
   hi javaParen4 guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
   hi javaParen5 guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
-  hi javaScriptBraces guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi javaScriptBraces guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi javaScriptFunction guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi javaScriptIdentifier guifg=#ea6962 guibg=NONE guisp=NONE gui=NONE
   hi javaScriptMember guifg=#7daea3 guibg=NONE guisp=NONE gui=NONE
@@ -400,60 +411,60 @@ if has('gui_running')
   hi javaScriptNumber guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
   hi javaScriptParens guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
   hi javaVarArg guifg=#a9b665 guibg=NONE guisp=NONE gui=NONE
-  hi javascriptArrayMethod guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi javascriptArrayStaticMethod guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi javascriptArrayMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi javascriptArrayStaticMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi javascriptArrowFunc guifg=#d8a657 guibg=NONE guisp=NONE gui=NONE
   hi javascriptAsyncFunc guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi javascriptAsyncFuncKeyword guifg=#ea6962 guibg=NONE guisp=NONE gui=NONE
   hi javascriptAwaitFuncKeyword guifg=#ea6962 guibg=NONE guisp=NONE gui=NONE
-  hi javascriptBOMLocationMethod guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi javascriptBOMNavigatorProp guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi javascriptBOMWindowMethod guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi javascriptBOMWindowProp guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi javascriptBrackets guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi javascriptCacheMethod guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi javascriptBOMLocationMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi javascriptBOMNavigatorProp guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi javascriptBOMWindowMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi javascriptBOMWindowProp guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi javascriptBrackets guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi javascriptCacheMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi javascriptClassExtends guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi javascriptClassKeyword guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi javascriptClassName guifg=#d8a657 guibg=NONE guisp=NONE gui=NONE
   hi javascriptClassStatic guifg=#e78a4e guibg=NONE guisp=NONE gui=NONE
   hi javascriptClassSuper guifg=#e78a4e guibg=NONE guisp=NONE gui=NONE
   hi javascriptClassSuperName guifg=#d8a657 guibg=NONE guisp=NONE gui=NONE
-  hi javascriptDOMDocMethod guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi javascriptDOMDocProp guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi javascriptDOMElemAttrs guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi javascriptDOMEventMethod guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi javascriptDOMNodeMethod guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi javascriptDOMStorageMethod guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi javascriptDateMethod guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi javascriptDOMDocMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi javascriptDOMDocProp guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi javascriptDOMElemAttrs guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi javascriptDOMEventMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi javascriptDOMNodeMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi javascriptDOMStorageMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi javascriptDateMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi javascriptDefault guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi javascriptDocNamedParamType guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
   hi javascriptDocNotation guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
   hi javascriptDocParamName guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
   hi javascriptDocParamType guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
   hi javascriptDocTags guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
-  hi javascriptEndColons guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi javascriptEndColons guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi javascriptExceptions guifg=#ea6962 guibg=NONE guisp=NONE gui=NONE
   hi javascriptExport guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi javascriptForOperator guifg=#ea6962 guibg=NONE guisp=NONE gui=NONE
-  hi javascriptFuncArg guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi javascriptFuncArg guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi javascriptFuncKeyword guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi javascriptGlobal guifg=#d8a657 guibg=NONE guisp=NONE gui=NONE
-  hi javascriptGlobalMethod guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi javascriptHeadersMethod guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi javascriptGlobalMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi javascriptHeadersMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi javascriptIdentifier guifg=#e78a4e guibg=NONE guisp=NONE gui=NONE
   hi javascriptImport guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
-  hi javascriptLabel guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi javascriptLogicSymbols guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi javascriptMathStaticMethod guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi javascriptLabel guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi javascriptLogicSymbols guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi javascriptMathStaticMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi javascriptMessage guifg=#ea6962 guibg=NONE guisp=NONE gui=NONE
-  hi javascriptNodeGlobal guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi javascriptObjectLabel guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi javascriptNodeGlobal guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi javascriptObjectLabel guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi javascriptOperator guifg=#ea6962 guibg=NONE guisp=NONE gui=NONE
-  hi javascriptPropertyName guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi javascriptStringMethod guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi javascriptPropertyName guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi javascriptStringMethod guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi javascriptTemplateSB guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
-  hi javascriptTemplateSubstitution guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi javascriptURLUtilsProp guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi javascriptTemplateSubstitution guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi javascriptURLUtilsProp guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi javascriptVariable guifg=#e78a4e guibg=NONE guisp=NONE gui=NONE
   hi javascriptYield guifg=#ea6962 guibg=NONE guisp=NONE gui=NONE
   hi jsBracket guifg=#ea6962 guibg=NONE guisp=NONE gui=NONE
@@ -470,8 +481,8 @@ if has('gui_running')
   hi jsFuncParens guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
   hi jsFunction guifg=#a9b665 guibg=NONE guisp=NONE gui=NONE
   hi jsFunctionKey guifg=#a9b665 guibg=NONE guisp=NONE gui=NONE
-  hi jsGlobalNodeObjects guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi jsGlobalObjects guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi jsGlobalNodeObjects guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi jsGlobalObjects guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi jsImport guifg=#ea6962 guibg=NONE guisp=NONE gui=NONE
   hi jsModuleKeyword guifg=#7daea3 guibg=NONE guisp=NONE gui=NONE
   hi jsNull guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
@@ -490,16 +501,16 @@ if has('gui_running')
   hi jsThis guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
   hi jsUndefined guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
   hi jsVariableDef guifg=#d8a657 guibg=NONE guisp=NONE gui=NONE
-  hi jsonBraces guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi jsonBraces guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi jsonKeyword guifg=#a9b665 guibg=NONE guisp=NONE gui=NONE
   hi jsonQuote guifg=#a9b665 guibg=NONE guisp=NONE gui=NONE
-  hi jsonString guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi jsonString guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi jsxAttrib guifg=#d8a657 guibg=NONE guisp=NONE gui=NONE
-  hi jsxAttributeBraces guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi jsxAttributeBraces guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi jsxCloseString guifg=#7daea3 guibg=NONE guisp=NONE gui=NONE
   hi jsxCloseTag guifg=#7daea3 guibg=NONE guisp=NONE gui=NONE
   hi jsxComponentName guifg=#d8a657 guibg=NONE guisp=NONE gui=NONE
-  hi jsxDot guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi jsxDot guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi jsxElseOperator guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi jsxEndString guifg=#7daea3 guibg=NONE guisp=NONE gui=NONE
   hi jsxEndTag guifg=#7daea3 guibg=NONE guisp=NONE gui=NONE
@@ -543,17 +554,17 @@ if has('gui_running')
   hi purescriptAsKeyword guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi purescriptBacktick guifg=#e78a4e guibg=NONE guisp=NONE gui=NONE
   hi purescriptConditional guifg=#e78a4e guibg=NONE guisp=NONE gui=NONE
-  hi purescriptConstructor guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi purescriptConstructor guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi purescriptDelimiter guifg=#a89984 guibg=NONE guisp=NONE gui=NONE
-  hi purescriptFunction guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi purescriptFunction guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi purescriptHidingKeyword guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi purescriptImportKeyword guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi purescriptModuleKeyword guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
-  hi purescriptModuleName guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi purescriptModuleName guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi purescriptOperator guifg=#7daea3 guibg=NONE guisp=NONE gui=NONE
   hi purescriptStructure guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
-  hi purescriptType guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi purescriptTypeVar guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi purescriptType guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi purescriptTypeVar guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi purescriptWhere guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi pythonBoolean guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
   hi pythonBuiltin guifg=#e78a4e guibg=NONE guisp=NONE gui=NONE
@@ -573,32 +584,32 @@ if has('gui_running')
   hi pythonRun guifg=#7daea3 guibg=NONE guisp=NONE gui=NONE
   hi rubyInterpolationDelimiter guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi rubyStringDelimiter guifg=#a9b665 guibg=NONE guisp=NONE gui=NONE
-  hi scalaCapitalWord guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi scalaCaseFollowing guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi scalaInstanceDeclaration guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi scalaCapitalWord guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi scalaCaseFollowing guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi scalaInstanceDeclaration guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi scalaInterpolation guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi scalaKeyword guifg=#ea6962 guibg=NONE guisp=NONE gui=NONE
   hi scalaKeywordModifier guifg=#ea6962 guibg=NONE guisp=NONE gui=NONE
-  hi scalaNameDefinition guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi scalaOperator guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi scalaNameDefinition guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi scalaOperator guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi scalaSpecial guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi scalaTypeDeclaration guifg=#d8a657 guibg=NONE guisp=NONE gui=NONE
-  hi scalaTypeExtension guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi scalaTypeExtension guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi scalaTypeTypePostDeclaration guifg=#d8a657 guibg=NONE guisp=NONE gui=NONE
-  hi typeScriptAjaxMethods guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi typeScriptBraces guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi typeScriptDOMObjects guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi typeScriptAjaxMethods guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi typeScriptBraces guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi typeScriptDOMObjects guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi! link typeScriptDocParam Comment
   hi! link typeScriptDocSeeTag Comment
   hi! link typeScriptDocTags vimCommentTitle
-  hi typeScriptEndColons guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi typeScriptEndColons guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi typeScriptFuncKeyword guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
-  hi typeScriptGlobalObjects guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-  hi typeScriptHtmlElemProperties guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi typeScriptGlobalObjects guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
+  hi typeScriptHtmlElemProperties guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi typeScriptIdentifier guifg=#e78a4e guibg=NONE guisp=NONE gui=NONE
   hi typeScriptInterpolationDelimiter guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
   hi typeScriptLabel guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
-  hi typeScriptLogicSymbols guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
+  hi typeScriptLogicSymbols guifg=#ebdbb2 guibg=NONE guisp=NONE gui=NONE
   hi typeScriptNull guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
   hi typeScriptOpSymbols guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
   hi typeScriptParens guifg=#bdae93 guibg=NONE guisp=NONE gui=NONE
