@@ -1,12 +1,12 @@
-local lsp, M = require('lspconfig'), {}
+local M = {}
 
 -- base settings for lsp
 local base = function(opts)
   opts = opts or {}
   opts.on_attach = function(_, bufnr)
-    for _, group in ipairs(vim.fn.getcompletion('@lsp', 'highlight')) do
-      vim.api.nvim_set_hl(0, group, {})
-    end
+    -- for _, group in ipairs(vim.fn.getcompletion('@lsp', 'highlight')) do
+    --   vim.api.nvim_set_hl(0, group, {})
+    -- end
     local x = { buffer = bufnr, noremap = true }
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, x)
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, x)
@@ -17,6 +17,28 @@ local base = function(opts)
   end
   return opts
 end
+
+local lsp_add = setmetatable({}, {
+  __newindex = function(table, key, value)
+    vim.lsp.config(key, base(value))
+    vim.lsp.enable(key)
+  end,
+})
+
+lsp_add['rust_analyzer'] = {
+  filetypes = { 'rust' },
+  cmd = { 'rust-analyzer' },
+  root_markers = { 'Cargo.toml', 'rust-project.json' },
+  settings = {
+    ['rust-analyzer'] = {
+      cargo = { features = 'all' },
+      imports = { granularity = { group = 'item' } },
+    },
+  },
+}
+
+return M
+--[[
 
 M.matlab_ls = function()
   lsp.matlab_ls.setup {
@@ -162,7 +184,4 @@ M.java = function()
     init_options = { bundles = {} },
   })
 end
-
-M.base = base
-
-return M
+]]

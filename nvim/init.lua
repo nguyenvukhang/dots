@@ -1,4 +1,4 @@
--- 'hrsh7th/nvim-cmp'
+require("brew.lsp")
 require('brew.lazy').setup {
   'nvim-lua/plenary.nvim',
   'tpope/vim-surround',
