@@ -29,7 +29,7 @@ local base = function(opts)
 end
 
 local lsp_add = setmetatable({}, {
-  __newindex = function(table, key, value)
+  __newindex = function(_, key, value)
     vim.lsp.config(key, base(value))
     vim.lsp.enable(key)
   end,
@@ -41,10 +41,37 @@ lsp_add['rust_analyzer'] = {
   cmd = { 'rust-analyzer' },
   root_markers = { 'Cargo.toml', 'rust-project.json' },
   settings = {
-    cargo = { features = 'all' },
-    imports = { granularity = { group = 'item' } },
+    ['rust-analyzer'] = {
+      cargo = { features = 'all' },
+      imports = { granularity = { group = 'item' } },
+    },
   },
 }
+
+lsp_add['python'] = {
+  filetypes = { 'python' },
+  cmd = { 'pyright-langserver', '--stdio' },
+  root_markers = { '.git' },
+  settings = {
+    python = {
+      analysis = {
+        useLibraryCodeForTypes = true,
+      },
+    },
+  },
+}
+
+-- lsp_add['python'] = {
+--   filetypes = { 'python' },
+--   cmd = { 'pyright' },
+--   settings = {
+--     python = {
+--       analysis = {
+--         useLibraryCodeForTypes = true,
+--       },
+--     },
+--   },
+-- }
 
 lsp_add['lua'] = {
   filetypes = { 'lua' },

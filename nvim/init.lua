@@ -182,24 +182,24 @@ require('brew.lazy').setup {
       require('nvim_comment').setup { create_mappings = false }
     end,
   },
-  -- {
-  --   'nvim-treesitter/nvim-treesitter',
-  --   config = function()
-  --     local languages = { 'latex' }
-  --     -- javascript, typescript, c, lua, rust, tsx, css, astro, java,
-  --     -- latex, markdown, markdown_inline, python, swift
-  --     require('nvim-treesitter.configs').setup {
-  --       highlight = {
-  --         enable = true,
-  --         disable = function(l) return not vim.tbl_contains(languages, l) end,
-  --         additional_vim_regex_highlighting = false,
-  --       },
-  --       ensure_installed = languages,
-  --     }
-  --     -- local p_config = require("nvim-treesitter.parsers").get_parser_config()
-  --     -- print(vim.inspect(require("nvim-treesitter.parsers")))
-  --   end,
-  -- },
+  {
+    'nvim-treesitter/nvim-treesitter',
+    config = function()
+      local languages = { 'latex' }
+      -- javascript, typescript, c, lua, rust, tsx, css, astro, java,
+      -- latex, markdown, markdown_inline, python, swift
+      require('nvim-treesitter.configs').setup {
+        highlight = {
+          enable = true,
+          disable = function(l) return not vim.tbl_contains(languages, l) end,
+          additional_vim_regex_highlighting = false,
+        },
+        ensure_installed = languages,
+      }
+      -- local p_config = require("nvim-treesitter.parsers").get_parser_config()
+      -- print(vim.inspect(require("nvim-treesitter.parsers")))
+    end,
+  },
   {
     'nguyenvukhang/lean.nvim',
     -- tag = 'nvim-0.9',
@@ -236,13 +236,20 @@ require('brew.lazy').setup {
   },
   {
     'nvim-mini/mini.pairs',
-    config = function() require('mini.pairs').setup() end,
+    config = function()
+      require('mini.pairs').setup {
+        mappings = {
+          ['$'] = { action = 'open', pair = '$$', neigh_pattern = '[^\\].' },
+        },
+      }
+    end,
   },
   {
     'folke/noice.nvim',
     event = 'VeryLazy',
     config = function()
       require('noice').setup {
+        notify = { enabled = false },
         cmdline = { enabled = false },
         messages = { enabled = false },
         lsp = {
