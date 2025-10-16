@@ -235,12 +235,40 @@ require('brew.lazy').setup {
     end,
   },
   {
+    'windwp/nvim-autopairs',
+    enabled = false,
+    config = function()
+      local npairs = require('nvim-autopairs')
+      -- local cond = require('nvim-autopairs.conds')
+      -- local Rule = require('nvim-autopairs.rule')
+      npairs.setup()
+      npairs.get_rules("'")[1].not_filetypes = { 'lean', 'rust' }
+    end,
+    -- use opts = {} for passing setup options
+    -- this is equivalent to setup({}) function
+  },
+  {
     'nvim-mini/mini.pairs',
     config = function()
-      require('mini.pairs').setup {
+      local mini_pairs = require('mini.pairs')
+      mini_pairs.setup {
         mappings = {
-          ['$'] = { action = 'open', pair = '$$', neigh_pattern = '[^\\].' },
+          ['$'] = {
+            action = 'closeopen',
+            pair = '$$',
+            neigh_pattern = '[^\\].',
+          },
         },
+      }
+      require('brew').autocmd {
+        pattern = { '*.lean' },
+        callback = function()
+          -- Ugly hack but I guess it works.
+          vim.keymap.set('i', "'", "'", { buffer = true })
+          -- local bufnr = vim.api.nvim_get_current_buf()
+          -- mini_pairs.unmap_buf(bufnr, 'i', "'", "''")
+          -- mini_pairs.unmap('i', "'", "''")
+        end,
       }
     end,
   },
@@ -261,30 +289,6 @@ require('brew.lazy').setup {
         },
         presets = { lsp_doc_border = false },
       }
-    end,
-  },
-  -- {
-  --   'windwp/nvim-autopairs',
-  --   config = function()
-  --     local np, Rule = require('nvim-autopairs'), require('nvim-autopairs.rule')
-  --     np.setup()
-  --     np.add_rules {
-  --       Rule('$', '$', { 'tex', 'markdown' }):with_move(
-  --         function(o) return o.next_char == o.char end
-  --       ),
-  --     }
-  --     -- Disable '' pair on LEAN files because it means "prime".
-  --     np.get_rules("'")[1].not_filetypes = { 'lean', 'rust' }
-  --   end,
-  -- },
-  {
-    'sainnhe/gruvbox-material',
-    config = function()
-      -- Optionally configure and load the colorscheme
-      -- directly inside the plugin declaration.
-      -- vim.g.everforest_enable_italic = true
-      vim.g.gruvbox_material_transparent_background = true
-      -- vim.cmd.colorscheme('gruvbox-material')
     end,
   },
 }

@@ -34,7 +34,6 @@ local lsp_add = setmetatable({}, {
     vim.lsp.enable(key)
   end,
 })
-local lazy_path = vim.fn.stdpath('data') .. '/lazy'
 
 lsp_add['rust_analyzer'] = {
   filetypes = { 'rust' },
@@ -73,6 +72,7 @@ lsp_add['python'] = {
 --   },
 -- }
 
+local lazy_path = vim.fn.stdpath('data') .. '/lazy'
 lsp_add['lua'] = {
   filetypes = { 'lua' },
   cmd = { 'lua-language-server' },
