@@ -60,25 +60,12 @@ lsp_add['python'] = {
   },
 }
 
--- lsp_add['python'] = {
---   filetypes = { 'python' },
---   cmd = { 'pyright' },
---   settings = {
---     python = {
---       analysis = {
---         useLibraryCodeForTypes = true,
---       },
---     },
---   },
--- }
-
 local lazy_path = vim.fn.stdpath('data') .. '/lazy'
 lsp_add['lua'] = {
   filetypes = { 'lua' },
   cmd = { 'lua-language-server' },
   settings = {
     Lua = {
-      runtime = { version = 'LuaJIT', path = luapath },
       diagnostics = { globals = { 'vim' } },
       workspace = {
         library = {
@@ -94,6 +81,11 @@ lsp_add['lua'] = {
       telemetry = { enable = false },
     },
   },
+}
+
+lsp_add['clang'] = {
+  filetypes = { 'c', 'cpp' },
+  cmd = { 'clangd' },
 }
 
 return { base = base }

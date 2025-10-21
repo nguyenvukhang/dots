@@ -66,6 +66,7 @@ require('brew.lazy').setup {
     config = function()
       local nt = require('nvim-toggler')
       local inverses = {
+        ['₂'] = '₁',
         ['- [ ]'] = '- [x]',
         ['shift'] = 'unshift',
         ['next'] = 'prev',
@@ -202,7 +203,9 @@ require('brew.lazy').setup {
   },
   {
     'nguyenvukhang/lean.nvim',
-    -- tag = 'nvim-0.9',
+    -- tag = 'v2024.10.1',
+    -- 'Julian/lean.nvim',
+    -- tag = 'v2024.10.1',
     dependencies = {
       'neovim/nvim-lspconfig',
       'nvim-lua/plenary.nvim',
