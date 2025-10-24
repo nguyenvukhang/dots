@@ -63,6 +63,7 @@ styles[1].print()
 # print("modify_font cell_height +0px")
 
 fonts = (
+    # macos Stuff
     Font(
         ("JetBrains Mono NL", 14),
         ["cell_width 95%"],
@@ -88,6 +89,18 @@ fonts = (
         None,
         ["U+1D4DD JuliaMono"],
     ),
+    Font(
+        ("JetBrains Mono NL Light", 11),
+        [],
+        # ["cell_width 110%"],
+        ["U+1D4DD JuliaMono"],
+    ),
+    Font(
+        ("CommitMono Regular", 11),
+        [],
+        # ["cell_width 110%"],
+        ["U+1D4DD JuliaMono"],
+    ),
 )
-x = True
-fonts[0 if x else 4].print()
+x = False
+fonts[0 if x else -1].print()

@@ -88,6 +88,11 @@ lsp_add['clang'] = {
   cmd = { 'clangd' },
 }
 
+lsp_add['zls'] = {
+  filetypes = { 'zig' },
+  cmd = { 'zls' },
+}
+
 return { base = base }
 --[[
 

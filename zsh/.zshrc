@@ -59,14 +59,14 @@ prepend_to_path_if_exists $HOME/.local/luals/bin
 prepend_to_path_if_exists /usr/local/cuda/bin
 prepend_to_path_if_exists $HOME/.elan/bin
 prepend_to_path_if_exists /usr/local/go/bin
-prepend_to_path_if_exists $HOME/go/bin
+prepend_to_path_if_exists $HOME/.local/go/bin
+prepend_to_path_if_exists $HOME/.local/alatty/bin
 prepend_to_path_if_exists $HOME/.jenv/bin
 prepend_to_path_if_exists $HOMEBREW_PREFIX/opt/ruby/bin
 prepend_to_path_if_exists $HOMEBREW_PREFIX/opt/swift/bin
 prepend_to_path_if_exists $HOMEBREW_PREFIX/bin
 prepend_to_path_if_exists $HOME/.zvm/bin
-prepend_to_path_if_exists $HOME/.local/memes/bin
-prepend_to_path_if_exists $HOME/.local/src/zig/zig-aarch64-macos-0.14.1
+prepend_to_path_if_exists $HOME/.local/zig
 export PATH
 
 #  ///////////////////////////////////////////////////////////////////
