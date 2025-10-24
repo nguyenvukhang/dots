@@ -55,6 +55,7 @@ fi
 
 PATH=$HOME/.local/bin:/usr/local/bin:$PATH
 prepend_to_path_if_exists /usr/lib/wsl/lib
+prepend_to_path_if_exists $HOME/.local/luals/bin
 prepend_to_path_if_exists /usr/local/cuda/bin
 prepend_to_path_if_exists $HOME/.elan/bin
 prepend_to_path_if_exists /usr/local/go/bin
