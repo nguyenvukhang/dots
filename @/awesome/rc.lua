@@ -58,7 +58,7 @@ end
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "x-terminal-emulator"
+terminal = "ghostty"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -272,7 +272,7 @@ awful.screen.connect_for_each_screen(function(s)
 			mykeyboardlayout,
 			wibox.widget.systray(),
 			mytextclock,
-			-- s.mylayoutbox,
+			s.mylayoutbox,
 		},
 	})
 end)
@@ -307,7 +307,8 @@ globalkeys = gears.table.join(
 
 	-- Prompt
 	awful.key({ modkey }, "space", function()
-		awful.screen.focused().mypromptbox:run()
+		awful.spawn("rofi -show run")
+		-- awful.screen.focused().mypromptbox:run()
 	end, { description = "run prompt", group = "launcher" }),
 
 	-- Menubar
@@ -421,8 +422,8 @@ awful.rules.rules = {
 	{ rule_any = { type = { "normal", "dialog" } }, properties = { titlebars_enabled = false } },
 
 	-- Set Firefox to always map on the tag named "2" on screen 1.
-	-- { rule = { class = "Firefox" },
-	--   properties = { screen = 1, tag = "2" } },
+	{ rule = { class = "firefox" },
+	  properties = { screen = 1, tag = "2", maximized = false } },
 }
 -- }}}
 
