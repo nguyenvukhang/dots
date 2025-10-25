@@ -1,5 +1,12 @@
 background = #282c34
-font-size = 14
+font-size = 10.5
+# font-size = 14 # Macos
+
+font-family             = "JetBrains Mono NL"
+font-family-bold        = "JetBrains Mono NL"
+font-family-italic      = "JetBrains Mono NL"
+font-family-bold-italic = "JetBrains Mono NL"
+
 font-feature = -calt, -liga, -dlig
 font-thicken = true
 font-thicken-strength = 200
@@ -7,9 +14,10 @@ quit-after-last-window-closed = true
 
 # Disable all the other nonsense
 font-synthetic-style   = false
-font-style-bold        = false
-font-style-italic      = false
-font-style-bold-italic = false
+font-style             = Medium
+font-style-bold        = Medium
+font-style-italic      = Medium
+font-style-bold-italic = Medium
 window-inherit-working-directory = true
 working-directory = home
 window-save-state = never
@@ -35,6 +43,7 @@ title = Ghostty
 window-padding-x = 6,6
 window-padding-y = 0,6
 window-new-tab-position = end
+window-decoration = none
 cursor-style = block
 
 # Gruvbox
