@@ -2,6 +2,8 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
+require("brew")
+
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -55,10 +57,10 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init(gears.filesystem.get_configuration_dir() .. "brew.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "ghostty"
+terminal = "alatty"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -71,22 +73,7 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-	-- awful.layout.suit.floating,
 	awful.layout.suit.tile,
-	-- awful.layout.suit.tile.left,
-	-- awful.layout.suit.tile.bottom,
-	-- awful.layout.suit.tile.top,
-	-- awful.layout.suit.fair,
-	-- awful.layout.suit.fair.horizontal,
-	-- awful.layout.suit.spiral,
-	-- awful.layout.suit.spiral.dwindle,
-	-- awful.layout.suit.max,
-	-- awful.layout.suit.max.fullscreen,
-	-- awful.layout.suit.magnifier,
-	-- awful.layout.suit.corner.nw,
-	-- awful.layout.suit.corner.ne,
-	-- awful.layout.suit.corner.sw,
-	-- awful.layout.suit.corner.se,
 }
 -- }}}
 
@@ -145,24 +132,24 @@ mytextclock = wibox.widget.textclock()
 local taglist_buttons = gears.table.join(
 	awful.button({}, 1, function(t)
 		t:view_only()
-	end),
-	awful.button({ modkey }, 1, function(t)
-		if client.focus then
-			client.focus:move_to_tag(t)
-		end
-	end),
-	awful.button({}, 3, awful.tag.viewtoggle),
-	awful.button({ modkey }, 3, function(t)
-		if client.focus then
-			client.focus:toggle_tag(t)
-		end
-	end),
-	awful.button({}, 4, function(t)
-		awful.tag.viewnext(t.screen)
-	end),
-	awful.button({}, 5, function(t)
-		awful.tag.viewprev(t.screen)
 	end)
+	-- awful.button({ modkey }, 1, function(t)
+	-- 	if client.focus then
+	-- 		client.focus:move_to_tag(t)
+	-- 	end
+	-- end),
+	-- awful.button({}, 3, awful.tag.viewtoggle),
+	-- awful.button({ modkey }, 3, function(t)
+	-- 	if client.focus then
+	-- 		client.focus:toggle_tag(t)
+	-- 	end
+	-- end),
+	-- awful.button({}, 4, function(t)
+	-- 	awful.tag.viewnext(t.screen)
+	-- end),
+	-- awful.button({}, 5, function(t)
+	-- 	awful.tag.viewprev(t.screen)
+	-- end)
 )
 
 local tasklist_buttons = gears.table.join(

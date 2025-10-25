@@ -60,7 +60,7 @@ prepend_to_path_if_exists /usr/local/cuda/bin
 prepend_to_path_if_exists $HOME/.elan/bin
 prepend_to_path_if_exists /usr/local/go/bin
 prepend_to_path_if_exists $HOME/.local/go/bin
-prepend_to_path_if_exists $HOME/.local/alatty/bin
+# prepend_to_path_if_exists $HOME/.local/alatty/bin
 prepend_to_path_if_exists $HOME/.jenv/bin
 prepend_to_path_if_exists $HOMEBREW_PREFIX/opt/ruby/bin
 prepend_to_path_if_exists $HOMEBREW_PREFIX/opt/swift/bin
