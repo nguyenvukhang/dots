@@ -421,5 +421,15 @@ fi
 
 # Pdf search tool for linux
 pdf() {
-
+  local SEARCH_DIRS=
+  local PDF_FILE=$(fd --no-ignore -e pdf . \
+    $HOME/uni \
+    $HOME/repos/books \
+    $HOME/repos/tex \
+    | fzf)
+  if [ -z $PDF_FILE ]; then
+    return
+  fi
+  nohup zathura $PDF_FILE &
+  disown
 }

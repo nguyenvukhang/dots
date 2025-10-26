@@ -6,6 +6,7 @@ set highlight-color "#8ecae6"
 unmap r
 unmap b
 unmap f
+unmap q
 
 map t toggle_index
 map [index] t toggle_index

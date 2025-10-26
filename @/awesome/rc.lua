@@ -24,7 +24,7 @@ require("awful.hotkeys_popup.keys")
 local debian = require("debian.menu")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
 
-local TAGLIST = { " 1 ", " 2 ", " 3 ", " 4 " }
+local TAGLIST = { " 1 ", " 2 ", " 3 ", " 4 ", " 5 " }
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -290,7 +290,7 @@ local clientkeys = gears.table.join(
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, 4 do
+for i = 1, #TAGLIST do
 	globalkeys = gears.table.join(
 		globalkeys,
 		-- View tag only.
@@ -389,8 +389,10 @@ awful.rules.rules = {
 
 	-- Set Firefox to always map on the tag named "2" on screen 1.
 	{ rule = { class = "firefox" }, properties = { screen = 1, tag = TAGLIST[2], maximized = false } },
+	{ rule = { class = "librewolf" }, properties = { screen = 1, tag = TAGLIST[2], maximized = false } },
 
 	{ rule = { class = "discord" }, properties = { screen = 1, tag = TAGLIST[3], maximized = false } },
+	{ rule = { class = "Telegram" }, properties = { screen = 1, tag = TAGLIST[3], maximized = false } },
 }
 -- }}}
 
