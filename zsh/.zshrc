@@ -430,6 +430,6 @@ pdf() {
   if [ -z $PDF_FILE ]; then
     return
   fi
-  nohup zathura $PDF_FILE &
+  nohup zathura "$PDF_FILE" </dev/null >/dev/null 2>&1 &
   disown
 }

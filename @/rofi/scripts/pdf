@@ -1,0 +1,15 @@
+#!/bin/sh
+
+zathura_open() {
+  nohup zathura "$1" </dev/null >/dev/null 2>&1 &
+}
+
+if [ ! -z "$1" ]; then
+  zathura_open "$1"
+  exit 0
+fi
+
+fd --no-ignore -e pdf . \
+  $HOME/uni \
+  $HOME/repos/books \
+  $HOME/repos/tex

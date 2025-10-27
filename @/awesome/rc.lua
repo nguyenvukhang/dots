@@ -237,13 +237,9 @@ end)
 -- }}}
 
 -- {{{ Mouse bindings
-root.buttons(gears.table.join(
-	awful.button({}, 3, function()
-		mymainmenu:toggle()
-	end),
-	awful.button({}, 4, awful.tag.viewnext),
-	awful.button({}, 5, awful.tag.viewprev)
-))
+root.buttons(gears.table.join(awful.button({}, 3, function()
+	mymainmenu:toggle()
+end)))
 -- }}}
 
 -- {{{ Key bindings
@@ -271,7 +267,8 @@ local globalkeys = gears.table.join(
 
 	-- Menubar
 	awful.key({ modkey }, "p", function()
-		menubar.show()
+		-- menubar.show()
+		awful.spawn("rofi -show pdf")
 	end, { description = "show the menubar", group = "launcher" })
 )
 
@@ -284,7 +281,14 @@ local clientkeys = gears.table.join(
 	end, { description = "swap with next client by index", group = "client" }),
 	awful.key({ modkey, "Control", "Shift" }, "k", function()
 		awful.client.swap.byidx(-1)
-	end, { description = "swap with previous client by index", group = "client" })
+	end, { description = "swap with previous client by index", group = "client" }),
+
+	awful.key({ modkey, "Control", "Shift" }, "l", function()
+		awful.tag.incmwfact(-0.05)
+	end, { description = "increase master width factor", group = "layout" }),
+	awful.key({ modkey, "Control", "Shift" }, "h", function()
+		awful.tag.incmwfact(0.05)
+	end, { description = "decrease master width factor", group = "layout" })
 )
 
 -- Bind all key numbers to tags.
@@ -391,8 +395,8 @@ awful.rules.rules = {
 	{ rule = { class = "firefox" }, properties = { screen = 1, tag = TAGLIST[2], maximized = false } },
 	{ rule = { class = "librewolf" }, properties = { screen = 1, tag = TAGLIST[2], maximized = false } },
 
-	{ rule = { class = "discord" }, properties = { screen = 1, tag = TAGLIST[3], maximized = false } },
-	{ rule = { class = "Telegram" }, properties = { screen = 1, tag = TAGLIST[3], maximized = false } },
+	{ rule = { class = "discord" }, properties = { screen = 1, tag = TAGLIST[4], maximized = false } },
+	{ rule = { class = "Telegram" }, properties = { screen = 1, tag = TAGLIST[4], maximized = false } },
 }
 -- }}}
 

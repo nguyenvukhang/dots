@@ -19,3 +19,6 @@ map f jumplist forward
 
 map [ jumplist backward
 map ] jumplist forward
+
+map - zoom out
+map = zoom in
