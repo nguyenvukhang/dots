@@ -268,7 +268,7 @@ local globalkeys = gears.table.join(
 	-- Menubar
 	awful.key({ modkey }, "p", function()
 		-- menubar.show()
-		awful.spawn("rofi -show pdf")
+		awful.spawn("rofi -modes pdf -show pdf -matching fuzzy")
 	end, { description = "show the menubar", group = "launcher" })
 )
 

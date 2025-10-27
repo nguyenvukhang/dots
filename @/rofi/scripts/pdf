@@ -1,15 +1,26 @@
-#!/bin/sh
+#!/bin/bash
+
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+LOGFILE=$SCRIPT_DIR/zathura.log
+
+Z_INDEX=
+Z_INDEX+=" -d /home/khang/uni"
+Z_INDEX+=" -d /home/khang/repos/books"
+Z_INDEX+=" -d /home/khang/repos/tex"
 
 zathura_open() {
   nohup zathura "$1" </dev/null >/dev/null 2>&1 &
 }
+PATH=/home/khang/.cargo/bin:$PATH
+export PATH
 
-if [ ! -z "$1" ]; then
-  zathura_open "$1"
-  exit 0
+if [ -z "$1" ]; then
+  zathura-pdf-index ls $Z_INDEX
+else
+  echo "ask: $1" >>$LOGFILE
+  TARGET=$(zathura-pdf-index resolve $Z_INDEX -q "$1")
+  if [ $? = 0 ]; then
+    zathura_open "$TARGET"
+  fi
+  # echo "$TARGET" >>$LOGFILE
 fi
-
-fd --no-ignore -e pdf . \
-  $HOME/uni \
-  $HOME/repos/books \
-  $HOME/repos/tex
