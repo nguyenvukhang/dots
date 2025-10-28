@@ -17,7 +17,6 @@ export PATH
 if [ -z "$1" ]; then
   zathura-pdf-index ls $Z_INDEX
 else
-  echo "ask: $1" >>$LOGFILE
   TARGET=$(zathura-pdf-index resolve $Z_INDEX -q "$1")
   if [ $? = 0 ]; then
     zathura_open "$TARGET"
