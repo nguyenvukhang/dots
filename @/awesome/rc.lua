@@ -24,7 +24,8 @@ require("awful.hotkeys_popup.keys")
 local debian = require("debian.menu")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
 
-local TAGLIST = { " 1 ", " 2 ", " 3 ", " 4 ", " 5 " }
+-- The height of the wibar at the top of the screen.
+local menubar_height = 20
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -72,6 +73,15 @@ local editor_cmd = terminal .. " -e " .. editor
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
 local modkey = "Mod4"
+
+local TAGLIST = {
+	{ title = " 1 ", map_key = "#10" }, -- raw keycode. See `xmodmap -pke | grep 10`.
+	{ title = " 2 ", map_key = "#11" }, -- (the # symbol denotes that it's a raw keycode)
+	{ title = " 3 ", map_key = "#12" },
+	{ title = " 4 ", map_key = "#13" },
+	{ title = " 5 ", map_key = "#14" },
+	{ title = " T ", map_key = "#19" },
+}
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -183,7 +193,11 @@ awful.screen.connect_for_each_screen(function(s)
 	set_wallpaper(s)
 
 	-- Each screen has its own tag table.
-	awful.tag(TAGLIST, s, awful.layout.layouts[1])
+	local taglist = {}
+	for i = 1, #TAGLIST do
+		table.insert(taglist, TAGLIST[i].title)
+	end
+	awful.tag(taglist, s, awful.layout.layouts[1])
 
 	-- Create a taglist widget
 	s.mytaglist = awful.widget.taglist({
@@ -215,7 +229,7 @@ awful.screen.connect_for_each_screen(function(s)
 	})
 
 	-- Create the wibox
-	s.mywibox = awful.wibar({ position = "top", screen = s, height = 18 })
+	s.mywibox = awful.wibar({ position = "top", screen = s, height = menubar_height })
 
 	-- Add widgets to the wibox
 	s.mywibox:setup({
@@ -278,10 +292,10 @@ local clientkeys = gears.table.join(
 	end, { description = "swap with previous client by index", group = "client" }),
 
 	awful.key({ modkey, "Control", "Shift" }, "l", function()
-		awful.tag.incmwfact(-0.05)
+		awful.tag.incmwfact(-0.08)
 	end, { description = "increase master width factor", group = "layout" }),
 	awful.key({ modkey, "Control", "Shift" }, "h", function()
-		awful.tag.incmwfact(0.05)
+		awful.tag.incmwfact(0.08)
 	end, { description = "decrease master width factor", group = "layout" })
 )
 
@@ -289,25 +303,25 @@ local clientkeys = gears.table.join(
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
 for i = 1, #TAGLIST do
+	local z = TAGLIST[i]
 	globalkeys = gears.table.join(
 		globalkeys,
 		-- View tag only.
-		awful.key({ modkey }, "#" .. i + 9, function()
-			local screen = awful.screen.focused()
-			local tag = screen.tags[i]
+		awful.key({ modkey }, z.map_key, function()
+			local tag = awful.screen.focused().tags[i]
 			if tag then
 				tag:view_only()
 			end
-		end, { description = "view tag #" .. i, group = "tag" }),
+		end, { description = "view tag " .. z.title, group = "tag" }),
 		-- Move client to tag.
-		awful.key({ modkey, "Shift" }, "#" .. i + 9, function()
+		awful.key({ modkey, "Shift" }, z.map_key, function()
 			if client.focus then
 				local tag = client.focus.screen.tags[i]
 				if tag then
 					client.focus:move_to_tag(tag)
 				end
 			end
-		end, { description = "move focused client to tag #" .. i, group = "tag" })
+		end, { description = "move focused client to tag " .. z.title, group = "tag" })
 	)
 end
 
@@ -386,11 +400,11 @@ awful.rules.rules = {
 	{ rule_any = { type = { "normal", "dialog" } }, properties = { titlebars_enabled = false } },
 
 	-- Set Firefox to always map on the tag named "2" on screen 1.
-	{ rule = { class = "firefox" }, properties = { screen = 1, tag = TAGLIST[2], maximized = false } },
-	{ rule = { class = "librewolf" }, properties = { screen = 1, tag = TAGLIST[2], maximized = false } },
+	{ rule = { class = "firefox" }, properties = { screen = 1, tag = TAGLIST[2].title, maximized = false } },
+	{ rule = { class = "librewolf" }, properties = { screen = 1, tag = TAGLIST[2].title, maximized = false } },
 
-	{ rule = { class = "discord" }, properties = { screen = 1, tag = TAGLIST[4], maximized = false } },
-	{ rule = { class = "Telegram" }, properties = { screen = 1, tag = TAGLIST[4], maximized = false } },
+	{ rule = { class = "discord" }, properties = { screen = 1, tag = TAGLIST[4].title, maximized = false } },
+	{ rule = { class = "Telegram" }, properties = { screen = 1, tag = TAGLIST[4].title, maximized = false } },
 }
 -- }}}
 
