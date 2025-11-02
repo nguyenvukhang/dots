@@ -394,6 +394,8 @@ knc() {
   killall NotificationCenter
 }
 
+# micromamba create --name ml python=3.10 --yes
+
 # >>> mamba initialize >>>
 # !! Contents within this block are managed by 'mamba init' !!
 export MAMBA_EXE="$HOME/.local/bin/micromamba"
@@ -426,8 +428,8 @@ pdf() {
   local PDF_FILE=$(fd --no-ignore -e pdf . \
     $HOME/uni \
     $HOME/repos/books \
-    $HOME/repos/tex \
-    | fzf)
+    $HOME/repos/tex |
+    fzf)
   if [ -z $PDF_FILE ]; then
     return
   fi
