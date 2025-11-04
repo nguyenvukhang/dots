@@ -39,21 +39,30 @@ require('brew.lazy').setup {
       -- C-k: Toggle signature help (if signature.enabled = true)
       --
       -- See :h blink-cmp-config-keymap for defining your own keymap
-      keymap = { preset = 'default' },
-
-      appearance = {
-        -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-        -- Adjusts spacing to ensure icons are aligned
-        -- nerd_font_variant = 'mono',
+      keymap = {
+        ['<C-l>'] = { 'accept', 'select_and_accept', 'fallback' },
+        ['<C-p>'] = { 'select_prev', 'fallback' },
+        ['<C-n>'] = { 'select_next', 'fallback' },
+        -- preset = 'default'
       },
 
       -- (Default) Only show the documentation popup when manually triggered
       completion = {
         menu = {
           draw = {
-            columns = {
-              { 'label', 'label_description', gap = 1 },
-              { 'kind' },
+            columns = { { 'label' }, { 'kind' } },
+            -- { 'label', 'label_description', gap = 1 },
+            components = {
+              label = {
+                width = { fill = true, max = 36 },
+                text = function(ctx)
+                  if ctx.label_detail == '' then
+                    return ctx.label
+                  else
+                    return ctx.label .. ' ' .. ctx.label_detail
+                  end
+                end,
+              },
             },
           },
         },
