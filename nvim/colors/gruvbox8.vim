@@ -227,6 +227,7 @@ hi NormalMode guifg=#a89984 guibg=#282828 guisp=NONE gui=reverse
 hi Number guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
 hi Operator guifg=#89b48c guibg=NONE guisp=NONE gui=NONE
 hi Pmenu guifg=#ebdbb2 guibg=#504945 guisp=NONE gui=NONE
+hi PmenuKind guifg=#e78a4e guibg=#504945 guisp=NONE gui=NONE
 hi PmenuSbar guifg=NONE guibg=#504945 guisp=NONE gui=NONE
 hi PmenuSel guifg=#504945 guibg=#7daea3 guisp=NONE gui=bold
 hi PmenuThumb guifg=NONE guibg=#7c6f64 guisp=NONE gui=NONE
