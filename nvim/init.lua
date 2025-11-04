@@ -66,6 +66,7 @@ require('brew.lazy').setup {
             },
           },
         },
+        list = { selection = { preselect = false } },
         documentation = { auto_show = true },
       },
 
@@ -398,5 +399,5 @@ require('brew.statusline')
 require('brew.autocmd')
 require('harpoon').my_setup()
 
-vim.cmd('colo gruvbox8')
+vim.cmd('colo gruvbox8_generated')
 -- require('gruvbox').load()
