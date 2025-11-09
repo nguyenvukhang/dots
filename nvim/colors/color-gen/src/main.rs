@@ -1,5 +1,6 @@
 use std::collections::HashSet;
 use std::io::Write;
+use std::path::Path;
 use std::{env, fs};
 
 macro_rules! color {
@@ -75,7 +76,7 @@ fn main() {
     let Some(first_arg) = env::args().skip(1).next() else {
         return println!("Use first arg as the source");
     };
-    let Ok(mut src) = fs::read_to_string(first_arg) else {
+    let Ok(mut src) = fs::read_to_string(&first_arg) else {
         return println!("Something went wrong trying to read the source file");
     };
 
@@ -112,6 +113,10 @@ fn main() {
         let _ = core::mem::replace(&mut src, next);
     }
 
-    let mut f = fs::File::create("output.vim").unwrap();
+    let outfile = Path::new(&first_arg);
+    let file_stem = outfile.file_stem().unwrap().to_str().unwrap().to_string() + "_generated";
+    let outfile = outfile.with_file_name(file_stem).with_extension("vim");
+
+    let mut f = fs::File::create(outfile).unwrap();
     write!(f, "{src}").unwrap();
 }

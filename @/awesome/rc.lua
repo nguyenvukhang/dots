@@ -79,7 +79,6 @@ local TAGLIST = {
 	{ title = " 2 ", map_key = "#11" }, -- (the # symbol denotes that it's a raw keycode)
 	{ title = " 3 ", map_key = "#12" },
 	{ title = " 4 ", map_key = "#13" },
-	{ title = " 5 ", map_key = "#14" },
 	{ title = " T ", map_key = "#19" },
 }
 
@@ -358,6 +357,7 @@ awful.rules.rules = {
 			buttons = clientbuttons,
 			screen = awful.screen.preferred,
 			placement = awful.placement.no_overlap + awful.placement.no_offscreen,
+			maximized = false,
 		},
 	},
 
@@ -403,8 +403,10 @@ awful.rules.rules = {
 	{ rule = { class = "firefox" }, properties = { screen = 1, tag = TAGLIST[2].title, maximized = false } },
 	{ rule = { class = "librewolf" }, properties = { screen = 1, tag = TAGLIST[2].title, maximized = false } },
 
-	{ rule = { class = "discord" }, properties = { screen = 1, tag = TAGLIST[4].title, maximized = false } },
-	{ rule = { class = "Telegram" }, properties = { screen = 1, tag = TAGLIST[4].title, maximized = false } },
+	{ rule = { class = "discord" }, properties = { screen = 1, tag = TAGLIST[3].title, maximized = false } },
+	{ rule = { class = "Telegram" }, properties = { screen = 1, tag = TAGLIST[3].title, maximized = false } },
+
+	{ rule = { class = "obs" }, properties = { screen = 1, tag = TAGLIST[4].title, maximized = false } },
 }
 -- }}}
 
@@ -475,3 +477,5 @@ end)
 -- }}}
 
 awful.spawn("picom")
+awful.spawn("lxpolkit")
+-- awful.spawn("/usr/lib/policykit-1/polkit-agent-helper-1")

@@ -285,7 +285,8 @@ yeet() {
 ed() {
   local t
   case $1 in
-  a) t="$DOTS/@/alacritty/alacritty.yml" ;;
+  # a) t="$DOTS/@/alacritty/alacritty.yml" ;;
+  a) t="$DOTS/@/awesome/rc.lua" ;;
   g) t="$DOTS/@/git/config" ;;
   gh) t="$DOTS/@/ghostty/config" ;;
   k) t="$DOTS/@/alatty/alatty.conf" ;;
@@ -435,4 +436,8 @@ pdf() {
   fi
   nohup zathura "$PDF_FILE" </dev/null >/dev/null 2>&1 &
   disown
+}
+
+obs_fix() {
+  sudo modprobe -r v4l2loopback
 }

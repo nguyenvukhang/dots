@@ -19,25 +19,10 @@ require('brew.lazy').setup {
 
     -- use a release tag to download pre-built binaries
     version = '1.*',
-    -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
-    -- build = 'cargo build --release',
-    -- If you use nix, you can build from source using latest nightly rust with:
-    -- build = 'nix run .#build-plugin',
 
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
-      -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
-      -- 'super-tab' for mappings similar to vscode (tab to accept)
-      -- 'enter' for enter to accept
-      -- 'none' for no mappings
-      --
-      -- All presets have the following mappings:
-      -- C-space: Open menu or open docs if already open
-      -- C-n/C-p or Up/Down: Select next/previous item
-      -- C-e: Hide menu
-      -- C-k: Toggle signature help (if signature.enabled = true)
-      --
       -- See :h blink-cmp-config-keymap for defining your own keymap
       keymap = {
         ['<C-l>'] = { 'accept', 'select_and_accept', 'fallback' },
@@ -46,12 +31,10 @@ require('brew.lazy').setup {
         -- preset = 'default'
       },
 
-      -- (Default) Only show the documentation popup when manually triggered
       completion = {
         menu = {
           draw = {
             columns = { { 'label' }, { 'kind' } },
-            -- { 'label', 'label_description', gap = 1 },
             components = {
               label = {
                 width = { fill = true, max = 36 },
@@ -70,20 +53,11 @@ require('brew.lazy').setup {
         documentation = { auto_show = true },
       },
 
-      -- Default list of enabled providers defined so that you can extend it
-      -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = { default = { 'lsp', 'path', 'buffer' } },
 
-      -- (Default) Rust fuzzy matcher for typo resistance and significantly
-      -- better performance You may use a lua implementation instead by using
-      -- `implementation = "lua"` or fallback to the lua implementation, when
-      -- the Rust fuzzy matcher is not available, by using `implementation =
-      -- "prefer_rust"`
-      --
       -- See the fuzzy documentation for more information
       fuzzy = { implementation = 'prefer_rust_with_warning' },
     },
-    opts_extend = { 'sources.default' },
   },
   {
     'ms-jpq/coq_nvim',
@@ -333,40 +307,38 @@ require('brew.lazy').setup {
     end,
   },
   {
-    'windwp/nvim-autopairs',
-    enabled = false,
+    'm4xshen/autoclose.nvim',
     config = function()
-      local npairs = require('nvim-autopairs')
-      -- local cond = require('nvim-autopairs.conds')
-      -- local Rule = require('nvim-autopairs.rule')
-      npairs.setup()
-      npairs.get_rules("'")[1].not_filetypes = { 'lean', 'rust' }
-    end,
-    -- use opts = {} for passing setup options
-    -- this is equivalent to setup({}) function
-  },
-  {
-    'nvim-mini/mini.pairs',
-    config = function()
-      local mini_pairs = require('mini.pairs')
-      mini_pairs.setup {
-        mappings = {
+      local autoclose = require('autoclose')
+      autoclose.setup {
+        options = {
+          disable_command_mode = true,
+        },
+        keys = {
           ['$'] = {
-            action = 'closeopen',
+            escape = true,
+            close = true,
             pair = '$$',
-            neigh_pattern = '[^\\].',
+            enabled_filetypes = { 'tex' },
+          },
+          ['('] = { escape = false, close = true, pair = '()' },
+          ['['] = { escape = false, close = true, pair = '[]' },
+          ['{'] = { escape = false, close = true, pair = '{}' },
+
+          ['>'] = { escape = true, close = false, pair = '<>' },
+          [')'] = { escape = true, close = false, pair = '()' },
+          [']'] = { escape = true, close = false, pair = '[]' },
+          ['}'] = { escape = true, close = false, pair = '{}' },
+
+          ['"'] = { escape = true, close = true, pair = '""' },
+          ['`'] = { escape = true, close = true, pair = '``' },
+          ["'"] = {
+            escape = true,
+            close = true,
+            pair = "''",
+            disabled_filetypes = { 'lean', 'rust', 'tex' },
           },
         },
-      }
-      require('brew').autocmd {
-        pattern = { '*.lean' },
-        callback = function()
-          -- Ugly hack but I guess it works.
-          vim.keymap.set('i', "'", "'", { buffer = true })
-          -- local bufnr = vim.api.nvim_get_current_buf()
-          -- mini_pairs.unmap_buf(bufnr, 'i', "'", "''")
-          -- mini_pairs.unmap('i', "'", "''")
-        end,
       }
     end,
   },

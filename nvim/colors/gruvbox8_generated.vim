@@ -179,7 +179,7 @@ hi GBOrangeUnderline guifg=#e78a4e guisp=#e78a4e guibg=NONE gui=underline
 " standard colors
 
 hi Normal guifg=#e5d2aa guibg=NONE guisp=NONE gui=NONE
-hi NormalFloat guifg=#e5d2aa guibg=#504945 guisp=NONE gui=NONE
+hi NormalFloat guifg=#e5d2aa guibg=#3c3836 guisp=NONE gui=NONE
 hi FloatBorder guifg=#e5d2aa guibg=#504945 guisp=NONE gui=NONE
 hi Boolean guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
 hi Character guifg=#d3869b guibg=NONE guisp=NONE gui=NONE
