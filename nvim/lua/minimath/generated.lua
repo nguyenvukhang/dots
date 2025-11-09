@@ -2,8 +2,9 @@ local topics = {
   ['notation'] = 'NOT',
   ['set_theory'] = 'SET',
   ['functions'] = 'FUN',
-  ['ring_theory'] = 'RNG',
   ['group_theory'] = 'GRP',
+  ['ring_theory'] = 'RNG',
+  ['module_theory'] = 'MOD',
   ['polynomials'] = 'POL',
   ['real_analysis'] = 'REA',
   ['bartle_sherbert'] = 'BTS',
@@ -34,6 +35,8 @@ local topics = {
   ['exercise'] = 'EXR',
   ['cheatsheet'] = 'CHT',
   ['ma3201'] = 'MA₁',
+  ['ma3209'] = 'MA₉',
+  ['ma3210'] = 'MA₀',
 }
 local marks = {
   'Definition',
