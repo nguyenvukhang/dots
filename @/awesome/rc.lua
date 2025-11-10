@@ -25,6 +25,14 @@ local has_fdo, freedesktop = pcall(require, "freedesktop")
 -- The height of the wibar at the top of the screen.
 local menubar_height = 20
 
+local TAGLIST = {
+	{ title = "  1  ", map_key = "#10" }, -- raw keycode. See `xmodmap -pke | grep 10`.
+	{ title = "  2  ", map_key = "#11" }, -- (the # symbol denotes that it's a raw keycode)
+	{ title = "  3  ", map_key = "#12" },
+	{ title = "  4  ", map_key = "#13" },
+	{ title = "  T  ", map_key = "#19" },
+}
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -66,14 +74,6 @@ local terminal = "alatty"
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 local modkey = "Mod4"
-
-local TAGLIST = {
-	{ title = " 1 ", map_key = "#10" }, -- raw keycode. See `xmodmap -pke | grep 10`.
-	{ title = " 2 ", map_key = "#11" }, -- (the # symbol denotes that it's a raw keycode)
-	{ title = " 3 ", map_key = "#12" },
-	{ title = " 4 ", map_key = "#13" },
-	{ title = " T ", map_key = "#19" },
-}
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
