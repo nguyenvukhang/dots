@@ -66,7 +66,9 @@ lsp_add['lua'] = {
   cmd = { 'lua-language-server' },
   settings = {
     Lua = {
-      diagnostics = { globals = { 'vim' } },
+      diagnostics = {
+        globals = { 'vim', 'awesome', 'client', 'root', 'screen' },
+      },
       workspace = {
         library = {
           [vim.env.VIMRUNTIME .. '/lua'] = true,

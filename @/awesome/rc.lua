@@ -2,8 +2,6 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
-require("brew")
-
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -62,16 +60,11 @@ end
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_configuration_dir() .. "brew.lua")
 
--- This is used later as the default terminal and editor to run.
+-- This is used later as the default terminal to run.
 local terminal = "alatty"
-local editor = os.getenv("EDITOR") or "editor"
-local editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
--- If you do not like this or do not have such a key,
--- I suggest you to remap Mod4 to another key using xmodmap or other tools.
--- However, you can use another modifier like Mod1, but it may interact with others.
 local modkey = "Mod4"
 
 local TAGLIST = {
@@ -99,15 +92,8 @@ local myawesomemenu = {
 			hotkeys_popup.show_help(nil, awful.screen.focused())
 		end,
 	},
-	{ "manual", terminal .. " -e man awesome" },
-	{ "edit config", editor_cmd .. " " .. awesome.conffile },
 	{ "restart", awesome.restart },
-	{
-		"quit",
-		function()
-			awesome.quit()
-		end,
-	},
+	{ "quit", awesome.quit },
 }
 
 local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
@@ -133,14 +119,6 @@ local mytextclock = wibox.widget.textclock()
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(awful.button({}, 1, function(t)
 	t:view_only()
-end))
-
-local tasklist_buttons = gears.table.join(awful.button({}, 1, function(c)
-	if c == client.focus then
-		c.minimized = true
-	else
-		c:emit_signal("request::activate", "tasklist", { raise = true })
-	end
 end))
 
 local function set_wallpaper(s)
@@ -180,7 +158,6 @@ awful.screen.connect_for_each_screen(function(s)
 	s.mytasklist = awful.widget.tasklist({
 		screen = s,
 		filter = awful.widget.tasklist.filter.currenttags,
-		buttons = tasklist_buttons,
 		layout = { layout = wibox.layout.fixed.horizontal },
 		widget_template = {
 			{
@@ -229,37 +206,36 @@ local globalkeys = gears.table.join(
 		if client.focus then
 			client.focus:raise()
 		end
-	end, { description = "go back", group = "client" }),
+	end),
 
 	-- Standard program
 	awful.key({ modkey }, "Return", function()
 		awful.spawn(terminal)
-	end, { description = "open a terminal", group = "launcher" }),
-	awful.key({ modkey, "Control" }, "r", awesome.restart, { description = "reload awesome", group = "awesome" }),
-	awful.key({ modkey, "Shift" }, "q", awesome.quit, { description = "quit awesome", group = "awesome" }),
+	end),
+	awful.key({ modkey, "Control" }, "r", awesome.restart),
+	awful.key({ modkey, "Shift" }, "q", awesome.quit),
 
 	-- Prompt
 	awful.key({ modkey }, "space", function()
 		awful.spawn("rofi -show run")
-	end, { description = "run prompt", group = "launcher" }),
+	end),
 
 	-- Menubar
 	awful.key({ modkey }, "p", function()
-		-- menubar.show()
 		awful.spawn("rofi -modes pdf -show pdf -matching fuzzy -sort -sorting-method fzf")
-	end, { description = "show the menubar", group = "launcher" })
+	end)
 )
 
 local clientkeys = gears.table.join(
 	awful.key({ modkey }, "q", function(c)
 		c:kill()
-	end, { description = "close", group = "client" }),
+	end),
 	awful.key({ modkey, "Control", "Shift" }, "j", function()
 		awful.client.swap.byidx(1)
-	end, { description = "swap with next client by index", group = "client" }),
+	end),
 	awful.key({ modkey, "Control", "Shift" }, "k", function()
 		awful.client.swap.byidx(-1)
-	end, { description = "swap with previous client by index", group = "client" }),
+	end),
 
 	awful.key({ modkey, "Control", "Shift" }, "l", function()
 		awful.tag.incmwfact(-0.08)
@@ -276,14 +252,14 @@ for i = 1, #TAGLIST do
 	local z = TAGLIST[i]
 	globalkeys = gears.table.join(
 		globalkeys,
-		-- View tag only.
+		-- View tag.
 		awful.key({ modkey }, z.map_key, function()
 			local tag = awful.screen.focused().tags[i]
 			if tag then
 				tag:view_only()
 			end
-		end, { description = "view tag " .. z.title, group = "tag" }),
-		-- Move client to tag.
+		end),
+		-- Move focused client to tag.
 		awful.key({ modkey, "Shift" }, z.map_key, function()
 			if client.focus then
 				local tag = client.focus.screen.tags[i]
@@ -291,7 +267,7 @@ for i = 1, #TAGLIST do
 					client.focus:move_to_tag(tag)
 				end
 			end
-		end, { description = "move focused client to tag " .. z.title, group = "tag" })
+		end)
 	)
 end
 
@@ -449,4 +425,3 @@ end)
 
 awful.spawn("picom")
 awful.spawn("lxpolkit")
--- awful.spawn("/usr/lib/policykit-1/polkit-agent-helper-1")
