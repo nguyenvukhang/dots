@@ -85,6 +85,7 @@ local TAGLIST = {
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
 	awful.layout.suit.tile.left,
+	-- awful.layout.suit.max.fullscreen,
 	-- awful.layout.suit.tile.right,
 }
 -- }}}
@@ -130,47 +131,17 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 local mytextclock = wibox.widget.textclock()
 
 -- Create a wibox for each screen and add it
-local taglist_buttons = gears.table.join(
-	awful.button({}, 1, function(t)
-		t:view_only()
-	end)
-	-- awful.button({ modkey }, 1, function(t)
-	-- 	if client.focus then
-	-- 		client.focus:move_to_tag(t)
-	-- 	end
-	-- end),
-	-- awful.button({}, 3, awful.tag.viewtoggle),
-	-- awful.button({ modkey }, 3, function(t)
-	-- 	if client.focus then
-	-- 		client.focus:toggle_tag(t)
-	-- 	end
-	-- end),
-	-- awful.button({}, 4, function(t)
-	-- 	awful.tag.viewnext(t.screen)
-	-- end),
-	-- awful.button({}, 5, function(t)
-	-- 	awful.tag.viewprev(t.screen)
-	-- end)
-)
+local taglist_buttons = gears.table.join(awful.button({}, 1, function(t)
+	t:view_only()
+end))
 
-local tasklist_buttons = gears.table.join(
-	awful.button({}, 1, function(c)
-		if c == client.focus then
-			c.minimized = true
-		else
-			c:emit_signal("request::activate", "tasklist", { raise = true })
-		end
-	end),
-	awful.button({}, 3, function()
-		awful.menu.client_list({ theme = { width = 250 } })
-	end),
-	awful.button({}, 4, function()
-		awful.client.focus.byidx(1)
-	end),
-	awful.button({}, 5, function()
-		awful.client.focus.byidx(-1)
-	end)
-)
+local tasklist_buttons = gears.table.join(awful.button({}, 1, function(c)
+	if c == client.focus then
+		c.minimized = true
+	else
+		c:emit_signal("request::activate", "tasklist", { raise = true })
+	end
+end))
 
 local function set_wallpaper(s)
 	-- Wallpaper
@@ -180,7 +151,7 @@ local function set_wallpaper(s)
 		if type(wallpaper) == "function" then
 			wallpaper = wallpaper(s)
 		end
-		gears.wallpaper.maximized(wallpaper, s, true)
+		gears.wallpaper.maximized(wallpaper, s, false)
 	end
 end
 
@@ -251,7 +222,7 @@ end)
 
 -- {{{ Key bindings
 local globalkeys = gears.table.join(
-	awful.key({ modkey }, "s", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
+	-- awful.key({ modkey }, "s", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
 
 	awful.key({ modkey }, "Tab", function()
 		awful.client.focus.history.previous()
