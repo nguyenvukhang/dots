@@ -213,7 +213,7 @@ local globalkeys = gears.table.join(
 		awful.spawn(terminal)
 	end),
 	awful.key({ modkey, "Control" }, "r", awesome.restart),
-	awful.key({ modkey, "Shift" }, "q", awesome.quit),
+	-- awful.key({ modkey, "Shift" }, "q", awesome.quit), -- too strong
 
 	-- Prompt
 	awful.key({ modkey }, "space", function()
