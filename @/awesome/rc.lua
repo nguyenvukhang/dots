@@ -13,10 +13,6 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
-local hotkeys_popup = require("awful.hotkeys_popup")
--- Enable hotkeys help widget for VIM and other apps
--- when client with a matching name is opened:
-require("awful.hotkeys_popup.keys")
 
 -- Load Debian menu entries
 local debian = require("debian.menu")
@@ -86,14 +82,13 @@ awful.layout.layouts = {
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 local myawesomemenu = {
+	{ "restart", awesome.restart },
 	{
-		"hotkeys",
+		"quit",
 		function()
-			hotkeys_popup.show_help(nil, awful.screen.focused())
+			awesome.quit()
 		end,
 	},
-	{ "restart", awesome.restart },
-	{ "quit", awesome.quit },
 }
 
 local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
@@ -166,7 +161,6 @@ awful.screen.connect_for_each_screen(function(s)
 				widget = wibox.container.margin,
 			},
 			id = "background_role",
-			-- forced_width = 28,
 			widget = wibox.container.background,
 			create_callback = function(self, c, index, objects) --luacheck: no unused
 				self:get_children_by_id("clienticon")[1].client = c
@@ -199,8 +193,6 @@ end)
 
 -- {{{ Key bindings
 local globalkeys = gears.table.join(
-	-- awful.key({ modkey }, "s", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
-
 	awful.key({ modkey }, "Tab", function()
 		awful.client.focus.history.previous()
 		if client.focus then
@@ -242,7 +234,8 @@ local clientkeys = gears.table.join(
 	end, { description = "increase master width factor", group = "layout" }),
 	awful.key({ modkey, "Control", "Shift" }, "h", function()
 		awful.tag.incmwfact(0.08)
-	end, { description = "decrease master width factor", group = "layout" })
+	end, { description = "decrease master width factor", group = "layout" }),
+	awful.key({ modkey, "Control" }, "f", awful.client.floating.toggle)
 )
 
 -- Bind all key numbers to tags.
@@ -370,44 +363,10 @@ client.connect_signal("manage", function(c)
 	end
 end)
 
--- Add a titlebar if titlebars_enabled is set to true in the rules.
-client.connect_signal("request::titlebars", function(c)
-	-- buttons for the titlebar
-	local buttons = gears.table.join(
-		awful.button({}, 1, function()
-			c:emit_signal("request::activate", "titlebar", { raise = true })
-			awful.mouse.client.move(c)
-		end),
-		awful.button({}, 3, function()
-			c:emit_signal("request::activate", "titlebar", { raise = true })
-			awful.mouse.client.resize(c)
-		end)
-	)
-
-	awful.titlebar(c):setup({
-		{ -- Left
-			awful.titlebar.widget.iconwidget(c),
-			buttons = buttons,
-			layout = wibox.layout.fixed.horizontal,
-		},
-		{ -- Middle
-			{ -- Title
-				align = "center",
-				widget = awful.titlebar.widget.titlewidget(c),
-			},
-			buttons = buttons,
-			layout = wibox.layout.flex.horizontal,
-		},
-		{ -- Right
-			awful.titlebar.widget.floatingbutton(c),
-			awful.titlebar.widget.maximizedbutton(c),
-			awful.titlebar.widget.stickybutton(c),
-			awful.titlebar.widget.ontopbutton(c),
-			awful.titlebar.widget.closebutton(c),
-			layout = wibox.layout.fixed.horizontal(),
-		},
-		layout = wibox.layout.align.horizontal,
-	})
+client.connect_signal("property::floating", function(c)
+	if not c.fullscreen then
+		c.ontop = c.floating
+	end
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
@@ -418,8 +377,9 @@ end)
 client.connect_signal("focus", function(c)
 	c.border_color = beautiful.border_focus
 end)
+
 client.connect_signal("unfocus", function(c)
-	c.border_color = beautiful.border_normal
+	c.border_color = "#00000000"
 end)
 -- }}}
 

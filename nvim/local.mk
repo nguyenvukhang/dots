@@ -12,7 +12,7 @@
 
 INSTALL_DIRECTORY=/usr/local
 
-sudo make \
+make \
   CMAKE_BUILD_TYPE=Release \
   CMAKE_INSTALL_PREFIX=${INSTALL_DIRECTORY} \
   install
