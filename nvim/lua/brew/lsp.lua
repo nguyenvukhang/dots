@@ -1,13 +1,3 @@
-local hover = function()
-  local USE_NATIVE = true
-  if USE_NATIVE then
-    local b = { '·', '─', '·', '│' }
-    return vim.lsp.buf.hover { border = b }
-  else
-    -- lewis6991/hover.nvim
-    require('hover').open()
-  end
-end
 -- base settings for lsp
 local base = function(opts)
   opts = opts or {}

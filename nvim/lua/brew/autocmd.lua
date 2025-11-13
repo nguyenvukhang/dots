@@ -1,4 +1,4 @@
-local c = require('brew')
+local autocmd = require('brew').autocmd
 local k = vim.keymap.set
 local sil = { silent = true }
 
@@ -54,18 +54,18 @@ local cfg = {
   end,
 }
 
-c.autocmd { pattern = '*.tex', callback = cfg.latex }
-c.autocmd { pattern = '*.asm', callback = cfg.asm }
-c.autocmd { pattern = { '*.swift' }, callback = cfg.swift }
-c.autocmd { pattern = { '*.mdx', '*.md' }, callback = cfg.markdown }
-c.autocmd { pattern = { '*.java' }, callback = cfg.java }
-c.autocmd { pattern = { '*.lean' }, callback = cfg.lean }
-c.autocmd {
+autocmd { pattern = '*.tex', callback = cfg.latex }
+autocmd { pattern = '*.asm', callback = cfg.asm }
+autocmd { pattern = { '*.swift' }, callback = cfg.swift }
+autocmd { pattern = { '*.mdx', '*.md' }, callback = cfg.markdown }
+autocmd { pattern = { '*.java' }, callback = cfg.java }
+autocmd { pattern = { '*.lean' }, callback = cfg.lean }
+autocmd {
   pattern = { '*.cpp', '*.hpp', '*.h', '*.c', '*.cc' },
   callback = cfg.cpp,
 }
-c.autocmd { pattern = { '*.astro' }, callback = cfg.astro }
-c.autocmd { pattern = { '*.pl' }, callback = cfg.prolog }
+autocmd { pattern = { '*.astro' }, callback = cfg.astro }
+autocmd { pattern = { '*.pl' }, callback = cfg.prolog }
 
 -- automatically redistribute splits when vim is resized
-c.autocmd({ command = 'wincmd =' }, { 'VimResized' })
+autocmd({ command = 'wincmd =' }, { 'VimResized' })
