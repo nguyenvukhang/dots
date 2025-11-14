@@ -222,17 +222,17 @@ local clientkeys = gears.table.join(
 	awful.key({ modkey }, "q", function(c)
 		c:kill()
 	end),
-	awful.key({ modkey, "Control", "Shift" }, "j", function()
+	awful.key({ modkey, "Control", "Shift" }, "i", function()
 		awful.client.swap.byidx(1)
 	end),
-	awful.key({ modkey, "Control", "Shift" }, "k", function()
+	awful.key({ modkey, "Control", "Shift" }, "o", function()
 		awful.client.swap.byidx(-1)
 	end),
 
-	awful.key({ modkey, "Control", "Shift" }, "l", function()
+	awful.key({ modkey, "Control", "Shift" }, "-", function()
 		awful.tag.incmwfact(-0.08)
 	end, { description = "increase master width factor", group = "layout" }),
-	awful.key({ modkey, "Control", "Shift" }, "h", function()
+	awful.key({ modkey, "Control", "Shift" }, "=", function()
 		awful.tag.incmwfact(0.08)
 	end, { description = "decrease master width factor", group = "layout" }),
 	awful.key({ modkey, "Control" }, "f", awful.client.floating.toggle)
