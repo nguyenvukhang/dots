@@ -32,6 +32,10 @@ shell-integration-features = no-cursor,no-title
 macos-option-as-alt = false
 macos-titlebar-style = transparent
 macos-titlebar-proxy-icon = hidden
+gtk-tabs-location = bottom
+gtk-toolbar-style = flat
+gtk-wide-tabs = false
+gtk-custom-css = gtk.css
 
 # Various visuals
 
