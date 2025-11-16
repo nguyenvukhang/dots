@@ -65,6 +65,10 @@ require('brew.lazy').setup {
     config = function() require('brew.telescope') end,
   },
   {
+    'ibhagwan/fzf-lua',
+    opts = {},
+  },
+  {
     'nguyenvukhang/nvim-toggler',
     opts = {
       inverses = {

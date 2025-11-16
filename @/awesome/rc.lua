@@ -237,7 +237,11 @@ local clientkeys = gears.table.join(
 	awful.key({ modkey, "Control", "Shift" }, "=", function()
 		awful.tag.incmwfact(0.08)
 	end, { description = "decrease master width factor", group = "layout" }),
-	awful.key({ modkey, "Control" }, "f", awful.client.floating.toggle)
+	awful.key({ modkey, "Control" }, "f", awful.client.floating.toggle),
+	awful.key({ modkey, "Control", "Shift" }, "f", function(c)
+		c.fullscreen = not c.fullscreen
+		c:raise()
+	end)
 )
 
 -- Bind all key numbers to tags.
