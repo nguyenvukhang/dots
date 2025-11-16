@@ -83,6 +83,7 @@ require('brew.lazy').setup {
         ['begin'] = 'end',
         ['True'] = 'False',
         ['TRUE'] = 'FALSE',
+        ['upper'] = 'lower',
         ['cot'] = 'tan',
         ['sec'] = 'csc',
         ['good'] = 'bad',
