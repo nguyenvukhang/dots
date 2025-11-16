@@ -63,7 +63,7 @@ require('brew.lazy').setup {
       'nvim-lua/plenary.nvim',
     },
     keys = function()
-      local search = require('brew.telescope.search')
+      local search = require('brew.telescope_search')
       return {
         { '<c-p>', search.files.repo },
         { '<c-f>', search.files.cwd },
