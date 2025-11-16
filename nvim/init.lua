@@ -66,7 +66,63 @@ require('brew.lazy').setup {
   },
   {
     'ibhagwan/fzf-lua',
-    opts = {},
+    opts = {
+      hls = {
+        border = 'Comment',
+        preview_border = 'Comment',
+      },
+      winopts = {
+        preview = {
+          vertical = 'up:45%',
+          horizontal = 'right:50%',
+        },
+      },
+      files = {
+        winopts = {
+          preview = {
+            hidden = true,
+          },
+        },
+      },
+      defaults = {
+        file_icons = false,
+      },
+      keymap = {
+        fzf = {
+          ['ctrl-q'] = 'select-all+accept',
+        },
+        builtin = {
+          ['enter'] = function() end,
+        },
+      },
+    },
+    keys = function()
+      local fzf = require('fzf-lua')
+      local actions = require('fzf-lua.actions')
+      local git_workspace_root = require('brew').git_workspace_root
+      local w = function(opts) return { winopts = opts } end
+      return {
+        { '<C-f>', function() fzf.files(w { width = 0.5, height = 0.5 }) end },
+        { '<C-p>', function() fzf.git_files() end },
+        {
+          '<leader>ps',
+          function()
+            fzf.grep {
+              cwd = git_workspace_root(),
+              input_prompt = 'Repo Search > ',
+            }
+          end,
+        },
+        {
+          '<leader>pw',
+          function() fzf.grep { input_prompt = 'CWD Search > ' } end,
+        },
+        {
+          '<leader>pf',
+          function() fzf.grep_cword { cwd = git_workspace_root() } end,
+        },
+      }
+    end,
   },
   {
     'nguyenvukhang/nvim-toggler',
