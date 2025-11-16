@@ -31,6 +31,36 @@ if get(g:, 'gruvbox_plugin_hi_groups', 0)
     \ ]
 endif
 
+" gruvbox additions
+
+hi GBFg1 guifg=#e5d2aa guibg=NONE
+hi GBFg2 guifg=#d5c4a1 guibg=NONE
+hi GBFg3 guifg=#bdae93 guibg=NONE
+hi GBFg4 guifg=#a89984 guibg=NONE
+hi GBGray guifg=#928374 guibg=NONE
+hi GBBg0 guifg=#282828 guibg=NONE
+hi GBBg1 guifg=#3c3836 guibg=NONE
+hi GBBg2 guifg=#504945 guibg=NONE
+hi GBBg3 guifg=#665c54 guibg=NONE
+hi GBBg4 guifg=#7c6f64 guibg=NONE
+
+hi GBRed guifg=#ea6962 guibg=NONE
+hi GBGreen guifg=#a9b665 guibg=NONE
+hi GBYellow guifg=#d8a657 guibg=NONE
+hi GBBlue guifg=#7daea3 guibg=NONE
+hi GBPurple guifg=#d3869b guibg=NONE
+hi GBAqua guifg=#89b48c guibg=NONE
+hi GBOrange guifg=#e78a4e guibg=NONE
+
+hi GBFg1Underline guifg=#e5d2aa guisp=#e5d2aa guibg=NONE gui=underline
+hi GBRedUnderline guifg=#ea6962 guisp=#ea6962 guibg=NONE gui=underline
+hi GBGreenUnderline guifg=#a9b665 guisp=#a9b665 guibg=NONE gui=underline
+hi GBYellowUnderline guifg=#d8a657 guisp=#d8a657 guibg=NONE gui=underline
+hi GBBlueUnderline guifg=#7daea3 guisp=#7daea3 guibg=NONE gui=underline
+hi GBPurpleUnderline guifg=#d3869b guisp=#d3869b guibg=NONE gui=underline
+hi GBAquaUnderline guifg=#89b48c guisp=#89b48c guibg=NONE gui=underline
+hi GBOrangeUnderline guifg=#e78a4e guisp=#e78a4e guibg=NONE gui=underline
+
 " custom
 
 " latex
@@ -79,23 +109,25 @@ hi! link texOnlyMath Normal
 
 hi! link markdownError Normal
 hi! link htmlError Normal
+
+hi UniversalBorder guifg=#504945 guibg=NONE guisp=NONE gui=NONE
+
 hi! link TelescopeNormal Normal
-hi! link TelescopeSelection Pmenu
-hi! link TelescopeSelectionCaret Error
-hi! link TelescopeMultiSelection Pmenu
-hi! link TelescopeBorder GBFg1
-hi! link TelescopeMatching Special
 hi! link TelescopePromptPrefix Identifier
 hi! link TelescopePrompt TelescopeNormal
-hi! link TelescopeCustomBorder GBBg4
-hi! link TelescopeResultsBorder TelescopeCustomBorder
-hi! link TelescopePreviewBorder TelescopeCustomBorder
-hi! link TelescopePromptBorder TelescopeCustomBorder
-hi! link TelescopePromptCounter TelescopeCustomBorder
+hi! link TelescopePromptCounter TelescopeNormal
+hi TelescopeSelection guifg=NONE guibg=#3c3836 guisp=NONE gui=NONE
+hi! link TelescopeSelectionCaret GBGreen
+hi! link TelescopeBorder GBFg1
+hi! link TelescopeMatching Special
+hi! link TelescopeResultsBorder UniversalBorder
+hi! link TelescopePreviewBorder UniversalBorder
+hi! link TelescopePromptBorder UniversalBorder
+
 hi! link rustCommentLineDoc Comment
 
 hi! link HarpoonWindow Normal
-hi! link HarpoonBorder GBBg4
+hi! link HarpoonBorder UniversalBorder
 
 " LSP Diagnostic
 hi! link DiagnosticError GBRed
@@ -145,36 +177,6 @@ hi! link debugPC SignColumn
 hi! link iCursor Cursor
 hi! link lCursor Cursor
 hi! link vCursor Cursor
-
-" gruvbox additions
-
-hi GBFg1 guifg=#e5d2aa guibg=NONE
-hi GBFg2 guifg=#d5c4a1 guibg=NONE
-hi GBFg3 guifg=#bdae93 guibg=NONE
-hi GBFg4 guifg=#a89984 guibg=NONE
-hi GBGray guifg=#928374 guibg=NONE
-hi GBBg0 guifg=#282828 guibg=NONE
-hi GBBg1 guifg=#3c3836 guibg=NONE
-hi GBBg2 guifg=#504945 guibg=NONE
-hi GBBg3 guifg=#665c54 guibg=NONE
-hi GBBg4 guifg=#7c6f64 guibg=NONE
-
-hi GBRed guifg=#ea6962 guibg=NONE
-hi GBGreen guifg=#a9b665 guibg=NONE
-hi GBYellow guifg=#d8a657 guibg=NONE
-hi GBBlue guifg=#7daea3 guibg=NONE
-hi GBPurple guifg=#d3869b guibg=NONE
-hi GBAqua guifg=#89b48c guibg=NONE
-hi GBOrange guifg=#e78a4e guibg=NONE
-
-hi GBFg1Underline guifg=#e5d2aa guisp=#e5d2aa guibg=NONE gui=underline
-hi GBRedUnderline guifg=#ea6962 guisp=#ea6962 guibg=NONE gui=underline
-hi GBGreenUnderline guifg=#a9b665 guisp=#a9b665 guibg=NONE gui=underline
-hi GBYellowUnderline guifg=#d8a657 guisp=#d8a657 guibg=NONE gui=underline
-hi GBBlueUnderline guifg=#7daea3 guisp=#7daea3 guibg=NONE gui=underline
-hi GBPurpleUnderline guifg=#d3869b guisp=#d3869b guibg=NONE gui=underline
-hi GBAquaUnderline guifg=#89b48c guisp=#89b48c guibg=NONE gui=underline
-hi GBOrangeUnderline guifg=#e78a4e guisp=#e78a4e guibg=NONE gui=underline
 
 " standard colors
 
