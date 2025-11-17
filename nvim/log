@@ -1,0 +1,9 @@
+{ "ctrl-p:select-all+accept", "enter:execute-silent:'/usr/local/bin/nvim' -u NONE -l '/home/khang/.local/share/nvim/
+lazy/fzf-lua/lua/fzf-lua/rpc.lua' 1 nil {+} {q} {n}", "alt-q:execute-silent:'/usr/local/bin/nvim' -u NONE -l '/home/
+khang/.local/share/nvim/lazy/fzf-lua/lua/fzf-lua/rpc.lua' 3 nil {+} {q} {n}", "alt-Q:execute-silent:'/usr/local/bin/
+nvim' -u NONE -l '/home/khang/.local/share/nvim/lazy/fzf-lua/lua/fzf-lua/rpc.lua' 7 nil {+} {q} {n}", "ctrl-s:execut
+e-silent:'/usr/local/bin/nvim' -u NONE -l '/home/khang/.local/share/nvim/lazy/fzf-lua/lua/fzf-lua/rpc.lua' 2 nil {+}
+ {q} {n}", "esc:execute-silent:'/usr/local/bin/nvim' -u NONE -l '/home/khang/.local/share/nvim/lazy/fzf-lua/lua/fzf-
+lua/rpc.lua' 4 nil {+} {q} {n}", "ctrl-t:execute-silent:'/usr/local/bin/nvim' -u NONE -l '/home/khang/.local/share/n
+vim/lazy/fzf-lua/lua/fzf-lua/rpc.lua' 5 nil {+} {q} {n}", "ctrl-v:execute-silent:'/usr/local/bin/nvim' -u NONE -l '/
+home/khang/.local/share/nvim/lazy/fzf-lua/lua/fzf-lua/rpc.lua' 6 nil {+} {q} {n}" }    

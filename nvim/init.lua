@@ -58,6 +58,7 @@ require('brew.lazy').setup {
   },
   {
     'nvim-telescope/telescope.nvim',
+    enabled = true,
     dependencies = {
       'nvim-telescope/telescope-fzy-native.nvim',
       'nvim-lua/plenary.nvim',
@@ -126,32 +127,30 @@ require('brew.lazy').setup {
     'ibhagwan/fzf-lua',
     enabled = false,
     opts = {
-      hls = {
-        border = 'Comment',
-        preview_border = 'Comment',
-      },
       winopts = {
         preview = {
           vertical = 'up:45%',
           horizontal = 'right:50%',
         },
       },
+      keymap = {
+        fzf = {
+          ['ctrl-p'] = 'select-all+accept',
+        },
+      },
+      fzf_opts = {
+        -- ['--bind'] = 'ctrl-a:select-all+accept',
+      },
+      hls = {
+        border = 'Comment',
+        preview_border = 'Comment',
+      },
+      -- Specific picker options
       files = {
         winopts = {
           preview = {
             hidden = true,
           },
-        },
-      },
-      defaults = {
-        file_icons = false,
-      },
-      keymap = {
-        fzf = {
-          ['ctrl-q'] = 'select-all+accept',
-        },
-        builtin = {
-          ['enter'] = function() end,
         },
       },
     },
@@ -160,26 +159,40 @@ require('brew.lazy').setup {
       local actions = require('fzf-lua.actions')
       local git_workspace_root = require('brew').git_workspace_root
       local w = function(opts) return { winopts = opts } end
+      local keymap = {
+        fzf = {
+          -- ['ctrl-['] = 'select-all+accept',
+          -- ['ctrl-p'] = 'select-all+accept',
+        },
+      }
       return {
-        { '<C-f>', function() fzf.files(w { width = 0.5, height = 0.5 }) end },
-        { '<C-p>', function() fzf.git_files() end },
+        -- { '<C-f>', function() fzf.files(w { width = 0.5, height = 0.5 }) end },
+        -- { '<C-p>', function() fzf.git_files() end },
         {
           '<leader>ps',
           function()
             fzf.grep {
               cwd = git_workspace_root(),
               input_prompt = 'Repo Search > ',
+              keymap = keymap,
+              actions = {
+                ['default'] = function(selected, opts)
+                  opts.copen = false
+                  actions.file_sel_to_qf(selected, opts)
+                  actions.file_edit({ selected[1] }, opts)
+                end,
+              },
             }
           end,
         },
-        {
-          '<leader>pw',
-          function() fzf.grep { input_prompt = 'CWD Search > ' } end,
-        },
-        {
-          '<leader>pf',
-          function() fzf.grep_cword { cwd = git_workspace_root() } end,
-        },
+        -- {
+        --   '<leader>pw',
+        --   function() fzf.grep { input_prompt = 'CWD Search > ' } end,
+        -- },
+        -- {
+        --   '<leader>pf',
+        --   function() fzf.grep_cword { cwd = git_workspace_root() } end,
+        -- },
       }
     end,
   },
