@@ -6,6 +6,9 @@ vim.diagnostic.config { underline = false, virtual_text = true }
 -- * wuelnerdotexe/vim-astro
 -- * mfussenegger/nvim-jdtls
 
+-- As opposed to fzf-lua
+local USE_TELESCOPE = true
+
 require('brew.lsp')
 require('brew.lazy').setup {
   'nvim-lua/plenary.nvim',
@@ -46,6 +49,7 @@ require('brew.lazy').setup {
             },
           },
         },
+        ghost_text = { enabled = false },
         list = { selection = { preselect = false } },
         documentation = { auto_show = true },
       },
@@ -58,7 +62,7 @@ require('brew.lazy').setup {
   },
   {
     'nvim-telescope/telescope.nvim',
-    enabled = true,
+    enabled = USE_TELESCOPE,
     dependencies = {
       'nvim-telescope/telescope-fzy-native.nvim',
       'nvim-lua/plenary.nvim',
@@ -85,8 +89,8 @@ require('brew.lazy').setup {
 
       -- Load all results to quickfix list AND jump to the selected one.
       local qf_and_jump = function(bufnr)
-        local m, qf = a_state.get_current_picker(bufnr).manager, {}
-        for e in m:iter() do
+        local p, qf = a_state.get_current_picker(bufnr), {}
+        for e in p.manager:iter() do
           local i, t, v = { bufnr = e.bufnr }, e.text, e.value
           i.filename = from_entry.path(e, false, false)
           i.lnum, i.col = vim.F.if_nil(e.lnum, 1), vim.F.if_nil(e.col, 1)
@@ -125,21 +129,13 @@ require('brew.lazy').setup {
   },
   {
     'ibhagwan/fzf-lua',
-    enabled = false,
+    enabled = not USE_TELESCOPE,
     opts = {
       winopts = {
         preview = {
           vertical = 'up:45%',
           horizontal = 'right:50%',
         },
-      },
-      keymap = {
-        fzf = {
-          ['ctrl-p'] = 'select-all+accept',
-        },
-      },
-      fzf_opts = {
-        -- ['--bind'] = 'ctrl-a:select-all+accept',
       },
       hls = {
         border = 'Comment',
@@ -159,40 +155,59 @@ require('brew.lazy').setup {
       local actions = require('fzf-lua.actions')
       local git_workspace_root = require('brew').git_workspace_root
       local w = function(opts) return { winopts = opts } end
-      local keymap = {
-        fzf = {
-          -- ['ctrl-['] = 'select-all+accept',
-          -- ['ctrl-p'] = 'select-all+accept',
+      local word_actions = {
+        ['enter'] = {
+          fn = function(selected, opts)
+            print(vim.inspect(opts.__CTX))
+            opts.copen = false
+            -- print(vim.inspect(opts.__CTX))
+            -- local file = io.open('/home/khang/dots/nvim/log', 'w')
+            -- if file then
+            --   file:write(vim.inspect(selected)) -- Write the content to the file
+            --   file:close() -- Close the file
+            -- end
+            -- file = io.open('/home/khang/dots/nvim/log2', 'w')
+            -- if file then
+            --   file:write(vim.inspect(opts)) -- Write the content to the file
+            --   file:close() -- Close the file
+            -- end
+            actions.file_sel_to_qf(selected, opts)
+            actions.file_edit({ opts.__INFO.selected }, opts)
+          end,
+          prefix = 'select-all',
         },
       }
       return {
-        -- { '<C-f>', function() fzf.files(w { width = 0.5, height = 0.5 }) end },
-        -- { '<C-p>', function() fzf.git_files() end },
+        { '<C-f>', function() fzf.files(w { width = 0.5, height = 0.5 }) end },
+        { '<C-p>', function() fzf.git_files() end },
         {
           '<leader>ps',
           function()
             fzf.grep {
               cwd = git_workspace_root(),
               input_prompt = 'Repo Search > ',
-              keymap = keymap,
-              actions = {
-                ['default'] = function(selected, opts)
-                  opts.copen = false
-                  actions.file_sel_to_qf(selected, opts)
-                  actions.file_edit({ selected[1] }, opts)
-                end,
-              },
+              actions = word_actions,
             }
           end,
         },
-        -- {
-        --   '<leader>pw',
-        --   function() fzf.grep { input_prompt = 'CWD Search > ' } end,
-        -- },
-        -- {
-        --   '<leader>pf',
-        --   function() fzf.grep_cword { cwd = git_workspace_root() } end,
-        -- },
+        {
+          '<leader>pw',
+          function()
+            fzf.grep {
+              input_prompt = 'CWD Search > ',
+              actions = word_actions,
+            }
+          end,
+        },
+        {
+          '<leader>pf',
+          function()
+            fzf.grep_cword {
+              cwd = git_workspace_root(),
+              actions = word_actions,
+            }
+          end,
+        },
       }
     end,
   },
@@ -326,6 +341,9 @@ require('brew.lazy').setup {
         infoview = {
           autoopen = false,
           -- show_term_goals = false,
+        },
+        inlay_hint = {
+          enabled = false,
         },
         progress_bars = { enable = false },
         goal_markers = {
