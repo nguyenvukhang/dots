@@ -18,7 +18,6 @@ end
 local function create_window()
   local width = 60
   local height = 10
-  local borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' }
   local bufnr = vim.api.nvim_create_buf(false, false)
 
   local Harpoon_win_id, win = popup.create(bufnr, {
@@ -28,13 +27,13 @@ local function create_window()
     col = math.floor((vim.o.columns - width) / 2),
     minwidth = width,
     minheight = height,
-    borderchars = borderchars,
+    borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
   })
 
-  vim.api.nvim_win_set_option(
-    win.border.win_id,
+  vim.api.nvim_set_option_value(
     'winhl',
-    'Normal:HarpoonBorder'
+    'Normal:HarpoonBorder',
+    { win = win.border.win_id }
   )
 
   return { bufnr = bufnr, win_id = Harpoon_win_id }
@@ -66,48 +65,29 @@ function M.toggle_quick_menu()
     contents[idx] = string.format('%s', file)
   end
 
-  vim.api.nvim_win_set_option(Harpoon_win_id, 'number', true)
-  vim.api.nvim_win_set_option(Harpoon_win_id, 'wrap', false)
+  vim.api.nvim_set_option_value('number', true, { win = Harpoon_win_id })
+  vim.api.nvim_set_option_value('wrap', false, { win = Harpoon_win_id })
   vim.api.nvim_buf_set_name(Harpoon_bufh, 'harpoon-menu')
   vim.api.nvim_buf_set_lines(Harpoon_bufh, 0, #contents, false, contents)
-  vim.api.nvim_buf_set_option(Harpoon_bufh, 'filetype', 'harpoon')
-  vim.api.nvim_buf_set_option(Harpoon_bufh, 'buftype', 'acwrite')
-  vim.api.nvim_buf_set_option(Harpoon_bufh, 'bufhidden', 'delete')
+  vim.api.nvim_set_option_value('filetype', 'harpoon', { buf = Harpoon_bufh })
+  vim.api.nvim_set_option_value('buftype', 'acwrite', { buf = Harpoon_bufh })
+  vim.api.nvim_set_option_value('bufhidden', 'delete', { buf = Harpoon_bufh })
 
-  vim.api.nvim_buf_set_keymap(
-    Harpoon_bufh,
-    'n',
-    'q',
-    "<Cmd>lua require('harpoon.ui').toggle_quick_menu()<CR>",
-    { silent = true }
+  vim.keymap.set('n', '<esc>', M.toggle_quick_menu, {
+    buffer = Harpoon_bufh,
+    silent = true,
+  })
+  vim.api.nvim_create_autocmd(
+    { 'BufWriteCmd' },
+    { buffer = Harpoon_bufh, callback = M.on_menu_save }
   )
-  vim.api.nvim_buf_set_keymap(
-    Harpoon_bufh,
-    'n',
-    '<ESC>',
-    "<Cmd>lua require('harpoon.ui').toggle_quick_menu()<CR>",
-    { silent = true }
+  vim.api.nvim_create_autocmd(
+    { 'TextChanged', 'TextChangedI' },
+    { buffer = Harpoon_bufh, callback = M.on_menu_save }
   )
-  vim.cmd(
-    string.format(
-      "autocmd BufWriteCmd <buffer=%s> lua require('harpoon.ui').on_menu_save()",
-      Harpoon_bufh
-    )
-  )
-  vim.cmd(
-    string.format(
-      "autocmd TextChanged,TextChangedI <buffer=%s> lua require('harpoon.ui').on_menu_save()",
-      Harpoon_bufh
-    )
-  )
-  vim.cmd(
-    string.format(
-      'autocmd BufModifiedSet <buffer=%s> set nomodified',
-      Harpoon_bufh
-    )
-  )
-  vim.cmd(
-    "autocmd BufLeave <buffer> ++nested ++once silent lua require('harpoon.ui').toggle_quick_menu()"
+  vim.api.nvim_create_autocmd(
+    { 'BufModifiedSet' },
+    { buffer = Harpoon_bufh, command = 'set nomodified' }
   )
 end
 
@@ -132,7 +112,9 @@ function M.nav_file(id)
   local old_bufnr = vim.api.nvim_get_current_buf()
 
   vim.api.nvim_set_current_buf(buf_id)
-  vim.api.nvim_buf_set_option(buf_id, 'buflisted', true)
+
+  vim.api.nvim_set_option_value('buflisted', true, { buf = buf_id })
+
   if set_row and mark.row and mark.col then
     vim.cmd(string.format(':call cursor(%d, %d)', mark.row, mark.col))
   end

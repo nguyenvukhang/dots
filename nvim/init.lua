@@ -11,7 +11,10 @@ local USE_TELESCOPE = true
 
 require('brew.lsp')
 require('brew.lazy').setup {
-  'nvim-lua/plenary.nvim',
+  {
+    'nvim-lua/plenary.nvim',
+    config = function() require('harpoon').my_setup() end,
+  },
   'tpope/vim-surround',
   'vimplug/nvim-colorizer.lua',
   {
@@ -417,7 +420,6 @@ require('brew.remaps')
 require('brew.commands')
 require('brew.statusline')
 require('brew.autocmd')
-require('harpoon').my_setup()
 
 vim.cmd('colo gruvbox8_generated')
 -- require('gruvbox').load()
