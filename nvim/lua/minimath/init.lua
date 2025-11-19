@@ -256,6 +256,7 @@ M.remaps = function()
   k('n', '<leader>b[', 'i\\biggl[\\biggr]<esc>T[', opts)
   k('v', '<leader>(', 'c\\biggl(\\biggr)<esc>T(P', opts)
   k('v', '<leader>[', 'c\\biggl[\\biggr]<esc>T[P', opts)
+  k('v', '<leader>|', 'c\\biggl|\\biggr|<esc>T|P', opts)
 
   -- environment wrappers
   k('n', '<leader>be', 'cc\\begin{equation*}<CR>\\end{equation*}<esc>k', opts)

@@ -221,6 +221,7 @@ require('brew.lazy').setup {
         ['₂'] = '₁',
         ['- [ ]'] = '- [x]',
         ['shift'] = 'unshift',
+        ['exact'] = 'refine',
         ['next'] = 'prev',
         ['odd'] = 'even',
         ['forall'] = 'exists',
