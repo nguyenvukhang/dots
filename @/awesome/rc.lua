@@ -4,6 +4,7 @@ pcall(require, "luarocks.loader")
 
 -- Standard awesome library
 local gears = require("gears")
+local shape = gears.shape
 local awful = require("awful")
 require("awful.autofocus")
 -- Widget and layout library
@@ -133,6 +134,7 @@ end
 screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
+	local bg_translucent = "#00000080"
 	-- Wallpaper
 	set_wallpaper(s)
 
@@ -155,6 +157,7 @@ awful.screen.connect_for_each_screen(function(s)
 		screen = s,
 		filter = awful.widget.tasklist.filter.currenttags,
 		layout = { layout = wibox.layout.fixed.horizontal },
+		style = { bg_normal = bg_translucent },
 		widget_template = {
 			{
 				{ id = "clienticon", widget = awful.widget.clienticon },
@@ -182,26 +185,54 @@ awful.screen.connect_for_each_screen(function(s)
 		layout = wibox.layout.align.horizontal,
 		{
 			widget = wibox.container.background,
-			bg = "#000000A0",
+			bg = bg_translucent,
 			{ -- Left widgets
 				layout = wibox.layout.fixed.horizontal,
 				mylauncher,
 				s.mytaglist,
 			},
 		},
-		s.mytasklist, -- Middle widget
 		{
-			widget = wibox.container.background,
-			shape = function(cr, width, height)
-				gears.shape.partially_rounded_rect(cr, width, height, true, false, false, true, 20)
-			end,
-			bg = "#000000A0",
+			layout = wibox.layout.fixed.horizontal, -- Middle widget
 			{
-				layout = wibox.layout.fixed.horizontal,
-				spacer(10),
-				londonclock,
-				mytextclock,
-				spacer(6),
+				layout = wibox.layout.align.horizontal, -- Middle widget
+				s.mytasklist,
+			},
+			{
+				widget = wibox.container.background,
+				shape = function(cr, width, height)
+					return shape
+						.transform(shape.isosceles_triangle)
+						:rotate_at(width / 2, height / 2, math.pi)(cr, width * 2, height)
+				end,
+				bg = bg_translucent,
+				forced_width = menubar_height,
+				spacer(0),
+			},
+		},
+		{
+			layout = wibox.layout.align.horizontal,
+			{
+				widget = wibox.container.background,
+				shape = function(cr, width, height)
+					return shape
+						.transform(shape.isosceles_triangle)
+						:rotate_at(width / 2, height / 2, -math.pi / 2)(cr, width * 2, height)
+				end,
+				bg = bg_translucent,
+				forced_width = menubar_height,
+				spacer(0),
+			},
+			{
+				widget = wibox.container.background,
+				bg = bg_translucent,
+				{
+					layout = wibox.layout.fixed.horizontal,
+					spacer(10),
+					londonclock,
+					mytextclock,
+					spacer(6),
+				},
 			},
 		},
 	})

@@ -68,7 +68,7 @@ prepend_to_path_if_exists $HOMEBREW_PREFIX/opt/swift/bin
 prepend_to_path_if_exists $HOMEBREW_PREFIX/bin
 prepend_to_path_if_exists $HOME/.zvm/bin
 prepend_to_path_if_exists $HOME/.local/zig
-prepend_to_path_if_exists /opt/texlive/texdir/bin/x86_64-linux
+prepend_to_path_if_exists $HOME/.local/texlive/texdir/bin/x86_64-linux
 export PATH
 
 #  ///////////////////////////////////////////////////////////////////

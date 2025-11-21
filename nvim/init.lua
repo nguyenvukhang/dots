@@ -228,6 +228,8 @@ require('brew.lazy').setup {
         ['row'] = 'column',
         ['positive'] = 'negative',
         ['horizontal'] = 'vertical',
+        ['above'] = 'below',
+        ['Above'] = 'Below',
         ['min'] = 'max',
         ['width'] = 'height',
         ['sin'] = 'cos',
