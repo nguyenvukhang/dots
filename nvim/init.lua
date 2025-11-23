@@ -147,9 +147,7 @@ require('brew.lazy').setup {
       -- Specific picker options
       files = {
         winopts = {
-          preview = {
-            hidden = true,
-          },
+          preview = { hidden = true },
         },
       },
     },
@@ -163,7 +161,7 @@ require('brew.lazy').setup {
         {
           '<leader>sd',
           function()
-            fzf.files { cwd = vim.env.DOTS, input_prompt = 'Search dots.' }
+            fzf.files { cwd = vim.env.DOTS, winopts = { title = 'Search dots' } }
           end,
         },
         -- word searches.
