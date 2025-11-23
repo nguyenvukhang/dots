@@ -8,6 +8,7 @@ local grep_actions = {
     fn = function(selected, opts)
       opts.copen = false
       actions.file_sel_to_qf(selected, opts)
+      print(vim.inspect(opts.__FZF_POS))
       actions.file_edit({ selected[(opts.__FZF_POS or 0) + 1] }, opts)
     end,
     prefix = 'select-all',
