@@ -48,13 +48,18 @@ end
 ---@return boolean
 function M.status(cmd) return vim.fn.system(cmd) and vim.v.shell_error == 0 end
 
-vim.api.nvim_create_augroup('BREW', { clear = true })
+M.common_augroup = '__BREW__'
+
+vim.api.nvim_create_augroup(M.common_augroup, { clear = true })
 
 ---@param opts any
 ---@param ev? string[]
 M.autocmd = function(opts, ev)
-  opts['group'], ev = 'BREW', ev or { 'BufRead', 'BufNewFile', 'BufEnter' }
-  vim.api.nvim_create_autocmd(ev, opts)
+  opts['group'] = M.common_augroup
+  vim.api.nvim_create_autocmd(
+    ev or { 'BufRead', 'BufNewFile', 'BufEnter' },
+    opts
+  )
 end
 
 ---@param cs string comment string e.g. '// %s'
