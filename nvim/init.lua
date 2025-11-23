@@ -7,7 +7,7 @@ vim.diagnostic.config { underline = false, virtual_text = true }
 -- * mfussenegger/nvim-jdtls
 
 -- As opposed to fzf-lua
-local USE_TELESCOPE = true
+local USE_TELESCOPE = false
 
 require('brew.lsp')
 require('brew.lazy').setup {
@@ -131,7 +131,7 @@ require('brew.lazy').setup {
     end,
   },
   {
-    'ibhagwan/fzf-lua',
+    'nguyenvukhang/fzf-lua',
     enabled = not USE_TELESCOPE,
     opts = {
       winopts = {
@@ -161,21 +161,14 @@ require('brew.lazy').setup {
       local word_actions = {
         ['enter'] = {
           fn = function(selected, opts)
-            print(vim.inspect(opts.__CTX))
             opts.copen = false
-            -- print(vim.inspect(opts.__CTX))
-            -- local file = io.open('/home/khang/dots/nvim/log', 'w')
-            -- if file then
-            --   file:write(vim.inspect(selected)) -- Write the content to the file
-            --   file:close() -- Close the file
-            -- end
-            -- file = io.open('/home/khang/dots/nvim/log2', 'w')
-            -- if file then
-            --   file:write(vim.inspect(opts)) -- Write the content to the file
-            --   file:close() -- Close the file
-            -- end
+            local target = selected[opts.__FZF_POS + 1]
+            -- print(vim.inspect(selected))
+            -- print("-----", target)
             actions.file_sel_to_qf(selected, opts)
-            actions.file_edit({ opts.__INFO.selected }, opts)
+            -- vim.fn.setqflist({}, 'r', { idx = opts.__FZF_POS, col = 1 })
+            -- print(selected[opts.__FZF_POS + 1])
+            actions.file_edit({ target }, opts)
           end,
           prefix = 'select-all',
         },
@@ -186,11 +179,14 @@ require('brew.lazy').setup {
         {
           '<leader>ps',
           function()
-            fzf.grep {
-              cwd = git_workspace_root(),
-              input_prompt = 'Repo Search > ',
-              actions = word_actions,
-            }
+            local cwd = git_workspace_root()
+            if cwd ~= nil then
+              fzf.grep {
+                cwd = cwd,
+                input_prompt = 'Repo Search > ',
+                actions = word_actions,
+              }
+            end
           end,
         },
         {
