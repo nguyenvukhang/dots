@@ -1,4 +1,5 @@
-local autocmd = require('brew').autocmd
+local brew = require('brew')
+local autocmd = brew.autocmd
 local k = vim.keymap.set
 local sil = { silent = true }
 
@@ -20,8 +21,11 @@ local cfg = {
     vim.opt.formatoptions = vim.opt.formatoptions + 't'
     vim.bo.filetype = 'tex'
     dollarDollar()
-    require('minimath').overriding_remaps()
-    require('minimath').remaps()
+    local minimath = brew.prequire('minimath')
+    if minimath then
+      minimath.overriding_remaps()
+      minimath.remaps()
+    end
   end,
   markdown = function()
     vim.opt.textwidth = 80
@@ -37,7 +41,8 @@ local cfg = {
   astro = function() vim.opt_local.commentstring = '// %s' end,
   asm = function() vim.opt_local.commentstring = '# %s' end,
   lean = function()
-    require('minimath').lean_remaps()
+    local minimath = brew.prequire('minimath')
+    if minimath then minimath.lean_remaps() end
     vim.opt_local.foldmarker = ':= by --,-- ∎'
     vim.opt_local.commentstring = '-- %s'
 

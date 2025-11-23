@@ -1,7 +1,5 @@
 local M, fn = {}, vim.fn
 
-M.debug = function(x) print(vim.inspect(x)) end
-
 -- checks if quickfix is open
 local function qf_is_open() return vim.fn.getqflist({ winid = 0 }).winid ~= 0 end
 
@@ -9,6 +7,17 @@ local function qf_is_open() return vim.fn.getqflist({ winid = 0 }).winid ~= 0 en
 M.git_workspace_root = function()
   local stdout = fn.systemlist('git rev-parse --show-toplevel')[1]
   return vim.v.shell_error == 0 and stdout or vim.notify('not in a git repo')
+end
+
+-- `require`, but guarded.
+-- USAGE
+-- local mod = prequire("test")
+-- if mod then
+-- end
+M.prequire = function(m)
+  local ok, err = pcall(require, m)
+  if not ok then return nil, err end
+  return err
 end
 
 -- Toggles the quickfix list/window
