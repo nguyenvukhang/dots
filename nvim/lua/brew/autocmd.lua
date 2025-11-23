@@ -21,6 +21,58 @@ local cfg = {
     vim.opt.formatoptions = vim.opt.formatoptions + 't'
     vim.bo.filetype = 'tex'
     dollarDollar()
+
+    local opts = { silent = true, buffer = true }
+    -- bigg wrappers
+    k('n', '<leader>b(', 'i\\biggl(\\biggr)<esc>T(', opts)
+    k('n', '<leader>b[', 'i\\biggl[\\biggr]<esc>T[', opts)
+    k('v', '<leader>(', 'c\\biggl(\\biggr)<esc>T(P', opts)
+    k('v', '<leader>[', 'c\\biggl[\\biggr]<esc>T[P', opts)
+    k('v', '<leader>|', 'c\\biggl|\\biggr|<esc>T|P', opts)
+    -- environment wrappers
+    k('n', '<leader>be', 'cc\\begin{equation*}<CR>\\end{equation*}<esc>k', opts)
+    k('n', '<leader>bi', 'cc\\begin{itemize}<CR>\\end{itemize}<esc>k', opts)
+    k('n', '<leader>ba', 'cc\\begin{align*}<CR>\\end{align*}<esc>k', opts)
+    k('n', '<leader>bc', 'cc\\begin{cases}<CR>\\end{cases}<esc>k', opts)
+    k('n', '<leader>bg', 'cc\\begin{gather*}<CR>\\end{gather*}<esc>k', opts)
+    k('n', '<leader>bp', 'o<CR>\\begin{proof}<CR>\\end{proof}<esc>k', opts)
+
+    local gen = require('minimath.generated')
+
+    -- jump to next/prev mark
+    local marks = table.concat(gen.marks, '|')
+    k('n', '[[', 'k?\\v^\\\\(' .. marks .. ')<cr>f{lzz', opts)
+    k('n', ']]', 'j/\\v^\\\\(' .. marks .. ')<cr>f{lzz', opts)
+    k('v', '[[', 'k?\\v^\\\\(' .. marks .. ')<cr>f{lzz', opts)
+    k('v', ']]', 'j/\\v^\\\\(' .. marks .. ')<cr>f{lzz', opts)
+
+    -- yank the current mark's SHA into system clipboard
+    k(
+      'n',
+      '[y',
+      'mK?\\v^\\\\(' .. marks .. ')<cr>/\\\\label<cr>f{"+yi{0`K',
+      opts
+    )
+
+    -- go to definition (looks for `\label{<cword>}`)
+    k('n', 'gd', function()
+      local cword, root = vim.fn.expand('<cword>'), brew.git_workspace_root()
+      if not cword or not root then return end
+      v('silent lgrep --no-column -ttex \\label\\\\{' .. cword .. '} ' .. root)
+    end)
+
+    -- go to references (looks for `\autoref{<cword>}` or `\href{<cword>}`)
+    k('n', 'gr', function()
+      local cword, root = vim.fn.expand('<cword>'), brew.git_workspace_root()
+      if not cword or not root then return end
+      local ref = "'\\\\(auto\\|h\\|name)ref\\{" .. cword .. "\\}'"
+      v('silent grep -ttex ' .. ref .. ' ' .. root)
+      if #vim.fn.getqflist() == 0 then
+        vim.notify('No references found.')
+      else
+        v('silent bel copen')
+      end
+    end)
     local minimath = brew.prequire('minimath')
     if minimath then
       minimath.overriding_remaps()

@@ -8,7 +8,11 @@ local grep_actions = {
     fn = function(selected, opts)
       opts.copen = false
       actions.file_sel_to_qf(selected, opts)
-      actions.file_edit({ selected[opts.__FZF_POS + 1] }, opts)
+      if opts.__FZF_POS then
+        actions.file_edit({ selected[opts.__FZF_POS + 1] }, opts)
+      else
+        actions.file_edit({ selected[1] }, opts)
+      end
     end,
     prefix = 'select-all',
   },

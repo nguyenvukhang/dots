@@ -65,6 +65,7 @@ lsp_add['lua'] = {
           [vim.env.VIMRUNTIME .. '/lua/vim/lsp'] = true,
           [lazy_path .. '/lazy.nvim/lua/lazy'] = true,
           [lazy_path .. '/telescope.nvim/lua/telescope'] = true,
+          [vim.fn.stdpath('config') .. '/lua'] = true,
           ['/usr/share/awesome/lib'] = true,
         },
         maxPreload = 100000,

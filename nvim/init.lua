@@ -170,6 +170,20 @@ require('brew.lazy').setup {
         { '<leader>pf', bfzf.grep_cword },
       }
     end,
+    config = function()
+      local brew = require('brew')
+      local fzf = require('fzf-lua')
+      local opts = { silent = true, buffer = true }
+      brew.autocmd {
+        pattern = '*.tex',
+        callback = function()
+          vim.keymap.set('n', '<leader>pm', function()
+            local f = fzf.fzf_exec('minimath-rg')
+            print('GOT HERE')
+          end, opts)
+        end,
+      }
+    end,
   },
   {
     'nguyenvukhang/nvim-toggler',
