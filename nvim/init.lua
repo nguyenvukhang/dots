@@ -162,13 +162,8 @@ require('brew.lazy').setup {
         ['enter'] = {
           fn = function(selected, opts)
             opts.copen = false
-            local target = selected[opts.__FZF_POS + 1]
-            -- print(vim.inspect(selected))
-            -- print("-----", target)
             actions.file_sel_to_qf(selected, opts)
-            -- vim.fn.setqflist({}, 'r', { idx = opts.__FZF_POS, col = 1 })
-            -- print(selected[opts.__FZF_POS + 1])
-            actions.file_edit({ target }, opts)
+            actions.file_edit({ selected[opts.__FZF_POS + 1] }, opts)
           end,
           prefix = 'select-all',
         },
