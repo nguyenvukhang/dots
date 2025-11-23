@@ -75,7 +75,6 @@ local cfg = {
     end)
     local minimath = brew.prequire('minimath')
     if minimath then
-      minimath.overriding_remaps()
       minimath.remaps()
     end
   end,

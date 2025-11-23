@@ -7,7 +7,7 @@ vim.diagnostic.config { underline = false, virtual_text = true }
 -- * mfussenegger/nvim-jdtls
 
 -- As opposed to fzf-lua
-local USE_TELESCOPE = false
+local USE_TELESCOPE = true
 
 require('brew.lsp')
 require('brew.lazy').setup {

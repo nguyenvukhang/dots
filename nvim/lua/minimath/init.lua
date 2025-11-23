@@ -1,8 +1,3 @@
-local pickers = require('telescope.pickers')
-local finders = require('telescope.finders')
-local conf = require('telescope.config').values
-local actions_state = require('telescope.actions.state')
-local actions = require('telescope.actions')
 local gen = require('minimath.generated')
 
 local M = {}
@@ -110,6 +105,8 @@ local get_attach_mappings_callback = function(action)
 end
 
 local get_attach_mappings = function(action)
+  local actions_state = require('telescope.actions.state')
+  local actions = require('telescope.actions')
   local callback = get_attach_mappings_callback(action)
   if callback == nil then return end
   local function inner(_, map)
@@ -134,6 +131,9 @@ end
 ---@param action 'a' | 'h' | 'j' | 'y' type of action
 local theorem_search = function(action)
   local opts = { entry_maker = gen_from_vimgrep_for_math_notes() }
+  local finders = require('telescope.finders')
+  local pickers = require('telescope.pickers')
+  local conf = require('telescope.config').values
   pickers
     .new(opts, {
       layout_strategy = 'vertical',
@@ -146,14 +146,6 @@ local theorem_search = function(action)
     })
     :find()
 end
-
--- Get path to the root of the git workspace
-local git_workspace_root = function()
-  local stdout = vim.fn.systemlist('git rev-parse --show-toplevel')
-  return vim.v.shell_error == 0 and stdout[1] or vim.notify('not in a git repo')
-end
-
-M.overriding_remaps = function() end
 
 local function gen_from_vimgrep_for_lean()
   local mt_vimgrep_entry
@@ -189,7 +181,10 @@ M.lean_remaps = function()
   local opts = { silent = true, buffer = bufnr }
 
   k('n', '<leader>pl', function()
+    local finders = require('telescope.finders')
+    local pickers = require('telescope.pickers')
     local lopts = { entry_maker = gen_from_vimgrep_for_lean() }
+    local conf = require('telescope.config').values
     pickers
       .new(lopts, {
         layout_strategy = 'vertical',
@@ -207,7 +202,6 @@ end
 M.remaps = function()
   local bufnr = vim.api.nvim_get_current_buf()
   local k = vim.keymap.set
-  local v = vim.cmd
   local opts = { silent = true, buffer = bufnr }
 
   k('n', '<leader>pm', function() theorem_search('j') end, opts)
@@ -217,28 +211,8 @@ M.remaps = function()
   k('n', '<leader>v', function()
     local line = vim.api.nvim_get_current_line()
     local parts = vim.split(line, ' %% ')
-    print(vim.inspect(parts))
     vim.api.nvim_set_current_line(parts[1] .. ' % ' .. os.date('%Y-%m-%d'))
   end, opts)
-
-  k('n', 'K', function()
-    --[[
-    local pos = vim.api.nvim_win_get_cursor(0)
-    local row, col = pos[1], pos[2]
-    local buf = vim.api.nvim_create_buf(false, true)
-    print("BUFFER", buf)
-    vim.api.nvim_buf_set_lines(buf, 0, -1, false, { 'This is a popup!' })
-    local opts = {
-      relative = 'cursor', -- Position relative to the cursor
-      row = -1, -- One line below the cursor
-      col = 0, -- Same column as the cursor
-      width = 20, -- Width of the popup window
-      height = 1, -- Height of the popup window
-      style = 'minimal', -- Minimal style (no borders, no title)
-    }
-    vim.api.nvim_open_win(buf, true, opts)
-    --]]
-  end)
 end
 
 return M
