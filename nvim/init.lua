@@ -154,54 +154,22 @@ require('brew.lazy').setup {
       },
     },
     keys = function()
+      local bfzf = require('brew.fzf')
       local fzf = require('fzf-lua')
-      local actions = require('fzf-lua.actions')
-      local git_workspace_root = require('brew').git_workspace_root
-      local w = function(opts) return { winopts = opts } end
-      local word_actions = {
-        ['enter'] = {
-          fn = function(selected, opts)
-            opts.copen = false
-            actions.file_sel_to_qf(selected, opts)
-            actions.file_edit({ selected[opts.__FZF_POS + 1] }, opts)
-          end,
-          prefix = 'select-all',
-        },
-      }
       return {
-        { '<C-f>', function() fzf.files(w { width = 0.5, height = 0.5 }) end },
-        { '<C-p>', function() fzf.git_files() end },
+        -- file searches.
+        { '<C-f>', bfzf.files },
+        { '<C-p>', bfzf.git_files },
         {
-          '<leader>ps',
+          '<leader>sd',
           function()
-            local cwd = git_workspace_root()
-            if cwd ~= nil then
-              fzf.grep {
-                cwd = cwd,
-                input_prompt = 'Repo Search > ',
-                actions = word_actions,
-              }
-            end
+            fzf.files { cwd = vim.env.DOTS, input_prompt = 'Search dots.' }
           end,
         },
-        {
-          '<leader>pw',
-          function()
-            fzf.grep {
-              input_prompt = 'CWD Search > ',
-              actions = word_actions,
-            }
-          end,
-        },
-        {
-          '<leader>pf',
-          function()
-            fzf.grep_cword {
-              cwd = git_workspace_root(),
-              actions = word_actions,
-            }
-          end,
-        },
+        -- word searches.
+        { '<leader>pw', bfzf.grep },
+        { '<leader>ps', bfzf.git_grep },
+        { '<leader>pf', bfzf.grep_cword },
       }
     end,
   },
