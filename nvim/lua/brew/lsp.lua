@@ -39,6 +39,7 @@ local lua = {
     vim.api.nvim_get_runtime_file('', true)
   ),
 }
+-- lua.library = vim.api.nvim_get_runtime_file('', true)
 -- table.insert(lua.library, vim.env.VIMRUNTIME)
 
 -- print(vim.inspect(vim.api.nvim_get_runtime_file('', true)))
