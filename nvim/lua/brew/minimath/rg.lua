@@ -1,4 +1,4 @@
-local gen = require('minimath.generated')
+local gen = require('brew.minimath.generated')
 
 local separator = '  .'
 local _abbrev_cache = {}
