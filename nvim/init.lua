@@ -180,7 +180,7 @@ require('brew.lazy').setup {
 
       local keymap = function(mode, keymap, callback)
         vim.keymap.set(mode, keymap, function()
-          rg:load()
+          rg:load_minimath()
           fzf.fzf_exec(rg.fzf_choices, { actions = { ['enter'] = callback } })
         end, { silent = true, buffer = true })
       end
@@ -188,11 +188,16 @@ require('brew.lazy').setup {
       brew.autocmd {
         pattern = '*.lean',
         callback = function()
-          keymap('n', '<leader>pm', function(fzf_choices)
-            -- Jump to a theorem.
-            rg.jump(rg:get_target(fzf_choices[1]))
-          end)
-          -- hey
+          vim.keymap.set('n', '<leader>pm', function()
+            rg:load_lean()
+            fzf.fzf_exec(rg.fzf_choices, {
+              actions = {
+                ['enter'] = function(fzf_choices)
+                  rg.jump(rg:get_target(fzf_choices[1]))
+                end,
+              },
+            })
+          end, { silent = true, buffer = true })
         end,
       }
 

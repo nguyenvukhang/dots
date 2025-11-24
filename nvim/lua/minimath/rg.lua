@@ -40,15 +40,28 @@ local MiniRg = {
   fzf_choices = {},
 }
 
----@param self MiniRg
----@param cmd string?
-MiniRg.load = function(self, cmd)
-  cmd = cmd or 'minimath-rg'
-  for i, line in pairs(vim.fn.systemlist(cmd)) do
+MiniRg.load_minimath = function(self, cmd)
+  for i, line in pairs(vim.fn.systemlist('minimath-rg')) do
     local _, _, filename, lnum, text, sha = line:find('(.*):(%d+):(.*):(.*)')
     self.data[sha] = { filename = filename, lnum = tonumber(lnum) }
     local abbrev = get_abbrev(filename)
-    self.fzf_choices[i] = abbrev
+    self.fzf_choices[sha] = abbrev
+      .. ' | '
+      .. text
+      .. '\x1b[37m'
+      .. separator
+      .. sha
+      .. '\x1b[m'
+  end
+end
+
+MiniRg.load_lean = function(self)
+  for i, line in pairs(vim.fn.systemlist { 'lake-dino', 'rg' }) do
+    local _, _, filename, lnum, text = line:find('(.*):(%d+):(.*)')
+    local sha = tostring(i)
+    self.data[sha] = { filename = filename, lnum = tonumber(lnum) }
+    local abbrev = get_abbrev(filename)
+    self.fzf_choices[sha] = abbrev
       .. ' | '
       .. text
       .. '\x1b[37m'
