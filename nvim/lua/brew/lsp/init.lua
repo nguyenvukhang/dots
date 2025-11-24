@@ -1,5 +1,7 @@
+local M = {}
+
 -- base settings for lsp
-return function(opts)
+M.base = function(opts)
   opts = opts or {}
   opts.on_attach = function(_, bufnr)
     -- Disable LSP-based syntax highlighting. This introduces a color change
@@ -17,3 +19,12 @@ return function(opts)
   end
   return opts
 end
+
+M.lsp_add = setmetatable({}, {
+  __newindex = function(_, key, opts)
+    vim.lsp.config(key, M.base(opts))
+    vim.lsp.enable(key)
+  end,
+})
+
+return M

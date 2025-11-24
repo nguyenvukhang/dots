@@ -1,13 +1,10 @@
-vim.deprecate = function() end
-vim.diagnostic.config { underline = false, virtual_text = true }
+-- vim.deprecate = function() end
+-- vim.diagnostic.config { underline = false, virtual_text = true }
 
 -- plugin archive
 -- * nvim-treesitter/playground
 -- * wuelnerdotexe/vim-astro
 -- * mfussenegger/nvim-jdtls
-
--- As opposed to fzf-lua
-local USE_TELESCOPE = false
 
 -- Add `lazy.nvim` to vim's runtime path first.
 local lazy = require('brew.lazy')
@@ -281,13 +278,7 @@ lazy.setup {
       'nvim-lua/plenary.nvim',
     },
     config = function()
-      local lean = require('lean')
-      lean.setup {
-        lsp = require('brew.lsp.base') {
-          init_options = {
-            editDelay = 100000,
-          },
-        },
+      require('lean').setup {
         infoview = {
           autoopen = false,
           -- show_term_goals = false,
@@ -301,13 +292,10 @@ lazy.setup {
           unsolved = '',
         },
       }
-      vim.keymap.set(
-        'n',
-        '<leader>u',
-        ':LeanInfoviewToggle<cr>',
-        { silent = true }
-      )
     end,
+    keys = {
+      { '<leader>u', ':LeanInfoviewToggle<cr>', { silent = true } },
+    },
   },
   {
     'm4xshen/autoclose.nvim',
@@ -360,7 +348,7 @@ lazy.setup {
     },
   },
 }
-local lsp = require('brew.lsp')
+require('brew.lsp.config')
 
 -- independent of plugins, server-friendly
 require('brew.server.sets')
