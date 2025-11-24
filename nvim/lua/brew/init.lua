@@ -76,4 +76,16 @@ M.search = function(query)
   return vim.fn.search(query, 's')
 end
 
+-- Requires that the user is currently in visual mode (not visual line mode),
+-- and also assume that the visual mode spans only one line.
+--
+-- Splits the line into `left`, `selection`, and `right`.
+M.split_visual_line = function()
+  local r, l, line = vim.fn.col('.'), vim.fn.col('v'), vim.fn.getline('.')
+  if r < l then
+    l, r = r, l
+  end
+  return line:sub(0, l - 1), line:sub(l, r), line:sub(r + 1)
+end
+
 return M

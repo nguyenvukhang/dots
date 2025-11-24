@@ -58,7 +58,9 @@ local cfg = {
     k('n', 'gd', function()
       local cword, root = vim.fn.expand('<cword>'), brew.git_workspace_root()
       if not cword or not root then return end
-      v('silent lgrep --no-column -ttex \\label\\\\{' .. cword .. '} ' .. root)
+      vim.cmd(
+        'silent lgrep --no-column -ttex \\label\\\\{' .. cword .. '} ' .. root
+      )
     end)
 
     -- go to references (looks for `\autoref{<cword>}` or `\href{<cword>}`)
@@ -66,17 +68,13 @@ local cfg = {
       local cword, root = vim.fn.expand('<cword>'), brew.git_workspace_root()
       if not cword or not root then return end
       local ref = "'\\\\(auto\\|h\\|name)ref\\{" .. cword .. "\\}'"
-      v('silent grep -ttex ' .. ref .. ' ' .. root)
+      vim.cmd('silent grep -ttex ' .. ref .. ' ' .. root)
       if #vim.fn.getqflist() == 0 then
         vim.notify('No references found.')
       else
-        v('silent bel copen')
+        vim.cmd('silent bel copen')
       end
     end)
-    local minimath = brew.prequire('minimath')
-    if minimath then
-      minimath.remaps()
-    end
   end,
   markdown = function()
     vim.opt.textwidth = 80
@@ -92,8 +90,6 @@ local cfg = {
   astro = function() vim.opt_local.commentstring = '// %s' end,
   asm = function() vim.opt_local.commentstring = '# %s' end,
   lean = function()
-    local minimath = brew.prequire('minimath')
-    if minimath then minimath.lean_remaps() end
     vim.opt_local.foldmarker = ':= by --,-- ∎'
     vim.opt_local.commentstring = '-- %s'
 

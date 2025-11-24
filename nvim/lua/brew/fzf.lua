@@ -5,13 +5,16 @@ local git_workspace_root = require('brew').git_workspace_root
 
 local grep_actions = {
   ['enter'] = {
-    fn = function(selected, opts)
+    fn = function(selection, opts)
+      local fzf_pos = tonumber(table.remove(selection, #selection))
       opts.copen = false
-      actions.file_sel_to_qf(selected, opts)
-      print(vim.inspect(opts.__FZF_POS))
-      actions.file_edit({ selected[(opts.__FZF_POS or 0) + 1] }, opts)
+      actions.file_sel_to_qf(selection, opts)
+      actions.file_edit({ selection[fzf_pos] }, opts)
     end,
     prefix = 'select-all',
+    -- '{+}' is where all the output will be dumped, and then $FZF_POS will be
+    -- printed after.
+    field_index = '{+} $FZF_POS',
   },
 }
 

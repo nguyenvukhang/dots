@@ -7,7 +7,7 @@ vim.diagnostic.config { underline = false, virtual_text = true }
 -- * mfussenegger/nvim-jdtls
 
 -- As opposed to fzf-lua
-local USE_TELESCOPE = true
+local USE_TELESCOPE = false
 
 require('brew.lsp')
 require('brew.lazy').setup {
@@ -131,7 +131,8 @@ require('brew.lazy').setup {
     end,
   },
   {
-    'nguyenvukhang/fzf-lua',
+    -- 'nguyenvukhang/fzf-lua',
+    'ibhagwan/fzf-lua',
     enabled = not USE_TELESCOPE,
     opts = {
       winopts = {
@@ -170,17 +171,41 @@ require('brew.lazy').setup {
         { '<leader>pf', bfzf.grep_cword },
       }
     end,
-    config = function()
-      local brew = require('brew')
+    config = function(spec)
       local fzf = require('fzf-lua')
-      local opts = { silent = true, buffer = true }
+      local brew = require('brew')
+      local rg = require('minimath.rg')
+
+      fzf.setup(spec.opts)
+
+      local keymap = function(mode, keymap, callback)
+        vim.keymap.set(mode, keymap, function()
+          rg:load()
+          fzf.fzf_exec(rg.fzf_choices, { actions = { ['enter'] = callback } })
+        end, { silent = true, buffer = true })
+      end
+
       brew.autocmd {
         pattern = '*.tex',
         callback = function()
-          vim.keymap.set('n', '<leader>pm', function()
-            local f = fzf.fzf_exec('minimath-rg')
-            print('GOT HERE')
-          end, opts)
+          keymap('n', '<leader>pm', function(fzf_choices)
+            -- Jump to a theorem.
+            rg.jump(rg:get_target(fzf_choices[1]))
+          end)
+          keymap('n', '<leader>pt', function(fzf_choices)
+            -- Copy the theorem's SHA to empty register.
+            vim.fn.setreg('', rg.get_sha(fzf_choices[1]))
+          end)
+          keymap('v', '<leader>h', function(fzf_choices)
+            -- Surround the selection with a \href{...}{<selection>}
+            local sha = rg.get_sha(fzf_choices[1])
+            vim.fn.feedkeys('gv"xc\\href{' .. sha .. '}{}"xP')
+          end)
+          keymap('v', '<leader>a', function(fzf_choices)
+            -- Replace the selection with a \autoref{...}
+            local sha = rg.get_sha(fzf_choices[1])
+            vim.fn.feedkeys('gv"xc\\autoref{' .. sha .. '}')
+          end)
         end,
       }
     end,
