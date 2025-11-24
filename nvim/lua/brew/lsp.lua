@@ -19,8 +19,8 @@ local base = function(opts)
 end
 
 local lsp_add = setmetatable({}, {
-  __newindex = function(_, key, value)
-    vim.lsp.config(key, base(value))
+  __newindex = function(_, key, opts)
+    vim.lsp.config(key, base(opts))
     vim.lsp.enable(key)
   end,
 })
@@ -50,28 +50,48 @@ lsp_add['python'] = {
   },
 }
 
-local lazy_path = vim.fn.stdpath('data') .. '/lazy'
+local lua = {
+  lazy_path = vim.fn.stdpath('data') .. '/lazy',
+  library = vim.tbl_filter(
+    function(d) return not d:match(vim.fn.stdpath('config') .. '/?a?f?t?e?r?') end,
+    vim.api.nvim_get_runtime_file('', true)
+  ),
+}
+-- table.insert(lua.library, vim.env.VIMRUNTIME)
+
+-- print(vim.inspect(vim.api.nvim_get_runtime_file('', true)))
+print(vim.inspect(lua.library))
 lsp_add['lua'] = {
   filetypes = { 'lua' },
   cmd = { 'lua-language-server' },
   settings = {
     Lua = {
+      runtime = {
+        version = 'LuaJIT',
+        -- Tell the language server how to find Lua modules same way as Neovim
+        -- (see `:h lua-module-load`)
+        path = {
+          'lua/?.lua',
+          'lua/?/init.lua',
+        },
+      },
       diagnostics = {
         globals = { 'vim', 'awesome', 'client', 'root', 'screen' },
       },
       workspace = {
-        library = {
-          [vim.env.VIMRUNTIME .. '/lua'] = true,
-          [vim.env.VIMRUNTIME .. '/lua/vim/lsp'] = true,
-          [lazy_path .. '/lazy.nvim/lua/lazy'] = true,
-          [lazy_path .. '/telescope.nvim/lua/telescope'] = true,
-          [vim.fn.stdpath('config') .. '/lua'] = true,
-          ['/usr/share/awesome/lib'] = true,
-        },
-        maxPreload = 100000,
-        preloadFileSize = 10000,
-        checkThirdParty = false,
+        library = lua.library,
       },
+      --     [vim.env.VIMRUNTIME .. '/lua'] = true,
+      --     [vim.env.VIMRUNTIME .. '/lua/vim/lsp'] = true,
+      --     [lazy_path .. '/lazy.nvim/lua/lazy'] = true,
+      --     [lazy_path .. '/telescope.nvim/lua/telescope'] = true,
+      --     [vim.fn.stdpath('config') .. '/lua'] = true,
+      --     ['/usr/share/awesome/lib'] = true,
+      --   },
+      --   maxPreload = 100000,
+      --   preloadFileSize = 10000,
+      --   checkThirdParty = false,
+      -- },
       telemetry = { enable = false },
     },
   },

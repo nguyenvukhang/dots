@@ -9,8 +9,11 @@ vim.diagnostic.config { underline = false, virtual_text = true }
 -- As opposed to fzf-lua
 local USE_TELESCOPE = false
 
-require('brew.lsp')
-require('brew.lazy').setup {
+-- Add `lazy.nvim` to vim's runtime path. First.
+local lazy = require('brew.lazy')
+local lsp = require('brew.lsp')
+
+lazy.setup {
   {
     'nvim-lua/plenary.nvim',
     config = function() require('harpoon').my_setup() end,
@@ -349,9 +352,8 @@ require('brew.lazy').setup {
     },
     config = function()
       local lean = require('lean')
-      local base = require('brew.lsp').base
       lean.setup {
-        lsp = base {
+        lsp = lsp.base {
           init_options = {
             editDelay = 100000,
           },
@@ -437,4 +439,3 @@ require('brew.statusline')
 require('brew.autocmd')
 
 vim.cmd('colo gruvbox8_generated')
--- require('gruvbox').load()
