@@ -1,5 +1,5 @@
 -- vim.deprecate = function() end
--- vim.diagnostic.config { underline = false, virtual_text = true }
+vim.diagnostic.config { underline = false, virtual_text = true }
 
 -- plugin archive
 -- * nvim-treesitter/playground
@@ -10,33 +10,6 @@
 local lazy = require('brew.lazy')
 
 lazy.setup {
-  {
-    'nguyenvukhang/lean.nvim', -- Julian
-    dependencies = {
-      'neovim/nvim-lspconfig',
-      'nvim-lua/plenary.nvim',
-    },
-    lazy = false,
-    opts = function()
-      local lsp = require('brew.lsp')
-      lsp.add['leanls'] = { init_options = { editDelay = 100000 } }
-      return {
-        infoview = {
-          autoopen = false,
-          -- show_term_goals = false,
-        },
-        inlay_hint = {
-          enabled = false,
-        },
-        progress_bars = { enable = false },
-        goal_markers = {
-          accomplished = '',
-          unsolved = '',
-        },
-      }
-    end,
-    keys = { { '<leader>u', ':LeanInfoviewToggle<cr>', { silent = true } } },
-  },
   {
     'nvim-lua/plenary.nvim',
     config = function() require('harpoon').my_setup() end,
@@ -279,17 +252,23 @@ lazy.setup {
   },
   {
     'nvim-treesitter/nvim-treesitter',
+    tag = 'v0.9.3',
     config = function()
       local languages = { 'latex' }
+      -- shut up nvim-treesitter.
+      local setup = function(x) require('nvim-treesitter.configs').setup(x) end
       -- javascript, typescript, c, lua, rust, tsx, css, astro, java,
       -- latex, markdown, markdown_inline, python, swift
-      require('nvim-treesitter.configs').setup {
+      setup {
+        modules = {},
+        ensure_installed = languages,
+        sync_install = false,
+        auto_install = false,
         highlight = {
           enable = true,
           disable = function(l) return not vim.tbl_contains(languages, l) end,
           additional_vim_regex_highlighting = false,
         },
-        ensure_installed = languages,
       }
       -- local p_config = require("nvim-treesitter.parsers").get_parser_config()
       -- print(vim.inspect(require("nvim-treesitter.parsers")))
@@ -344,6 +323,31 @@ lazy.setup {
       },
       presets = { lsp_doc_border = false },
     },
+  },
+  {
+    'nguyenvukhang/lean.nvim', -- Julian
+    dependencies = {
+      'neovim/nvim-lspconfig',
+      'nvim-lua/plenary.nvim',
+    },
+    lazy = false,
+    opts = function()
+      local lsp = require('brew.lsp')
+      lsp.add['leanls'] = { init_options = { editDelay = 100000 } }
+      return {
+        infoview = {
+          autoopen = false,
+          -- show_term_goals = false,
+        },
+        inlay_hint = { enabled = false },
+        progress_bars = { enable = false },
+        goal_markers = {
+          accomplished = '',
+          unsolved = '',
+        },
+      }
+    end,
+    keys = { { '<leader>u', ':LeanInfoviewToggle<cr>', { silent = true } } },
   },
 }
 require('brew.lsp.config')
