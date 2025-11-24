@@ -40,8 +40,11 @@ local MiniRg = {
   fzf_choices = {},
 }
 
-MiniRg.load = function(self)
-  for i, line in pairs(vim.fn.systemlist('minimath-rg')) do
+---@param self MiniRg
+---@param cmd string?
+MiniRg.load = function(self, cmd)
+  cmd = cmd or 'minimath-rg'
+  for i, line in pairs(vim.fn.systemlist(cmd)) do
     local _, _, filename, lnum, text, sha = line:find('(.*):(%d+):(.*):(.*)')
     self.data[sha] = { filename = filename, lnum = tonumber(lnum) }
     local abbrev = get_abbrev(filename)

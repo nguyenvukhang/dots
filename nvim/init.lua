@@ -186,6 +186,17 @@ require('brew.lazy').setup {
       end
 
       brew.autocmd {
+        pattern = '*.lean',
+        callback = function()
+          keymap('n', '<leader>pm', function(fzf_choices)
+            -- Jump to a theorem.
+            rg.jump(rg:get_target(fzf_choices[1]))
+          end)
+          -- hey
+        end,
+      }
+
+      brew.autocmd {
         pattern = '*.tex',
         callback = function()
           keymap('n', '<leader>pm', function(fzf_choices)
