@@ -23,6 +23,64 @@ vim.g.mapleader = ' '
 
 vim.diagnostic.config { underline = false, virtual_text = true }
 
+local fzf_separator = '  .'
+
+---@class MiniFzfEntryData
+---@field filename string
+---@field lnum number?
+
+---@class MiniFzf
+---@field data table<string, MiniFzfEntryData>
+---@field fzf_choices string[]
+local MiniFzf = { data = {}, fzf_choices = {} }
+
+MiniFzf.load_minimath = function(self) --<
+  for _, line in pairs(vim.fn.systemlist('minimath-rg')) do
+    local _, _, filename, lnum, text, sha = line:find('(.*):(%d+):(.*):(.*)')
+    self.data[sha] = { filename = filename, lnum = tonumber(lnum) }
+    local abbrev = require('minimath.abbrev').get(filename)
+    self.fzf_choices[sha] = abbrev
+      .. ' | '
+      .. text
+      .. '\x1b[37m'
+      .. fzf_separator
+      .. sha
+      .. '\x1b[m'
+  end
+end -->
+MiniFzf.load_lean = function(self) --<
+  for i, line in pairs(vim.fn.systemlist { 'lake-dino', 'rg' }) do
+    local _, _, filename, lnum, text = line:find('(.*):(%d+):(.*)')
+    local sha = tostring(i)
+    self.data[sha] = { filename = filename, lnum = tonumber(lnum) }
+    local abbrev = require('minimath.abbrev').get(filename)
+    self.fzf_choices[sha] = abbrev
+      .. ' | '
+      .. text
+      .. '\x1b[37m'
+      .. fzf_separator
+      .. sha
+      .. '\x1b[m'
+  end
+end -->
+---@param fzf_choice string
+MiniFzf.get_sha = function(fzf_choice) --<
+  local parts = vim.fn.split(fzf_choice, fzf_separator)
+  return parts[#parts]
+end -->
+---@param fzf_choice string
+MiniFzf.get_target = function(self, fzf_choice) --<
+  return self.data[MiniFzf.get_sha(fzf_choice)]
+end -->
+---@param target MiniFzfEntryData
+MiniFzf.jump = function(target) --<
+  local bufnr = vim.fn.bufadd(target.filename)
+  vim.fn.bufload(bufnr)
+  vim.api.nvim_set_current_buf(bufnr)
+  vim.api.nvim_win_set_cursor(0, { target.lnum, 0 })
+  vim.fn.feedkeys('zz$T{', 'n')
+end -->
+
 -- plugin archive
 -- * nvim-treesitter/playground
 -- * wuelnerdotexe/vim-astro
@@ -131,7 +189,7 @@ require('lazy').setup {
       config = function(spec)
         local fzf = require('fzf-lua')
         local brew = require('brew.server.utils')
-        local rg = require('minimath.rg')
+        local rg = MiniFzf
 
         fzf.setup(spec.opts)
 
@@ -351,7 +409,6 @@ require('lazy').setup {
           override = {
             ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
             ['vim.lsp.util.stylize_markdown'] = true,
-            ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
           },
         },
         presets = { lsp_doc_border = false },
@@ -366,8 +423,8 @@ require('lazy').setup {
       },
       lazy = false,
       opts = function()
-        local lsp = require('brew.lsp')
-        lsp.add['leanls'] = { init_options = { editDelay = 100000 } }
+        require('brew.lsp').add['leanls'] =
+          { init_options = { editDelay = 100000 } }
         return {
           infoview = {
             autoopen = false,

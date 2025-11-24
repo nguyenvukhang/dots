@@ -32,8 +32,7 @@ local lua = {
     vim.api.nvim_get_runtime_file('', true)
   ),
 }
-table.insert(lua.library, vim.fn.stdpath('config') .. '/lua/brew')
-
+-- table.insert(lua.library, vim.fn.stdpath('config') .. '/lua/brew')
 
 -- print(vim.inspect(vim.api.nvim_get_runtime_file('', true)))
 -- print(vim.inspect(lua.library))
