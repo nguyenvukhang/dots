@@ -11,7 +11,6 @@ local USE_TELESCOPE = false
 
 -- Add `lazy.nvim` to vim's runtime path. First.
 local lazy = require('brew.lazy')
-local lsp = require('brew.lsp')
 
 lazy.setup {
   {
@@ -353,7 +352,7 @@ lazy.setup {
     config = function()
       local lean = require('lean')
       lean.setup {
-        lsp = lsp.base {
+        lsp = require('brew.lsp.base') {
           init_options = {
             editDelay = 100000,
           },
@@ -430,6 +429,7 @@ lazy.setup {
     },
   },
 }
+local lsp = require('brew.lsp')
 
 -- independent of plugins, server-friendly
 require('brew.sets')

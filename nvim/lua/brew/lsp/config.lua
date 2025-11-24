@@ -1,4 +1,22 @@
-local base = require('brew.lsp.base')
+-- base settings for lsp
+local base = function(opts)
+  opts = opts or {}
+  opts.on_attach = function(_, bufnr)
+    -- Disable LSP-based syntax highlighting. This introduces a color change
+    -- after LSP gets attached.
+    for _, group in ipairs(vim.fn.getcompletion('@lsp', 'highlight')) do
+      vim.api.nvim_set_hl(0, group, {})
+    end
+    local x = { buffer = bufnr, noremap = true }
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, x)
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, x)
+    vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, x)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, x)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, x)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, x)
+  end
+  return opts
+end
 
 local lsp_add = setmetatable({}, {
   __newindex = function(_, key, opts)
@@ -42,7 +60,7 @@ local lua = {
 -- table.insert(lua.library, vim.env.VIMRUNTIME)
 
 -- print(vim.inspect(vim.api.nvim_get_runtime_file('', true)))
--- print(vim.inspect(lua.library))
+print(vim.inspect(lua.library))
 lsp_add['lua'] = {
   filetypes = { 'lua' },
   cmd = { 'lua-language-server' },
