@@ -16,14 +16,11 @@ lazy.setup {
       'neovim/nvim-lspconfig',
       'nvim-lua/plenary.nvim',
     },
-    config = function()
-      local base = require('brew.lsp').base
-      require('lean').setup {
-        lsp = base {
-          init_options = {
-            editDelay = 100000,
-          },
-        },
+    lazy = false,
+    opts = function()
+      local lsp = require('brew.lsp')
+      lsp.add['leanls'] = { init_options = { editDelay = 100000 } }
+      return {
         infoview = {
           autoopen = false,
           -- show_term_goals = false,
@@ -38,9 +35,7 @@ lazy.setup {
         },
       }
     end,
-    keys = {
-      { '<leader>u', ':LeanInfoviewToggle<cr>', { silent = true } },
-    },
+    keys = { { '<leader>u', ':LeanInfoviewToggle<cr>', { silent = true } } },
   },
   {
     'nvim-lua/plenary.nvim',
@@ -351,7 +346,7 @@ lazy.setup {
     },
   },
 }
--- require('brew.lsp.config')
+require('brew.lsp.config')
 
 -- independent of plugins, server-friendly
 require('brew.server.sets')

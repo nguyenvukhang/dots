@@ -31,42 +31,36 @@ vim.g.maplocalleader = '\\'
 -- Setup lazy.nvim
 require('lazy').setup {
   {
-    'ibhagwan/fzf-lua',
-    keys = function()
-      local actions = require('fzf-lua.actions')
-      local fzf = require('fzf-lua')
-      return {
-        {
-          '<c-p>',
-          function()
-            fzf.grep {
-              actions = {
-                ['enter'] = {
-                  fn = function(s, opts)
-                    print(vim.inspect(s))
-                    local tmp_file = s[1]
-                    local fzf_pos = s[2]
-                    local entries = vim.split(
-                      io.open(tmp_file, 'r'):read('*a'),
-                      opts.fzf_opts['--read0'] and '\0' or '\n'
-                    )
-                    entries[#entries] = nil
-                    opts.copen = false
-                    actions.file_sel_to_qf(entries, opts)
-                    actions.file_edit({ entries[tonumber(fzf_pos)] }, opts)
-                  end,
-                  prefix = 'select-all',
-                  field_index = '{+f} $FZF_POS',
-                },
-              },
-            }
-          end,
+    'nguyenvukhang/lean.nvim', -- Julian
+    dependencies = {
+      'neovim/nvim-lspconfig',
+      'nvim-lua/plenary.nvim',
+    },
+    lazy = false,
+    config = function()
+      print('GOT HERE')
+      require('lean').setup {
+        lsp = {
+          init_options = {
+            editDelay = 100000,
+          },
+        },
+        infoview = {
+          autoopen = false,
+          -- show_term_goals = false,
+        },
+        inlay_hint = {
+          enabled = false,
+        },
+        progress_bars = { enable = false },
+        goal_markers = {
+          accomplished = '',
+          unsolved = '',
         },
       }
     end,
-    config = function()
-      -- hey
-      require('fzf-lua').setup()
-    end,
+    keys = {
+      { '<leader>u', ':LeanInfoviewToggle<cr>', { silent = true } },
+    },
   },
 }

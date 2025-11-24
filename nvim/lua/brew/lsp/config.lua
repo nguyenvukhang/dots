@@ -1,6 +1,6 @@
-local lsp_add = require('brew.lsp').lsp_add
+local lsp = require('brew.lsp')
 
-lsp_add['rust_analyzer'] = {
+lsp.add['rust_analyzer'] = {
   filetypes = { 'rust' },
   cmd = { 'rust-analyzer' },
   root_markers = { 'Cargo.toml', 'rust-project.json' },
@@ -12,7 +12,7 @@ lsp_add['rust_analyzer'] = {
   },
 }
 
-lsp_add['python'] = {
+lsp.add['python'] = {
   filetypes = { 'python' },
   cmd = { 'pyright-langserver', '--stdio' },
   root_markers = { '.git' },
@@ -36,7 +36,7 @@ table.insert(lua.library, vim.fn.stdpath('config') .. '/lua/brew')
 
 -- print(vim.inspect(vim.api.nvim_get_runtime_file('', true)))
 -- print(vim.inspect(lua.library))
-lsp_add['lua'] = {
+lsp.add['lua'] = {
   filetypes = { 'lua' },
   cmd = { 'lua-language-server' },
   settings = {
@@ -53,31 +53,18 @@ lsp_add['lua'] = {
       diagnostics = {
         globals = { 'vim', 'awesome', 'client', 'root', 'screen' },
       },
-      workspace = {
-        library = lua.library,
-      },
-      --     [vim.env.VIMRUNTIME .. '/lua'] = true,
-      --     [vim.env.VIMRUNTIME .. '/lua/vim/lsp'] = true,
-      --     [lazy_path .. '/lazy.nvim/lua/lazy'] = true,
-      --     [lazy_path .. '/telescope.nvim/lua/telescope'] = true,
-      --     [vim.fn.stdpath('config') .. '/lua'] = true,
-      --     ['/usr/share/awesome/lib'] = true,
-      --   },
-      --   maxPreload = 100000,
-      --   preloadFileSize = 10000,
-      --   checkThirdParty = false,
-      -- },
+      workspace = { library = lua.library },
       telemetry = { enable = false },
     },
   },
 }
 
-lsp_add['clang'] = {
+lsp.add['clang'] = {
   filetypes = { 'c', 'cpp' },
   cmd = { 'clangd' },
 }
 
-lsp_add['zls'] = {
+lsp.add['zls'] = {
   filetypes = { 'zig' },
   cmd = { 'zls' },
 }
