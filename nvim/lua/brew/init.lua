@@ -104,7 +104,7 @@ lazy.setup {
     config = function(spec)
       local fzf = require('fzf-lua')
       local brew = require('brew.server.utils')
-      local rg = require('brew.minimath.rg')
+      local rg = require('minimath.rg')
 
       fzf.setup(spec.opts)
 
