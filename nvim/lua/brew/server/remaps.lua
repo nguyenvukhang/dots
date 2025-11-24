@@ -1,4 +1,4 @@
-local c = require('brew')
+local c = require('brew.server.utils')
 local k = vim.keymap.set
 local s = { silent = true }
 

@@ -1,5 +1,5 @@
-local brew = require('brew')
-local autocmd = brew.autocmd
+local utils = require('brew.server.utils')
+local autocmd = utils.autocmd
 local k = vim.keymap.set
 local sil = { silent = true }
 
@@ -56,7 +56,7 @@ local cfg = {
 
     -- go to definition (looks for `\label{<cword>}`)
     k('n', 'gd', function()
-      local cword, root = vim.fn.expand('<cword>'), brew.git_workspace_root()
+      local cword, root = vim.fn.expand('<cword>'), utils.git_workspace_root()
       if not cword or not root then return end
       vim.cmd(
         'silent lgrep --no-column -ttex \\label\\\\{' .. cword .. '} ' .. root

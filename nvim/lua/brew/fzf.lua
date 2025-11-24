@@ -1,7 +1,7 @@
 local M = {}
 local fzf = require('fzf-lua')
 local actions = require('fzf-lua.actions')
-local git_workspace_root = require('brew').git_workspace_root
+local git_workspace_root = require('brew.server.utils').git_workspace_root
 
 local grep_actions = {
   ['enter'] = {
