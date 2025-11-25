@@ -6,15 +6,17 @@ local git_workspace_root = require('brew.server.utils').git_workspace_root
 local grep_actions = {
   ['enter'] = {
     fn = function(selection, opts)
-      local fzf_pos = tonumber(table.remove(selection, #selection))
-      opts.copen = false
-      actions.file_sel_to_qf(selection, opts)
-      actions.file_edit({ selection[fzf_pos] }, opts)
+      -- print('GOT HERE')
+      -- local fzf_pos = tonumber(table.remove(selection, #selection))
+      -- opts.copen = false
+      -- actions.file_sel_to_qf(selection, opts)
+      -- actions.file_edit({ selection[fzf_pos] }, opts)
+      actions.file_edit({ selection[1] }, opts)
     end,
-    prefix = 'select-all',
+    -- prefix = 'select-all',
     -- '{+}' is where all the output will be dumped, and then $FZF_POS will be
     -- printed after.
-    field_index = '{+} $FZF_POS',
+    -- field_index = '{+} $FZF_POS',
   },
 }
 
