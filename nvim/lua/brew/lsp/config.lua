@@ -25,35 +25,22 @@ lsp.add['python'] = {
   },
 }
 
-local lua = {
-  lazy_path = vim.fn.stdpath('data') .. '/lazy',
-  library = vim.tbl_filter(
-    function(d) return not d:match(vim.fn.stdpath('config') .. '/?a?f?t?e?r?') end,
-    vim.api.nvim_get_runtime_file('', true)
-  ),
-}
--- table.insert(lua.library, vim.fn.stdpath('config') .. '/lua/brew')
-
--- print(vim.inspect(vim.api.nvim_get_runtime_file('', true)))
--- print(vim.inspect(lua.library))
 lsp.add['lua'] = {
   filetypes = { 'lua' },
   cmd = { 'lua-language-server' },
   settings = {
     Lua = {
-      runtime = {
-        version = 'LuaJIT',
-        -- Tell the language server how to find Lua modules same way as Neovim
-        -- (see `:h lua-module-load`)
-        path = {
-          'lua/?.lua',
-          'lua/?/init.lua',
-        },
-      },
+      runtime = { version = 'LuaJIT' },
       diagnostics = {
         globals = { 'vim', 'awesome', 'client', 'root', 'screen' },
       },
-      workspace = { library = lua.library },
+      workspace = {
+        checkThirdParty = false,
+        library = {
+          vim.env.VIMRUNTIME,
+          '/usr/share/awesome/lib/',
+        },
+      },
       telemetry = { enable = false },
     },
   },

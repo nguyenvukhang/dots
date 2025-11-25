@@ -1,85 +1,7 @@
--- vim:fmr=--<,-->
-
 -- Bootstrap `lazy.nvim` by Folke.
-local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  vim.api.nvim_create_user_command('Boot', function()
-    vim.notify('installing lazy...')
-    vim.fn.system {
-      'git',
-      'clone',
-      '--filter=blob:none',
-      '--single-branch',
-      'https://github.com/folke/lazy.nvim.git',
-      lazypath,
-    }
-    vim.notify('done installing lazy.nvim')
-  end, {})
-  error('lazy.nvim not installed. Run `:Boot` to install it.')
-end
-
-vim.opt.runtimepath:prepend(lazypath)
-vim.g.mapleader = ' '
+require('brew.lazy-bootstrap')
 
 vim.diagnostic.config { underline = false, virtual_text = true }
-
-local fzf_separator = '  .'
-
----@class MiniFzfEntryData
----@field filename string
----@field lnum number?
-
----@class MiniFzf
----@field data table<string, MiniFzfEntryData>
----@field fzf_choices string[]
-local MiniFzf = { data = {}, fzf_choices = {} }
-
-MiniFzf.load_minimath = function(self) --<
-  for _, line in pairs(vim.fn.systemlist('minimath-rg')) do
-    local _, _, filename, lnum, text, sha = line:find('(.*):(%d+):(.*):(.*)')
-    self.data[sha] = { filename = filename, lnum = tonumber(lnum) }
-    local abbrev = require('minimath.abbrev').get(filename)
-    self.fzf_choices[sha] = abbrev
-      .. ' | '
-      .. text
-      .. '\x1b[37m'
-      .. fzf_separator
-      .. sha
-      .. '\x1b[m'
-  end
-end -->
-MiniFzf.load_lean = function(self) --<
-  for i, line in pairs(vim.fn.systemlist { 'lake-dino', 'rg' }) do
-    local _, _, filename, lnum, text = line:find('(.*):(%d+):(.*)')
-    local sha = tostring(i)
-    self.data[sha] = { filename = filename, lnum = tonumber(lnum) }
-    local abbrev = require('minimath.abbrev').get(filename)
-    self.fzf_choices[sha] = abbrev
-      .. ' | '
-      .. text
-      .. '\x1b[37m'
-      .. fzf_separator
-      .. sha
-      .. '\x1b[m'
-  end
-end -->
----@param fzf_choice string
-MiniFzf.get_sha = function(fzf_choice) --<
-  local parts = vim.fn.split(fzf_choice, fzf_separator)
-  return parts[#parts]
-end -->
----@param fzf_choice string
-MiniFzf.get_target = function(self, fzf_choice) --<
-  return self.data[MiniFzf.get_sha(fzf_choice)]
-end -->
----@param target MiniFzfEntryData
-MiniFzf.jump = function(target) --<
-  local bufnr = vim.fn.bufadd(target.filename)
-  vim.fn.bufload(bufnr)
-  vim.api.nvim_set_current_buf(bufnr)
-  vim.api.nvim_win_set_cursor(0, { target.lnum, 0 })
-  vim.fn.feedkeys('zz$T{', 'n')
-end -->
 
 -- plugin archive
 -- * nvim-treesitter/playground
@@ -91,29 +13,42 @@ require('lazy').setup {
   spec = {
     'tpope/vim-surround',
     'vimplug/nvim-colorizer.lua',
-    --< nvim-lua/plenary.nvim
+    --< nguyenvukhang/lean.nvim
     {
-      'nvim-lua/plenary.nvim',
-      config = function() require('harpoon').my_setup() end,
+      'nguyenvukhang/lean.nvim', -- Julian
+      dependencies = {
+        'neovim/nvim-lspconfig',
+        'nvim-lua/plenary.nvim',
+      },
+      lazy = false,
+      opts = function()
+        require('brew.lsp').add['leanls'] =
+          { init_options = { editDelay = 100000 } }
+        return {
+          infoview = {
+            autoopen = false,
+            -- show_term_goals = false,
+          },
+          inlay_hint = { enabled = false },
+          progress_bars = { enable = false },
+          goal_markers = {
+            accomplished = '',
+            unsolved = '',
+          },
+        }
+      end,
+      keys = { { '<leader>u', ':LeanInfoviewToggle<cr>', { silent = true } } },
     }, -->
     --< saghen/blink.cmp
     {
       'saghen/blink.cmp',
-
-      -- use a release tag to download pre-built binaries
       version = '1.*',
-
-      ---@module 'blink.cmp'
-      ---@type blink.cmp.Config
       opts = {
-        -- See :h blink-cmp-config-keymap for defining your own keymap
         keymap = {
           ['<C-l>'] = { 'accept', 'select_and_accept', 'fallback' },
           ['<C-p>'] = { 'select_prev', 'fallback' },
           ['<C-n>'] = { 'select_next', 'fallback' },
-          -- preset = 'default'
         },
-
         completion = {
           menu = {
             draw = {
@@ -136,10 +71,7 @@ require('lazy').setup {
           list = { selection = { preselect = false } },
           documentation = { auto_show = true },
         },
-
         sources = { default = { 'lsp', 'path', 'buffer' } },
-
-        -- See the fuzzy documentation for more information
         fuzzy = { implementation = 'prefer_rust_with_warning' },
       },
     }, -->
@@ -148,10 +80,7 @@ require('lazy').setup {
       'ibhagwan/fzf-lua',
       opts = {
         winopts = {
-          preview = {
-            vertical = 'up:45%',
-            horizontal = 'right:50%',
-          },
+          preview = { vertical = 'up:45%', horizontal = 'right:50%' },
         },
         hls = {
           border = 'Comment',
@@ -159,9 +88,7 @@ require('lazy').setup {
         },
         -- Specific picker options
         files = {
-          winopts = {
-            preview = { hidden = true },
-          },
+          winopts = { preview = { hidden = true } },
         },
       },
       keys = function()
@@ -189,7 +116,7 @@ require('lazy').setup {
       config = function(spec)
         local fzf = require('fzf-lua')
         local brew = require('brew.server.utils')
-        local rg = MiniFzf
+        local rg = require('minimath.fzf')
 
         fzf.setup(spec.opts)
 
@@ -241,38 +168,54 @@ require('lazy').setup {
         }
       end,
     }, -->
-    --< nguyenvukhang/nvim-toggler
+    --< folke/noice.nvim
     {
-      'nguyenvukhang/nvim-toggler',
+      'folke/noice.nvim',
+      enabled = true,
+      event = 'VeryLazy',
       opts = {
-        inverses = {
-          ['₂'] = '₁',
-          ['- [ ]'] = '- [x]',
-          ['shift'] = 'unshift',
-          ['exact'] = 'refine',
-          ['next'] = 'prev',
-          ['odd'] = 'even',
-          ['forall'] = 'exists',
-          ['row'] = 'column',
-          ['positive'] = 'negative',
-          ['horizontal'] = 'vertical',
-          ['above'] = 'below',
-          ['Above'] = 'Below',
-          ['min'] = 'max',
-          ['width'] = 'height',
-          ['sin'] = 'cos',
-          ['begin'] = 'end',
-          ['True'] = 'False',
-          ['TRUE'] = 'FALSE',
-          ['upper'] = 'lower',
-          ['cot'] = 'tan',
-          ['sec'] = 'csc',
-          ['good'] = 'bad',
-          ['ON'] = 'OFF',
-          ['Yes'] = 'No',
-          ['and'] = 'or',
+        notify = { enabled = false },
+        cmdline = { enabled = false },
+        messages = { enabled = false },
+        lsp = {
+          override = {
+            ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+            ['vim.lsp.util.stylize_markdown'] = true,
+          },
         },
-        autoselect_longest_match = true,
+        presets = { lsp_doc_border = false },
+      },
+    }, -->
+    --< m4xshen/autoclose.nvim
+    {
+      'm4xshen/autoclose.nvim',
+      opts = {
+        options = { disable_command_mode = true },
+        keys = {
+          ['$'] = {
+            escape = true,
+            close = true,
+            pair = '$$',
+            enabled_filetypes = { 'tex' },
+          },
+          ['('] = { escape = false, close = true, pair = '()' },
+          ['['] = { escape = false, close = true, pair = '[]' },
+          ['{'] = { escape = false, close = true, pair = '{}' },
+
+          ['>'] = { escape = true, close = false, pair = '<>' },
+          [')'] = { escape = true, close = false, pair = '()' },
+          [']'] = { escape = true, close = false, pair = '[]' },
+          ['}'] = { escape = true, close = false, pair = '{}' },
+
+          ['"'] = { escape = true, close = true, pair = '""' },
+          ['`'] = { escape = true, close = true, pair = '``' },
+          ["'"] = {
+            escape = true,
+            close = true,
+            pair = "''",
+            disabled_filetypes = { 'lean', 'rust', 'tex' },
+          },
+        },
       },
     }, -->
     --< stevearc/conform.nvim
@@ -338,6 +281,45 @@ require('lazy').setup {
       },
       opts = { create_mappings = false },
     }, -->
+    --< nguyenvukhang/nvim-toggler
+    {
+      'nguyenvukhang/nvim-toggler',
+      opts = {
+        inverses = {
+          ['₂'] = '₁',
+          ['- [ ]'] = '- [x]',
+          ['shift'] = 'unshift',
+          ['exact'] = 'refine',
+          ['next'] = 'prev',
+          ['odd'] = 'even',
+          ['forall'] = 'exists',
+          ['row'] = 'column',
+          ['positive'] = 'negative',
+          ['horizontal'] = 'vertical',
+          ['above'] = 'below',
+          ['Above'] = 'Below',
+          ['min'] = 'max',
+          ['width'] = 'height',
+          ['sin'] = 'cos',
+          ['begin'] = 'end',
+          ['True'] = 'False',
+          ['TRUE'] = 'FALSE',
+          ['upper'] = 'lower',
+          ['cot'] = 'tan',
+          ['sec'] = 'csc',
+          ['good'] = 'bad',
+          ['ON'] = 'OFF',
+          ['Yes'] = 'No',
+          ['and'] = 'or',
+        },
+        autoselect_longest_match = true,
+      },
+    }, -->
+    --< nvim-lua/plenary.nvim (+ harpoon)
+    {
+      'nvim-lua/plenary.nvim',
+      config = function() require('harpoon').my_setup() end,
+    }, -->
     --< nvim-treesitter/nvim-treesitter
     {
       'nvim-treesitter/nvim-treesitter',
@@ -363,83 +345,6 @@ require('lazy').setup {
         -- print(vim.inspect(require("nvim-treesitter.parsers")))
       end,
     }, -->
-    --< m4xshen/autoclose.nvim
-    {
-      'm4xshen/autoclose.nvim',
-      opts = {
-        options = {
-          disable_command_mode = true,
-        },
-        keys = {
-          ['$'] = {
-            escape = true,
-            close = true,
-            pair = '$$',
-            enabled_filetypes = { 'tex' },
-          },
-          ['('] = { escape = false, close = true, pair = '()' },
-          ['['] = { escape = false, close = true, pair = '[]' },
-          ['{'] = { escape = false, close = true, pair = '{}' },
-
-          ['>'] = { escape = true, close = false, pair = '<>' },
-          [')'] = { escape = true, close = false, pair = '()' },
-          [']'] = { escape = true, close = false, pair = '[]' },
-          ['}'] = { escape = true, close = false, pair = '{}' },
-
-          ['"'] = { escape = true, close = true, pair = '""' },
-          ['`'] = { escape = true, close = true, pair = '``' },
-          ["'"] = {
-            escape = true,
-            close = true,
-            pair = "''",
-            disabled_filetypes = { 'lean', 'rust', 'tex' },
-          },
-        },
-      },
-    }, -->
-    --< folke/noice.nvim
-    {
-      'folke/noice.nvim',
-      event = 'VeryLazy',
-      opts = {
-        notify = { enabled = false },
-        cmdline = { enabled = false },
-        messages = { enabled = false },
-        lsp = {
-          override = {
-            ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-            ['vim.lsp.util.stylize_markdown'] = true,
-          },
-        },
-        presets = { lsp_doc_border = false },
-      },
-    }, -->
-    --< nguyenvukhang/lean.nvim
-    {
-      'nguyenvukhang/lean.nvim', -- Julian
-      dependencies = {
-        'neovim/nvim-lspconfig',
-        'nvim-lua/plenary.nvim',
-      },
-      lazy = false,
-      opts = function()
-        require('brew.lsp').add['leanls'] =
-          { init_options = { editDelay = 100000 } }
-        return {
-          infoview = {
-            autoopen = false,
-            -- show_term_goals = false,
-          },
-          inlay_hint = { enabled = false },
-          progress_bars = { enable = false },
-          goal_markers = {
-            accomplished = '',
-            unsolved = '',
-          },
-        }
-      end,
-      keys = { { '<leader>u', ':LeanInfoviewToggle<cr>', { silent = true } } },
-    }, -->
   },
 }
 
@@ -453,3 +358,4 @@ require('brew.server.statusline')
 require('brew.server.autocmd')
 
 vim.cmd('colo gruvbox8_generated')
+-- vim:fmr=--<,-->
