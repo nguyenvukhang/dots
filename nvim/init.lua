@@ -22,6 +22,7 @@ require('lazy').setup {
       },
       keys = function()
         local search = require('brew.telescope_search')
+        local m = require('minimath.telescopes')
         return {
           { '<c-p>', search.files.repo },
           { '<c-f>', search.files.cwd },
@@ -31,6 +32,23 @@ require('lazy').setup {
           { '<leader>pw', search.string.cwd },
           { '<leader>sd', search.files.dots },
           { '<leader>su', search.files.university },
+          -- minimath repo searchers
+          { '<leader>pm', function() m.theorem_search('j') end, ft = 'tex' },
+          { '<leader>pt', function() m.theorem_search('y') end, ft = 'tex' },
+          {
+            '<leader>h',
+            function() m.theorem_search('h') end,
+            mode = 'v',
+            ft = 'tex',
+          },
+          {
+            '<leader>a',
+            function() m.theorem_search('a') end,
+            mode = 'v',
+            ft = 'tex',
+          },
+          -- lean theorem searchers
+          { '<leader>pm', m.lean_theorem_search, ft = 'lean' },
         }
       end,
       config = function()
@@ -73,9 +91,7 @@ require('lazy').setup {
               theme = 'dropdown',
             },
             grep_string = {
-              mappings = {
-                i = { ['<CR>'] = qf_and_jump },
-              },
+              mappings = { i = { ['<CR>'] = qf_and_jump } },
             },
           },
           extensions = { fzy_native = {} },
