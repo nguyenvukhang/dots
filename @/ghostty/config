@@ -1,0 +1,113 @@
+background = #282c34
+font-size = 10.5
+# font-size = 14 # Macos
+
+font-family             = "JetBrains Mono NL"
+font-family-bold        = "JetBrains Mono NL"
+font-family-italic      = "JetBrains Mono NL"
+font-family-bold-italic = "JetBrains Mono NL"
+
+font-feature = -calt, -liga, -dlig
+font-thicken = true
+font-thicken-strength = 200
+quit-after-last-window-closed = true
+
+# Disable all the other nonsense
+font-synthetic-style   = false
+font-style             = Medium
+font-style-bold        = Medium
+font-style-italic      = Medium
+font-style-bold-italic = Medium
+font-codepoint-map = U+1D4D0-U+1D503=JuliaMono Medium
+font-codepoint-map = U+2115=JuliaMono Medium
+# font-codepoint-map = U+1D4DD=JuliaMono Medium
+window-inherit-working-directory = true
+working-directory = home
+window-save-state = never
+
+adjust-cell-width = -6%
+
+# Various behavior
+
+copy-on-select = clipboard
+shell-integration = zsh
+shell-integration-features = no-cursor,no-title
+macos-option-as-alt = false
+macos-titlebar-style = transparent
+macos-titlebar-proxy-icon = hidden
+gtk-tabs-location = bottom
+gtk-toolbar-style = flat
+gtk-wide-tabs = false
+gtk-custom-css = gtk.css
+
+# Various visuals
+
+unfocused-split-opacity = 1
+split-divider-color = #8A9948
+background-opacity = 0.95
+background-blur = 6
+title = Ghostty
+window-padding-x = 6,6
+window-padding-y = 0,6
+window-new-tab-position = end
+window-decoration = none
+cursor-style = block
+
+# Gruvbox
+
+palette = 0=#282828
+palette = 1=#ea6962
+palette = 2=#a9b665
+palette = 3=#d8a657
+palette = 4=#7daea3
+palette = 5=#d3869b
+palette = 6=#89b48c
+palette = 7=#a89984
+palette = 8=#928374
+palette = 9=#ea6962
+palette = 10=#a9b665
+palette = 11=#d8a657
+palette = 12=#7daea3
+palette = 13=#d3869b
+palette = 14=#89b48c
+palette = 15=#ebdbb2
+background = #181818
+foreground = #ebdbb2
+cursor-color = #bdae93
+cursor-text = #181818
+selection-background = #ebdbb2
+selection-foreground = #928374
+# active_border_color      #8A9948
+# inactive_border_color    #8A9948
+# 
+# active_tab_foreground    #a9b665
+# active_tab_background    #3c3836
+# inactive_tab_foreground  #a89984
+# inactive_tab_background  #282828
+
+# Keybinds!
+
+keybind = clear
+keybind = super+v=paste_from_clipboard
+keybind = super+r=reload_config
+keybind = super+d=new_split:left
+keybind = super+shift+d=new_split:down
+keybind = super+n=new_tab
+keybind = super+h=goto_split:left
+keybind = super+j=goto_split:down
+keybind = super+k=goto_split:up
+keybind = super+l=goto_split:right
+
+keybind = super+shift+h=previous_tab
+keybind = super+shift+l=next_tab
+
+keybind = ctrl+space>h=move_tab:-1
+keybind = ctrl+space>l=move_tab:1
+keybind = ctrl+space>x=close_window
+
+keybind = super+equal=increase_font_size:0.5
+keybind = super+minus=decrease_font_size:0.5
+keybind = super+0=reset_font_size
+keybind = super+comma=prompt_surface_title
+
+keybind = super+q=quit

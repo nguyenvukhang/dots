@@ -1,0 +1,25 @@
+set adjust-open best-fit
+set double-click-follow false
+set selection-notification false
+set highlight-color "#8ecae6"
+set selection-clipboard clipboard
+
+unmap r
+unmap b
+unmap f
+unmap q
+
+map t toggle_index
+map [index] t toggle_index
+
+map <Space> toggle_index
+map [index] <Space> toggle_index
+
+map b jumplist backward
+map f jumplist forward
+
+map [ jumplist backward
+map ] jumplist forward
+
+map - zoom out
+map = zoom in

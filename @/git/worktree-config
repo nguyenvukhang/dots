@@ -1,0 +1,20 @@
+# example from uni worktree repo
+
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = true
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = git@github.com:nguyenvukhang/uni.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[branch "work"]
+	remote = origin
+	merge = refs/heads/work
+
+# vim:ft=gitconfig

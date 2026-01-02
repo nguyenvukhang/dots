@@ -1,0 +1,56 @@
+#!/usr/bin/env zsh
+
+# tmux launcher
+tm() {
+  [ $TMUX ] && local a=switch || local a=a
+  case $1 in
+  ls) tmux $@ ;;
+  -d) tmux detach ;;
+  -k)
+    shift
+    [ $1 ] || set -- $(tmux ls | fzf -0 $FZF_OPTS)
+    [ $1 ] && tmux kill-session -t $1
+    ;;
+  '')
+    local S=$(tmux ls -F '#{session_name}: #{session_windows} windows #{?session_attached,(attached),}' 2>/dev/null)
+    if [ -z $S ]; then
+      tmux new -s 0
+    else
+      S=$(printf $S | fzf $FZF_OPTS)
+      [ $S ] && tmux $a -t ${S%%:*}
+    fi
+    ;;
+  *)
+    tmux has -t $1 2>/dev/null || tmux new -ds $1
+    tmux $a -t $1
+    ;;
+  esac
+}
+
+# Use tmux session as a shell wrapper.
+# Only quitting the base session will exit the terminal emulator.
+tmux_loop() {
+  ([[ $START_TMUX != true ]] || [ $TMUX ] || ! command -v tmux 2>/dev/null) && return
+  while; do
+    [[ $(tmux new -As z -n editor) == '[detached (from session z)]' ]] && exit
+    tmux has -t z && continue || exit
+  done
+}
+# tmux_loop
+
+# Run the obvious thing
+t() {
+  local DONE=0
+  _() {
+    [ $DONE = 0 ] && [ -r $1 ] && DONE=1 && shift && $@
+  }
+  _ Makefile make $@
+  _ run bash run $@
+  _ build.sh bash build.sh $@
+  _ run.py python3 run.py $@
+  _ Cargo.toml cargo run $@
+  _ package.json npm run dev $@
+  unset _ DONE
+  return 0
+}
+

@@ -1,0 +1,44 @@
+#!/bin/zsh
+
+# dock config
+defaults write com.apple.dock autohide -bool true       # set hide on
+defaults write com.apple.dock tilesize -int 32          # set size
+defaults write com.apple.Dock size-immutable -bool true # lock size
+defaults write com.apple.dock no-bouncing -bool false   # disable icon bounce
+defaults write com.apple.dock orientation bottom
+defaults write com.apple.dock magnification -int 0
+killall Dock
+
+# finder config
+defaults write com.apple.finder AppleShowAllFiles true # show hidden files
+chflags nohidden ~/Library                             # show Library dir
+
+# ui config
+defaults write -g NSScrollViewRubberbanding -bool false # disable rubber band scrolling
+
+# keyboard/moseu config
+defaults write -g InitialKeyRepeat -int 16                 # normal minimum is 15 (225 ms)
+defaults write -g KeyRepeat -int 2                         # normal minimum is 2 (30 ms)
+defaults write -g com.apple.trackpad.scaling -float 0.6875 # trackpad speed
+
+# disable cmd-h hiding apps by making it hypr-h
+defaults write -g NSUserKeyEquivalents -dict \
+  "Hide kitty" "\@\~\^\$y" \
+  "Hide Spotify" "\@\~\^\$y" \
+  "Hide Safari" "\@\~\^\$y" \
+  "Hide Telegram" "\@\~\^\$y" \
+  "Hide alacritty" "\@\~\^\$y" \
+  "Hide others" "\@\~\^\$h"
+
+# chill out on keyboard smartness
+defaults write -g NSAutomaticCapitalizationEnabled -int 0
+defaults write -g NSAutomaticDashSubstitutionEnabled -int 0
+defaults write -g NSAutomaticPeriodSubstitutionEnabled -int 0
+defaults write -g NSAutomaticQuoteSubstitutionEnabled -int 0
+defaults write -g NSAutomaticSpellingCorrectionEnabled -int 0
+
+# set the value of `hostname` output, for prompt in zsh/bash
+sudo scutil --set HostName 'mac'
+
+defaults write -app Skim SKToolTipWidth -float 720
+defaults write -app Skim SKToolTipHeight -float 405

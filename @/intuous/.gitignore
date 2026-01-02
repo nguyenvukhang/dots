@@ -1,0 +1,3 @@
+*.wacomprefs
+!dots.wacomprefs
+!min.wacomprefs

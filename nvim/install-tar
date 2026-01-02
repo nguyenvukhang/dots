@@ -1,0 +1,13 @@
+#!/bin/sh
+
+S=/Users/khang/Downloads/nvim-macos.tar.gz
+
+IDIR=/usr/local
+
+sudo rm -rf /usr/local/share/icons/hicolor/128x128/apps/nvim.png
+sudo rm -rf /usr/local/bin/nvim
+sudo rm -rf /usr/local/lib/nvim
+sudo rm -rf /usr/local/share/nvim
+sudo rm -rf /usr/local/share/man/man1/nvim.1
+
+sudo tar -xf $S -C /usr/local --strip-components=1

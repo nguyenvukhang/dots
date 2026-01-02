@@ -1,0 +1,67 @@
+  -- {
+  --   'nvim-telescope/telescope.nvim',
+  --   enabled = USE_TELESCOPE,
+  --   dependencies = {
+  --     'nvim-telescope/telescope-fzy-native.nvim',
+  --     'nvim-lua/plenary.nvim',
+  --   },
+  --   keys = function()
+  --     local search = require('brew.telescope_search')
+  --     return {
+  --       { '<c-p>', search.files.repo },
+  --       { '<c-f>', search.files.cwd },
+  --       { '<leader>ps', search.string.repo },
+  --       { '<leader>pS', search.string.repo_live },
+  --       { '<leader>pf', search.string.cursor },
+  --       { '<leader>pw', search.string.cwd },
+  --       { '<leader>sd', search.files.dots },
+  --       { '<leader>su', search.files.university },
+  --     }
+  --   end,
+  --   config = function()
+  --     local telescope = require('telescope')
+  --     local actions = require('telescope.actions')
+  --     local a_state = require('telescope.actions.state')
+  --     local a_set = require('telescope.actions.set')
+  --     local from_entry = require('telescope.from_entry')
+  --
+  --     -- Load all results to quickfix list AND jump to the selected one.
+  --     local qf_and_jump = function(bufnr)
+  --       local p, qf = a_state.get_current_picker(bufnr), {}
+  --       for e in p.manager:iter() do
+  --         local i, t, v = { bufnr = e.bufnr }, e.text, e.value
+  --         i.filename = from_entry.path(e, false, false)
+  --         i.lnum, i.col = vim.F.if_nil(e.lnum, 1), vim.F.if_nil(e.col, 1)
+  --         i.text = t and t or type(v) == 'table' and v.text or v
+  --         table.insert(qf, i)
+  --       end
+  --       vim.fn.setqflist(qf, 'r')
+  --       return a_set.select(bufnr, 'default')
+  --     end
+  --
+  --     telescope.setup {
+  --       defaults = {
+  --         layout_strategy = 'flex',
+  --         vimgrep_arguments = { 'rg', '--vimgrep', '--hidden' },
+  --         color_devicons = false,
+  --         selection_caret = '> ',
+  --         mappings = { i = { ['<esc>'] = actions.close } },
+  --         preview = {
+  --           treesitter = false,
+  --         },
+  --       },
+  --       pickers = {
+  --         git_files = { hidden = true, previewer = false, theme = 'dropdown' },
+  --         find_files = { hidden = true, previewer = false, theme = 'dropdown' },
+  --         grep_string = {
+  --           mappings = {
+  --             i = { ['<CR>'] = qf_and_jump },
+  --           },
+  --         },
+  --       },
+  --       extensions = { fzy_native = {} },
+  --     }
+  --
+  --     telescope.load_extension('fzy_native')
+  --   end,
+  -- },

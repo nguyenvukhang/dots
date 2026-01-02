@@ -1,0 +1,5 @@
+1. increase the height of middle layer
+2. slice the middle layer twice (such that side-view is a trapezium)
+   a. create a plane at an angle to the project
+   b. split the project with the plane
+3. re-adjust the position of the cut-outs for the ports

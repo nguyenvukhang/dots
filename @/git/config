@@ -1,0 +1,42 @@
+# This is Git's per-user configuration file.
+[user]
+	name = nguyenvukhang
+	email = brew4k@gmail.com
+[pull]
+	rebase = false
+[push]
+	autoSetupRemote = true
+[init]
+	defaultBranch = main
+[alias]
+	sm = submodule
+	wt = worktree
+	cp = cherry-pick
+[advice]
+	pushUpdateRejected = true
+	pushNonFFCurrent = true
+	pushNonFFMatching = true
+	pushAlreadyExists = true
+	pushFetchFirst = true
+	pushNeedsForce = true
+	statusUoption = true
+	commitBeforeMerge = true
+	resolveConflict = true
+	implicitIdentity = true
+	amWorkDir = true
+	rmHints = true
+  skippedCherryPicks = false
+	; personal falses
+	detachedHead = false
+	statusHints = false
+[core]
+	whitespace = cr-at-eol
+	compression = 0
+[pretty]
+	k = %C(yellow)%h%C(auto)%d %Creset%s %C(241)(%C(246)%ar%C(241))
+	s = %C(yellow)%h %Creset%s
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

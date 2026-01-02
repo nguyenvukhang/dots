@@ -1,0 +1,464 @@
+{
+    "$help": "https://aka.ms/terminal-documentation",
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "actions": 
+    [
+        {
+            "command": 
+            {
+                "action": "splitPane",
+                "split": "right"
+            },
+            "id": "User.splitPane.864CD510"
+        },
+        {
+            "command": 
+            {
+                "action": "prevTab"
+            },
+            "id": "User.prevTab.0"
+        },
+        {
+            "command": "openTabRenamer",
+            "id": "User.openTabRenamer"
+        },
+        {
+            "command": 
+            {
+                "action": "adjustFontSize",
+                "delta": 1
+            },
+            "id": "User.adjustFontSize.E04D5229"
+        },
+        {
+            "command": "resetFontSize",
+            "id": "User.resetFontSize"
+        },
+        {
+            "command": 
+            {
+                "action": "adjustFontSize",
+                "delta": -1
+            },
+            "id": "User.adjustFontSize.E2698FAA"
+        },
+        {
+            "command": 
+            {
+                "action": "swapPane",
+                "direction": "left"
+            },
+            "id": "User.swapPane.2A0DA8E0"
+        }
+    ],
+    "copyFormatting": "none",
+    "copyOnSelect": true,
+    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+    "disableAnimations": true,
+    "keybindings": 
+    [
+        {
+            "id": null,
+            "keys": "ctrl+shift+tab"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+d"
+        },
+        {
+            "id": null,
+            "keys": "alt+shift+down"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+tab"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+minus"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+plus"
+        },
+        {
+            "id": "Terminal.DuplicatePaneDown",
+            "keys": "alt+shift+d"
+        },
+        {
+            "id": "Terminal.OpenNewTab",
+            "keys": "alt+n"
+        },
+        {
+            "id": "Terminal.NextTab",
+            "keys": "alt+shift+l"
+        },
+        {
+            "id": "User.resetFontSize",
+            "keys": "alt+0"
+        },
+        {
+            "id": null,
+            "keys": "shift+insert"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+3"
+        },
+        {
+            "id": "Terminal.DuplicatePaneRight",
+            "keys": "alt+d"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+w"
+        },
+        {
+            "id": null,
+            "keys": "alt+f4"
+        },
+        {
+            "id": null,
+            "keys": "enter"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+insert"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+numpad_minus"
+        },
+        {
+            "id": null,
+            "keys": "alt+right"
+        },
+        {
+            "id": null,
+            "keys": "alt+space"
+        },
+        {
+            "id": null,
+            "keys": "alt+shift+plus"
+        },
+        {
+            "id": null,
+            "keys": "alt+shift+minus"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+1"
+        },
+        {
+            "id": null,
+            "keys": "alt+shift+left"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+2"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+9"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+7"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+4"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+5"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+c"
+        },
+        {
+            "id": null,
+            "keys": "alt+shift+right"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+6"
+        },
+        {
+            "id": null,
+            "keys": "win+sc(41)"
+        },
+        {
+            "id": null,
+            "keys": "menu"
+        },
+        {
+            "id": "Terminal.MoveFocusDown",
+            "keys": "alt+j"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+a"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+8"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+p"
+        },
+        {
+            "id": null,
+            "keys": "alt+enter"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+pgdn"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+pgup"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+period"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+numpad0"
+        },
+        {
+            "id": null,
+            "keys": "f11"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+m"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+up"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+home"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+end"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+down"
+        },
+        {
+            "id": null,
+            "keys": "alt+shift+up"
+        },
+        {
+            "id": "Terminal.MoveFocusLeft",
+            "keys": "alt+h"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+comma"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+0"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+comma"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+f"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+space"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+comma"
+        },
+        {
+            "id": "User.prevTab.0",
+            "keys": "alt+shift+h"
+        },
+        {
+            "id": null,
+            "keys": "alt+left"
+        },
+        {
+            "id": "Terminal.MoveFocusRight",
+            "keys": "alt+l"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+left"
+        },
+        {
+            "id": "Terminal.MoveFocusUp",
+            "keys": "alt+k"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+numpad_plus"
+        },
+        {
+            "id": null,
+            "keys": "alt+up"
+        },
+        {
+            "id": null,
+            "keys": "alt+down"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+4"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+t"
+        },
+        {
+            "id": "User.openTabRenamer",
+            "keys": "alt+comma"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+1"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+5"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+2"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+3"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+6"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+7"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+8"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+9"
+        },
+        {
+            "id": "User.adjustFontSize.E2698FAA",
+            "keys": "alt+minus"
+        },
+        {
+            "id": "User.swapPane.2A0DA8E0",
+            "keys": "alt+o"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+n"
+        },
+        {
+            "id": "Terminal.PasteFromClipboard",
+            "keys": "alt+v"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+v"
+        },
+        {
+            "id": "User.adjustFontSize.E04D5229",
+            "keys": "alt+plus"
+        }
+    ],
+    "language": "en-US",
+    "newTabMenu": 
+    [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
+    "profiles": 
+    {
+        "defaults": 
+        {
+            "autoMarkPrompts": false,
+            "bellStyle": "none",
+            "colorScheme": "Gruvbox Material",
+            "cursorShape": "filledBox",
+            "font": 
+            {
+                "builtinGlyphs": false,
+                "colorGlyphs": true
+            },
+            "opacity": 49,
+            "useAcrylic": false
+        },
+        "list": 
+        [
+            {
+                "commandline": "\"C:\\Program Files\\PowerShell\\7\\pwsh.exe\"",
+                "cursorShape": "filledBox",
+                "font": 
+                {
+                    "builtinGlyphs": true,
+                    "cellHeight": "1.2",
+                    "face": "JetBrains Mono NL",
+                    "size": 10.5
+                },
+                "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+                "hidden": false,
+                "icon": "none",
+                "name": "PowerShell",
+                "opacity": 95,
+                "source": "Windows.Terminal.PowershellCore",
+                "useAcrylic": false
+            }
+        ]
+    },
+    "rendering.graphicsAPI": "direct2d",
+    "schemes": 
+    [
+        {
+            "background": "#282828",
+            "black": "#282828",
+            "blue": "#7DAEA3",
+            "brightBlack": "#928374",
+            "brightBlue": "#7DAEA3",
+            "brightCyan": "#89B48C",
+            "brightGreen": "#A9B665",
+            "brightPurple": "#D3869B",
+            "brightRed": "#EA6962",
+            "brightWhite": "#EBDBB2",
+            "brightYellow": "#D8A657",
+            "cursorColor": "#6E635A",
+            "cyan": "#89B48C",
+            "foreground": "#EBDBB2",
+            "green": "#A9B665",
+            "name": "Gruvbox Material",
+            "purple": "#D3869B",
+            "red": "#EA6962",
+            "selectionBackground": "#8C7E72",
+            "white": "#EBDBB2",
+            "yellow": "#D8A657"
+        }
+    ],
+    "tabWidthMode": "equal",
+    "theme": "system",
+    "themes": []
+}

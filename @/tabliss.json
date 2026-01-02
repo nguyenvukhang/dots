@@ -1,0 +1,107 @@
+{
+  "timeZone": null,
+  "widget/default-time": {
+    "id": "default-time",
+    "key": "widget/time",
+    "order": 0,
+    "display": {
+      "position": "middleCentre",
+      "fontSize": 28,
+      "fontWeight": 100,
+      "colour": "#ececec"
+    }
+  },
+  "data/f2FvggOlNUkW": {
+    "columns": 4,
+    "links": [
+      {
+        "url": "https://outlook.office365.com/mail/",
+        "name": "outlook",
+        "icon": "mail"
+      },
+      {
+        "url": "https://drive.google.com",
+        "name": "g.drive",
+        "icon": "hard-drive"
+      },
+      { "url": "https://gmail.com", "name": "g.mail", "icon": "mail" },
+      {
+        "url": "https://leanprover-community.github.io/mathlib4_docs/",
+        "name": "lean api",
+        "icon": "book"
+      }
+    ],
+    "visible": true,
+    "linkOpenStyle": false
+  },
+  "focus": false,
+  "data/default-time": {
+    "mode": "digital",
+    "hour12": false,
+    "showDate": false,
+    "showMinutes": true,
+    "showSeconds": false,
+    "showDayPeriod": true,
+    "timeZone": null,
+    "name": ""
+  },
+  "background": {
+    "id": "IAoLHIrMU3E7",
+    "key": "background/colour",
+    "display": { "blur": 0 }
+  },
+  "data/IAoLHIrMU3E7": { "colour": "#424242" },
+  "widget/default-greeting": null,
+  "locale": "en",
+  "widget/f2FvggOlNUkW": {
+    "id": "f2FvggOlNUkW",
+    "key": "widget/links",
+    "order": 1,
+    "display": {
+      "position": "middleCentre",
+      "fontSize": 22,
+      "fontWeight": 300,
+      "colour": "#777777"
+    }
+  },
+  "widget/Fxv4UDBjRZZo": {
+    "id": "Fxv4UDBjRZZo",
+    "key": "widget/links",
+    "order": 2,
+    "display": {
+      "position": "middleCentre",
+      "fontSize": 22,
+      "fontWeight": 300,
+      "colour": "#777777"
+    }
+  },
+  "data/Fxv4UDBjRZZo": {
+    "columns": 4,
+    "links": [
+      {
+        "url": "https://nusmods.com/timetable/sem-1/share?CS3241=TUT:07,LEC:1&MA3201=TUT:1,LEC:1&MA3209=TUT:1,LEC:1&MA3210=TUT:1,LEC:1",
+        "name": "nusmods",
+        "icon": "calendar"
+      },
+      {
+        "url": "https://gradapp.nus.edu.sg/apply",
+        "name": "grad.app",
+        "icon": "send"
+      },
+      {
+        "url": "https://docs.google.com/spreadsheets/d/12kmFEuOpieg_fpT5aCUyXpqC954iZ7MbVtZ9Sb0GDFw",
+        "name": "job.app",
+        "icon": "briefcase"
+      },
+      {
+        "url": "https://app.standardnotes.com/",
+        "name": "notes",
+        "icon": "file-text"
+      }
+    ],
+    "visible": true,
+    "linkOpenStyle": false
+  },
+  "version": 3
+}
+

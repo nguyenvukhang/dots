@@ -1,0 +1,14 @@
+set ts=2
+set sts=1
+set shiftwidth=2
+set nowrap
+set et
+nnoremap H ^
+nnoremap L $
+vnoremap H ^
+vnoremap L $
+
+nnoremap <space>1 :w<CR>:e Main.java<CR>
+nnoremap <space>2 :w<CR>:e Server.java<CR>
+nnoremap <space>3 :w<CR>:e Customer.java<CR>
+nnoremap <space>4 :w<CR>:e Shop.java<CR>

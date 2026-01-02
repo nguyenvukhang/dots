@@ -1,0 +1,4 @@
+[submodule "personal"]
+	path = personal
+	url = git@github.com:nguyenvukhang/personal.git
+  branch = baafc43080acb2a4a68d40db638ed4817fb03a08

@@ -1,0 +1,20 @@
+# Rose Pine Moon
+colors:
+  cursor:
+    cursor: "#f6c177"
+    text: "#2a283e"
+  normal:
+    black: "#393552"
+    blue: "#9ccfd8"
+    cyan: "#ea9a97"
+    green: "#3e8fb0"
+    magenta: "#c4a7e7"
+    red: "#eb6f92"
+    white: "#e0def4"
+    yellow: "#f6c177"
+  primary:
+    background: "#2F2D39"
+    foreground: "#e0def4"
+  selection:
+    background: "#e0def4"
+    text: "#232136"

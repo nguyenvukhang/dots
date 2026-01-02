@@ -1,0 +1,115 @@
+[general]
+live_config_reload = false
+
+[bell]
+duration = 0
+
+[colors.cursor]
+cursor = "#d5c4a1"
+text = "#282828"
+
+[colors.normal]
+black = "#7c6f64"
+blue = "#7daea3"
+cyan = "#89b482"
+green = "#a9b665"
+magenta = "#d3869b"
+red = "#ea6962"
+white = "#ebdbb2"
+yellow = "#d8a657"
+
+[colors.primary]
+background = "#282828"
+foreground = "#ebdbb2"
+
+[colors.selection]
+background = "#ebdbb2"
+text = "#504945"
+
+[cursor]
+blink_interval = 750
+unfocused_hollow = true
+
+[cursor.style]
+blinking = "Always"
+shape = "Block"
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 10.5
+
+[font.normal]
+family = "JetBrains Mono"
+style = "Light"
+
+[keyboard]
+bindings = [
+   { key = "A", mods = "Command", chars  =  "\u001Ba" },
+   { key = "B", mods = "Command", chars  =  "\u001Bb" },
+   { key = "C", mods = "Command", action = "Copy" },
+   { key = "D", mods = "Command", chars  =  "\u001Bd" },
+   { key = "E", mods = "Command", chars  =  "\u001Be" },
+   { key = "F", mods = "Command", chars  =  "\u001Bf" },
+   { key = "G", mods = "Command", chars  =  "\u001Bg" },
+   { key = "H", mods = "Command", chars  =  "\u001Bh" },
+   { key = "I", mods = "Command", chars  =  "\u001Bi" },
+   { key = "J", mods = "Command", chars  =  "\u001Bj" },
+   { key = "K", mods = "Command", chars  =  "\u001Bk" },
+   { key = "L", mods = "Command", chars  =  "\u001Bl" },
+   { key = "M", mods = "Command", chars  =  "\u001Bm" },
+   { key = "N", mods = "Command", action =  "CreateNewTab" },
+   { key = "O", mods = "Command", chars  =  "\u001Bo" },
+   { key = "P", mods = "Command", chars  =  "\u001Bp" },
+   { key = "Q", mods = "Command", chars  =  "\u001Bq" },
+   { key = "R", mods = "Command", chars  =  "\u001Br" },
+   { key = "S", mods = "Command", chars  =  "\u001Bs" },
+   { key = "T", mods = "Command", chars  =  "\u001Bt" },
+   { key = "U", mods = "Command", chars  =  "\u001Bu" },
+   { key = "V", mods = "Command", action =  "Paste" },
+   { key = "W", mods = "Command", chars  =  "\u001Bw" },
+   { key = "X", mods = "Command", chars  =  "\u001Bx" },
+   { key = "Y", mods = "Command", chars  =  "\u001By" },
+   { key = "Z", mods = "Command", chars  =  "\u001Bz" },
+
+   { key = "A", mods = "Shift|Command", chars  =  "\u001BA" },
+   { key = "B", mods = "Shift|Command", chars  =  "\u001BB" },
+   { key = "C", mods = "Shift|Command", chars  =  "\u001BC" },
+   { key = "D", mods = "Shift|Command", chars  =  "\u001BD" },
+   { key = "E", mods = "Shift|Command", chars  =  "\u001BE" },
+   { key = "F", mods = "Shift|Command", chars  =  "\u001BF" },
+   { key = "G", mods = "Shift|Command", chars  =  "\u001BG" },
+   { key = "H", mods = "Shift|Command", action =  "SelectPreviousTab" },
+   { key = "I", mods = "Shift|Command", chars  =  "\u001BI" },
+   { key = "J", mods = "Shift|Command", chars  =  "\u001BJ" },
+   { key = "K", mods = "Shift|Command", chars  =  "\u001BK" },
+   { key = "L", mods = "Shift|Command", action =  "SelectNextTab" },
+   { key = "M", mods = "Shift|Command", chars  =  "\u001BM" },
+   { key = "N", mods = "Shift|Command", chars  =  "\u001BN" },
+   { key = "O", mods = "Shift|Command", chars  =  "\u001BO" },
+   { key = "P", mods = "Shift|Command", chars  =  "\u001BP" },
+   { key = "Q", mods = "Shift|Command", chars  =  "\u001BQ" },
+   { key = "R", mods = "Shift|Command", chars  =  "\u001BR" },
+   { key = "S", mods = "Shift|Command", chars  =  "\u001BS" },
+   { key = "T", mods = "Shift|Command", chars  =  "\u001BT" },
+   { key = "U", mods = "Shift|Command", chars  =  "\u001BU" },
+   { key = "V", mods = "Shift|Command", chars  =  "\u001BV" },
+   { key = "W", mods = "Shift|Command", chars  =  "\u001BW" },
+   { key = "X", mods = "Shift|Command", chars  =  "\u001BX" },
+   { key = "Y", mods = "Shift|Command", chars  =  "\u001BY" },
+   { key = "Z", mods = "Shift|Command", chars  =  "\u001BZ" },
+]
+
+[scrolling]
+history = 10000
+
+[window]
+decorations = "full"
+decorations_theme_variant = "Dark"
+dynamic_padding = true
+opacity = 1
+
+[window.padding]
+x = 8
+y = 4

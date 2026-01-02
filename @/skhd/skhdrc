@@ -1,0 +1,11 @@
+# drop ctrl because ctrl + click gives right click
+cmd + alt + shift - c : ~/dots/intuous/bin/intuous cycle
+cmd + alt + shift - 3 : ~/dots/intuous/bin/intuous zoom-out
+cmd + alt + shift - 4 : ~/dots/intuous/bin/intuous zoom-in
+
+# period .
+cmd + alt + shift - 0x2F : ~/dots/intuous/bin/intuous load-preset ~/dots/intuous/presets/90-centered.prefs
+cmd + alt + shift - left : ~/dots/intuous/bin/intuous load-preset ~/dots/intuous/presets/60-left.prefs
+cmd + alt + shift - right : ~/dots/intuous/bin/intuous load-preset ~/dots/intuous/presets/60-right.prefs
+
+# vim:ft=yaml

@@ -1,0 +1,19 @@
+#options_button {
+  opacity: 0;
+}
+
+.folder {
+  font-weight: 700;
+}
+
+a {
+  width: 100%;
+}
+
+.column {
+  margin: 0 10px;
+}
+
+#main {
+  display: flex;
+}
