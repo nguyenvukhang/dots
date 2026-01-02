@@ -44,6 +44,13 @@ accessible through the `gpg` command. To export it, continue with
 gpg --export-secret-keys KEY_ID > udon.key
 ```
 
+## Deleting old keys
+
+```sh
+gpg --delete-keys
+gpg --delete-secret-keys
+```
+
 ## Migrating ~/.password-store
 
 To migrate the password store to this new key, re-initialize the
