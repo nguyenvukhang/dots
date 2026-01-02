@@ -2,22 +2,22 @@ new_tab editor
 cd ~/repos/math
 launch zsh
 
-# new_tab compiler
-# cd ~/repos/math
+# # new_tab compiler
+# # cd ~/repos/math
+# # launch zsh
+# 
+# new_tab mathlib
+# cd ~/repos/math/.lake/packages/mathlib/Mathlib
 # launch zsh
-
-new_tab mathlib
-cd ~/repos/math/.lake/packages/mathlib/Mathlib
-launch zsh
-
-# new_tab lean.nvim
-# cd ~/.local/share/nvim/lazy/lean.nvim
+# 
+# # new_tab lean.nvim
+# # cd ~/.local/share/nvim/lazy/lean.nvim
+# # launch zsh
+# 
+# new_tab ℓ·server
+# cd ~/repos/tex
 # launch zsh
-
-new_tab ℓ·server
-cd ~/repos/tex
-launch zsh
-
-new_tab ℓ·editor
-cd ~/repos/tex
-launch zsh
+# 
+# new_tab ℓ·editor
+# cd ~/repos/tex
+# launch zsh
