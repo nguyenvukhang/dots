@@ -362,6 +362,7 @@ alias nv="~/.local/memes/bin/nvim"
 alias clangf="cp $DOTS/zsh/.clang-format ."
 alias pulse='open "/Applications/Pulse Secure.app/Contents/Plugins/JamUI/PulseTray.app"'
 alias ca='micromamba activate ml'
+alias sus='sudo systemctl suspend'
 
 # Clears jdtls (nvim's Java LSP) cache.
 jclear() {
