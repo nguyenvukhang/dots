@@ -350,6 +350,7 @@ require('lazy').setup {
           go = { 'gofmt' },
           ocaml = { 'ocamlformat' },
           javascript = { 'prettier' },
+          typescript = { 'prettier' },
           json = { 'prettier' },
           yaml = { 'prettier' },
           tex = { 'latexindent' },
