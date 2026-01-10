@@ -357,6 +357,7 @@ require('lazy').setup {
           rust = { 'rustfmt' },
           swift = { 'swiftformat' },
           typescriptreact = { 'prettier' },
+          javascriptreact = { 'prettier' },
         },
       },
     }, -->

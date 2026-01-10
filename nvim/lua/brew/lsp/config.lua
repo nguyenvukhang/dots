@@ -62,6 +62,15 @@ lsp.add['zls'] = {
   cmd = { 'zls' },
 }
 
+lsp.add['ts_ls'] = {
+  filetypes = {
+    'javascriptreact',
+    'typescriptreact',
+    'javascript',
+    'typescript',
+  },
+}
+
 --[[
 
 M.matlab_ls = function()
