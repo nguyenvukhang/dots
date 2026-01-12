@@ -51,7 +51,8 @@ end)
 
 -- create new line (at current cursor position) and insert date
 cmd('Date', function()
-  local date = vim.fn.strftime('%-d %b')
+  -- local date = vim.fn.strftime('%-d %b')
+  local date = vim.fn.strftime('# %-d %b, %Y')
   feedkeys('O' .. date .. '<esc>', 'n')
 end)
 
