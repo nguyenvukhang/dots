@@ -1,0 +1,142 @@
+{
+    "version": 3,
+    "timeZone": "Asia/Taipei",
+    "focus": false,
+    "widget/default-greeting": null,
+    "locale": "en",
+    "background": {
+        "id": "IAoLHIrMU3E7",
+        "key": "background/colour",
+        "display": {
+            "blur": 0
+        }
+    },
+    "data/IAoLHIrMU3E7": {
+        "colour": "#424242"
+    },
+    "widget/default-time": {
+        "id": "default-time",
+        "key": "widget/time",
+        "order": 0,
+        "display": {
+            "position": "middleCentre",
+            "fontSize": 32,
+            "fontWeight": 100,
+            "colour": "#ECECEC"
+        }
+    },
+    "data/default-time": {
+        "timeZone": "Asia/Taipei",
+        "mode": "digital",
+        "hour12": false,
+        "showDate": false,
+        "showMinutes": true,
+        "showSeconds": false,
+        "showDayPeriod": true,
+        "name": ""
+    },
+    "data/f2FvggOlNUkW": {
+        "columns": 4,
+        "links": [
+            {
+                "url": "https://mail.proton.me",
+                "name": "p.mail",
+                "icon": "mail"
+            },
+            {
+                "url": "https://outlook.office365.com/mail/",
+                "name": "outlook",
+                "icon": "mail"
+            },
+            {
+                "url": "https://gmail.com",
+                "name": "g.mail",
+                "icon": "mail"
+            },
+            {
+                "url": "https://drive.google.com",
+                "name": "g.drive",
+                "icon": "hard-drive"
+            }
+        ],
+        "visible": true,
+        "linkOpenStyle": false
+    },
+    "widget/f2FvggOlNUkW": {
+        "id": "f2FvggOlNUkW",
+        "key": "widget/links",
+        "order": 1,
+        "display": {
+            "position": "middleCentre",
+            "fontSize": 22,
+            "fontWeight": 300,
+            "colour": "#777777"
+        }
+    },
+    "data/Fxv4UDBjRZZo": {
+        "columns": 4,
+        "links": [
+            {
+                "url": "https://calendar.notion.so",
+                "name": "calendar",
+                "icon": "calendar"
+            },
+            {
+                "url": "https://docs.google.com/spreadsheets/d/12kmFEuOpieg_fpT5aCUyXpqC954iZ7MbVtZ9Sb0GDFw",
+                "name": "job.app",
+                "icon": "table"
+            },
+            {
+                "url": "https://gradapp.nus.edu.sg/apply",
+                "name": "grad.app",
+                "icon": "send"
+            },
+            {
+                "url": "https://app.standardnotes.com/",
+                "name": "notes",
+                "icon": "file-text"
+            }
+        ],
+        "visible": true,
+        "linkOpenStyle": false
+    },
+    "widget/Fxv4UDBjRZZo": {
+        "id": "Fxv4UDBjRZZo",
+        "key": "widget/links",
+        "order": 2,
+        "display": {
+            "position": "middleCentre",
+            "fontSize": 22,
+            "fontWeight": 300,
+            "colour": "#777777"
+        }
+    },
+    "data/aOabLvrJi2gA": {
+        "columns": 2,
+        "links": [
+            {
+                "url": "https://leanprover-community.github.io/mathlib4_docs/",
+                "name": "lean api",
+                "icon": "book"
+            },
+            {
+                "url": "https://internet-banking.dbs.com.sg",
+                "name": "dbs",
+                "icon": "globe"
+            }
+        ],
+        "visible": true,
+        "linkOpenStyle": false
+    },
+    "widget/aOabLvrJi2gA": {
+        "id": "aOabLvrJi2gA",
+        "key": "widget/links",
+        "order": 3,
+        "display": {
+            "position": "middleCentre",
+            "fontSize": 22,
+            "fontWeight": 300,
+            "colour": "#777777"
+        }
+    }
+}
