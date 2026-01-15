@@ -391,6 +391,8 @@ awful.rules.rules = {
 	-- Add titlebars to normal clients and dialogs
 	{ rule_any = { type = { "normal", "dialog" } }, properties = { titlebars_enabled = false } },
 
+	{ rule = { class = "smile" }, properties = { floating = true, placement = awful.placement.centered } },
+
 	-- Set Firefox to always map on the tag named "2" on screen 1.
 	{ rule = { class = "firefox" }, properties = { screen = 1, tag = TAGLIST[2].title, maximized = false } },
 	{ rule = { class = "librewolf" }, properties = { screen = 1, tag = TAGLIST[2].title, maximized = false } },
