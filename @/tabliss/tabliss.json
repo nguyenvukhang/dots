@@ -112,7 +112,7 @@
         }
     },
     "data/aOabLvrJi2gA": {
-        "columns": 2,
+        "columns": 3,
         "links": [
             {
                 "url": "https://leanprover-community.github.io/mathlib4_docs/",
@@ -123,6 +123,11 @@
                 "url": "https://internet-banking.dbs.com.sg",
                 "name": "dbs",
                 "icon": "globe"
+            },
+            {
+                "url": "https://emoji.julien-marcou.fr/",
+                "name": "emoji",
+                "icon": "image"
             }
         ],
         "visible": true,
