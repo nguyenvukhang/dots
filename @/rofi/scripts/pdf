@@ -12,7 +12,8 @@ Z_INDEX+=" -d /home/khang/repos/hire"
 zathura_open() {
   nohup zathura "$1" </dev/null >/dev/null 2>&1 &
 }
-PATH=/home/khang/.cargo/bin:$PATH
+
+PATH=$HOME/.cargo/bin:$PATH
 export PATH
 
 if [ -z "$1" ]; then

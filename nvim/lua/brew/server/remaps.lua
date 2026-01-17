@@ -30,6 +30,8 @@ k('n', 'go', ':!open <cfile><cr>', s)
 -- slowly increase this until I can use the default
 k('n', '<C-d>', '13j', s)
 k('n', '<C-u>', '13k', s)
+k('v', '<C-d>', '13j', s)
+k('v', '<C-u>', '13k', s)
 
 -- quickfix list navigation
 k('n', '<C-j>', ':cnext<cr>', s)
