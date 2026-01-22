@@ -13,7 +13,6 @@ local t = {
     '%.gpg',
     '%.DS_Store',
     '%.pdf',
-    '%.pdf',
     '%.png',
     '%.jpg',
     '%.gif',

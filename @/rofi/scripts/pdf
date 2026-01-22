@@ -8,6 +8,7 @@ Z_INDEX+=" -d /home/khang/uni"
 Z_INDEX+=" -d /home/khang/repos/books"
 Z_INDEX+=" -d /home/khang/repos/tex"
 Z_INDEX+=" -d /home/khang/repos/hire"
+Z_INDEX+=" -d /home/khang/repos/finance"
 
 zathura_open() {
   nohup zathura "$1" </dev/null >/dev/null 2>&1 &
