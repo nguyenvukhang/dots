@@ -18,6 +18,11 @@ lsp.add['rust_analyzer'] = {
   },
 }
 
+lsp.add['gopls'] = {
+  filetypes = { 'go' },
+  root_markers = { 'go.mod', '.git' },
+}
+
 lsp.add['python'] = {
   filetypes = { 'python' },
   cmd = { 'pyright-langserver', '--stdio' },
@@ -134,9 +139,6 @@ M.lean = function()
   lsp.leanls.setup(base { root_dir = lsp.util.root_pattern('lakefile.toml') })
 end
 
-M.go = function()
-  lsp.gopls.setup(base { root_dir = lsp.util.root_pattern('go.mod', '.git') })
-end
 
 -- TODO: don't open Location List with this. Ideally, send all diagnostics to
 -- global list, or just don't open any lists.
