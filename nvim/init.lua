@@ -342,7 +342,7 @@ require('lazy').setup {
           css = { 'prettier' },
           go = { 'gofmt' },
           html = { 'prettier' },
-          java = { 'java_custom' },
+          java = { 'clang_format' },
           javascript = { 'prettier' },
           javascriptreact = { 'prettier' },
           json = { 'prettier' },
