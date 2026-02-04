@@ -63,6 +63,7 @@ prepend_to_path_if_exists $HOME/.local/go/bin
 prepend_to_path_if_exists $HOME/go/bin
 # prepend_to_path_if_exists $HOME/.local/alatty/bin
 prepend_to_path_if_exists $HOME/.jenv/bin
+prepend_to_path_if_exists $HOME/.local/jdtls/bin
 prepend_to_path_if_exists $HOMEBREW_PREFIX/opt/ruby/bin
 prepend_to_path_if_exists $HOMEBREW_PREFIX/opt/swift/bin
 prepend_to_path_if_exists $HOMEBREW_PREFIX/bin

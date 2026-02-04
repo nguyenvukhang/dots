@@ -6,7 +6,6 @@ vim.diagnostic.config { underline = false, virtual_text = true }
 -- plugin archive
 -- * nvim-treesitter/playground
 -- * wuelnerdotexe/vim-astro
--- * mfussenegger/nvim-jdtls
 
 require('lazy').setup {
   rocks = { enabled = false },
@@ -437,6 +436,21 @@ require('lazy').setup {
         -- print(vim.inspect(require("nvim-treesitter.parsers")))
       end,
     }, -->
+    {
+      'mfussenegger/nvim-jdtls',
+      config = function()
+        local lsp = require('brew.lsp')
+        lsp.add['jdtls'] = {
+          settings = {
+            java = {
+              -- Custom eclipse.jdt.ls options go here
+            },
+          },
+        }
+
+        -- hey
+      end,
+    },
   },
 }
 

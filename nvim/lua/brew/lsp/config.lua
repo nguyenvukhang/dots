@@ -76,6 +76,8 @@ lsp.add['ts_ls'] = {
   },
 }
 
+-- lsp.add['jdtls'] = { filetypes = { 'java' }, }
+
 --[[
 
 M.matlab_ls = function()

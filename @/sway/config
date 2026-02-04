@@ -1,18 +1,22 @@
 ### Variables
-#
+
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
 set $hypr Mod4+Alt+Ctrl+Shift
+
 # Home row direction keys, like vim
 set $left h
 set $down j
 set $up k
 set $right l
+
 # Your preferred terminal emulator
-set $term /home/khang/repos/alatty/linux-package/bin/alatty
+# set $term /home/khang/repos/alatty/linux-package/bin/alatty
+set $term /usr/local/bin/alatty
+
 # Your preferred application launcher
-# Note: pass the final command to swaymsg so that the resulting window can be opened
-# on the original workspace that the command was run on.
+# Note: pass the final command to swaymsg so that the resulting window can be
+# opened on the original workspace that the command was run on.
 set $menu rofi -show run
 
 gaps inner 8
@@ -23,7 +27,7 @@ gaps inner 8
 output * bg /usr/share/backgrounds/warty-final-ubuntu.png fill
 
 # disable the primary monitor
-output eDP-1 disable
+# output eDP-1 disable
 
 ### Key bindings
 #
@@ -47,10 +51,10 @@ output eDP-1 disable
     floating_modifier $mod normal
 
     # Reload the configuration file
-    bindsym $mod+Shift+c reload
+    bindsym $hypr+r reload
 
     # Exit sway (logs you out of your Wayland session)
-    bindsym $hypr+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+    bindsym $hypr+q exec swaynag -t warning -m 'Exit shortcut pressed. frfr? This will end Wayland.' -B 'Yes, exit sway' 'swaymsg exit'
 #
 # Moving around:
 #
@@ -98,17 +102,18 @@ output eDP-1 disable
 # Read `man 5 sway-bar` for more information about this section.
 bar {
     position top
+    swaybar_command waybar
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %R'; do sleep 10; done
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #323232 #323232 #888888
-        focused_workspace #323232 #c4b5fd #333333
-    }
+    # status_command while date +'%Y-%m-%d %R'; do sleep 10; done
+    #
+    # colors {
+    #     statusline #ffffff
+    #     background #323232
+    #     inactive_workspace #323232 #323232 #888888
+    #     focused_workspace #323232 #c4b5fd #333333
+    # }
 }
 client.focused #c4b5fd #c4b5fd #c4b5fd #c4b5fd #c4b5fd
 
