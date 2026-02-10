@@ -1,29 +1,21 @@
 #!/bin/bash
 
-SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-LOGFILE=$SCRIPT_DIR/zathura.log
+# For documentation, see https://davatorium.github.io/rofi/1.7.3/rofi-script.5/
+# In particular, they recommend to use `coproc ( myApp > /dev/null  2>&1 )` to
+# open external programs from Rofi.
 
 Z_INDEX=
-Z_INDEX+=" -d /home/khang/uni"
-Z_INDEX+=" -d /home/khang/repos/pdfs"
-Z_INDEX+=" -d /home/khang/repos/tex"
-Z_INDEX+=" -d /home/khang/repos/hire"
-Z_INDEX+=" -d /home/khang/repos/finance"
-
-zathura_open() {
-  coproc (zathura "$1" >/dev/null 2>&1)
-}
+Z_INDEX+=' /home/khang/uni'
+Z_INDEX+=' /home/khang/repos/pdfs'
+Z_INDEX+=' /home/khang/repos/tex'
+Z_INDEX+=' /home/khang/repos/hire'
+Z_INDEX+=' /home/khang/repos/finance'
 
 PATH=$HOME/.cargo/bin:$PATH
 export PATH
-echo $PWD >> $LOGFILE
 
-if [ -z "$1" ]; then
-  zathura-pdf-index ls $Z_INDEX
+if [ $# -eq 0 ]; then
+  zathura-pdf-index $Z_INDEX
 else
-  TARGET=$(zathura-pdf-index resolve $Z_INDEX -q "$1")
-  if [ $? = 0 ]; then
-    zathura_open "$TARGET"
-  fi
-  # echo "$TARGET" >>$LOGFILE
+  coproc (zathura "$ROFI_INFO" >/dev/null 2>&1)
 fi

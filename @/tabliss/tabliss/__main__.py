@@ -24,6 +24,7 @@ z.new_row()  # =================================================================
 l("lean api", "https://leanprover-community.github.io/mathlib4_docs/", icon="book")
 l("dbs", "https://internet-banking.dbs.com.sg", icon="globe")
 l("emoji", "https://emoji.julien-marcou.fr/", icon="image")
+l("resume", "https://github.com/nguyenvukhang/hire", icon="github")
 
 # ==============================================================================
 

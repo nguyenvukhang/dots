@@ -402,6 +402,7 @@ require('lazy').setup {
           ['Open'] = 'Closed',
           ['Yes'] = 'No',
           ['and'] = 'or',
+          ['head'] = 'tail',
         },
         autoselect_longest_match = true,
       },
