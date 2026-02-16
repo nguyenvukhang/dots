@@ -388,6 +388,8 @@ awful.rules.rules = {
 		properties = { floating = true },
 	},
 
+	{ rule = { instance = "app.element.io" }, properties = { floating = false, maximized = false } },
+
 	-- Add titlebars to normal clients and dialogs
 	{ rule_any = { type = { "normal", "dialog" } }, properties = { titlebars_enabled = false } },
 
@@ -400,7 +402,11 @@ awful.rules.rules = {
 	{ rule = { class = "discord" }, properties = { screen = 1, tag = TAGLIST[3].title, maximized = false } },
 	{ rule = { class = "Telegram" }, properties = { screen = 1, tag = TAGLIST[3].title, maximized = false } },
 
-	{ rule = { class = "obs" }, properties = { screen = 1, tag = TAGLIST[4].title, maximized = false } },
+	{
+		rule = { class = "obs" },
+		except = { class = "obsidian" },
+		properties = { screen = 1, tag = TAGLIST[4].title, maximized = false },
+	},
 }
 -- }}}
 
