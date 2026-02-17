@@ -30,6 +30,12 @@ local TAGLIST = {
 	{ title = "  T  ", map_key = "#19" },
 }
 
+local spawn = function(command)
+	return function()
+		awful.spawn(command)
+	end
+end
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -249,21 +255,18 @@ local globalkeys = gears.table.join(
 	end),
 
 	-- Standard program
-	awful.key({ modkey }, "Return", function()
-		awful.spawn(terminal)
-	end),
+	awful.key({ modkey }, "Return", spawn(terminal)),
 	awful.key({ modkey, "Control" }, "r", awesome.restart),
 	-- awful.key({ modkey, "Shift" }, "q", awesome.quit), -- too strong
 
 	-- Prompt
-	awful.key({ modkey }, "space", function()
-		awful.spawn("rofi -show run")
-	end),
+	awful.key({ modkey }, "space", spawn("rofi -show run")),
+
+	-- Emoji
+	awful.key({ modkey, "Control" }, "space", spawn("rofi -modi emoji -show emoji")),
 
 	-- Menubar
-	awful.key({ modkey }, "p", function()
-		awful.spawn("rofi -modes pdf -show pdf -matching fuzzy -sort -sorting-method fzf")
-	end)
+	awful.key({ modkey }, "p", spawn("rofi -modes pdf -show pdf -matching fuzzy -sort -sorting-method fzf"))
 )
 
 local clientkeys = gears.table.join(
@@ -400,7 +403,7 @@ awful.rules.rules = {
 
 	{
 		rule_any = {
-			class = { "discord", "Telegram", "signal" },
+			class = { "discord", "Telegram", "Signal" },
 		},
 		properties = { screen = 1, tag = TAGLIST[3].title, maximized = false },
 	},
