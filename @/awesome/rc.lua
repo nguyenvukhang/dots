@@ -245,6 +245,7 @@ awful.screen.connect_for_each_screen(function(s)
 end)
 -- }}}
 
+local rofi_fzf = " -matching fuzzy -sort -sorting-method fzf"
 -- {{{ Key bindings
 local globalkeys = gears.table.join(
 	awful.key({ modkey }, "Tab", function()
@@ -260,13 +261,13 @@ local globalkeys = gears.table.join(
 	-- awful.key({ modkey, "Shift" }, "q", awesome.quit), -- too strong
 
 	-- Prompt
-	awful.key({ modkey }, "space", spawn("rofi -show run")),
+	awful.key({ modkey }, "space", spawn("rofi -show run" .. rofi_fzf)),
 
 	-- Emoji
-	awful.key({ modkey, "Control" }, "space", spawn("rofi -modi emoji -show emoji")),
+	awful.key({ modkey, "Control" }, "space", spawn("rofi -modi emoji -show emoji" .. rofi_fzf)),
 
 	-- Menubar
-	awful.key({ modkey }, "p", spawn("rofi -modes pdf -show pdf -matching fuzzy -sort -sorting-method fzf"))
+	awful.key({ modkey }, "p", spawn("rofi -modes pdf -show pdf" .. rofi_fzf))
 )
 
 local clientkeys = gears.table.join(
