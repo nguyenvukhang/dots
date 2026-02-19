@@ -345,7 +345,14 @@ if binary_exists eza; then
   X+=":README*=33:LICENSE*=37:*.pdf=38;5;105:Cargo.toml=4;33"
   export EZA_COLORS="reset:$X"
   EZA_OPTS=(--group-directories-first -s Name -I '.DS_Store')
-  alias ls="eza -a $EZA_OPTS"
+  ls() {
+    if [[ $HOME = $PWD ]]; then
+      eza $EZA_OPTS
+    else
+      eza -a $EZA_OPTS
+    fi
+
+  }
   alias lss="eza -a --tree -L 2 $EZA_OPTS"
   alias lsss="eza -a --tree -L 3 $EZA_OPTS"
   alias ll="eza -lag $EZA_OPTS"
@@ -356,12 +363,10 @@ fi
 
 alias ct="printf '\033[2J\033[3J\033[1;1H'" # clear terminal
 alias zr="exec $SHELL -l"                   # reloads shell
-alias py='python3' mk='make'
-alias vim="$EDITOR" vi="$EDITOR"
-alias nvimd="$EDITOR -u $DOTS/nvim/debug/init.lua"
-alias nv="~/.local/memes/bin/nvim"
-alias clangf="cp $DOTS/zsh/.clang-format ."
-alias pulse='open "/Applications/Pulse Secure.app/Contents/Plugins/JamUI/PulseTray.app"'
+alias py='python3'
+alias mk='make'
+alias vim="$EDITOR"
+alias vi="$EDITOR"
 alias ca='micromamba activate ml'
 alias sus='sudo systemctl suspend'
 
@@ -382,22 +387,6 @@ if [[ $(cat /etc/os-release 2>/dev/null) == *'ubuntu'* ]]; then
   }
 fi
 
-# killing Goodnotes
-kgn() {
-  PID=$(ps x | grep Goodnotes | grep -v grep)
-  PID="${PID#"${PID%%[![:space:]]*}"}" # remove spaces from the front
-  PID=${PID%% *}                       # get contents before the first space
-  if [ $PID ]; then
-    echo "Killing $PID" && kill $PID
-  else
-    echo "No matching process found"
-  fi
-}
-# kills notification center
-knc() {
-  killall NotificationCenter
-}
-
 # micromamba create --name ml python=3.10 --yes
 
 # >>> mamba initialize >>>
@@ -413,33 +402,18 @@ fi
 unset __mamba_setup
 # <<< mamba initialize <<<
 
-JENV=false
-if [ "$JENV" = true ] && binary_exists jenv; then
-  # jenv initialize
-  eval "$(jenv init -)"
-  jenv enable-plugin export
-fi
+# JENV=false
+# if [ "$JENV" = true ] && binary_exists jenv; then
+#   # jenv initialize
+#   eval "$(jenv init -)"
+#   jenv enable-plugin export
+# fi
 
 # RBENV=false
 # if [ "$RBENV" = true ] && binary_exists rbenv; then
 #   # rbenv initialize
 #   eval "$(rbenv init - --no-rehash zsh)"
 # fi
-
-# Pdf search tool for linux
-pdf() {
-  local SEARCH_DIRS=
-  local PDF_FILE=$(fd --no-ignore -e pdf . \
-    $HOME/uni \
-    $HOME/repos/books \
-    $HOME/repos/tex |
-    fzf)
-  if [ -z $PDF_FILE ]; then
-    return
-  fi
-  nohup zathura "$PDF_FILE" </dev/null >/dev/null 2>&1 &
-  disown
-}
 
 obs_fix() {
   sudo modprobe -r v4l2loopback
