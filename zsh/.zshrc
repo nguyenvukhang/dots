@@ -347,9 +347,9 @@ if binary_exists eza; then
   EZA_OPTS=(--group-directories-first -s Name -I '.DS_Store')
   ls() {
     if [[ $HOME = $PWD ]]; then
-      eza $EZA_OPTS
+      eza $EZA_OPTS $@
     else
-      eza -a $EZA_OPTS
+      eza -a $EZA_OPTS $@
     fi
 
   }
