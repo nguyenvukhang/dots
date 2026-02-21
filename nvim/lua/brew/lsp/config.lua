@@ -14,6 +14,14 @@ lsp.add['rust_analyzer'] = {
         allTargets = true,
       },
       imports = { granularity = { group = 'item' } },
+
+      procMacro = {
+        ignored = {
+          -- Ignoring this fixed LSP go-to-definition within `#[tokio::test]`.
+          -- https://github.com/rust-lang/rust-analyzer/issues/12362
+          ['tokio-macros'] = { 'test' },
+        },
+      },
     },
   },
 }
